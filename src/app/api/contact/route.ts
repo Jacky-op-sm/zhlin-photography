@@ -163,8 +163,8 @@ export async function POST(request: Request) {
 
   const payloadInput: ContactPayload = {
     name: sanitize(body.name),
-    firstName: sanitize(body.firstName),
-    lastName: sanitize(body.lastName),
+    firstName: sanitize(body.firstName || body.first_name),
+    lastName: sanitize(body.lastName || body.last_name),
     email: sanitize(body.email),
     type: sanitize(body.type),
     message: sanitize(body.message),

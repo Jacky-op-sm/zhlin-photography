@@ -8,7 +8,7 @@ export const profile: Profile = {
   title: 'PhD Student · Photographer',
   city: 'Hangzhou, China',
   email: 'Jackylin714@gmail.com',
-  avatar: '/profile/avatar.jpeg',
+  avatar: '/assets/profile/avatar.jpeg',
   aboutParagraphs: [
     '研究方向聚焦 VLA（Vision-Language-Action），关注视觉理解、语言建模与行动决策之间的连接。',
     '摄影以街拍为主，偏爱在日常场景中捕捉真实情绪与城市节奏，记录那些转瞬即逝的细微时刻。',

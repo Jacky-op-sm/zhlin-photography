@@ -91,6 +91,15 @@ export interface TravelGalleryGroup {
 }
 
 /**
+ * 旅行正文块
+ */
+export interface TravelStorySection {
+  eyebrow?: string;
+  title?: string;
+  paragraphs: string[];
+}
+
+/**
  * 景点
  */
 export interface TravelSpot {
@@ -114,6 +123,7 @@ export interface Travel {
   tags: string[];
   itinerary: string[];
   spots: TravelSpot[];
+  storySections?: TravelStorySection[];
   photoStory: string;
   reflection: string;
   gallery: TravelGalleryGroup[];
@@ -189,6 +199,9 @@ export interface Hobby {
  */
 export interface ContactInfo {
   title: string;
+  email: string;
+  wechat: string;
+  intro: string;
   responseTime: string;
   types: string[];
 }
@@ -199,7 +212,9 @@ export interface ContactInfo {
 export interface ContactPayload {
   name?: string;
   firstName?: string;
+  first_name?: string;
   lastName?: string;
+  last_name?: string;
   email: string;
   type: string;
   message: string;

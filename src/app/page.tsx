@@ -74,6 +74,30 @@ export default async function Home() {
       <section className="mx-auto max-w-7xl px-4 pb-12 pt-8 sm:px-6 lg:px-8 lg:pb-16 lg:pt-10">
         <div className="grid gap-10 lg:grid-cols-[1.05fr_0.95fr] lg:items-end">
           <div className="space-y-8">
+            <div className="flex max-w-2xl items-center gap-4 rounded-[1.75rem] border border-[#d7c9bd] bg-[#fffaf3]/90 p-4 shadow-[0_16px_36px_rgba(35,26,17,0.08)]">
+              <div className="relative h-20 w-20 shrink-0 overflow-hidden rounded-full border border-[#d7c9bd] bg-[#efe7db]">
+                <Image
+                  src={profile.avatar}
+                  alt={`${profile.name} portrait`}
+                  fill
+                  priority
+                  sizes="80px"
+                  className="object-cover"
+                />
+              </div>
+              <div className="min-w-0">
+                <p className="text-[0.68rem] uppercase tracking-[0.34em] text-[#756459]">
+                  Profile
+                </p>
+                <p className="mt-1 truncate text-xl font-semibold tracking-[-0.04em] text-[#17110d]">
+                  {profile.name}
+                </p>
+                <p className="mt-1 text-sm leading-6 text-[#5a4f46]">
+                  {profile.title} · {profile.city}
+                </p>
+              </div>
+            </div>
+
             <div className="space-y-5">
               <p className="text-[0.7rem] uppercase tracking-[0.45em] text-[#756459]">
                 Zhlin Photography

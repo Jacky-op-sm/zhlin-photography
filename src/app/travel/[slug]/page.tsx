@@ -4,7 +4,6 @@ import Link from 'next/link';
 import { notFound } from 'next/navigation';
 import type { ReactNode } from 'react';
 import { getTravelBySlug, getTravelSlugs } from '@/lib/data/travel';
-import type { Travel, TravelGalleryGroup, TravelSpot } from '@/lib/types';
 
 export async function generateStaticParams() {
   return getTravelSlugs().map((slug) => ({ slug }));
@@ -49,7 +48,7 @@ export default async function TravelDetailPage({ params }: { params: { slug: str
             priority
             sizes="100vw"
           />
-          <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(2,6,23,0.2),rgba(2,6,23,0.8)),radial-gradient(circle_at_top_right,rgba(255,255,255,0.12),transparent_34%)]" />
+          <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(2,6,23,0.2),rgba(2,6,23,0.82)),radial-gradient(circle_at_top_right,rgba(255,255,255,0.12),transparent_34%)]" />
         </div>
 
         <div className="relative mx-auto max-w-7xl px-6 py-8 sm:py-10 lg:py-14">
@@ -94,42 +93,8 @@ export default async function TravelDetailPage({ params }: { params: { slug: str
       <section className="mx-auto max-w-7xl px-6 py-14 sm:py-16 lg:py-20">
         <div className="grid gap-10 lg:grid-cols-[minmax(0,1fr)_22rem]">
           <article className="space-y-10">
-            <ContentPanel title="Summary">
-              <p className="text-base leading-8 text-neutral-700">{travel.summary}</p>
-            </ContentPanel>
-
-            <ContentPanel title="Itinerary">
-              <ol className="space-y-4">
-                {travel.itinerary.map((item, index) => (
-                  <li key={item} className="flex gap-4 rounded-2xl border border-black/8 bg-white/70 p-4">
-                    <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-neutral-950 text-sm font-semibold text-white">
-                      {String(index + 1).padStart(2, '0')}
-                    </span>
-                    <p className="pt-1 text-sm leading-7 text-neutral-700">{item}</p>
-                  </li>
-                ))}
-              </ol>
-            </ContentPanel>
-
-            <ContentPanel title="Spots">
-              <div className="grid gap-4 md:grid-cols-2">
-                {travel.spots.map((spot) => (
-                  <SpotCard key={spot.name} spot={spot} />
-                ))}
-              </div>
-            </ContentPanel>
-
-            <ContentPanel title="Photo Story">
-              <div className="space-y-6">
-                <p className="max-w-3xl text-base leading-8 text-neutral-700">{travel.photoStory}</p>
-                <Gallery groups={travel.gallery} />
-              </div>
-            </ContentPanel>
-
-            <ContentPanel title="Reflection">
-              <blockquote className="border-l-4 border-neutral-950 pl-5 text-lg leading-9 text-neutral-800">
-                {travel.reflection}
-              </blockquote>
+            <ContentPanel title="原文正文">
+              <TravelStory bodyHtml={travel.bodyHtml} />
             </ContentPanel>
           </article>
 
@@ -151,14 +116,10 @@ export default async function TravelDetailPage({ params }: { params: { slug: str
             </div>
 
             <div className="rounded-[1.75rem] border border-black/10 bg-[#f7f2ea] p-6">
-              <p className="text-xs uppercase tracking-[0.35em] text-neutral-400">Tags</p>
-              <div className="mt-4 flex flex-wrap gap-2">
-                {travel.tags.map((tag) => (
-                  <span key={tag} className="rounded-full border border-black/10 bg-white px-3 py-1 text-xs text-neutral-600">
-                    {tag}
-                  </span>
-                ))}
-              </div>
+              <p className="text-xs uppercase tracking-[0.35em] text-neutral-400">Summary</p>
+              <p className="mt-4 text-sm leading-7 text-neutral-700">
+                {travel.summary}
+              </p>
             </div>
 
             <div className="rounded-[1.75rem] border border-black/10 bg-neutral-950 p-6 text-white">
@@ -198,73 +159,38 @@ function ContentPanel({ title, children }: { title: string; children: ReactNode 
   );
 }
 
-function SpotCard({ spot }: { spot: TravelSpot }) {
+function TravelStory({ bodyHtml }: { bodyHtml: string }) {
   return (
-    <article className="rounded-2xl border border-black/8 bg-[#fbf8f3] p-5">
-      <h3 className="text-lg font-semibold tracking-tight text-neutral-950">{spot.name}</h3>
-      <p className="mt-3 text-sm leading-7 text-neutral-600">{spot.description}</p>
-    </article>
+    <div
+      className={[
+        'travel-story max-w-none text-[1.03rem] leading-8 text-neutral-800',
+        '[&_article]:space-y-10',
+        '[&_header]:space-y-4',
+        '[&_header>h1]:text-4xl [&_header>h1]:font-semibold [&_header>h1]:tracking-tight [&_header>h1]:text-neutral-950',
+        '[&_header>p]:text-sm [&_header>p]:leading-7 [&_header>p]:text-neutral-600',
+        '[&_figure]:overflow-hidden [&_figure]:rounded-[1.75rem] [&_figure]:border [&_figure]:border-black/10 [&_figure]:bg-neutral-100 [&_figure]:shadow-[0_12px_30px_rgba(15,23,42,0.06)]',
+        '[&_img]:block [&_img]:h-auto [&_img]:w-full',
+        '[&_figcaption]:px-4 [&_figcaption]:py-3 [&_figcaption]:text-sm [&_figcaption]:leading-6 [&_figcaption]:text-neutral-500',
+        '[&_section]:space-y-4 [&_section]:pt-2',
+        '[&_section>h2]:text-2xl [&_section>h2]:font-semibold [&_section>h2]:tracking-tight [&_section>h2]:text-neutral-950',
+        '[&_section>h3]:text-xl [&_section>h3]:font-semibold [&_section>h3]:tracking-tight [&_section>h3]:text-neutral-950',
+        '[&_section>p]:mt-0 [&_section>p]:text-base [&_section>p]:leading-8 [&_section>p]:text-neutral-800',
+        '[&_p]:text-base [&_p]:leading-8 [&_p]:text-neutral-800',
+        '[&_p.nanjing-rb-channel]:text-xs [&_p.nanjing-rb-channel]:uppercase [&_p.nanjing-rb-channel]:tracking-[0.35em] [&_p.nanjing-rb-channel]:text-neutral-500',
+        '[&_p.nanjing-rb-section-index]:text-xs [&_p.nanjing-rb-section-index]:uppercase [&_p.nanjing-rb-section-index]:tracking-[0.35em] [&_p.nanjing-rb-section-index]:text-neutral-400',
+        '[&_p.nanjing-rb-separator]:text-center [&_p.nanjing-rb-separator]:tracking-[0.5em] [&_p.nanjing-rb-separator]:text-neutral-400',
+        '[&_div.nanjing-rb-break]:my-8 [&_div.nanjing-rb-break]:h-px [&_div.nanjing-rb-break]:bg-black/10',
+        '[&_ul]:flex [&_ul]:flex-wrap [&_ul]:gap-2',
+        '[&_ul>li]:list-none',
+        '[&_ul.nanjing-rb-tags>li]:rounded-full [&_ul.nanjing-rb-tags>li]:border [&_ul.nanjing-rb-tags>li]:border-black/10 [&_ul.nanjing-rb-tags>li]:bg-[#f8f4ed] [&_ul.nanjing-rb-tags>li]:px-3 [&_ul.nanjing-rb-tags>li]:py-1 [&_ul.nanjing-rb-tags>li]:text-xs [&_ul.nanjing-rb-tags>li]:text-neutral-600',
+        '[&_div.nanjing-card-grid]:grid [&_div.nanjing-card-grid]:gap-4 [&_div.nanjing-card-grid]:md:grid-cols-2 [&_div.nanjing-card-grid]:xl:grid-cols-3',
+        '[&_article.nanjing-card]:rounded-2xl [&_article.nanjing-card]:border [&_article.nanjing-card]:border-black/10 [&_article.nanjing-card]:bg-[#fbf8f3] [&_article.nanjing-card]:p-4 [&_article.nanjing-card]:shadow-sm',
+        '[&_article.nanjing-card>h3]:text-lg [&_article.nanjing-card>h3]:font-semibold [&_article.nanjing-card>h3]:tracking-tight [&_article.nanjing-card>h3]:text-neutral-950',
+        '[&_article.nanjing-card>p]:mt-3 [&_article.nanjing-card>p]:text-sm [&_article.nanjing-card>p]:leading-7 [&_article.nanjing-card>p]:text-neutral-700',
+        '[&_article.nanjing-card[data-food-key]]:cursor-default',
+        '[&_section.nanjing-section--appendix]:mt-12 [&_section.nanjing-section--appendix]:rounded-[1.75rem] [&_section.nanjing-section--appendix]:border [&_section.nanjing-section--appendix]:border-black/10 [&_section.nanjing-section--appendix]:bg-[#faf7f1] [&_section.nanjing-section--appendix]:p-6',
+      ].join(' ')}
+      dangerouslySetInnerHTML={{ __html: bodyHtml }}
+    />
   );
-}
-
-function Gallery({ groups }: { groups: TravelGalleryGroup[] }) {
-  return (
-    <div className="space-y-8">
-      {groups.map((group) => (
-        <section key={group.title ?? group.images[0]?.src} className="space-y-4">
-          {group.title ? (
-            <h3 className="text-sm uppercase tracking-[0.35em] text-neutral-400">{group.title}</h3>
-          ) : null}
-          <div className={galleryLayoutClass(group.layout)}>
-            {group.images.map((image) => (
-              <figure key={image.src} className="space-y-3">
-                <div className={imageWrapperClass(group.layout)}>
-                  <Image
-                    src={image.src}
-                    alt={image.alt}
-                    fill
-                    className="object-cover transition duration-500 hover:scale-[1.02]"
-                    sizes={gallerySizes(group.layout)}
-                  />
-                </div>
-                {image.caption ? <figcaption className="text-sm leading-6 text-neutral-500">{image.caption}</figcaption> : null}
-              </figure>
-            ))}
-          </div>
-        </section>
-      ))}
-    </div>
-  );
-}
-
-function galleryLayoutClass(layout: TravelGalleryGroup['layout']) {
-  if (layout === 'single') {
-    return 'space-y-4';
-  }
-
-  if (layout === 'double') {
-    return 'grid gap-4 md:grid-cols-2';
-  }
-
-  return 'grid gap-4 md:grid-cols-3';
-}
-
-function imageWrapperClass(layout: TravelGalleryGroup['layout']) {
-  if (layout === 'single') {
-    return 'relative aspect-[16/9] overflow-hidden rounded-[1.5rem] border border-black/10 bg-neutral-200';
-  }
-
-  return 'relative aspect-[4/3] overflow-hidden rounded-[1.5rem] border border-black/10 bg-neutral-200';
-}
-
-function gallerySizes(layout: TravelGalleryGroup['layout']) {
-  if (layout === 'single') {
-    return '100vw';
-  }
-
-  if (layout === 'double') {
-    return '(max-width: 768px) 100vw, 50vw';
-  }
-
-  return '(max-width: 768px) 100vw, 33vw';
 }

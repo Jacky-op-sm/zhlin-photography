@@ -1,5 +1,5 @@
 import { getHobby } from '@/lib/data/hobby'
-import type { HobbyCategory, HobbyItem, MonthlyDigest } from '@/lib/types'
+import type { Hobby, HobbyCategory, HobbyItem, MonthlyDigest } from '@/lib/types'
 
 function formatMonth(month: string) {
   const match = month.match(/^(\d{4})-(\d{1,2})$/)
@@ -77,9 +77,11 @@ function ItemCard({
 function CategoryCard({
   category,
   tone,
+  lolProfile,
 }: {
   category: HobbyCategory
   tone: 'amber' | 'rose' | 'emerald'
+  lolProfile?: Hobby['lolProfile']
 }) {
   const toneClassName =
     tone === 'amber'
@@ -106,7 +108,70 @@ function CategoryCard({
           />
         ))}
       </div>
+
+      {category.title === '游戏' && lolProfile ? <LolProfileModule lolProfile={lolProfile} /> : null}
     </article>
+  )
+}
+
+function LolProfileModule({ lolProfile }: { lolProfile: Hobby['lolProfile'] }) {
+  return (
+    <section className="mt-5 rounded-[1.75rem] border border-neutral-800/80 bg-neutral-950 p-5 text-white shadow-[0_18px_50px_rgba(0,0,0,0.18)]">
+      <div className="flex flex-wrap items-start justify-between gap-4">
+        <div>
+          <p className="text-xs font-semibold uppercase tracking-[0.35em] text-white/45">
+            LOL Profile
+          </p>
+          <h4 className="mt-3 text-2xl font-semibold tracking-tight text-white">
+            LOL 信息块
+          </h4>
+          <p className="mt-3 max-w-2xl text-sm leading-7 text-white/70">
+            保留当前游戏状态与偏好，作为长期兴趣里最稳定的一个观察窗口。
+          </p>
+        </div>
+      </div>
+
+      <div className="mt-6 grid gap-4 sm:grid-cols-2">
+        <InfoTile label="服务器" value={lolProfile.server} />
+        <InfoTile label="段位" value={lolProfile.rank} />
+      </div>
+
+      <div className="mt-5">
+        <p className="text-xs font-semibold uppercase tracking-[0.24em] text-white/50">
+          主位置
+        </p>
+        <div className="mt-3 flex flex-wrap gap-2">
+          {lolProfile.mainRoles.map((role) => (
+            <span
+              key={role}
+              className="rounded-full border border-white/15 bg-white/10 px-3 py-1 text-xs font-medium text-white/85"
+            >
+              {role}
+            </span>
+          ))}
+        </div>
+      </div>
+
+      <div className="mt-5">
+        <p className="text-xs font-semibold uppercase tracking-[0.24em] text-white/50">
+          英雄池
+        </p>
+        <div className="mt-3 flex flex-wrap gap-2">
+          {lolProfile.championPool.map((champion) => (
+            <span
+              key={champion}
+              className="rounded-full border border-white/15 bg-white/10 px-3 py-1 text-xs font-medium text-white/85"
+            >
+              {champion}
+            </span>
+          ))}
+        </div>
+      </div>
+
+      <p className="mt-6 rounded-2xl border border-white/10 bg-white/5 p-4 text-sm leading-7 text-white/75">
+        {lolProfile.currentInsight}
+      </p>
+    </section>
   )
 }
 
@@ -244,6 +309,7 @@ export default async function HobbyPage() {
                 key={category.title}
                 category={category}
                 tone={index === 0 ? 'amber' : index === 1 ? 'rose' : 'emerald'}
+                lolProfile={category.title === '游戏' ? hobby.lolProfile : undefined}
               />
             ))}
           </div>
@@ -276,7 +342,7 @@ export default async function HobbyPage() {
           ) : null}
         </section>
 
-        <section className="grid gap-6 lg:grid-cols-2">
+        <section className="space-y-6">
           <article className="rounded-[2rem] border border-neutral-200/80 bg-white/80 p-6 shadow-sm backdrop-blur">
             <SectionLabel
               eyebrow="External links"
@@ -304,51 +370,6 @@ export default async function HobbyPage() {
                 </a>
               ))}
             </div>
-          </article>
-
-          <article className="rounded-[2rem] border border-neutral-200/80 bg-gradient-to-br from-neutral-950 to-neutral-800 p-6 text-white shadow-sm">
-            <SectionLabel
-              eyebrow="LOL profile"
-              title="LOL 信息块"
-              description="保留当前游戏状态与偏好，作为长期兴趣里最稳定的一个观察窗口。"
-            />
-            <div className="mt-6 grid gap-4 sm:grid-cols-2">
-              <InfoTile label="服务器" value={hobby.lolProfile.server} />
-              <InfoTile label="段位" value={hobby.lolProfile.rank} />
-            </div>
-            <div className="mt-4">
-              <p className="text-xs font-semibold uppercase tracking-[0.24em] text-white/50">
-                主位置
-              </p>
-              <div className="mt-3 flex flex-wrap gap-2">
-                {hobby.lolProfile.mainRoles.map((role) => (
-                  <span
-                    key={role}
-                    className="rounded-full border border-white/15 bg-white/10 px-3 py-1 text-xs font-medium text-white/85"
-                  >
-                    {role}
-                  </span>
-                ))}
-              </div>
-            </div>
-            <div className="mt-4">
-              <p className="text-xs font-semibold uppercase tracking-[0.24em] text-white/50">
-                英雄池
-              </p>
-              <div className="mt-3 flex flex-wrap gap-2">
-                {hobby.lolProfile.championPool.map((champion) => (
-                  <span
-                    key={champion}
-                    className="rounded-full border border-white/15 bg-white/10 px-3 py-1 text-xs font-medium text-white/85"
-                  >
-                    {champion}
-                  </span>
-                ))}
-              </div>
-            </div>
-            <p className="mt-6 rounded-2xl border border-white/10 bg-white/5 p-4 text-sm leading-7 text-white/75">
-              {hobby.lolProfile.currentInsight}
-            </p>
           </article>
         </section>
       </div>
