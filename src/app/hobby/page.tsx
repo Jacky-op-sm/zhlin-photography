@@ -116,35 +116,21 @@ function CategoryCard({
 
 function LolProfileModule({ lolProfile }: { lolProfile: Hobby['lolProfile'] }) {
   return (
-    <section className="mt-5 rounded-[1.75rem] border border-neutral-800/80 bg-neutral-950 p-5 text-white shadow-[0_18px_50px_rgba(0,0,0,0.18)]">
-      <div className="flex flex-wrap items-start justify-between gap-4">
-        <div>
-          <p className="text-xs font-semibold uppercase tracking-[0.35em] text-white/45">
-            LOL Profile
-          </p>
-          <h4 className="mt-3 text-2xl font-semibold tracking-tight text-white">
-            LOL 信息块
-          </h4>
-          <p className="mt-3 max-w-2xl text-sm leading-7 text-white/70">
-            保留当前游戏状态与偏好，作为长期兴趣里最稳定的一个观察窗口。
-          </p>
-        </div>
-      </div>
-
-      <div className="mt-6 grid gap-4 sm:grid-cols-2">
+    <section className="mt-5 rounded-[1.75rem] border border-neutral-200/80 bg-white/75 p-5 text-neutral-950 shadow-sm backdrop-blur">
+      <div className="grid gap-4 sm:grid-cols-2">
         <InfoTile label="服务器" value={lolProfile.server} />
         <InfoTile label="段位" value={lolProfile.rank} />
       </div>
 
       <div className="mt-5">
-        <p className="text-xs font-semibold uppercase tracking-[0.24em] text-white/50">
+        <p className="text-xs font-semibold uppercase tracking-[0.24em] text-neutral-500">
           主位置
         </p>
         <div className="mt-3 flex flex-wrap gap-2">
           {lolProfile.mainRoles.map((role) => (
             <span
               key={role}
-              className="rounded-full border border-white/15 bg-white/10 px-3 py-1 text-xs font-medium text-white/85"
+              className="rounded-full border border-neutral-200/80 bg-neutral-50 px-3 py-1 text-xs font-medium text-neutral-700"
             >
               {role}
             </span>
@@ -153,14 +139,14 @@ function LolProfileModule({ lolProfile }: { lolProfile: Hobby['lolProfile'] }) {
       </div>
 
       <div className="mt-5">
-        <p className="text-xs font-semibold uppercase tracking-[0.24em] text-white/50">
+        <p className="text-xs font-semibold uppercase tracking-[0.24em] text-neutral-500">
           英雄池
         </p>
         <div className="mt-3 flex flex-wrap gap-2">
           {lolProfile.championPool.map((champion) => (
             <span
               key={champion}
-              className="rounded-full border border-white/15 bg-white/10 px-3 py-1 text-xs font-medium text-white/85"
+              className="rounded-full border border-neutral-200/80 bg-neutral-50 px-3 py-1 text-xs font-medium text-neutral-700"
             >
               {champion}
             </span>
@@ -168,7 +154,7 @@ function LolProfileModule({ lolProfile }: { lolProfile: Hobby['lolProfile'] }) {
         </div>
       </div>
 
-      <p className="mt-6 rounded-2xl border border-white/10 bg-white/5 p-4 text-sm leading-7 text-white/75">
+      <p className="mt-6 rounded-2xl border border-neutral-200/80 bg-neutral-50 p-4 text-sm leading-7 text-neutral-700">
         {lolProfile.currentInsight}
       </p>
     </section>
@@ -208,6 +194,8 @@ function DigestGroup({
     accent === 'amber'
       ? 'border-amber-200/70 bg-amber-50/70 text-amber-950'
       : 'border-rose-200/70 bg-rose-50/70 text-rose-950'
+  const visibleEntries = entries.slice(0, 2)
+  const hiddenEntries = entries.slice(2)
 
   return (
     <section className={`rounded-2xl border p-4 ${accentClassName}`}>
@@ -217,13 +205,30 @@ function DigestGroup({
       </div>
 
       <ul className="mt-4 space-y-4">
-        {entries.map((entry) => (
+        {visibleEntries.map((entry) => (
           <li key={entry.name} className="rounded-xl bg-white/65 p-4 shadow-sm">
             <p className="text-sm font-semibold text-neutral-950">{entry.name}</p>
             <p className="mt-2 text-sm leading-7 text-neutral-700">{entry.why}</p>
           </li>
         ))}
       </ul>
+
+      {hiddenEntries.length ? (
+        <details className="group mt-4">
+          <summary className="flex cursor-pointer list-none items-center justify-center rounded-xl border border-current/20 bg-white/50 px-4 py-3 text-xs font-semibold uppercase tracking-[0.22em] text-current transition hover:bg-white/75">
+            <span className="group-open:hidden">查看更多</span>
+            <span className="hidden group-open:inline">收起</span>
+          </summary>
+          <div className="mt-4 space-y-4">
+            {hiddenEntries.map((entry) => (
+              <div key={entry.name} className="rounded-xl bg-white/65 p-4 shadow-sm">
+                <p className="text-sm font-semibold text-neutral-950">{entry.name}</p>
+                <p className="mt-2 text-sm leading-7 text-neutral-700">{entry.why}</p>
+              </div>
+            ))}
+          </div>
+        </details>
+      ) : null}
     </section>
   )
 }
@@ -232,8 +237,6 @@ export default async function HobbyPage() {
   const hobby = await getHobby()
   const categories = hobby.featured?.length ? hobby.featured : hobby.cards
   const digest = sortDigest(hobby.monthlyDigest || [])
-  const recentDigest = digest.slice(0, 3)
-  const olderDigest = digest.slice(3)
 
   const externalLinks = [
     { label: 'Goodreads', href: hobby.externalProfiles.goodreads, description: '完整书单与阅读记录' },
@@ -322,24 +325,10 @@ export default async function HobbyPage() {
             description="把最近读完的书、看过的电影整理在一起，保留短期兴趣的变化轨迹。"
           />
           <div className="grid gap-6">
-            {recentDigest.map((monthData) => (
+            {digest.map((monthData) => (
               <DigestCard key={monthData.month} monthData={monthData} />
             ))}
           </div>
-
-          {olderDigest.length ? (
-            <details className="group rounded-[2rem] border border-neutral-200/80 bg-white/75 p-6 shadow-sm backdrop-blur">
-              <summary className="cursor-pointer list-none text-sm font-semibold uppercase tracking-[0.24em] text-neutral-600">
-                查看更早月份
-                <span className="ml-3 text-neutral-400 transition group-open:rotate-180">⌄</span>
-              </summary>
-              <div className="mt-6 grid gap-6">
-                {olderDigest.map((monthData) => (
-                  <DigestCard key={monthData.month} monthData={monthData} />
-                ))}
-              </div>
-            </details>
-          ) : null}
         </section>
 
         <section className="space-y-6">
@@ -379,11 +368,11 @@ export default async function HobbyPage() {
 
 function InfoTile({ label, value }: { label: string; value: string }) {
   return (
-    <div className="rounded-2xl border border-white/10 bg-white/5 p-4">
-      <p className="text-xs font-semibold uppercase tracking-[0.24em] text-white/50">
+    <div className="rounded-2xl border border-neutral-200/80 bg-white/75 p-4">
+      <p className="text-xs font-semibold uppercase tracking-[0.24em] text-neutral-500">
         {label}
       </p>
-      <p className="mt-2 text-base font-medium text-white">{value}</p>
+      <p className="mt-2 text-base font-medium text-neutral-950">{value}</p>
     </div>
   )
 }

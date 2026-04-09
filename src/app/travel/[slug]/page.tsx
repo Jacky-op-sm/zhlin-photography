@@ -2,7 +2,6 @@ import type { Metadata } from 'next';
 import Image from 'next/image';
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
-import type { ReactNode } from 'react';
 import { getTravelBySlug, getTravelSlugs } from '@/lib/data/travel';
 
 export async function generateStaticParams() {
@@ -36,22 +35,24 @@ export default async function TravelDetailPage({ params }: { params: { slug: str
     notFound();
   }
 
+  const { html: bodyHtml, headings } = buildTravelStory(travel.bodyHtml);
+
   return (
     <main className="min-h-screen bg-[#f3efe7] text-neutral-950">
-      <section className="relative overflow-hidden bg-neutral-950 text-white">
+      <section className="relative isolate min-h-[78vh] overflow-hidden bg-neutral-950 text-white sm:min-h-[82vh] lg:min-h-[88vh]">
         <div className="absolute inset-0">
           <Image
             src={travel.hero}
             alt={travel.cardTitle}
             fill
-            className="object-cover opacity-75"
+            className="object-cover object-center opacity-78"
             priority
             sizes="100vw"
           />
-          <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(2,6,23,0.2),rgba(2,6,23,0.82)),radial-gradient(circle_at_top_right,rgba(255,255,255,0.12),transparent_34%)]" />
+          <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(2,6,23,0.12),rgba(2,6,23,0.78)),radial-gradient(circle_at_top_right,rgba(255,255,255,0.12),transparent_34%)]" />
         </div>
 
-        <div className="relative mx-auto max-w-7xl px-6 py-8 sm:py-10 lg:py-14">
+        <div className="relative mx-auto flex min-h-[78vh] max-w-7xl flex-col justify-between px-6 py-8 sm:min-h-[82vh] sm:py-10 lg:min-h-[88vh] lg:px-8 lg:py-14">
           <Link
             href="/travel"
             className="inline-flex items-center gap-2 rounded-full border border-white/15 bg-white/10 px-4 py-2 text-sm text-white/85 backdrop-blur transition hover:bg-white/15"
@@ -59,8 +60,8 @@ export default async function TravelDetailPage({ params }: { params: { slug: str
             ← 返回 Travel
           </Link>
 
-          <div className="mt-14 grid gap-10 lg:grid-cols-[minmax(0,1.1fr)_24rem] lg:items-end">
-            <div>
+          <div className="grid gap-10 lg:grid-cols-[minmax(0,1.1fr)_20rem] lg:items-end">
+            <div className="pb-2">
               <p className="text-xs uppercase tracking-[0.45em] text-white/45">{travel.enName}</p>
               <h1 className="mt-4 max-w-4xl text-4xl font-semibold tracking-tight sm:text-5xl lg:text-7xl">
                 {travel.cardTitle}
@@ -90,51 +91,50 @@ export default async function TravelDetailPage({ params }: { params: { slug: str
         </div>
       </section>
 
-      <section className="mx-auto max-w-7xl px-6 py-14 sm:py-16 lg:py-20">
-        <div className="grid gap-10 lg:grid-cols-[minmax(0,1fr)_22rem]">
-          <article className="space-y-10">
-            <ContentPanel title="原文正文">
-              <TravelStory bodyHtml={travel.bodyHtml} />
-            </ContentPanel>
-          </article>
+      <section className="mx-auto max-w-7xl px-6 py-14 sm:py-16 lg:px-8 lg:py-20">
+        <div className="grid gap-8 lg:grid-cols-[minmax(0,1fr)_minmax(0,3fr)]">
+          <aside className="lg:sticky lg:top-8 self-start">
+            <details open className="group rounded-[1.75rem] border border-black/10 bg-white/85 p-5 shadow-[0_12px_40px_rgba(15,23,42,0.06)] backdrop-blur">
+              <summary className="flex cursor-pointer list-none items-center justify-between gap-4 rounded-[1.25rem] border border-black/5 bg-[#faf6ef] px-4 py-3 text-sm font-semibold text-neutral-900 outline-none transition hover:bg-[#f6efe5]">
+                <span>目录</span>
+                <span className="text-neutral-400 transition group-open:rotate-45">+</span>
+              </summary>
 
-          <aside className="space-y-4 lg:sticky lg:top-8 self-start">
-            <div className="rounded-[1.75rem] border border-black/10 bg-white/80 p-6 shadow-[0_12px_40px_rgba(15,23,42,0.06)] backdrop-blur">
-              <p className="text-xs uppercase tracking-[0.35em] text-neutral-400">Overview</p>
-              <h2 className="mt-3 text-2xl font-semibold tracking-tight text-neutral-950">
-                {travel.zhName}
-              </h2>
-              <p className="mt-4 text-sm leading-7 text-neutral-600">
-                {travel.location}
-              </p>
-              <div className="mt-6 space-y-3 text-sm text-neutral-600">
-                <p>Period: {travel.period}</p>
-                <p>Story blocks: {travel.itinerary.length}</p>
-                <p>Spots: {travel.spots.length}</p>
-                <p>Gallery groups: {travel.gallery.length}</p>
-              </div>
-            </div>
-
-            <div className="rounded-[1.75rem] border border-black/10 bg-[#f7f2ea] p-6">
-              <p className="text-xs uppercase tracking-[0.35em] text-neutral-400">Summary</p>
-              <p className="mt-4 text-sm leading-7 text-neutral-700">
-                {travel.summary}
-              </p>
-            </div>
-
-            <div className="rounded-[1.75rem] border border-black/10 bg-neutral-950 p-6 text-white">
-              <p className="text-xs uppercase tracking-[0.35em] text-white/40">Next</p>
-              <p className="mt-3 text-base leading-7 text-white/78">
-                如果你想继续看别的城市，可以直接回到 Travel 总览页。
-              </p>
-              <Link
-                href="/travel"
-                className="mt-5 inline-flex rounded-full border border-white/15 bg-white/10 px-4 py-2 text-sm text-white/85 transition hover:bg-white/15"
-              >
-                回到总览
-              </Link>
-            </div>
+              <nav className="mt-5" aria-label="目录">
+                <p className="text-xs uppercase tracking-[0.35em] text-neutral-400">
+                  章节导航
+                </p>
+                {headings.length ? (
+                  <ol className="mt-4 space-y-2">
+                    {headings.map((heading, index) => (
+                      <li key={heading.id}>
+                        <a
+                          href={`#${heading.id}`}
+                          className="group flex items-start gap-3 rounded-2xl border border-transparent px-3 py-2 text-sm leading-6 text-neutral-700 transition hover:border-black/5 hover:bg-white hover:text-neutral-950"
+                        >
+                          <span className="mt-0.5 w-5 shrink-0 text-[11px] font-semibold uppercase tracking-[0.28em] text-neutral-400">
+                            {String(index + 1).padStart(2, '0')}
+                          </span>
+                          <span className="min-w-0 flex-1">{heading.title}</span>
+                        </a>
+                      </li>
+                    ))}
+                  </ol>
+                ) : (
+                  <p className="mt-4 text-sm leading-7 text-neutral-500">
+                    这篇正文没有可提取的章节标题。
+                  </p>
+                )}
+              </nav>
+            </details>
           </aside>
+
+          <article className="min-w-0 rounded-[1.75rem] border border-black/10 bg-white/80 p-6 shadow-[0_12px_40px_rgba(15,23,42,0.06)] backdrop-blur sm:p-7 lg:p-8">
+            <p className="text-xs uppercase tracking-[0.35em] text-neutral-400">原文正文</p>
+            <div className="mt-5">
+              <TravelStory bodyHtml={bodyHtml} />
+            </div>
+          </article>
         </div>
       </section>
     </main>
@@ -147,15 +147,6 @@ function MetaRow({ label, value }: { label: string; value: string }) {
       <dt className="text-white/45">{label}</dt>
       <dd className="text-right text-white">{value}</dd>
     </div>
-  );
-}
-
-function ContentPanel({ title, children }: { title: string; children: ReactNode }) {
-  return (
-    <section className="rounded-[1.75rem] border border-black/10 bg-white/80 p-6 shadow-[0_12px_40px_rgba(15,23,42,0.06)] backdrop-blur">
-      <p className="text-xs uppercase tracking-[0.35em] text-neutral-400">{title}</p>
-      <div className="mt-5">{children}</div>
-    </section>
   );
 }
 
@@ -189,8 +180,51 @@ function TravelStory({ bodyHtml }: { bodyHtml: string }) {
         '[&_article.nanjing-card>p]:mt-3 [&_article.nanjing-card>p]:text-sm [&_article.nanjing-card>p]:leading-7 [&_article.nanjing-card>p]:text-neutral-700',
         '[&_article.nanjing-card[data-food-key]]:cursor-default',
         '[&_section.nanjing-section--appendix]:mt-12 [&_section.nanjing-section--appendix]:rounded-[1.75rem] [&_section.nanjing-section--appendix]:border [&_section.nanjing-section--appendix]:border-black/10 [&_section.nanjing-section--appendix]:bg-[#faf7f1] [&_section.nanjing-section--appendix]:p-6',
+        '[&_h2[id]]:scroll-mt-28',
+        '[&_h3[id]]:scroll-mt-28',
       ].join(' ')}
       dangerouslySetInnerHTML={{ __html: bodyHtml }}
     />
   );
+}
+
+function buildTravelStory(bodyHtml: string) {
+  const headings: { id: string; title: string }[] = [];
+  const seen = new Map<string, number>();
+
+  const html = bodyHtml.replace(/<h2\b([^>]*)>([\s\S]*?)<\/h2>/gi, (match, rawAttrs = '', innerHtml) => {
+    const title = normalizeHeadingText(innerHtml);
+    const baseId = slugifyHeading(title) || 'section';
+    const count = (seen.get(baseId) ?? 0) + 1;
+    seen.set(baseId, count);
+    const id = count === 1 ? baseId : `${baseId}-${count}`;
+
+    headings.push({ id, title });
+
+    const attrs = String(rawAttrs)
+      .replace(/\sid=(?:"[^"]*"|'[^']*'|[^\s>]+)/i, '')
+      .trim();
+
+    return attrs ? `<h2 ${attrs} id="${id}">${innerHtml}</h2>` : `<h2 id="${id}">${innerHtml}</h2>`;
+  });
+
+  return { html, headings };
+}
+
+function normalizeHeadingText(html: string) {
+  return html
+    .replace(/<[^>]*>/g, ' ')
+    .replace(/&nbsp;/gi, ' ')
+    .replace(/\s+/g, ' ')
+    .trim();
+}
+
+function slugifyHeading(text: string) {
+  return text
+    .normalize('NFKD')
+    .toLowerCase()
+    .replace(/[\u3000\s]+/g, '-')
+    .replace(/[^a-z0-9\u4e00-\u9fff-]+/g, '-')
+    .replace(/-+/g, '-')
+    .replace(/^-|-$/g, '');
 }
