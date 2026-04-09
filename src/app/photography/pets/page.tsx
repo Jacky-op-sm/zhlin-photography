@@ -7,7 +7,7 @@ import CategoryFilter from '@/components/photography/CategoryFilter'
 import { Photo, PhotoCategory } from '@/lib/types'
 
 export default function PetsPage() {
-  const [selectedCategory] = useState<PhotoCategory>('pets')
+  const [selectedCategory] = useState<PhotoCategory>(PhotoCategory.Pets)
   const [photos, setPhotos] = useState<Photo[]>([])
 
   useEffect(() => {

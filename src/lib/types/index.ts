@@ -7,6 +7,19 @@ export enum PhotoCategory {
   Project = 'project',
 }
 
+/** 摄影筛选（含「全部」） */
+export type PhotographyNavCategory = PhotoCategory | 'all'
+
+/**
+ * 摄影分类卡片（首页 / 分类入口）
+ */
+export interface CategoryInfo {
+  id: PhotoCategory;
+  name: string;
+  description: string;
+  coverImage: string;
+}
+
 /**
  * 照片接口
  */

@@ -65,7 +65,6 @@ const config: Config = {
           muted: "#9ca3af",
         },
       },
-      },
       fontFamily: {
         sans: ["var(--font-sans)", "system-ui", "sans-serif"],
         mono: ["var(--font-mono)", "monospace"],

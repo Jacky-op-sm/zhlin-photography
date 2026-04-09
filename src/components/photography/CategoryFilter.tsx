@@ -1,31 +1,32 @@
 'use client'
 
-import { useRouter, useSearchParams } from 'next/navigation'
+import { useRouter } from 'next/navigation'
 import { motion } from 'framer-motion'
-import type { PhotoCategory } from '@/lib/types'
+import type { PhotoCategory, PhotographyNavCategory } from '@/lib/types'
+import { PhotoCategory as PC } from '@/lib/types'
 
 interface CategoryFilterProps {
   currentCategory: PhotoCategory
 }
 
-const categories: { id: PhotoCategory; label: string }[] = [
+const categories: { id: PhotographyNavCategory; label: string }[] = [
   { id: 'all', label: '全部' },
-  { id: 'street', label: '街头' },
-  { id: 'pets', label: '宠物' },
-  { id: 'project', label: '项目' },
+  { id: PC.Street, label: '街头' },
+  { id: PC.Pets, label: '宠物' },
+  { id: PC.Project, label: '项目' },
 ]
 
 export default function CategoryFilter({ currentCategory }: CategoryFilterProps) {
   const router = useRouter()
-  const searchParams = useSearchParams()
 
-  const handleCategoryChange = (category: PhotoCategory) => {
+  const handleCategoryChange = (category: PhotographyNavCategory) => {
     if (category === 'all') {
       router.push('/photography', { scroll: false })
     } else {
-      const params = new URLSearchParams(searchParams.toString())
-      params.set('category', category)
-      router.push(`/photography?${params.toString()}`, { scroll: false })
+      router.push(
+        `/photography?category=${encodeURIComponent(category)}`,
+        { scroll: false }
+      )
     }
   }
 

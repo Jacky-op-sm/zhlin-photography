@@ -17,7 +17,7 @@ const projectInfo = {
 }
 
 export default function ProjectPage() {
-  const [selectedCategory] = useState<PhotoCategory>('project')
+  const [selectedCategory] = useState<PhotoCategory>(PhotoCategory.Project)
   const [photos, setPhotos] = useState<Photo[]>([])
 
   useEffect(() => {

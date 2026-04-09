@@ -7,7 +7,7 @@ import CategoryFilter from '@/components/photography/CategoryFilter'
 import { Photo, PhotoCategory } from '@/lib/types'
 
 export default function StreetPage() {
-  const [selectedCategory] = useState<PhotoCategory>('street')
+  const [selectedCategory] = useState<PhotoCategory>(PhotoCategory.Street)
   const [photos, setPhotos] = useState<Photo[]>([])
 
   useEffect(() => {

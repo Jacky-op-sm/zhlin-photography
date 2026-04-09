@@ -4,11 +4,11 @@ import { useState, useEffect, useRef, useCallback } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import PhotoCard from './PhotoCard'
 import PhotoViewer from './PhotoViewer'
-import type { Photo, PhotoCategory } from '@/lib/types'
+import type { Photo, PhotographyNavCategory } from '@/lib/types'
 
 interface PhotoGridProps {
   photos: Photo[]
-  selectedCategory: PhotoCategory
+  selectedCategory: PhotographyNavCategory
 }
 
 export default function PhotoGrid({ photos, selectedCategory }: PhotoGridProps) {
