@@ -76,7 +76,7 @@ export interface TravelSpot {
 }
 
 /**
- * 旅行接口
+ * 单个旅行目的地（卡片展示用）
  */
 export interface Travel {
   slug: string;
@@ -84,12 +84,10 @@ export interface Travel {
   enName: string;
   period: string;
   cardTitle: string;
-  cover: string;
+  cardSub: string;
+  cover: string;          // Unsplash 或外部可访问的 URL
+  coverLocal: string;     // 本地路径（在 public 下）
   summary: string;
-  itinerary: string[];
-  spots: string[];
-  photoStory: string;
-  reflection: string;
 }
 
 /**
