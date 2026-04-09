@@ -237,6 +237,8 @@ export default async function HobbyPage() {
   const hobby = await getHobby()
   const categories = hobby.featured?.length ? hobby.featured : hobby.cards
   const digest = sortDigest(hobby.monthlyDigest || [])
+  const recentDigest = digest.slice(0, 3)
+  const archivedDigest = digest.slice(3)
 
   const externalLinks = [
     { label: 'Goodreads', href: hobby.externalProfiles.goodreads, description: '完整书单与阅读记录' },
@@ -325,9 +327,34 @@ export default async function HobbyPage() {
             description="把最近读完的书、看过的电影整理在一起，保留短期兴趣的变化轨迹。"
           />
           <div className="grid gap-6">
-            {digest.map((monthData) => (
+            {recentDigest.map((monthData) => (
               <DigestCard key={monthData.month} monthData={monthData} />
             ))}
+
+            {archivedDigest.length ? (
+              <details className="group rounded-[2rem] border border-neutral-200/80 bg-white/70 p-4 shadow-sm backdrop-blur sm:p-5">
+                <summary className="flex cursor-pointer list-none items-center justify-between gap-4 rounded-[1.5rem] border border-neutral-200/80 bg-neutral-50/80 px-5 py-4 text-left transition hover:border-neutral-300 hover:bg-white">
+                  <div>
+                    <p className="text-xs font-semibold uppercase tracking-[0.24em] text-neutral-500">
+                      Earlier months
+                    </p>
+                    <p className="mt-2 text-base font-semibold text-neutral-950">
+                      展开更早月份
+                    </p>
+                  </div>
+                  <span className="text-xs font-semibold uppercase tracking-[0.22em] text-neutral-500">
+                    <span className="group-open:hidden">查看更多</span>
+                    <span className="hidden group-open:inline">收起</span>
+                  </span>
+                </summary>
+
+                <div className="mt-6 grid gap-6">
+                  {archivedDigest.map((monthData) => (
+                    <DigestCard key={monthData.month} monthData={monthData} />
+                  ))}
+                </div>
+              </details>
+            ) : null}
           </div>
         </section>
 

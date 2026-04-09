@@ -56,43 +56,34 @@ function TravelCard({ travel }: { travel: Travel }) {
   return (
     <Link
       href={`/travel/${travel.slug}`}
-      className="group overflow-hidden rounded-[2rem] border border-black/10 bg-white/75 shadow-[0_12px_40px_rgba(15,23,42,0.08)] backdrop-blur transition duration-300 hover:-translate-y-1 hover:shadow-[0_18px_50px_rgba(15,23,42,0.12)]"
+      className="group relative block overflow-hidden rounded-[2rem] border border-black/10 bg-neutral-950 shadow-[0_12px_40px_rgba(15,23,42,0.08)] transition duration-300 hover:-translate-y-1 hover:shadow-[0_20px_54px_rgba(15,23,42,0.16)]"
     >
-      <div className="grid gap-0 lg:grid-cols-[1.05fr_0.95fr]">
-        <div className="relative aspect-[4/3] overflow-hidden bg-[#e8e1d4] p-4 lg:aspect-auto lg:min-h-[22rem] lg:p-5">
-          <Image
-            src={travel.cover}
-            alt={travel.cardTitle}
-            fill
-            className="object-contain transition duration-700 group-hover:scale-[1.02]"
-            sizes="(max-width: 1024px) 100vw, 50vw"
-          />
-          <div className="absolute left-5 top-5 z-10 flex flex-wrap gap-2 text-[11px] font-medium uppercase tracking-[0.3em] text-white/80">
-            <span className="rounded-full border border-white/15 bg-black/25 px-3 py-2 backdrop-blur">{travel.period}</span>
-          </div>
+      <div className="relative aspect-[4/5] sm:aspect-[16/11] lg:aspect-[5/4]">
+        <Image
+          src={travel.cover}
+          alt={travel.cardTitle}
+          fill
+          className="object-cover transition duration-700 group-hover:scale-[1.04]"
+          sizes="(max-width: 1024px) 100vw, 50vw"
+        />
+        <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(10,10,10,0.1),rgba(10,10,10,0.04)_30%,rgba(10,10,10,0.72))]" />
+
+        <div className="absolute left-5 top-5 z-10">
+          <span className="inline-flex rounded-full border border-white/18 bg-black/30 px-3 py-2 text-[11px] font-medium uppercase tracking-[0.3em] text-white/88 backdrop-blur-md">
+            {travel.period}
+          </span>
         </div>
 
-        <div className="flex flex-col p-6 sm:p-7 lg:p-8">
-          <div className="flex items-start justify-between gap-4">
-            <div>
-              <p className="text-xs uppercase tracking-[0.35em] text-neutral-500">{travel.enName}</p>
-              <h2 className="mt-3 text-3xl font-semibold tracking-tight text-neutral-950 sm:text-4xl">
-                {travel.cardTitle}
-              </h2>
-            </div>
-            <span className="rounded-full border border-black/10 bg-black/3 px-3 py-2 text-xs uppercase tracking-[0.3em] text-neutral-500">
+        <div className="absolute inset-x-0 bottom-0 z-10 flex items-end justify-between gap-4 p-5 sm:p-6">
+          <div className="min-w-0">
+            <p className="text-2xl font-semibold tracking-tight text-white drop-shadow-[0_6px_20px_rgba(0,0,0,0.35)] sm:text-[2rem]">
               {travel.zhName}
-            </span>
+            </p>
           </div>
 
-          <div className="mt-6 flex items-center justify-between border-t border-black/8 pt-4 text-sm text-neutral-500">
-            <span>{travel.gallery.length} 组图</span>
-            <span className="text-xs uppercase tracking-[0.3em]">Travel</span>
-          </div>
-
-          <div className="mt-auto pt-8 text-sm font-medium text-neutral-950 transition group-hover:translate-x-1">
-            阅读详情 →
-          </div>
+          <span className="inline-flex shrink-0 rounded-full border border-white/20 bg-white/12 px-4 py-2 text-sm font-medium text-white backdrop-blur-md transition group-hover:translate-x-1">
+            阅读更多
+          </span>
         </div>
       </div>
     </Link>

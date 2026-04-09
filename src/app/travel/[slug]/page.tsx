@@ -92,25 +92,29 @@ export default async function TravelDetailPage({ params }: { params: { slug: str
       </section>
 
       <section className="mx-auto max-w-7xl px-6 py-14 sm:py-16 lg:px-8 lg:py-20">
-        <div className="grid gap-8 lg:grid-cols-[minmax(0,1fr)_minmax(0,3fr)]">
-          <aside className="lg:sticky lg:top-8 self-start">
-            <details open className="group rounded-[1.75rem] border border-black/10 bg-white/85 p-5 shadow-[0_12px_40px_rgba(15,23,42,0.06)] backdrop-blur">
-              <summary className="flex cursor-pointer list-none items-center justify-between gap-4 rounded-[1.25rem] border border-black/5 bg-[#faf6ef] px-4 py-3 text-sm font-semibold text-neutral-900 outline-none transition hover:bg-[#f6efe5]">
-                <span>目录</span>
-                <span className="text-neutral-400 transition group-open:rotate-45">+</span>
+        <div className="grid gap-8 lg:grid-cols-[14rem_minmax(0,1fr)] xl:grid-cols-[minmax(0,1fr)_minmax(0,3fr)] xl:gap-10">
+          <aside className="self-start lg:sticky lg:top-8">
+            <details className="group rounded-[1.5rem] border border-black/10 bg-white/70 p-3 shadow-[0_12px_32px_rgba(15,23,42,0.05)] backdrop-blur">
+              <summary className="flex cursor-pointer list-none items-center justify-between gap-3 rounded-[1.1rem] px-3 py-3 text-sm font-medium text-neutral-900 outline-none transition hover:bg-black/[0.03]">
+                <span className="inline-flex items-center gap-3">
+                  <span className="flex h-9 w-9 items-center justify-center rounded-full border border-black/10 bg-[#faf6ef] text-lg leading-none text-neutral-600 transition group-open:rotate-45">
+                    +
+                  </span>
+                  <span className="text-neutral-700 group-open:hidden">打开目录</span>
+                  <span className="hidden text-neutral-700 group-open:inline">收起目录</span>
+                </span>
+                <span className="text-[11px] uppercase tracking-[0.3em] text-neutral-400">TOC</span>
               </summary>
 
-              <nav className="mt-5" aria-label="目录">
-                <p className="text-xs uppercase tracking-[0.35em] text-neutral-400">
-                  章节导航
-                </p>
+              <nav className="mt-3 border-t border-black/6 px-2 pt-4" aria-label="目录">
+                <p className="text-[11px] uppercase tracking-[0.35em] text-neutral-400">章节导航</p>
                 {headings.length ? (
-                  <ol className="mt-4 space-y-2">
+                  <ol className="mt-4 space-y-1.5">
                     {headings.map((heading, index) => (
                       <li key={heading.id}>
                         <a
                           href={`#${heading.id}`}
-                          className="group flex items-start gap-3 rounded-2xl border border-transparent px-3 py-2 text-sm leading-6 text-neutral-700 transition hover:border-black/5 hover:bg-white hover:text-neutral-950"
+                          className="flex items-start gap-3 rounded-2xl px-3 py-2 text-sm leading-6 text-neutral-700 transition hover:bg-white hover:text-neutral-950"
                         >
                           <span className="mt-0.5 w-5 shrink-0 text-[11px] font-semibold uppercase tracking-[0.28em] text-neutral-400">
                             {String(index + 1).padStart(2, '0')}
