@@ -1,0 +1,786 @@
+{
+  "travel": [
+    {
+      "slug": "beijing",
+      "zhName": "北京",
+      "enName": "Beijing",
+      "period": "2024 年 7 月",
+      "location": "北京，中国",
+      "cardTitle": "北京行记",
+      "cover": "/assets/travel/beijing-front.jpeg",
+      "hero": "/assets/travel/beijing/beijing-hero-kunming-lake.jpeg",
+      "summary": "沿着北大、清华、圆明园与三里屯展开的北京游记，夹着图书馆、夜骑和一连串与陌生人的对话。",
+      "tags": ["北京", "北大", "清华", "圆明园"],
+      "itinerary": [
+        "北大报到与校园初逛",
+        "南锣鼓巷、什刹海与天安门夜骑",
+        "反复尝试进入北大图书馆",
+        "清华园、荷塘月色与校园散步",
+        "三里屯喜剧、唱片店与 Apple 店",
+        "圆明园和颐和园的过场式游览",
+        "与北京司机闲聊、798 与植物园收尾"
+      ],
+      "spots": [
+        {
+          "name": "北京大学",
+          "description": "短期报道、图书馆和红色建筑一起构成了最强的校园印象。"
+        },
+        {
+          "name": "清华园",
+          "description": "紫色的校园基调、二校门和荷塘月色都很难忘。"
+        },
+        {
+          "name": "南锣鼓巷",
+          "description": "人潮和商业气息都很浓，但夜里仍然有北京的热闹。"
+        },
+        {
+          "name": "圆明园与颐和园",
+          "description": "一个像遗址散步，一个像大公园黄昏。"
+        }
+      ],
+      "photoStory": "这趟北京行里，我最常拍的不是宏大景点，而是人群、门口和路灯下的停顿。北大正门、清华二校门、天安门外的夜骑，以及圆明园和颐和园边缘的水面，都像是在提醒我：城市最耐看的往往不是中心，而是走过去的过程。",
+      "reflection": "北京给我的感受很复杂：它有顶级学校、商业街和历史景观，也有挤满人的路口和让人失望的景点。可正因为这种落差，游记才会留下声音。",
+      "gallery": [
+        {
+          "title": "校园与夜骑",
+          "layout": "triple",
+          "images": [
+            {
+              "src": "/assets/travel/beijing/pku-gate.png",
+              "alt": "北京大学校门",
+              "caption": "北大正校门。"
+            },
+            {
+              "src": "/assets/travel/beijing/pku-red-architecture.jpeg",
+              "alt": "北京大学建筑",
+              "caption": "北大建筑的红色基调。"
+            },
+            {
+              "src": "/assets/travel/beijing/pku-campus-card.jpeg",
+              "alt": "校园卡与北大",
+              "caption": "把浙大的校园卡也拿了出来。"
+            }
+          ]
+        },
+        {
+          "title": "街头和天安门",
+          "layout": "triple",
+          "images": [
+            {
+              "src": "/assets/travel/beijing/nanluo-sunglasses-cat.jpeg",
+              "alt": "墨镜白猫",
+              "caption": "南锣鼓巷的墨镜猫。"
+            },
+            {
+              "src": "/assets/travel/beijing/tiananmen-night.png",
+              "alt": "夜晚的天安门",
+              "caption": "夜晚骑到天安门外拍照。"
+            },
+            {
+              "src": "/assets/travel/beijing/shichahai-lake-night.jpeg",
+              "alt": "什刹海夜景",
+              "caption": "跟丢之后，独自走回湖边。"
+            }
+          ]
+        },
+        {
+          "title": "清华与圆明园",
+          "layout": "triple",
+          "images": [
+            {
+              "src": "/assets/travel/beijing/tsinghua-gate.png",
+              "alt": "清华二校门",
+              "caption": "标志性的二校门。"
+            },
+            {
+              "src": "/assets/travel/beijing/tsinghua-lotus-pond.png",
+              "alt": "荷塘月色",
+              "caption": "现在的荷塘月色。"
+            },
+            {
+              "src": "/assets/travel/beijing/yuanmingyuan-stone-pavilion.jpeg",
+              "alt": "圆明园石亭",
+              "caption": "圆明园像个走过场的散步地点。"
+            }
+          ]
+        },
+        {
+          "title": "商业街与收尾",
+          "layout": "triple",
+          "images": [
+            {
+              "src": "/assets/travel/beijing/motuo-stage.png",
+              "alt": "魔脱喜剧演出",
+              "caption": "北京现场脱口秀。"
+            },
+            {
+              "src": "/assets/travel/beijing/sanlitun-apple.png",
+              "alt": "三里屯 Apple 店",
+              "caption": "最喜欢逛的 Apple 店。"
+            },
+            {
+              "src": "/assets/travel/beijing/summer-palace-tower-and-boat.jpeg",
+              "alt": "颐和园塔楼和游船",
+              "caption": "颐和园里的黄昏风景。"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "slug": "dongbei",
+      "zhName": "东北",
+      "enName": "Northeast China",
+      "period": "2025 年 2 月",
+      "location": "沈阳、长春、吉林、哈尔滨，中国",
+      "cardTitle": "东北行记",
+      "cover": "/assets/travel/dongbei-front.jpg",
+      "hero": "/assets/travel/dongbei-front.jpg",
+      "summary": "沿沈阳、长白山与哈尔滨展开的冬日路书，包含滑雪、洗浴、雪地与夜景。",
+      "tags": ["沈阳", "长白山", "哈尔滨", "滑雪"],
+      "itinerary": [
+        "初到沈阳与雪中街景",
+        "沈阳故宫、洗浴和摆烂夜晚",
+        "长春冰雪新天地与夜滑天定山",
+        "老里克湖和长白山的短途穿越",
+        "吉林本地澡堂与北大湖滑雪",
+        "哈尔滨的索菲亚教堂和中央大街",
+        "松花江夜行、书店和收尾公园"
+      ],
+      "spots": [
+        {
+          "name": "沈阳故宫",
+          "description": "外观看起来还行，内部却给人很强的过场感。"
+        },
+        {
+          "name": "长白山",
+          "description": "真正让人意识到北方规模和寒意的地方。"
+        },
+        {
+          "name": "北大湖",
+          "description": "差点把我滑雪信心一次性打掉的中级道。"
+        },
+        {
+          "name": "哈尔滨",
+          "description": "教堂、江边、商业街和夜景构成了最后几天。"
+        }
+      ],
+      "photoStory": "东北最适合被相机记录的，是那些关于温度的东西：雪落在路边、灯光照在冰面、滑雪场上的坡度、以及夜晚城市里不断变冷的空气。照片里的景色都很大，但真正留在身体里的，是寒冷和行动的迟缓。",
+      "reflection": "东北旅行把我从南方的日常里拽出来，逼着我用新的方式理解城市和身体。那里既有夸张的商业景点，也有很朴素的日常生活；两者并存，才是这趟行程最真实的样子。",
+      "gallery": [
+        {
+          "title": "初到沈阳",
+          "layout": "triple",
+          "images": [
+            {
+              "src": "/assets/travel/dongbei/0206/p1.jpeg",
+              "alt": "2 月 6 日 雪山航拍",
+              "caption": "第一次意识到自己到了北方。"
+            },
+            {
+              "src": "/assets/travel/dongbei/0206/p3.jpeg",
+              "alt": "2 月 6 日 夜晚故宫街",
+              "caption": "沈阳街头的夜色。"
+            },
+            {
+              "src": "/assets/travel/dongbei/0206/p4.jpeg",
+              "alt": "2 月 6 日 节日街景",
+              "caption": "雪和春节气氛一起出现。"
+            }
+          ]
+        },
+        {
+          "title": "雪上项目",
+          "layout": "triple",
+          "images": [
+            {
+              "src": "/assets/travel/dongbei/0208/p1.jpeg",
+              "alt": "2 月 8 日 冰雪新天地入口",
+              "caption": "冰雪新天地入口。"
+            },
+            {
+              "src": "/assets/travel/dongbei/0208/p8.jpeg",
+              "alt": "2 月 8 日 冰雪模型",
+              "caption": "冰雕和灯光。"
+            },
+            {
+              "src": "/assets/travel/dongbei/0208/a4.jpeg",
+              "alt": "2 月 8 日 天定山中级道",
+              "caption": "天定山滑雪道。"
+            }
+          ]
+        },
+        {
+          "title": "长白山与雾凇",
+          "layout": "triple",
+          "images": [
+            {
+              "src": "/assets/travel/dongbei/0210/p2.jpeg",
+              "alt": "2 月 10 日 雾凇湖畔",
+              "caption": "雾凇漂流前的湖边。"
+            },
+            {
+              "src": "/assets/travel/dongbei/0210/a1.jpeg",
+              "alt": "2 月 10 日 长白山晴景",
+              "caption": "长白山的晴天。"
+            },
+            {
+              "src": "/assets/travel/dongbei/0210/a3.jpeg",
+              "alt": "2 月 10 日 长白山雪面",
+              "caption": "雪山表面的纹理。"
+            }
+          ]
+        },
+        {
+          "title": "哈尔滨夜色",
+          "layout": "triple",
+          "images": [
+            {
+              "src": "/assets/travel/dongbei/0212/p1.jpeg",
+              "alt": "2 月 12 日 索菲亚教堂夜景",
+              "caption": "索菲亚教堂夜景。"
+            },
+            {
+              "src": "/assets/travel/dongbei/0212/p3.jpeg",
+              "alt": "2 月 12 日 教堂红衣人物",
+              "caption": "教堂周边的人物。"
+            },
+            {
+              "src": "/assets/travel/dongbei/0212/a1.jpeg",
+              "alt": "2 月 12 日 中央大街人潮",
+              "caption": "中央大街的人潮。"
+            }
+          ]
+        },
+        {
+          "title": "收尾时刻",
+          "layout": "triple",
+          "images": [
+            {
+              "src": "/assets/travel/dongbei/0215/t1.jpeg",
+              "alt": "2 月 15 日 红墙艺术馆入口",
+              "caption": "哈尔滨的艺术和商业。"
+            },
+            {
+              "src": "/assets/travel/dongbei/0215/t3.jpeg",
+              "alt": "2 月 15 日 商业区街景",
+              "caption": "哈尔滨的街道。"
+            },
+            {
+              "src": "/assets/travel/dongbei/0216/p1.jpeg",
+              "alt": "2 月 16 日 公园外景",
+              "caption": "离开前再逛一次公园。"
+            }
+          ]
+        },
+        {
+          "title": "长白山与龙塔",
+          "layout": "triple",
+          "images": [
+            {
+              "src": "/assets/travel/dongbei/changbai-portrait-brown-hat.jpeg",
+              "alt": "长白山远景下的停驻",
+              "caption": "长白山下的停驻。"
+            },
+            {
+              "src": "/assets/travel/dongbei/beidahu-snow-portrait.jpeg",
+              "alt": "北大湖雪地中的停驻",
+              "caption": "北大湖雪地里的停驻。"
+            },
+            {
+              "src": "/assets/travel/dongbei/longta-night.jpeg",
+              "alt": "夜晚的龙塔",
+              "caption": "哈尔滨的夜景地标。"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "slug": "hangzhou",
+      "zhName": "杭州",
+      "enName": "Hangzhou",
+      "period": "春天",
+      "location": "杭州，中国",
+      "cardTitle": "杭州游记",
+      "cover": "/assets/travel/hangzhou-front.jpeg",
+      "hero": "/assets/travel/hangzhou-front.jpeg",
+      "summary": "杭州的这一页很轻，主要围绕西湖、烟雨和慢节奏散步展开。",
+      "tags": ["西湖", "烟雨", "日常"],
+      "itinerary": [
+        "西湖漫步",
+        "烟雨中的湖边观察",
+        "城市里慢速移动的一天",
+        "把杭州当作日常摄影的练习场"
+      ],
+      "spots": [
+        {
+          "name": "西湖",
+          "description": "杭州最容易和雨联系在一起的地方。"
+        },
+        {
+          "name": "湖边街道",
+          "description": "适合观察光线和行人的慢节奏空间。"
+        }
+      ],
+      "photoStory": "这页更像杭州的呼吸练习：有风、有雨、有湖面，也有不赶时间的散步。",
+      "reflection": "杭州离我太近，反而容易忽视。把它放进 Travel 里后，我更想保留的是那种慢下来的城市节奏，而不是某一个具体景点。",
+      "gallery": [
+        {
+          "title": "西湖与烟雨",
+          "layout": "single",
+          "images": [
+            {
+              "src": "/assets/travel/hangzhou-front.jpeg",
+              "alt": "杭州游记封面",
+              "caption": "杭州这一页的封面。"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "slug": "japan",
+      "zhName": "日本",
+      "enName": "Japan",
+      "period": "2025 年 2 月",
+      "location": "高松、直岛、小豆岛、京都、奈良",
+      "cardTitle": "日本游记",
+      "cover": "/assets/travel/japan-front.jpeg",
+      "hero": "/assets/travel/japan-front.jpeg",
+      "summary": "沿着高松、岛屿、京都与奈良展开的影像长页，保留了许多陌生人、海风和颜色变化。",
+      "tags": ["高松", "直岛", "京都", "奈良"],
+      "itinerary": [
+        "飞抵高松与初到日本",
+        "栗林公园、井盖和高松街道",
+        "直岛的船、泵浦和美术馆",
+        "屋岛、四国村和山上的寺庙",
+        "小豆岛、扳手港和海风",
+        "京都的伏见稻荷、清水寺与鸭川",
+        "奈良的鹿、东大寺与山顶落日"
+      ],
+      "spots": [
+        {
+          "name": "高松",
+          "description": "日本旅行的起点，安静且克制。"
+        },
+        {
+          "name": "栗林公园",
+          "description": "湖、庭院、刨冰和午后的绿。"
+        },
+        {
+          "name": "直岛",
+          "description": "海岛、美术馆和红黄南瓜。"
+        },
+        {
+          "name": "京都与奈良",
+          "description": "红色鸟居、鸭川夜色和鹿群一起构成了旅行记忆。"
+        }
+      ],
+      "photoStory": "我在日本最常拍的是颜色和间隙：船窗外的蓝、鸟居的红、海岛上的白，以及一只只鹿和陌生人之间的停顿。",
+      "reflection": "这趟日本行让我意识到，旅行不总是要追着著名景点跑。真正留在记忆里的，往往是半路上的风、语言不通时的手势，以及别人帮忙的一句 upgrade。",
+      "gallery": [
+        {
+          "title": "高松初见",
+          "layout": "triple",
+          "images": [
+            {
+              "src": "/assets/travel/japan/01-flight-departure.jpeg",
+              "alt": "出发去日本的旅途开场",
+              "caption": "春秋航空的出发时刻。"
+            },
+            {
+              "src": "/assets/travel/japan/02-takamatsu-rural-house.jpeg",
+              "alt": "日式乡村建筑，以及迷你停车场",
+              "caption": "高松本地的房屋和停车场。"
+            },
+            {
+              "src": "/assets/travel/japan/05-ritsurin-kakigori.jpeg",
+              "alt": "红色的甜味刨冰",
+              "caption": "栗林公园里的刨冰。"
+            }
+          ]
+        },
+        {
+          "title": "直岛与小豆岛",
+          "layout": "triple",
+          "images": [
+            {
+              "src": "/assets/travel/japan/07-naoshima-ferry-blue-sea.jpeg",
+              "alt": "船窗外的蓝",
+              "caption": "去直岛的船。"
+            },
+            {
+              "src": "/assets/travel/japan/09-naoshima-red-pumpkin.jpeg",
+              "alt": "红色的大南瓜",
+              "caption": "草间弥生的大南瓜。"
+            },
+            {
+              "src": "/assets/travel/japan/42-ferry-sunset-wide.jpeg",
+              "alt": "海边晚霞与航路",
+              "caption": "海边晚霞和航路。"
+            }
+          ]
+        },
+        {
+          "title": "屋岛与四国村",
+          "layout": "triple",
+          "images": [
+            {
+              "src": "/assets/travel/japan/14-yashima-temple.jpeg",
+              "alt": "屋岛上的寺庙",
+              "caption": "屋岛上的寺庙。"
+            },
+            {
+              "src": "/assets/travel/japan/16-shikokumura-bridge.jpeg",
+              "alt": "危险的独木桥",
+              "caption": "四国村里的独木桥。"
+            },
+            {
+              "src": "/assets/travel/japan/45-shikoku-village-landscape.jpeg",
+              "alt": "四国村聚落景观",
+              "caption": "四国村的聚落景观。"
+            }
+          ]
+        },
+        {
+          "title": "京都的红色",
+          "layout": "triple",
+          "images": [
+            {
+              "src": "/assets/travel/japan/25-fushimi-inari-torii.jpeg",
+              "alt": "稻荷大社里红色的鸟居",
+              "caption": "伏见稻荷的大鸟居。"
+            },
+            {
+              "src": "/assets/travel/japan/27-kyoto-red-pagoda.jpeg",
+              "alt": "三层的红色塔楼",
+              "caption": "清水寺附近的红色塔楼。"
+            },
+            {
+              "src": "/assets/travel/japan/30-kyoto-kamogawa-night.jpeg",
+              "alt": "夜晚的鸭川边上",
+              "caption": "夜晚的鸭川。"
+            }
+          ]
+        },
+        {
+          "title": "奈良的鹿",
+          "layout": "triple",
+          "images": [
+            {
+              "src": "/assets/travel/japan/31-nara-deer-greeting.jpeg",
+              "alt": "聪明的小鹿，和人互相点头",
+              "caption": "奈良的鹿会鞠躬。"
+            },
+            {
+              "src": "/assets/travel/japan/32-nara-todaiji.jpeg",
+              "alt": "东大寺",
+              "caption": "东大寺的外观。"
+            },
+            {
+              "src": "/assets/travel/japan/35-nara-mt-wakakusa-sunset.jpeg",
+              "alt": "落霞与孤鹜齐飞",
+              "caption": "若草山上的落日。"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "slug": "nanjing",
+      "zhName": "南京",
+      "enName": "Nanjing",
+      "period": "2024 年春节",
+      "location": "南京，中国",
+      "cardTitle": "南京游记",
+      "cover": "/assets/travel/nanjing-hero-wutong-street.jpg",
+      "hero": "/assets/travel/nanjing-hero-wutong-street.jpg",
+      "summary": "像摄影画册一样翻阅的南京游记，保留了老门东、夫子庙、玄武湖和一整套吃饭记录。",
+      "tags": ["老门东", "夫子庙", "玄武湖", "摄影"],
+      "itinerary": [
+        "抵达南京和老门东初见",
+        "夫子庙、秦淮河与夜景",
+        "红山动物园与南京博物院",
+        "鸡鸣寺、玄武湖与街头摄影",
+        "先锋书店与中山陵",
+        "明孝陵和回程前的总结"
+      ],
+      "spots": [
+        {
+          "name": "老门东",
+          "description": "人潮、街道和最开始的南京印象。"
+        },
+        {
+          "name": "南京博物院",
+          "description": "民国馆和卡拉瓦乔让人停下来看很久。"
+        },
+        {
+          "name": "玄武湖",
+          "description": "风很大，但正适合拍人和湖面。"
+        },
+        {
+          "name": "先锋书店",
+          "description": "地下书店里装着城市的气质和一堆作家头像。"
+        }
+      ],
+      "photoStory": "南京这页最像一组街头速写：人比景更重要，镜头常常落在转身、等待、让位、拍照和吃饭的缝隙里。",
+      "reflection": "南京给我的感觉不是看完一个大景点就结束，而是不断在陌生人的动作里重新认识城市。那种现场感，是文字和照片一起才成立的。",
+      "gallery": [
+        {
+          "title": "老门东与街头",
+          "layout": "triple",
+          "images": [
+            {
+              "src": "/assets/travel/nanjing/nj-laomendong-crowd.jpg",
+              "alt": "老门东人潮",
+              "caption": "老门东的人潮。"
+            },
+            {
+              "src": "/assets/travel/nanjing/nj-mirror-window-framing.jpeg",
+              "alt": "圆孔镜面中的景物",
+              "caption": "镜面作为取景框。"
+            },
+            {
+              "src": "/assets/travel/nanjing/nj-wall-fir-tree-composition.jpeg",
+              "alt": "墙面与落叶松的构图",
+              "caption": "墙面和光影构图。"
+            }
+          ]
+        },
+        {
+          "title": "人像和相遇",
+          "layout": "triple",
+          "images": [
+            {
+              "src": "/assets/travel/nanjing/nj-sunset-portrait-adai.jpeg",
+              "alt": "落日前人物与光影",
+              "caption": "落日前的阿呆。"
+            },
+            {
+              "src": "/assets/travel/nanjing/nj-qinhuai-bridge-couple.jpeg",
+              "alt": "桥上一对情侣的剪影",
+              "caption": "桥上的情侣剪影。"
+            },
+            {
+              "src": "/assets/travel/nanjing/nj-night-pool-reflection.jpeg",
+              "alt": "水池边拍摄的夜色场景",
+              "caption": "夜色和水面。"
+            }
+          ]
+        },
+        {
+          "title": "城市与展厅",
+          "layout": "triple",
+          "images": [
+            {
+              "src": "/assets/travel/nanjing/nj-nanjing-museum-caravaggio.jpeg",
+              "alt": "南京博物院中的卡拉瓦乔展",
+              "caption": "南京博物院的画作。"
+            },
+            {
+              "src": "/assets/travel/nanjing/nj-portrait-korean-style-guy.jpeg",
+              "alt": "先锋书店里的韩系帅哥",
+              "caption": "先锋书店里的练手素材。"
+            },
+            {
+              "src": "/assets/travel/nanjing/nj-zhongshanling-rain-steps.jpg",
+              "alt": "中山陵雨天与游客台阶",
+              "caption": "雨中的中山陵。"
+            }
+          ]
+        },
+        {
+          "title": "街头人物",
+          "layout": "triple",
+          "images": [
+            {
+              "src": "/assets/travel/nanjing/nj-portrait-biker-man.jpeg",
+              "alt": "机车男",
+              "caption": "机车男。"
+            },
+            {
+              "src": "/assets/travel/nanjing/nj-portrait-jiming-temple-prayer.jpeg",
+              "alt": "鸡鸣寺虔诚的人",
+              "caption": "鸡鸣寺前的虔诚。"
+            },
+            {
+              "src": "/assets/travel/nanjing/nj-portrait-riverside-auntie.jpeg",
+              "alt": "玄武湖边请求拍照的女士",
+              "caption": "湖边请我拍照的女士。"
+            }
+          ]
+        },
+        {
+          "title": "食物和尾声",
+          "layout": "triple",
+          "images": [
+            {
+              "src": "/assets/travel/nanjing/nj-food-xinfangyuan.jpeg",
+              "alt": "馨方园 南京菜",
+              "caption": "南京的第一顿。"
+            },
+            {
+              "src": "/assets/travel/nanjing/nj-food-laoyu-fish-hotpot.jpeg",
+              "alt": "捞鱼 鱼火锅",
+              "caption": "最满意的一顿。"
+            },
+            {
+              "src": "/assets/travel/nanjing/nj-food-guangyingju-double-odor.jpeg",
+              "alt": "广迎居 南京菜",
+              "caption": "离开前的最后一餐。"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "slug": "shanghai",
+      "zhName": "上海",
+      "enName": "Shanghai",
+      "period": "2024 年春末",
+      "location": "上海，中国",
+      "cardTitle": "上海行记",
+      "cover": "/assets/travel/shanghai-hero-cityscape.jpg",
+      "hero": "/assets/travel/shanghai-hero-cityscape.jpg",
+      "summary": "从虹桥落地到黄浦江夜骑，上海这页写的是城市速度：地铁按秒显示，夜风沿江吹着，朋友、陌生人和偶遇一起把旅程推向迪士尼烟花。",
+      "tags": ["黄浦江", "夜骑", "迪士尼", "外滩"],
+      "itinerary": [
+        "虹桥落地和地铁初印象",
+        "黄浦江夜骑与渡轮过江",
+        "愚园路、静安寺和街头漫步",
+        "教堂洗礼的偶遇",
+        "上海电影博物馆和外滩",
+        "深夜出租车闲聊",
+        "迪士尼白天游行与烟花收尾"
+      ],
+      "spots": [
+        {
+          "name": "虹桥火车站",
+          "description": "旅程真正开始的地方。"
+        },
+        {
+          "name": "黄浦江",
+          "description": "夜骑和渡轮把它变成了上海的主线。"
+        },
+        {
+          "name": "静安寺与愚园路",
+          "description": "最适合边走边看边记录的一段城市空间。"
+        },
+        {
+          "name": "迪士尼",
+          "description": "最强的集体情绪机器。"
+        }
+      ],
+      "photoStory": "上海的图像总是和移动有关：车厢里的孩子、渡轮上的甲板、沿江骑车时拉长的灯带，以及迪士尼烟花下被同伴们围住的一瞬。",
+      "reflection": "上海让我重新相信，走路和骑车是认识城市最好的方式。白天的热闹、夜晚的安静、宗教场所的意外和外滩的拥挤，都在提醒我：城市没有统一的脸。",
+      "gallery": [
+        {
+          "title": "初到上海",
+          "layout": "triple",
+          "images": [
+            {
+              "src": "/assets/travel/shanghai/story/metro-second-display.jpeg",
+              "alt": "精确到秒的上海地铁",
+              "caption": "精确到秒的地铁显示屏。"
+            },
+            {
+              "src": "/assets/travel/shanghai/story/metro-chess-kids.jpeg",
+              "alt": "在地铁上玩国际象棋的两个小孩",
+              "caption": "车厢里的国际象棋。"
+            },
+            {
+              "src": "/assets/travel/shanghai/story/huangpu-ferry-deck.jpeg",
+              "alt": "前往复兴东路渡口",
+              "caption": "过江前的甲板。"
+            }
+          ]
+        },
+        {
+          "title": "愚园路和静安寺",
+          "layout": "triple",
+          "images": [
+            {
+              "src": "/assets/travel/shanghai/story/yuyuan-shop-street.jpeg",
+              "alt": "窄窄的人行道旁满是精致小店",
+              "caption": "愚园路的小店。"
+            },
+            {
+              "src": "/assets/travel/shanghai/story/yuyuan-green-wall.jpeg",
+              "alt": "藤蔓爬满的青墙",
+              "caption": "藤蔓爬满的墙。"
+            },
+            {
+              "src": "/assets/travel/shanghai/story/jingan-city-lawn.jpeg",
+              "alt": "舒适的城市草坪",
+              "caption": "静安寺旁的草坪。"
+            }
+          ]
+        },
+        {
+          "title": "教堂和博物馆",
+          "layout": "triple",
+          "images": [
+            {
+              "src": "/assets/travel/shanghai/story/church-entrance.jpeg",
+              "alt": "教堂门口",
+              "caption": "教堂的门口。"
+            },
+            {
+              "src": "/assets/travel/shanghai/story/church-father-son-trumpet.jpeg",
+              "alt": "吹小号的父子与法国来宾",
+              "caption": "洗礼现场。"
+            },
+            {
+              "src": "/assets/travel/shanghai/story/movie-museum-gate.jpeg",
+              "alt": "上海电影博物馆大门",
+              "caption": "上海电影博物馆。"
+            }
+          ]
+        },
+        {
+          "title": "外滩和出租车",
+          "layout": "triple",
+          "images": [
+            {
+              "src": "/assets/travel/shanghai/story/bund-golden-buildings.jpeg",
+              "alt": "外滩金色建筑群",
+              "caption": "外滩的金色建筑群。"
+            },
+            {
+              "src": "/assets/travel/shanghai/story/bund-clocktower-night.jpeg",
+              "alt": "钟楼与夜色人群",
+              "caption": "夜色中的外滩。"
+            },
+            {
+              "src": "/assets/travel/shanghai/story/taxi-riverside-midnight.jpeg",
+              "alt": "即将宣告黑夜的江边城市",
+              "caption": "深夜的江边。"
+            }
+          ]
+        },
+        {
+          "title": "迪士尼收尾",
+          "layout": "triple",
+          "images": [
+            {
+              "src": "/assets/travel/shanghai/story/disney-castle-day.jpeg",
+              "alt": "迪士尼的主堡",
+              "caption": "迪士尼主堡。"
+            },
+            {
+              "src": "/assets/travel/shanghai/story/disney-parade-crowd.jpeg",
+              "alt": "太阳下撑伞看游行表演的群众",
+              "caption": "游行时的观众。"
+            },
+            {
+              "src": "/assets/travel/shanghai/story/disney-fireworks-castle.jpeg",
+              "alt": "九点烟花下的主堡夜景",
+              "caption": "烟花的尾声。"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

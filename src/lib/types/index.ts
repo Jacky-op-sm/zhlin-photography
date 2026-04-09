@@ -68,28 +68,62 @@ export interface TravelDay {
 }
 
 /**
+ * 旅行照片
+ */
+export interface TravelImage {
+  src: string;
+  alt: string;
+  caption?: string;
+}
+
+/**
+ * 旅行图组布局
+ */
+export type TravelGalleryLayout = 'single' | 'double' | 'triple';
+
+/**
+ * 旅行图组
+ */
+export interface TravelGalleryGroup {
+  title?: string;
+  layout: TravelGalleryLayout;
+  images: TravelImage[];
+}
+
+/**
  * 景点
  */
 export interface TravelSpot {
   name: string;
-  description?: string;
+  description: string;
 }
 
 /**
- * 旅行接口
+ * 旅行内容
  */
 export interface Travel {
   slug: string;
   zhName: string;
   enName: string;
   period: string;
+  location: string;
   cardTitle: string;
   cover: string;
+  hero: string;
   summary: string;
+  tags: string[];
   itinerary: string[];
-  spots: string[];
+  spots: TravelSpot[];
   photoStory: string;
   reflection: string;
+  gallery: TravelGalleryGroup[];
+}
+
+/**
+ * 旅行内容集合
+ */
+export interface TravelCollection {
+  travel: Travel[];
 }
 
 /**
@@ -148,4 +182,26 @@ export interface Hobby {
   featured: HobbyCategory[];
   monthlyDigest: MonthlyDigest[];
   cards: HobbyCategory[];
+}
+
+/**
+ * 联系页信息
+ */
+export interface ContactInfo {
+  title: string;
+  responseTime: string;
+  types: string[];
+}
+
+/**
+ * 联系表单提交数据
+ */
+export interface ContactPayload {
+  name?: string;
+  firstName?: string;
+  lastName?: string;
+  email: string;
+  type: string;
+  message: string;
+  website?: string;
 }
