@@ -91,8 +91,8 @@ export default async function TravelDetailPage({ params }: { params: { slug: str
         </div>
       </section>
 
-      <section className="mx-auto max-w-7xl px-6 py-14 sm:py-16 lg:px-8 lg:py-20">
-        <div className="grid gap-8 lg:grid-cols-[14rem_minmax(0,1fr)] xl:grid-cols-[minmax(0,1fr)_minmax(0,3fr)] xl:gap-10">
+      <section className="mx-auto max-w-[1650px] px-6 py-14 sm:py-16 lg:px-8 lg:py-20">
+        <div className="grid gap-8 lg:grid-cols-[15rem_minmax(0,3fr)] lg:gap-10">
           <aside className="self-start lg:sticky lg:top-8">
             <details className="group rounded-[1.5rem] border border-black/10 bg-white/70 p-3 shadow-[0_12px_32px_rgba(15,23,42,0.05)] backdrop-blur">
               <summary className="flex cursor-pointer list-none items-center justify-between gap-3 rounded-[1.1rem] px-3 py-3 text-sm font-medium text-neutral-900 outline-none transition hover:bg-black/[0.03]">

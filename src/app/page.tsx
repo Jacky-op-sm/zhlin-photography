@@ -2,96 +2,98 @@ import Image from 'next/image'
 import Link from 'next/link'
 import { getProfile } from '@/lib/data/profile'
 
-type HomeCard = {
+type ShowcaseCard = {
   title: string
-  subtitle: string
-  description: string
   href: string
   image: string
   alt: string
+  lead: string
+  body: string
   imageClassName?: string
 }
 
-const photographyCards: HomeCard[] = [
+const photographyCards: ShowcaseCard[] = [
   {
-    title: '街拍',
-    subtitle: 'Street',
-    description: '用一张图先占位，后续可以替换成更完整的项目说明。',
+    title: 'STREET',
     href: '/photography?category=street',
     image: '/assets/photos/street/street-scene-1.jpg',
-    alt: '街拍代表图',
+    alt: 'Street photography cover',
+    lead: '街拍是我最自然的观察方式。',
+    body: '先放简短说明，后续你可补充完整项目叙事。',
   },
   {
-    title: '宠物',
-    subtitle: 'Pets',
-    description: '先放简短说明，后续可扩写成宠物摄影的拍摄方法与偏好。',
+    title: 'PETS',
     href: '/photography?category=pets',
     image: '/assets/photos/pets/Z52_6041.jpg',
-    alt: '宠物摄影代表图',
+    alt: 'Pets photography cover',
+    lead: '宠物摄影记录更慢、更近的情绪。',
+    body: '先放短文案占位，后续你可补完整说明。',
   },
   {
-    title: '项目',
-    subtitle: 'Project',
-    description: '作为持续更新的专题入口，这里暂时保留一句简短占位文案。',
+    title: 'PROJECT',
     href: '/photography?category=project',
     image: '/assets/photos/project/1.jpg',
-    alt: '项目摄影代表图',
+    alt: 'Project photography cover',
+    lead: '项目是我长期反复回看的章节。',
+    body: '保持简短占位，后续再补每个项目的背景。',
   },
 ]
 
-const travelCards: HomeCard[] = [
+const travelCards: ShowcaseCard[] = [
   {
-    title: '日本',
-    subtitle: 'Japan',
-    description: '从城市步行到海边航线，先用一句话概括这一组旅行记忆。',
+    title: 'JAPAN',
     href: '/travel/japan',
     image: '/assets/travel/japan-front.jpeg',
-    alt: '日本游记封面图',
+    alt: 'Japan travel cover',
+    lead: '城市、海线和步行记忆被放在同一页。',
+    body: '先用一句话占位，后续你可补充完整游记导语。',
     imageClassName: 'object-[56%_center]',
   },
   {
-    title: '南京',
-    subtitle: 'Nanjing',
-    description: '梧桐、街头和日常细节的组合，文案先保持轻量占位。',
+    title: 'NANJING',
     href: '/travel/nanjing',
     image: '/assets/travel/nanjing-hero-wutong-street.jpg',
-    alt: '南京游记封面图',
+    alt: 'Nanjing travel cover',
+    lead: '梧桐、街头和雨天构成这次南京的底色。',
+    body: '这里先保留简短文案，后续可补完整摘要。',
   },
   {
-    title: '北京',
-    subtitle: 'Beijing',
-    description: '校园、城市与冬天的层次关系，后续可以继续补充完整叙述。',
+    title: 'BEIJING',
     href: '/travel/beijing',
     image: '/assets/travel/beijing-front.jpeg',
-    alt: '北京游记封面图',
+    alt: 'Beijing travel cover',
+    lead: '校园和城市节奏在同一条线路里展开。',
+    body: '当前先用占位文案，后续你可补上具体叙事。',
     imageClassName: 'object-[56%_center]',
   },
 ]
 
-const hobbyCards: HomeCard[] = [
+const hobbyCards: ShowcaseCard[] = [
   {
-    title: '书籍',
-    subtitle: '《第六病室》',
-    description: '阅读部分先保留一段短文案，后续可以替换成真实读后感摘录。',
+    title: 'BOOKS',
     href: '/hobby',
     image: '/assets/home/ward-no-6-cover.jpg',
-    alt: '第六病室封面',
+    alt: 'Ward No.6 book cover',
+    lead: '最近读完《第六病室》，先以封面作为入口。',
+    body: '后续你可补上读后感和关键摘录。',
+    imageClassName: 'object-contain bg-[#ede7dc]',
   },
   {
-    title: '电影',
-    subtitle: '蓝白红三部曲',
-    description: '电影部分先放占位说明，后续再补充观看时间与感受。',
+    title: 'FILMS',
     href: '/hobby',
     image: '/assets/home/three-colours-trilogy-cover.png',
-    alt: '蓝白红三部曲封面',
+    alt: 'Three Colours trilogy cover',
+    lead: '电影以蓝白红三部曲作为当前入口。',
+    body: '先保留一段短文案，后续你可补充观影笔记。',
+    imageClassName: 'object-contain bg-[#ece8e0] p-4',
   },
   {
     title: 'LOL',
-    subtitle: 'League of Legends',
-    description: '游戏部分保留一句简短占位，后续可接你现在的 rank 与英雄池。',
     href: '/hobby',
     image: '/assets/home/league-of-legends-cover.jpg',
-    alt: '英雄联盟封面',
+    alt: 'League of Legends cover',
+    lead: '游戏部分暂以英雄联盟封面作为固定入口。',
+    body: '后续可补段位、英雄池和赛季记录。',
     imageClassName: 'object-[54%_center]',
   },
 ]
@@ -100,109 +102,54 @@ export default async function Home() {
   const profile = await getProfile()
 
   return (
-    <main className="relative overflow-hidden bg-[#f4efe6] text-[#17110f]">
-      <div className="pointer-events-none absolute inset-0 -z-10 bg-[radial-gradient(circle_at_top_left,_rgba(215,183,144,0.26),_transparent_26%),radial-gradient(circle_at_top_right,_rgba(51,41,32,0.08),_transparent_28%),linear-gradient(180deg,_rgba(255,255,255,0.56),_rgba(244,239,230,0.92))]" />
-
-      <section className="mx-auto max-w-7xl px-4 pb-14 pt-8 sm:px-6 lg:px-8 lg:pb-20 lg:pt-12">
-        <div className="grid gap-10 border-b border-[#d3c5b8] pb-14 lg:grid-cols-[0.9fr_1.1fr] lg:items-end lg:gap-16 lg:pb-20">
-          <div className="max-w-xl space-y-6">
-            <p className="text-[0.72rem] uppercase tracking-[0.42em] text-[#7b6758]">
+    <main className="bg-[#efefef] text-black">
+      <section className="mx-auto max-w-[1550px] px-6 pb-16 pt-10 sm:px-10 lg:pb-24 lg:pt-14">
+        <div className="grid gap-12 lg:grid-cols-[1fr_34rem] lg:items-end lg:gap-16">
+          <div className="max-w-3xl">
+            <p className="text-xs font-semibold uppercase tracking-[0.42em] text-black/45">
               Zhlin Photography
             </p>
-            <div className="space-y-4">
-              <h1 className="text-4xl font-semibold leading-[0.95] tracking-[-0.06em] text-[#120d0b] sm:text-5xl lg:text-[4.5rem]">
-                在研究、旅行与日常之间，持续记录正在发生的瞬间。
-              </h1>
-              <p className="text-base leading-8 text-[#4f433a] sm:text-lg">
-                {profile.aboutParagraphs[0]}
-              </p>
-              <p className="text-base leading-8 text-[#4f433a] sm:text-lg">
-                {profile.aboutParagraphs[1]}
-              </p>
-            </div>
-
-            <div className="grid gap-3 border-t border-[#d3c5b8] pt-5 text-sm text-[#4f433a] sm:grid-cols-2">
-              <div>
-                <p className="text-[0.66rem] uppercase tracking-[0.32em] text-[#8a7564]">
-                  Name
-                </p>
-                <p className="mt-2 text-base text-[#17110f]">{profile.name}</p>
-              </div>
-              <div>
-                <p className="text-[0.66rem] uppercase tracking-[0.32em] text-[#8a7564]">
-                  Base
-                </p>
-                <p className="mt-2 text-base text-[#17110f]">{profile.city}</p>
-              </div>
-              <div>
-                <p className="text-[0.66rem] uppercase tracking-[0.32em] text-[#8a7564]">
-                  Role
-                </p>
-                <p className="mt-2 text-base text-[#17110f]">{profile.title}</p>
-              </div>
-              <div>
-                <p className="text-[0.66rem] uppercase tracking-[0.32em] text-[#8a7564]">
-                  Contact
-                </p>
-                <a
-                  href={`mailto:${profile.email}`}
-                  className="mt-2 inline-block text-base text-[#17110f] underline decoration-[#bea28c] underline-offset-4"
-                >
-                  {profile.email}
-                </a>
-              </div>
-            </div>
+            <h1 className="mt-6 text-[clamp(2.3rem,5.8vw,5.2rem)] font-black leading-[0.92] tracking-[-0.045em]">
+              在研究、旅行与日常之间，
+              <br />
+              持续记录正在发生的瞬间。
+            </h1>
+            <p className="mt-8 max-w-2xl text-lg leading-9 text-black/75">{profile.aboutParagraphs[0]}</p>
+            <p className="mt-5 max-w-2xl text-lg leading-9 text-black/75">{profile.aboutParagraphs[1]}</p>
           </div>
 
-          <div className="relative overflow-hidden rounded-[2rem] border border-[#d3c5b8] bg-[#e8ddd2]">
+          <figure className="overflow-hidden rounded-[2rem] border border-black/12 bg-white shadow-[0_20px_70px_rgba(0,0,0,0.08)]">
             <div className="relative aspect-[4/5]">
               <Image
                 src={profile.avatar}
                 alt={`${profile.name} profile`}
                 fill
                 priority
-                sizes="(min-width: 1024px) 42vw, 100vw"
+                sizes="(min-width: 1280px) 34rem, (min-width: 1024px) 40vw, 100vw"
                 className="object-cover"
               />
             </div>
-            <div className="flex items-center justify-between border-t border-[#d3c5b8] bg-[#f8f4ee] px-5 py-4">
-              <div>
-                <p className="text-[0.66rem] uppercase tracking-[0.32em] text-[#8a7564]">
-                  Profile
-                </p>
-                <p className="mt-2 text-lg font-medium tracking-[-0.03em] text-[#17110f]">
-                  {profile.name}
-                </p>
-              </div>
-              <p className="max-w-[14rem] text-right text-sm leading-6 text-[#5e5248]">
-                Photography, travel notes, and visual fragments from everyday life.
-              </p>
-            </div>
-          </div>
+            <figcaption className="border-t border-black/10 px-6 py-5">
+              <p className="text-xs font-semibold uppercase tracking-[0.32em] text-black/45">Profile</p>
+              <p className="mt-2 text-2xl font-bold tracking-[-0.03em]">{profile.name}</p>
+              <p className="mt-2 text-sm text-black/65">{profile.title} · {profile.city}</p>
+            </figcaption>
+          </figure>
         </div>
       </section>
 
-      <EditorialSection
-        eyebrow="Photography"
-        watermark="PHOTOGRAPHY"
-        title="Photography"
-        description="街拍、宠物和项目作品，被重新整理成首页上的三张入口卡片，整体节奏尽量贴近参考站的分区方式。"
+      <ShowcaseSection
+        marquee="PHOTOGRAPHER"
         cards={photographyCards}
       />
 
-      <EditorialSection
-        eyebrow="Travel"
-        watermark="TRAVEL"
-        title="Travel"
-        description="旅行部分直接复用站内封面图，把日本、南京和北京放在同一组横向阅读节奏里。"
+      <ShowcaseSection
+        marquee="TRAVEL"
         cards={travelCards}
       />
 
-      <EditorialSection
-        eyebrow="Hobby"
-        watermark="HOBBY"
-        title="Hobby"
-        description="阅读、电影和 LOL 使用单独封面图进入，先建立结构与视觉比例，文案保持简短占位。"
+      <ShowcaseSection
+        marquee="HOBBY"
         cards={hobbyCards}
         isLast
       />
@@ -210,88 +157,58 @@ export default async function Home() {
   )
 }
 
-function EditorialSection({
-  eyebrow,
-  watermark,
-  title,
-  description,
+function ShowcaseSection({
+  marquee,
   cards,
   isLast = false,
 }: {
-  eyebrow: string
-  watermark: string
-  title: string
-  description: string
-  cards: HomeCard[]
+  marquee: string
+  cards: ShowcaseCard[]
   isLast?: boolean
 }) {
   return (
-    <section
-      className={`mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 ${
-        isLast ? 'pb-16 lg:pb-24' : ''
-      }`}
-    >
-      <div className="relative border-t border-[#d3c5b8] py-14 lg:py-20">
-        <p className="pointer-events-none absolute right-0 top-10 hidden text-[clamp(4.5rem,14vw,11rem)] font-semibold tracking-[-0.08em] text-[#d8cec2] lg:block">
-          {watermark}
-        </p>
+    <section className={`mx-auto max-w-[1550px] px-6 sm:px-10 ${isLast ? 'pb-20 lg:pb-28' : 'pb-12 lg:pb-16'}`}>
+      <div className="overflow-hidden">
+        <h2 className="whitespace-nowrap text-[clamp(3rem,8.8vw,8.6rem)] font-black uppercase leading-none tracking-[-0.045em]">
+          <span className="text-black/10">{marquee}</span>{' '}
+          <span className="text-black">{marquee}</span>{' '}
+          <span className="text-black/12">{marquee}</span>
+        </h2>
+      </div>
 
-        <div className="relative grid gap-10 lg:grid-cols-[0.72fr_1.28fr] lg:gap-14">
-          <div className="max-w-sm space-y-5">
-            <p className="text-[0.72rem] uppercase tracking-[0.42em] text-[#7b6758]">
-              {eyebrow}
-            </p>
-            <h2 className="text-4xl font-semibold tracking-[-0.06em] text-[#120d0b] sm:text-5xl">
-              {title}
-            </h2>
-            <p className="text-base leading-8 text-[#4f433a] sm:text-lg">
-              {description}
-            </p>
-          </div>
-
-          <div className="grid gap-5 md:grid-cols-2 lg:grid-cols-3">
-            {cards.map((card) => (
-              <SectionCard key={card.title} card={card} />
-            ))}
-          </div>
-        </div>
+      <div className="mt-10 grid gap-10 md:grid-cols-2 xl:mt-12 xl:grid-cols-3 xl:gap-12">
+        {cards.map((card) => (
+          <ShowcaseCardItem key={card.title} card={card} />
+        ))}
       </div>
     </section>
   )
 }
 
-function SectionCard({ card }: { card: HomeCard }) {
+function ShowcaseCardItem({ card }: { card: ShowcaseCard }) {
   return (
-    <Link
-      href={card.href}
-      className="group overflow-hidden rounded-[1.75rem] border border-[#d3c5b8] bg-[#fbf7f1] transition-transform duration-300 hover:-translate-y-1"
-    >
-      <div className="relative aspect-[4/5] overflow-hidden bg-[#e7ddd0]">
-        <Image
-          src={card.image}
-          alt={card.alt}
-          fill
-          sizes="(min-width: 1024px) 28vw, (min-width: 768px) 44vw, 100vw"
-          className={`object-cover transition-transform duration-700 group-hover:scale-[1.03] ${
-            card.imageClassName ?? ''
-          }`}
-        />
-      </div>
+    <Link href={card.href} className="group block">
+      <h3 className="text-center text-[2.1rem] font-black uppercase tracking-[-0.02em] text-black">
+        {card.title}
+      </h3>
 
-      <div className="space-y-3 border-t border-[#d3c5b8] px-5 py-5">
-        <p className="text-[0.66rem] uppercase tracking-[0.34em] text-[#8a7564]">
-          {card.subtitle}
+      <div className="mt-8">
+        <div className="relative aspect-[4/5] overflow-hidden rounded-[2rem] bg-[#e7e7e7] shadow-[0_20px_50px_rgba(0,0,0,0.1)]">
+          <Image
+            src={card.image}
+            alt={card.alt}
+            fill
+            sizes="(min-width: 1280px) 30vw, (min-width: 768px) 45vw, 100vw"
+            className={`object-cover transition duration-700 group-hover:scale-[1.03] ${card.imageClassName ?? ''}`}
+          />
+        </div>
+
+        <p className="mx-auto mt-9 max-w-[28rem] text-center font-serif text-[1.95rem] italic leading-[1.35] tracking-[-0.01em] text-black/85">
+          {card.lead}
         </p>
-        <h3 className="text-[1.65rem] font-semibold tracking-[-0.05em] text-[#17110f]">
-          {card.title}
-        </h3>
-        <p className="text-sm leading-7 text-[#5d5147]">{card.description}</p>
-        <span className="inline-flex items-center gap-2 text-sm font-medium text-[#17110f]">
-          View section
-          <span className="transition-transform duration-300 group-hover:translate-x-1">
-            →
-          </span>
-        </span>
+        <p className="mx-auto mt-6 max-w-[28rem] text-center text-[1.12rem] leading-9 text-black/72">
+          {card.body}
+        </p>
       </div>
     </Link>
   )

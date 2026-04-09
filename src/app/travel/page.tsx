@@ -52,7 +52,18 @@ export default async function TravelPage() {
   );
 }
 
+const pinyinBySlug: Record<string, string> = {
+  nanjing: 'NANJING',
+  hangzhou: 'HANGZHOU',
+  shanghai: 'SHANGHAI',
+  beijing: 'BEIJING',
+  dongbei: 'DONGBEI',
+  japan: 'RIBEN',
+}
+
 function TravelCard({ travel }: { travel: Travel }) {
+  const pinyin = pinyinBySlug[travel.slug] ?? travel.enName.toUpperCase()
+
   return (
     <Link
       href={`/travel/${travel.slug}`}
@@ -69,13 +80,16 @@ function TravelCard({ travel }: { travel: Travel }) {
         <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(10,10,10,0.1),rgba(10,10,10,0.04)_30%,rgba(10,10,10,0.72))]" />
 
         <div className="absolute left-5 top-5 z-10">
-          <span className="inline-flex rounded-full border border-white/18 bg-black/30 px-3 py-2 text-[11px] font-medium uppercase tracking-[0.3em] text-white/88 backdrop-blur-md">
+          <span className="inline-flex rounded-full border border-white/35 bg-white/20 px-3 py-2 text-[11px] font-medium uppercase tracking-[0.3em] text-white backdrop-blur-md">
             {travel.period}
           </span>
         </div>
 
         <div className="absolute inset-x-0 bottom-0 z-10 flex items-end justify-between gap-4 p-5 sm:p-6">
           <div className="min-w-0">
+            <p className="text-xs font-medium uppercase tracking-[0.34em] text-white/80 drop-shadow-[0_4px_16px_rgba(0,0,0,0.28)]">
+              {pinyin}
+            </p>
             <p className="text-2xl font-semibold tracking-tight text-white drop-shadow-[0_6px_20px_rgba(0,0,0,0.35)] sm:text-[2rem]">
               {travel.zhName}
             </p>
