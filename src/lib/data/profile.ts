@@ -1,4 +1,4 @@
-import { Profile, Socials } from '../lib/types';
+import { Profile, Socials } from '../types';
 
 /**
  * 个人资料数据（从现有 site-content.json 迁移）

@@ -1,5 +1,5 @@
-import { Photo, PhotoCategory } from '../lib/types';
-import photosData from '../../data/photos.json';
+import { Photo, PhotoCategory } from '../types';
+import photosData from '../../../data/photos.json';
 
 /**
  * 将 JSON 数据转换为 Photo 类型的数组
