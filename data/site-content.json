@@ -1,0 +1,39 @@
+{
+  "profile": {
+    "name": "Zhlin",
+    "title": "摄影师 / 摄影爱好者",
+    "bio": "用镜头捕捉生活中的每一个美好瞬间",
+    "avatar": "/assets/profile/avatar.jpg",
+    "social": {
+      "instagram": "",
+      "weibo": "",
+      "email": ""
+    }
+  },
+  "gallery": {
+    "street": {
+      "title": "街头摄影",
+      "description": "城市角落的光影故事",
+      "images": []
+    },
+    "pets": {
+      "title": "宠物摄影",
+      "description": "毛孩子们的可爱瞬间",
+      "images": []
+    },
+    "project": {
+      "title": "项目作品",
+      "description": "商业与人像摄影作品",
+      "images": []
+    },
+    "travel": {
+      "title": "旅行摄影",
+      "description": "旅途中的风景与故事",
+      "images": []
+    }
+  },
+  "contact": {
+    "email": "",
+    "wechat": ""
+  }
+}
