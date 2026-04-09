@@ -19,15 +19,11 @@ export default function CategoryFilter({ currentCategory }: CategoryFilterProps)
   const router = useRouter()
 
   const handleCategoryChange = (category: PhotoCategory) => {
-    if (category === 'all') {
-      router.push('/photography', { scroll: false })
-    } else {
-      router.push(`/photography?category=${category}`, { scroll: false })
-    }
+    router.push(`/photography?category=${category}`, { scroll: false })
   }
 
   return (
-    <div className="flex flex-wrap justify-center gap-2 md:gap-3 mb-8 md:mb-12">
+    <div className="mb-8 flex flex-wrap justify-center gap-2 md:mb-12 md:gap-3">
       {categories.map((category) => {
         const isActive = currentCategory === category.id
         return (
@@ -35,8 +31,7 @@ export default function CategoryFilter({ currentCategory }: CategoryFilterProps)
             key={category.id}
             onClick={() => handleCategoryChange(category.id)}
             className={`
-              relative px-4 py-2 text-sm md:text-base font-medium rounded-full
-              transition-all duration-300 ease-out
+              relative rounded-full px-4 py-2 text-sm font-medium transition-all duration-300 ease-out md:text-base
               ${
                 isActive
                   ? 'text-white'
@@ -47,7 +42,7 @@ export default function CategoryFilter({ currentCategory }: CategoryFilterProps)
             {isActive && (
               <motion.span
                 layoutId="activeCategory"
-                className="absolute inset-0 bg-gray-900 dark:bg-white rounded-full -z-10"
+                className="absolute inset-0 -z-10 rounded-full bg-gray-900 dark:bg-white"
                 transition={{ type: 'spring', stiffness: 380, damping: 30 }}
               />
             )}

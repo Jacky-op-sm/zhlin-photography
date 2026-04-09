@@ -52,6 +52,9 @@ export async function getAllPhotos(): Promise<Photo[]> {
  */
 export async function getPhotosByCategory(category: PhotoCategory): Promise<Photo[]> {
   const allPhotos = await getAllPhotos();
+  if (category === PhotoCategory.All) {
+    return allPhotos;
+  }
   return allPhotos.filter(photo => photo.category === category);
 }
 
