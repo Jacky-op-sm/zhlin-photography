@@ -5,7 +5,6 @@ import { motion } from 'framer-motion'
 import PhotoGrid from '@/components/photography/PhotoGrid'
 import CategoryFilter from '@/components/photography/CategoryFilter'
 import { Photo, PhotoCategory } from '@/lib/types'
-import { getProjectMeta } from '@/lib/data/photos'
 
 // 项目描述
 const projectInfo = {

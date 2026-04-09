@@ -1,6 +1,6 @@
 'use client'
 
-import { useRouter, useSearchParams } from 'next/navigation'
+import { useRouter } from 'next/navigation'
 import { motion } from 'framer-motion'
 import type { PhotoCategory } from '@/lib/types'
 
@@ -17,15 +17,12 @@ const categories: { id: PhotoCategory; label: string }[] = [
 
 export default function CategoryFilter({ currentCategory }: CategoryFilterProps) {
   const router = useRouter()
-  const searchParams = useSearchParams()
 
   const handleCategoryChange = (category: PhotoCategory) => {
     if (category === 'all') {
       router.push('/photography', { scroll: false })
     } else {
-      const params = new URLSearchParams(searchParams.toString())
-      params.set('category', category)
-      router.push(`/photography?${params.toString()}`, { scroll: false })
+      router.push(`/photography?category=${category}`, { scroll: false })
     }
   }
 

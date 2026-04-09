@@ -1,10 +1,23 @@
 /**
- * 照片分类枚举
+ * 照片分类常量和值类型
  */
-export enum PhotoCategory {
-  Street = 'street',
-  Pets = 'pets',
-  Project = 'project',
+export const PhotoCategory = {
+  All: 'all',
+  Street: 'street',
+  Pets: 'pets',
+  Project: 'project',
+} as const;
+
+export type PhotoCategory = (typeof PhotoCategory)[keyof typeof PhotoCategory];
+
+/**
+ * 摄影分类卡片信息
+ */
+export interface CategoryInfo {
+  id: Exclude<PhotoCategory, 'all'>;
+  name: string;
+  description: string;
+  coverImage: string;
 }
 
 /**
