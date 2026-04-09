@@ -3,26 +3,25 @@
 import { motion } from 'framer-motion'
 import CategoryCard from '@/components/photography/CategoryCard'
 import type { CategoryInfo } from '@/lib/types'
-import { PhotoCategory } from '@/lib/types'
 
 const categories: CategoryInfo[] = [
   {
-    id: PhotoCategory.Street,
+    id: 'street',
     name: 'Street',
     description: '街头摄影 - 捕捉城市中的瞬间与情绪',
-    coverImage: '/assets/photos/street/fridge.jpeg',
+    coverImage: '/assets/photos/street/placeholder.jpg',
   },
   {
-    id: PhotoCategory.Pets,
+    id: 'pets',
     name: 'Pets',
     description: '宠物摄影 - 定格毛孩子的可爱时刻',
-    coverImage: '/assets/photos/pets/Z52_2306.jpg',
+    coverImage: '/assets/photos/pets/placeholder.jpg',
   },
   {
-    id: PhotoCategory.Project,
+    id: 'project',
     name: 'Project',
     description: '项目作品 - 持续创作的专题摄影',
-    coverImage: '/assets/photos/project/1.jpg',
+    coverImage: '/assets/photos/project/placeholder.jpg',
   },
 ]
 

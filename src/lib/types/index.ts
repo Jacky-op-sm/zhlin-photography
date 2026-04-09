@@ -7,19 +7,6 @@ export enum PhotoCategory {
   Project = 'project',
 }
 
-/** 摄影筛选（含「全部」） */
-export type PhotographyNavCategory = PhotoCategory | 'all'
-
-/**
- * 摄影分类卡片（首页 / 分类入口）
- */
-export interface CategoryInfo {
-  id: PhotoCategory;
-  name: string;
-  description: string;
-  coverImage: string;
-}
-
 /**
  * 照片接口
  */
@@ -76,7 +63,7 @@ export interface TravelSpot {
 }
 
 /**
- * 单个旅行目的地（卡片展示用）
+ * 旅行接口
  */
 export interface Travel {
   slug: string;
@@ -84,10 +71,12 @@ export interface Travel {
   enName: string;
   period: string;
   cardTitle: string;
-  cardSub: string;
-  cover: string;          // Unsplash 或外部可访问的 URL
-  coverLocal: string;     // 本地路径（在 public 下）
+  cover: string;
   summary: string;
+  itinerary: string[];
+  spots: string[];
+  photoStory: string;
+  reflection: string;
 }
 
 /**

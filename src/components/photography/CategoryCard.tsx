@@ -4,18 +4,17 @@ import { useState } from 'react'
 import Image from 'next/image'
 import { motion } from 'framer-motion'
 import Link from 'next/link'
-import type { CategoryInfo } from '@/lib/types'
-import { PhotoCategory } from '@/lib/types'
+import type { CategoryInfo, PhotoCategory } from '@/lib/types'
 
 interface CategoryCardProps {
   category: CategoryInfo
   index: number
 }
 
-const categoryLabels: Record<PhotoCategory, string> = {
-  [PhotoCategory.Street]: '街头摄影',
-  [PhotoCategory.Pets]: '宠物摄影',
-  [PhotoCategory.Project]: '项目摄影',
+const categoryLabels: Record<Exclude<PhotoCategory, 'all'>, string> = {
+  street: '街头摄影',
+  pets: '宠物摄影',
+  project: '项目摄影',
 }
 
 export default function CategoryCard({ category, index }: CategoryCardProps) {
