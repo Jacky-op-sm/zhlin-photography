@@ -1,6 +1,7 @@
+import Image from 'next/image'
+import Link from 'next/link'
+import SectionOverline from '@/components/photography/SectionOverline'
 import {
-  PhotographyLandingHero,
-  PhotographySeriesCard,
   getSeriesCoverPhoto,
   photographySeries,
 } from '@/components/photography'
@@ -50,31 +51,49 @@ export default async function PhotographyPage({
   const photos = await getAllPhotos()
 
   return (
-    <main className="min-h-screen bg-[var(--portfolio-bg)] text-[var(--portfolio-text)]">
-      <PhotographyLandingHero
-        overline="Photography / Selected series"
-        title="Photography"
-        intro="A portfolio of quiet observations, held together by light, rhythm, and sustained attention."
-        description="This section is organized as a small authored system: each series keeps its own pace, statement, and visual entry point. Street, pets, and the long-form project remain independent while sharing one editorial language."
-      />
-
-      <section id="series" className="photography-section">
-        <div className="photography-shell">
-          <div className="grid gap-6 md:grid-cols-2 xl:grid-cols-3">
-            {photographySeries.map((series, index) => {
-              const previewPhoto =
-                getSeriesCoverPhoto(photos, series.slug) ?? undefined
-
-              return (
-                <PhotographySeriesCard
-                  key={series.slug}
-                  series={series}
-                  imageSrc={previewPhoto?.thumbnail ?? series.cover}
-                  index={index}
-                />
-              )
-            })}
+    <main className="photo-index-page">
+      <section className="photo-index-intro">
+        <div className="site-shell">
+          <div className="photo-index-intro-copy">
+            <SectionOverline>Photography</SectionOverline>
+            <h1>Photography</h1>
+            <p>
+              Three authored series built from the same practice: close observation,
+              repeat visits, and attention to light.
+            </p>
           </div>
+        </div>
+      </section>
+
+      <section className="photo-index-series">
+        <div className="site-shell photo-index-series-grid">
+          {photographySeries.map((series) => {
+            const previewPhoto = getSeriesCoverPhoto(photos, series.slug)
+
+            return (
+              <article key={series.slug} className="photo-index-card">
+                <Link href={series.href} className="photo-index-card-media-link">
+                  <div className="photo-index-card-media">
+                    <Image
+                      src={previewPhoto?.thumbnail ?? series.cover}
+                      alt={series.title}
+                      fill
+                      sizes="(min-width: 1280px) 28vw, (min-width: 768px) 44vw, 95vw"
+                      className="object-cover"
+                    />
+                  </div>
+                </Link>
+
+                <div className="photo-index-card-body">
+                  <SectionOverline>{series.overline}</SectionOverline>
+                  <h2>{series.title}</h2>
+                  <Link href={series.href} className="photo-inline-link">
+                    View series
+                  </Link>
+                </div>
+              </article>
+            )
+          })}
         </div>
       </section>
     </main>

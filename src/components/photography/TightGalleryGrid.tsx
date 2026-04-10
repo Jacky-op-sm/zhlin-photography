@@ -23,23 +23,20 @@ export default function TightGalleryGrid({ photos }: TightGalleryGridProps) {
   }, [])
 
   const goToPrevious = useCallback(() => {
-    setCurrentIndex((prev) => (prev === 0 ? photos.length - 1 : prev - 1))
-  }, [photos.length])
+    setCurrentIndex((prev) => (prev > 0 ? prev - 1 : prev))
+  }, [])
 
   const goToNext = useCallback(() => {
-    setCurrentIndex((prev) => (prev === photos.length - 1 ? 0 : prev + 1))
+    setCurrentIndex((prev) => (prev < photos.length - 1 ? prev + 1 : prev))
   }, [photos.length])
 
-  const columnCountClass = useMemo(
-    () => 'columns-1 sm:columns-2 xl:columns-3',
-    []
-  )
+  const columnCountClass = useMemo(() => 'columns-1 md:columns-2 xl:columns-3', [])
 
   if (photos.length === 0) {
     return (
-      <section className="photography-section">
-        <div className="photography-shell">
-          <div className="rounded-2xl border border-dashed border-[var(--portfolio-border)] px-6 py-16 text-center text-[var(--portfolio-soft)]">
+      <section className="photo-gallery-section">
+        <div className="site-shell">
+          <div className="photo-gallery-empty">
             This series does not have images yet.
           </div>
         </div>
@@ -49,40 +46,32 @@ export default function TightGalleryGrid({ photos }: TightGalleryGridProps) {
 
   return (
     <>
-      <section className="photography-section">
-        <div className="photography-shell">
-          <div
-            className={`${columnCountClass} [column-gap:var(--photography-image-gap)]`}
-          >
+      <section className="photo-gallery-section">
+        <div className="site-shell">
+          <div className={`${columnCountClass} photo-gallery-masonry`}>
             {photos.map((photo, index) => (
               <button
                 key={photo.id}
                 type="button"
-                className="group photography-gallery-item mb-[var(--photography-image-gap)] block w-full break-inside-avoid text-left"
+                className="group photo-gallery-item"
                 onClick={() => openViewer(index)}
-                aria-label={`Open ${photo.title}`}
+                aria-label={`View fullsize ${photo.title}`}
               >
                 <div
-                  className="photography-media-shell relative overflow-hidden"
+                  className="photo-gallery-media"
                   style={{ aspectRatio: `${photo.width} / ${photo.height}` }}
                 >
                   <Image
                     src={photo.thumbnail}
                     alt={photo.title}
                     fill
-                    className="object-cover transition duration-700 ease-out group-hover:scale-[1.025] group-hover:brightness-[0.97]"
+                    className="object-cover transition duration-700 ease-out group-hover:scale-[1.02]"
                     sizes="(max-width: 768px) 100vw, (max-width: 1280px) 50vw, 33vw"
                     priority={index < 2}
                   />
-                </div>
-
-                <div className="pt-2">
-                  <p className="text-xs uppercase tracking-[0.22em] text-[var(--portfolio-soft)]">
-                    {photo.title}
-                  </p>
-                  <p className="mt-1 text-sm leading-6 text-[var(--portfolio-muted)]">
-                    {photo.location} · {photo.takenAt}
-                  </p>
+                  <div className="photo-gallery-overlay">
+                    <span>View fullsize</span>
+                  </div>
                 </div>
               </button>
             ))}
@@ -103,4 +92,3 @@ export default function TightGalleryGrid({ photos }: TightGalleryGridProps) {
     </>
   )
 }
-

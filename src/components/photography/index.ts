@@ -10,8 +10,11 @@ export { default as PhotographySeriesCard } from './PhotographySeriesCard'
 export { default as PhotographySeriesHero } from './PhotographySeriesHero'
 export { default as SeriesStatement } from './SeriesStatement'
 export { default as TightGalleryGrid } from './TightGalleryGrid'
+export { default as PhotographySeriesTemplate } from './PhotographySeriesTemplate'
+export { default as PhotographyFeaturedPublications } from './PhotographyFeaturedPublications'
 export {
   photographySeries,
+  type PhotographyFeaturedPublication,
   getPhotographySeries,
   getSeriesPhotos,
   getSeriesCoverPhoto,

@@ -1,7 +1,5 @@
 import {
-  PhotographySeriesHero,
-  SeriesStatement,
-  TightGalleryGrid,
+  PhotographySeriesTemplate,
   getPhotographySeries,
 } from '@/components/photography'
 import { getAllPhotos, getProjectMeta } from '@/lib/data/photos'
@@ -20,19 +18,13 @@ export default async function ProjectPage() {
   }
 
   return (
-    <main className="bg-[var(--portfolio-bg)] text-[var(--portfolio-text)]">
-      <PhotographySeriesHero
-        overline={series.overline}
-        title={projectMeta.title}
-        subtitle={projectMeta.titleEn}
-        lead={series.heroLead}
-        featuredPhoto={seriesPhotos[0] ?? null}
-      />
-      <SeriesStatement
-        title="Long-form observation from a fixed frame"
-        paragraphs={[projectMeta.description, ...series.statement]}
-      />
-      <TightGalleryGrid photos={seriesPhotos} />
-    </main>
+    <PhotographySeriesTemplate
+      overline={series.overline}
+      title={projectMeta.title}
+      intro={projectMeta.titleEn}
+      description={projectMeta.description}
+      photos={seriesPhotos}
+      featuredPublications={series.featuredPublications}
+    />
   )
 }

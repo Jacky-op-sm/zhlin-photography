@@ -20,8 +20,8 @@ const navigationItems: NavItem[] = [
     label: 'Photography',
     href: '/photography',
     children: [
-      { label: 'Street', href: '/photography/street' },
       { label: 'Pets', href: '/photography/pets' },
+      { label: 'Street', href: '/photography/street' },
       { label: 'Project', href: '/photography/project' },
     ],
   },

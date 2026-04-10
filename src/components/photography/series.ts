@@ -13,6 +13,15 @@ export interface PhotographySeriesCopy {
   cover: string
   href: string
   ctaLabel: string
+  featuredPublications?: PhotographyFeaturedPublication[]
+}
+
+export interface PhotographyFeaturedPublication {
+  title: string
+  description: string
+  image: string
+  href: string
+  ctaLabel: string
 }
 
 export const photographySeries: PhotographySeriesCopy[] = [
@@ -33,6 +42,22 @@ export const photographySeries: PhotographySeriesCopy[] = [
     cover: '/assets/photos/street/street-scene-1.jpg',
     href: '/photography/street',
     ctaLabel: 'View series',
+    featuredPublications: [
+      {
+        title: 'Nanjing Travel Story',
+        description: 'A long-form city walk with portraits, food notes, and narrative captions.',
+        image: '/assets/travel/nanjing-hero-wutong-street.jpg',
+        href: '/travel/nanjing',
+        ctaLabel: 'Read journey',
+      },
+      {
+        title: 'Shanghai Travel Story',
+        description: 'Dense street scenes and movement studies from one of my busiest routes.',
+        image: '/assets/travel/shanghai-hero-cityscape.jpg',
+        href: '/travel/shanghai',
+        ctaLabel: 'Read journey',
+      },
+    ],
   },
   {
     slug: PhotoCategory.Pets,
@@ -69,6 +94,22 @@ export const photographySeries: PhotographySeriesCopy[] = [
     cover: '/assets/photos/project/1.jpg',
     href: '/photography/project',
     ctaLabel: 'View series',
+    featuredPublications: [
+      {
+        title: 'Hangzhou City Notes',
+        description: 'A companion city archive that extends the same long-form attention.',
+        image: '/assets/travel/hangzhou-front.jpeg',
+        href: '/travel/hangzhou',
+        ctaLabel: 'Read journey',
+      },
+      {
+        title: 'Daily Notes / Hobby',
+        description: 'Reading, films, and game notes that shaped the rhythm of this project.',
+        image: '/assets/home/three-colours-trilogy-cover.png',
+        href: '/hobby',
+        ctaLabel: 'View notes',
+      },
+    ],
   },
 ]
 
@@ -83,4 +124,3 @@ export function getSeriesPhotos(photos: Photo[], slug: PhotographySeriesSlug) {
 export function getSeriesCoverPhoto(photos: Photo[], slug: PhotographySeriesSlug) {
   return getSeriesPhotos(photos, slug)[0] ?? null
 }
-

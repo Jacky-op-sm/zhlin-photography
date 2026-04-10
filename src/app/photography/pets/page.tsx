@@ -1,4 +1,7 @@
-import { PhotographySeriesHero, SeriesStatement, TightGalleryGrid, getPhotographySeries } from '@/components/photography'
+import {
+  PhotographySeriesTemplate,
+  getPhotographySeries,
+} from '@/components/photography'
 import { getAllPhotos } from '@/lib/data/photos'
 import { PhotoCategory } from '@/lib/types'
 
@@ -14,16 +17,12 @@ export default async function PetsPage() {
   }
 
   return (
-    <main className="bg-[var(--portfolio-bg)] text-[var(--portfolio-text)]">
-      <PhotographySeriesHero
-        overline={series.overline}
-        title={series.title}
-        subtitle={series.landingDescription}
-        lead={series.heroLead}
-        featuredPhoto={seriesPhotos[0] ?? null}
-      />
-      <SeriesStatement paragraphs={series.statement} />
-      <TightGalleryGrid photos={seriesPhotos} />
-    </main>
+    <PhotographySeriesTemplate
+      overline={series.overline}
+      title={series.title}
+      intro={series.landingSummary}
+      description={series.landingDescription}
+      photos={seriesPhotos}
+    />
   )
 }
