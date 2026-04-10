@@ -29,47 +29,77 @@ function SectionLabel({
 }) {
   return (
     <div className="max-w-3xl">
-      <p className="text-xs font-semibold uppercase tracking-[0.35em] text-neutral-500">
-        {eyebrow}
-      </p>
-      <h2 className="mt-3 text-2xl font-semibold tracking-tight text-neutral-950 sm:text-3xl">
+      <p className="portfolio-eyebrow">{eyebrow}</p>
+      <h2 className="mt-4 text-[clamp(1.7rem,3vw,2.55rem)] font-semibold tracking-[-0.04em] text-[color:var(--portfolio-text)]">
         {title}
       </h2>
-      <p className="mt-3 text-sm leading-7 text-neutral-600 sm:text-base">
+      <p className="mt-4 text-[0.98rem] leading-8 text-[color:var(--portfolio-muted)] sm:text-[1.02rem]">
         {description}
       </p>
     </div>
   )
 }
 
-function ItemCard({
-  item,
-  tone = 'neutral',
-}: {
-  item: HobbyItem
-  tone?: 'neutral' | 'amber' | 'rose' | 'emerald'
-}) {
-  const toneClassName =
-    tone === 'amber'
-      ? 'border-amber-200/70 bg-amber-50/80 text-amber-950'
-      : tone === 'rose'
-        ? 'border-rose-200/70 bg-rose-50/80 text-rose-950'
-        : tone === 'emerald'
-          ? 'border-emerald-200/70 bg-emerald-50/80 text-emerald-950'
-          : 'border-neutral-200/80 bg-white/75 text-neutral-950'
-
+function SubtleInfoChip({ label, value }: { label: string; value: string }) {
   return (
-    <div className={`rounded-2xl border p-5 shadow-sm ${toneClassName}`}>
-      <h4 className="text-base font-semibold">{item.name}</h4>
-      <p className="mt-3 text-sm leading-7 text-inherit/80">{item.why}</p>
+    <div className="rounded-full border border-[color:var(--portfolio-border)] bg-[color:var(--portfolio-panel)] px-4 py-2 text-sm text-[color:var(--portfolio-muted)]">
+      <span className="font-semibold text-[color:var(--portfolio-text)]">{value}</span>
+      <span className="ml-2">{label}</span>
+    </div>
+  )
+}
+
+type EntryTone = {
+  panel: string
+  badge: string
+  item: string
+  details: string
+}
+
+const entryTones: Record<'reading' | 'film' | 'game', EntryTone> = {
+  reading: {
+    panel:
+      'border-[#d8cfbf]/80 bg-[#f5f0e8]/80 dark:border-[#5f564a]/70 dark:bg-[#2b241e]/62',
+    badge:
+      'border-[#d1c8b9]/80 bg-[#f2ece3]/80 text-[#665844] dark:border-[#61584d]/70 dark:bg-[#302921]/70 dark:text-[#d5cab9]',
+    item:
+      'border-[#d8cebd]/70 bg-[#f9f5ef]/84 dark:border-[#62584b]/70 dark:bg-[#332b23]/74',
+    details:
+      'border-[#d2c8ba]/75 bg-[#f5f0e6]/80 text-[#675946] dark:border-[#5d5448]/70 dark:bg-[#2f2821]/72 dark:text-[#d3c8b6]',
+  },
+  film: {
+    panel:
+      'border-[#dccfca]/80 bg-[#f4eeec]/80 dark:border-[#62524c]/70 dark:bg-[#2d231f]/62',
+    badge:
+      'border-[#d7c8c3]/80 bg-[#f2ebea]/80 text-[#6a5550] dark:border-[#644f4a]/70 dark:bg-[#322622]/70 dark:text-[#d7c2bc]',
+    item:
+      'border-[#dccdc9]/70 bg-[#f8f2f0]/84 dark:border-[#634f4a]/70 dark:bg-[#352723]/74',
+    details:
+      'border-[#d7c8c4]/75 bg-[#f3ecea]/80 text-[#6b5551] dark:border-[#5f4b47]/70 dark:bg-[#302420]/72 dark:text-[#d6c1bb]',
+  },
+  game: {
+    panel:
+      'border-[#cfd8ca]/80 bg-[#edf2ea]/82 dark:border-[#4f5c4b]/70 dark:bg-[#1f2620]/64',
+    badge:
+      'border-[#c7d1c2]/80 bg-[#e9efe6]/82 text-[#495d46] dark:border-[#4f5e4c]/70 dark:bg-[#242d24]/70 dark:text-[#c2d0bf]',
+    item:
+      'border-[#ccd5c7]/70 bg-[#f2f6ef]/86 dark:border-[#536250]/70 dark:bg-[#273028]/74',
+    details:
+      'border-[#c5cfbf]/75 bg-[#e9efe5]/82 text-[#4a5f47] dark:border-[#4d5c4a]/70 dark:bg-[#232c24]/72 dark:text-[#c1cebe]',
+  },
+}
+
+function ItemCard({ item, tone }: { item: HobbyItem; tone: EntryTone }) {
+  return (
+    <div className={`rounded-2xl border p-5 ${tone.item}`}>
+      <h4 className="text-base font-semibold text-[color:var(--portfolio-text)]">{item.name}</h4>
+      <p className="mt-3 text-sm leading-7 text-[color:var(--portfolio-muted)]">{item.why}</p>
       {item.rating ? (
-        <p className="mt-4 text-xs font-medium uppercase tracking-[0.2em] text-inherit/60">
+        <p className="mt-4 text-[11px] font-semibold uppercase tracking-[0.22em] text-[color:var(--portfolio-soft)]">
           {item.rating}
         </p>
       ) : null}
-      {item.date ? (
-        <p className="mt-2 text-xs text-inherit/55">{item.date}</p>
-      ) : null}
+      {item.date ? <p className="mt-2 text-xs text-[color:var(--portfolio-soft)]">{item.date}</p> : null}
     </div>
   )
 }
@@ -80,57 +110,52 @@ function CategoryCard({
   lolProfile,
 }: {
   category: HobbyCategory
-  tone: 'amber' | 'rose' | 'emerald'
+  tone: EntryTone
   lolProfile?: Hobby['lolProfile']
 }) {
-  const toneClassName =
-    tone === 'amber'
-      ? 'from-amber-50 via-white to-white border-amber-200/70'
-      : tone === 'rose'
-        ? 'from-rose-50 via-white to-white border-rose-200/70'
-        : 'from-emerald-50 via-white to-white border-emerald-200/70'
-
   return (
-    <article className={`rounded-[2rem] border bg-gradient-to-br p-6 shadow-[0_1px_0_rgba(0,0,0,0.02)] ${toneClassName}`}>
+    <article className={`rounded-[1.7rem] border p-5 sm:p-6 ${tone.panel}`}>
       <div className="flex items-center justify-between gap-4">
-        <h3 className="text-lg font-semibold text-neutral-950">{category.title}</h3>
-        <span className="rounded-full border border-neutral-200 bg-white px-3 py-1 text-[11px] font-medium uppercase tracking-[0.22em] text-neutral-500">
+        <h3 className="text-[1.06rem] font-semibold tracking-[-0.015em] text-[color:var(--portfolio-text)]">
+          {category.title}
+        </h3>
+        <span className={`rounded-full border px-3 py-1 text-[10px] font-semibold uppercase tracking-[0.24em] ${tone.badge}`}>
           {category.items.length} items
         </span>
       </div>
 
       <div className="mt-5 grid gap-4">
         {category.items.map((item) => (
-          <ItemCard
-            key={item.name}
-            item={item}
-            tone={tone === 'amber' ? 'amber' : tone === 'rose' ? 'rose' : 'emerald'}
-          />
+          <ItemCard key={item.name} item={item} tone={tone} />
         ))}
       </div>
 
-      {category.title === '游戏' && lolProfile ? <LolProfileModule lolProfile={lolProfile} /> : null}
+      {category.title === '游戏' && lolProfile ? <LolProfileModule lolProfile={lolProfile} tone={tone} /> : null}
     </article>
   )
 }
 
-function LolProfileModule({ lolProfile }: { lolProfile: Hobby['lolProfile'] }) {
+function LolProfileModule({
+  lolProfile,
+  tone,
+}: {
+  lolProfile: Hobby['lolProfile']
+  tone: EntryTone
+}) {
   return (
-    <section className="mt-5 rounded-[1.75rem] border border-neutral-200/80 bg-white/75 p-5 text-neutral-950 shadow-sm backdrop-blur">
+    <section className={`mt-5 rounded-[1.4rem] border p-5 ${tone.details}`}>
       <div className="grid gap-4 sm:grid-cols-2">
-        <InfoTile label="服务器" value={lolProfile.server} />
-        <InfoTile label="段位" value={lolProfile.rank} />
+        <InfoTile label="服务器" value={lolProfile.server} tone={tone} />
+        <InfoTile label="段位" value={lolProfile.rank} tone={tone} />
       </div>
 
       <div className="mt-5">
-        <p className="text-xs font-semibold uppercase tracking-[0.24em] text-neutral-500">
-          主位置
-        </p>
+        <p className="portfolio-eyebrow">主位置</p>
         <div className="mt-3 flex flex-wrap gap-2">
           {lolProfile.mainRoles.map((role) => (
             <span
               key={role}
-              className="rounded-full border border-neutral-200/80 bg-neutral-50 px-3 py-1 text-xs font-medium text-neutral-700"
+              className="rounded-full border border-[color:var(--portfolio-border)] bg-[color:var(--portfolio-panel)] px-3 py-1 text-xs font-medium text-[color:var(--portfolio-muted)]"
             >
               {role}
             </span>
@@ -139,14 +164,12 @@ function LolProfileModule({ lolProfile }: { lolProfile: Hobby['lolProfile'] }) {
       </div>
 
       <div className="mt-5">
-        <p className="text-xs font-semibold uppercase tracking-[0.24em] text-neutral-500">
-          英雄池
-        </p>
+        <p className="portfolio-eyebrow">英雄池</p>
         <div className="mt-3 flex flex-wrap gap-2">
           {lolProfile.championPool.map((champion) => (
             <span
               key={champion}
-              className="rounded-full border border-neutral-200/80 bg-neutral-50 px-3 py-1 text-xs font-medium text-neutral-700"
+              className="rounded-full border border-[color:var(--portfolio-border)] bg-[color:var(--portfolio-panel)] px-3 py-1 text-xs font-medium text-[color:var(--portfolio-muted)]"
             >
               {champion}
             </span>
@@ -154,7 +177,7 @@ function LolProfileModule({ lolProfile }: { lolProfile: Hobby['lolProfile'] }) {
         </div>
       </div>
 
-      <p className="mt-6 rounded-2xl border border-neutral-200/80 bg-neutral-50 p-4 text-sm leading-7 text-neutral-700">
+      <p className="mt-6 rounded-xl border border-[color:var(--portfolio-border)] bg-[color:var(--portfolio-panel)] px-4 py-3 text-sm leading-7 text-[color:var(--portfolio-muted)]">
         {lolProfile.currentInsight}
       </p>
     </section>
@@ -163,19 +186,17 @@ function LolProfileModule({ lolProfile }: { lolProfile: Hobby['lolProfile'] }) {
 
 function DigestCard({ monthData }: { monthData: MonthlyDigest }) {
   return (
-    <article className="rounded-[2rem] border border-neutral-200/80 bg-white/80 p-6 shadow-sm backdrop-blur">
+    <article className="rounded-[1.7rem] border border-[color:var(--portfolio-border)] bg-[color:var(--portfolio-panel)] p-5 sm:p-6">
       <div className="flex flex-wrap items-center justify-between gap-3">
-        <h3 className="text-lg font-semibold text-neutral-950">
+        <h3 className="text-[1.06rem] font-semibold tracking-[-0.015em] text-[color:var(--portfolio-text)]">
           {formatMonth(monthData.month)}
         </h3>
-        <span className="rounded-full bg-neutral-100 px-3 py-1 text-[11px] font-medium uppercase tracking-[0.22em] text-neutral-500">
-          Monthly Digest
-        </span>
+        <span className="portfolio-eyebrow">Monthly digest</span>
       </div>
 
-      <div className="mt-6 grid gap-5 lg:grid-cols-2">
-        <DigestGroup title="阅读" entries={monthData.reading} accent="amber" />
-        <DigestGroup title="电影" entries={monthData.films} accent="rose" />
+      <div className="mt-6 grid gap-4 lg:grid-cols-2">
+        <DigestGroup title="阅读" entries={monthData.reading} accent="reading" />
+        <DigestGroup title="电影" entries={monthData.films} accent="film" />
       </div>
     </article>
   )
@@ -188,42 +209,39 @@ function DigestGroup({
 }: {
   title: string
   entries: HobbyItem[]
-  accent: 'amber' | 'rose'
+  accent: 'reading' | 'film'
 }) {
-  const accentClassName =
-    accent === 'amber'
-      ? 'border-amber-200/70 bg-amber-50/70 text-amber-950'
-      : 'border-rose-200/70 bg-rose-50/70 text-rose-950'
+  const tone = entryTones[accent]
   const visibleEntries = entries.slice(0, 2)
   const hiddenEntries = entries.slice(2)
 
   return (
-    <section className={`rounded-2xl border p-4 ${accentClassName}`}>
+    <section className={`rounded-2xl border p-4 ${tone.panel}`}>
       <div className="flex items-center justify-between gap-3">
-        <h4 className="text-sm font-semibold uppercase tracking-[0.24em]">{title}</h4>
-        <span className="text-xs text-inherit/55">{entries.length} 条</span>
+        <h4 className="portfolio-eyebrow text-[color:var(--portfolio-muted)]">{title}</h4>
+        <span className="text-xs text-[color:var(--portfolio-soft)]">{entries.length} 条</span>
       </div>
 
-      <ul className="mt-4 space-y-4">
+      <ul className="mt-4 space-y-3">
         {visibleEntries.map((entry) => (
-          <li key={entry.name} className="rounded-xl bg-white/65 p-4 shadow-sm">
-            <p className="text-sm font-semibold text-neutral-950">{entry.name}</p>
-            <p className="mt-2 text-sm leading-7 text-neutral-700">{entry.why}</p>
+          <li key={entry.name} className={`rounded-xl border p-4 ${tone.item}`}>
+            <p className="text-sm font-semibold text-[color:var(--portfolio-text)]">{entry.name}</p>
+            <p className="mt-2 text-sm leading-7 text-[color:var(--portfolio-muted)]">{entry.why}</p>
           </li>
         ))}
       </ul>
 
       {hiddenEntries.length ? (
         <details className="group mt-4">
-          <summary className="flex cursor-pointer list-none items-center justify-center rounded-xl border border-current/20 bg-white/50 px-4 py-3 text-xs font-semibold uppercase tracking-[0.22em] text-current transition hover:bg-white/75">
+          <summary className="flex cursor-pointer list-none items-center justify-center rounded-xl border border-[color:var(--portfolio-border)] bg-[color:var(--portfolio-panel)] px-4 py-3 text-[11px] font-semibold uppercase tracking-[0.24em] text-[color:var(--portfolio-muted)] transition hover:bg-white/40 dark:hover:bg-white/5">
             <span className="group-open:hidden">查看更多</span>
             <span className="hidden group-open:inline">收起</span>
           </summary>
-          <div className="mt-4 space-y-4">
+          <div className="mt-4 space-y-3">
             {hiddenEntries.map((entry) => (
-              <div key={entry.name} className="rounded-xl bg-white/65 p-4 shadow-sm">
-                <p className="text-sm font-semibold text-neutral-950">{entry.name}</p>
-                <p className="mt-2 text-sm leading-7 text-neutral-700">{entry.why}</p>
+              <div key={entry.name} className={`rounded-xl border p-4 ${tone.item}`}>
+                <p className="text-sm font-semibold text-[color:var(--portfolio-text)]">{entry.name}</p>
+                <p className="mt-2 text-sm leading-7 text-[color:var(--portfolio-muted)]">{entry.why}</p>
               </div>
             ))}
           </div>
@@ -251,115 +269,107 @@ export default async function HobbyPage() {
     { label: '外部记录', value: externalLinks.length.toString() },
   ]
 
-  return (
-    <main className="relative isolate min-h-screen overflow-hidden bg-[radial-gradient(circle_at_top_left,_rgba(251,191,36,0.14),_transparent_28%),radial-gradient(circle_at_top_right,_rgba(244,114,182,0.12),_transparent_30%),linear-gradient(180deg,_#fafafa_0%,_#f4f5f7_100%)] text-neutral-950">
-      <div className="pointer-events-none absolute inset-x-0 top-0 h-64 bg-[linear-gradient(180deg,rgba(255,255,255,0.82),rgba(255,255,255,0))]" />
+  const toneOrder: Array<'reading' | 'film' | 'game'> = ['reading', 'film', 'game']
 
-      <div className="relative mx-auto flex w-full max-w-7xl flex-col gap-16 px-4 py-16 sm:px-6 lg:px-8 lg:py-24">
-        <section className="grid gap-10 lg:grid-cols-[1.15fr_0.85fr] lg:items-end">
+  return (
+    <main className="relative isolate min-h-screen overflow-hidden bg-[var(--portfolio-bg)] text-[var(--portfolio-text)]">
+      <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_top_left,rgba(248,241,233,0.45),transparent_35%),radial-gradient(circle_at_top_right,rgba(240,233,228,0.32),transparent_34%)] dark:bg-[radial-gradient(circle_at_top_left,rgba(244,237,226,0.08),transparent_32%),radial-gradient(circle_at_top_right,rgba(244,237,226,0.06),transparent_32%)]" />
+
+      <div className="portfolio-shell relative py-[clamp(3.5rem,8vw,6.25rem)]">
+        <section className="grid gap-10 lg:grid-cols-[1.12fr_0.88fr] lg:items-end">
           <div className="max-w-4xl">
-            <p className="text-xs font-semibold uppercase tracking-[0.35em] text-neutral-500">
-              Hobby
-            </p>
-            <h1 className="mt-4 text-4xl font-semibold tracking-tight text-neutral-950 sm:text-5xl lg:text-6xl">
+            <p className="portfolio-eyebrow">Hobby</p>
+            <h1 className="mt-6 max-w-[17ch] text-[clamp(2.45rem,6vw,4.8rem)] font-semibold leading-[0.95] tracking-[-0.05em] text-[color:var(--portfolio-text)]">
               阅读、电影、游戏，都是我持续观察世界的入口。
             </h1>
-            <p className="mt-6 max-w-3xl text-base leading-8 text-neutral-600 sm:text-lg">
+            <p className="mt-7 max-w-3xl text-[1.02rem] leading-8 text-[color:var(--portfolio-muted)] sm:text-[1.08rem]">
               {hobby.intro}
             </p>
 
             <div className="mt-8 flex flex-wrap gap-3">
               {stats.map((stat) => (
-                <div
-                  key={stat.label}
-                  className="rounded-full border border-neutral-200/80 bg-white/80 px-4 py-2 text-sm text-neutral-700 shadow-sm backdrop-blur"
-                >
-                  <span className="font-semibold text-neutral-950">{stat.value}</span>
-                  <span className="ml-2 text-neutral-500">{stat.label}</span>
-                </div>
+                <SubtleInfoChip key={stat.label} label={stat.label} value={stat.value} />
               ))}
             </div>
           </div>
 
-          <aside className="rounded-[2rem] border border-neutral-200/80 bg-white/80 p-6 shadow-sm backdrop-blur">
-            <p className="text-xs font-semibold uppercase tracking-[0.35em] text-neutral-500">
-              Snapshot
-            </p>
-            <div className="mt-5 grid gap-3">
+          <aside className="rounded-[1.7rem] border border-[color:var(--portfolio-border)] bg-[color:var(--portfolio-panel)] p-5 sm:p-6">
+            <p className="portfolio-eyebrow">Snapshot</p>
+            <div className="mt-5 grid gap-2.5">
               {categories.map((category) => (
                 <div
                   key={category.title}
-                  className="flex items-center justify-between gap-4 rounded-2xl border border-neutral-200/70 bg-neutral-50/80 px-4 py-3"
+                  className="flex items-center justify-between gap-4 rounded-xl border border-[color:var(--portfolio-border)] bg-white/20 px-4 py-3 transition hover:bg-white/35 dark:bg-white/[0.03] dark:hover:bg-white/[0.06]"
                 >
                   <div>
-                    <p className="font-medium text-neutral-950">{category.title}</p>
-                    <p className="text-sm text-neutral-500">{category.items.length} 条精选记录</p>
+                    <p className="font-medium text-[color:var(--portfolio-text)]">{category.title}</p>
+                    <p className="text-sm text-[color:var(--portfolio-soft)]">{category.items.length} 条精选记录</p>
                   </div>
-                  <span className="text-sm font-medium text-neutral-400">→</span>
+                  <span className="text-sm text-[color:var(--portfolio-soft)]">→</span>
                 </div>
               ))}
             </div>
           </aside>
         </section>
 
-        <section className="space-y-6">
-          <SectionLabel
-            eyebrow="Long-term entries"
-            title="长期入口"
-            description="这些内容不是一次性的清单，而是我会持续回看的三个方向。"
-          />
-          <div className="grid gap-6 lg:grid-cols-3">
-            {categories.map((category, index) => (
-              <CategoryCard
-                key={category.title}
-                category={category}
-                tone={index === 0 ? 'amber' : index === 1 ? 'rose' : 'emerald'}
-                lolProfile={category.title === '游戏' ? hobby.lolProfile : undefined}
-              />
-            ))}
+        <section className="mt-[clamp(3.25rem,7vw,5.25rem)] border-t border-[color:var(--portfolio-border)] pt-[clamp(2.6rem,5.8vw,4.4rem)]">
+          <div className="space-y-6">
+            <SectionLabel
+              eyebrow="Long-term entries"
+              title="长期入口"
+              description="这些内容不是一次性的清单，而是我会持续回看的三个方向。"
+            />
+            <div className="grid gap-5 lg:grid-cols-3">
+              {categories.map((category, index) => (
+                <CategoryCard
+                  key={category.title}
+                  category={category}
+                  tone={entryTones[toneOrder[index] ?? 'reading']}
+                  lolProfile={category.title === '游戏' ? hobby.lolProfile : undefined}
+                />
+              ))}
+            </div>
           </div>
         </section>
 
-        <section className="space-y-6">
-          <SectionLabel
-            eyebrow="Monthly digest"
-            title="本月更新"
-            description="把最近读完的书、看过的电影整理在一起，保留短期兴趣的变化轨迹。"
-          />
-          <div className="grid gap-6">
-            {recentDigest.map((monthData) => (
-              <DigestCard key={monthData.month} monthData={monthData} />
-            ))}
+        <section className="mt-[clamp(3.25rem,7vw,5.25rem)] border-t border-[color:var(--portfolio-border)] pt-[clamp(2.6rem,5.8vw,4.4rem)]">
+          <div className="space-y-6">
+            <SectionLabel
+              eyebrow="Monthly digest"
+              title="本月更新"
+              description="把最近读完的书、看过的电影整理在一起，保留短期兴趣的变化轨迹。"
+            />
+            <div className="grid gap-5">
+              {recentDigest.map((monthData) => (
+                <DigestCard key={monthData.month} monthData={monthData} />
+              ))}
 
-            {archivedDigest.length ? (
-              <details className="group rounded-[2rem] border border-neutral-200/80 bg-white/70 p-4 shadow-sm backdrop-blur sm:p-5">
-                <summary className="flex cursor-pointer list-none items-center justify-between gap-4 rounded-[1.5rem] border border-neutral-200/80 bg-neutral-50/80 px-5 py-4 text-left transition hover:border-neutral-300 hover:bg-white">
-                  <div>
-                    <p className="text-xs font-semibold uppercase tracking-[0.24em] text-neutral-500">
-                      Earlier months
-                    </p>
-                    <p className="mt-2 text-base font-semibold text-neutral-950">
-                      展开更早月份
-                    </p>
+              {archivedDigest.length ? (
+                <details className="group rounded-[1.7rem] border border-[color:var(--portfolio-border)] bg-[color:var(--portfolio-panel)] p-4 sm:p-5">
+                  <summary className="flex cursor-pointer list-none items-center justify-between gap-4 rounded-[1.2rem] border border-[color:var(--portfolio-border)] bg-white/20 px-5 py-4 text-left transition hover:bg-white/35 dark:bg-white/[0.03] dark:hover:bg-white/[0.06]">
+                    <div>
+                      <p className="portfolio-eyebrow">Earlier months</p>
+                      <p className="mt-2 text-base font-semibold text-[color:var(--portfolio-text)]">展开更早月份</p>
+                    </div>
+                    <span className="text-[11px] font-semibold uppercase tracking-[0.24em] text-[color:var(--portfolio-muted)]">
+                      <span className="group-open:hidden">查看更多</span>
+                      <span className="hidden group-open:inline">收起</span>
+                    </span>
+                  </summary>
+
+                  <div className="mt-5 grid gap-5">
+                    {archivedDigest.map((monthData) => (
+                      <DigestCard key={monthData.month} monthData={monthData} />
+                    ))}
                   </div>
-                  <span className="text-xs font-semibold uppercase tracking-[0.22em] text-neutral-500">
-                    <span className="group-open:hidden">查看更多</span>
-                    <span className="hidden group-open:inline">收起</span>
-                  </span>
-                </summary>
-
-                <div className="mt-6 grid gap-6">
-                  {archivedDigest.map((monthData) => (
-                    <DigestCard key={monthData.month} monthData={monthData} />
-                  ))}
-                </div>
-              </details>
-            ) : null}
+                </details>
+              ) : null}
+            </div>
           </div>
         </section>
 
-        <section className="space-y-6">
-          <article className="rounded-[2rem] border border-neutral-200/80 bg-white/80 p-6 shadow-sm backdrop-blur">
+        <section className="mt-[clamp(3.25rem,7vw,5.25rem)] border-t border-[color:var(--portfolio-border)] pt-[clamp(2.6rem,5.8vw,4.4rem)]">
+          <article className="rounded-[1.7rem] border border-[color:var(--portfolio-border)] bg-[color:var(--portfolio-panel)] p-5 sm:p-6">
             <SectionLabel
               eyebrow="External links"
               title="外部链接"
@@ -372,14 +382,14 @@ export default async function HobbyPage() {
                   href={entry.href}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="group rounded-2xl border border-neutral-200/80 bg-neutral-50/80 p-5 transition hover:-translate-y-0.5 hover:border-neutral-300 hover:bg-white"
+                  className="group rounded-xl border border-[color:var(--portfolio-border)] bg-white/20 p-4 transition hover:bg-white/35 dark:bg-white/[0.03] dark:hover:bg-white/[0.06]"
                 >
                   <div className="flex items-start justify-between gap-4">
                     <div>
-                      <p className="text-lg font-semibold text-neutral-950">{entry.label}</p>
-                      <p className="mt-2 text-sm leading-7 text-neutral-600">{entry.description}</p>
+                      <p className="text-base font-semibold text-[color:var(--portfolio-text)]">{entry.label}</p>
+                      <p className="mt-2 text-sm leading-7 text-[color:var(--portfolio-muted)]">{entry.description}</p>
                     </div>
-                    <span className="text-neutral-400 transition group-hover:translate-x-0.5 group-hover:-translate-y-0.5">
+                    <span className="text-[color:var(--portfolio-soft)] transition group-hover:-translate-y-0.5 group-hover:translate-x-0.5">
                       ↗
                     </span>
                   </div>
@@ -393,13 +403,11 @@ export default async function HobbyPage() {
   )
 }
 
-function InfoTile({ label, value }: { label: string; value: string }) {
+function InfoTile({ label, value, tone }: { label: string; value: string; tone: EntryTone }) {
   return (
-    <div className="rounded-2xl border border-neutral-200/80 bg-white/75 p-4">
-      <p className="text-xs font-semibold uppercase tracking-[0.24em] text-neutral-500">
-        {label}
-      </p>
-      <p className="mt-2 text-base font-medium text-neutral-950">{value}</p>
+    <div className={`rounded-xl border p-4 ${tone.item}`}>
+      <p className="portfolio-eyebrow">{label}</p>
+      <p className="mt-2 text-base font-medium text-[color:var(--portfolio-text)]">{value}</p>
     </div>
   )
 }
