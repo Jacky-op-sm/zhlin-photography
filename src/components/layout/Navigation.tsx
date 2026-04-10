@@ -39,15 +39,19 @@ export default function Navigation({ className = '' }: NavigationProps) {
 
   return (
     <nav className={className}>
-      <ul className="flex items-center space-x-1">
+      <ul className="flex items-center gap-7">
         {navigationItems.map((item) => (
           <li key={item.href} className="relative group">
             {item.children ? (
               <>
-                <button className="flex items-center px-4 py-2 text-sm font-medium text-gray-700 hover:text-gray-900 dark:text-gray-300 dark:hover:text-white transition-colors">
+                <button
+                  className="site-nav-link"
+                  data-active={isActive(item.href)}
+                  aria-haspopup="menu"
+                >
                   {item.label}
                   <svg
-                    className="ml-1 w-4 h-4"
+                    className="h-4 w-4"
                     fill="none"
                     stroke="currentColor"
                     viewBox="0 0 24 24"
@@ -60,13 +64,13 @@ export default function Navigation({ className = '' }: NavigationProps) {
                     />
                   </svg>
                 </button>
-                <div className="absolute left-0 mt-1 w-40 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 z-50">
-                  <div className="bg-white dark:bg-gray-800 rounded-lg shadow-lg ring-1 ring-black ring-opacity-5 py-1">
+                <div className="invisible absolute left-0 z-50 mt-3 w-44 translate-y-2 opacity-0 transition-all duration-200 group-hover:visible group-hover:translate-y-0 group-hover:opacity-100 group-focus-within:visible group-focus-within:translate-y-0 group-focus-within:opacity-100">
+                  <div className="site-nav-dropdown py-2">
                     {item.children.map((child) => (
                       <Link
                         key={child.href}
                         href={child.href}
-                        className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-700"
+                        className="block px-4 py-2 text-[0.72rem] font-semibold uppercase tracking-[0.2em] text-[color:var(--portfolio-muted)] transition hover:text-[color:var(--portfolio-text)]"
                       >
                         {child.label}
                       </Link>
@@ -77,11 +81,8 @@ export default function Navigation({ className = '' }: NavigationProps) {
             ) : (
               <Link
                 href={item.href}
-                className={`px-4 py-2 text-sm font-medium rounded-md transition-colors ${
-                  isActive(item.href)
-                    ? 'text-gray-900 bg-gray-100 dark:text-white dark:bg-gray-800'
-                    : 'text-gray-700 hover:text-gray-900 hover:bg-gray-50 dark:text-gray-300 dark:hover:text-white dark:hover:bg-gray-800'
-                }`}
+                className="site-nav-link"
+                data-active={isActive(item.href)}
               >
                 {item.label}
               </Link>

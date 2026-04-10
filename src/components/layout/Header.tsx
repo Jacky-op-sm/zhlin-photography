@@ -9,32 +9,31 @@ export default function Header() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
 
   return (
-    <header className="sticky top-0 z-50 bg-white/80 dark:bg-gray-900/80 backdrop-blur-md border-b border-gray-200 dark:border-gray-800">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex items-center justify-between h-16">
-          {/* Logo */}
+    <header className="site-header">
+      <div className="portfolio-shell">
+        <div className="flex h-[4.4rem] items-center justify-between gap-6">
           <Link
             href="/"
-            className="flex items-center space-x-2 text-xl font-bold text-gray-900 dark:text-white hover:opacity-80 transition-opacity"
+            className="font-editorial-sans flex items-center gap-4 transition-opacity hover:opacity-80"
           >
-            <span className="text-2xl">📷</span>
-            <span>Zhlin</span>
+            <span className="portfolio-eyebrow !text-[0.62rem] !tracking-[0.42em]">Zhlin</span>
+            <span className="text-[0.86rem] font-semibold uppercase tracking-[0.26em] text-[color:var(--portfolio-text)]">
+              Photography
+            </span>
           </Link>
 
-          {/* Desktop Navigation */}
-          <div className="hidden md:flex items-center space-x-4">
+          <div className="hidden items-center gap-5 md:flex">
             <Navigation />
-            <div className="ml-4 pl-4 border-l border-gray-200 dark:border-gray-700">
+            <div className="border-l border-[color:var(--portfolio-border)] pl-5">
               <ThemeToggle />
             </div>
           </div>
 
-          {/* Mobile Menu Button */}
-          <div className="flex md:hidden items-center space-x-2">
+          <div className="flex items-center gap-2 md:hidden">
             <ThemeToggle />
             <button
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-              className="p-2 rounded-lg text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors"
+              className="rounded-full border border-[color:var(--portfolio-border)] p-2.5 text-[color:var(--portfolio-text)] transition hover:bg-white/20 dark:hover:bg-white/5"
               aria-label="切换菜单"
               aria-expanded={mobileMenuOpen}
             >
@@ -71,10 +70,9 @@ export default function Header() {
           </div>
         </div>
 
-        {/* Mobile Navigation Menu */}
         {mobileMenuOpen && (
-          <div className="md:hidden py-4 border-t border-gray-200 dark:border-gray-800">
-            <nav className="flex flex-col space-y-2">
+          <div className="border-t border-[color:var(--portfolio-border)] py-4 md:hidden">
+            <nav className="flex flex-col gap-2">
               <MobileNavLink href="/" onClick={() => setMobileMenuOpen(false)}>
                 Home
               </MobileNavLink>
@@ -117,7 +115,7 @@ function MobileNavLink({
     <Link
       href={href}
       onClick={onClick}
-      className="px-4 py-2 text-gray-700 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-800 rounded-lg transition-colors"
+      className="site-mobile-link px-4 py-3 text-[0.78rem] font-semibold uppercase tracking-[0.2em]"
     >
       {children}
     </Link>
@@ -139,11 +137,11 @@ function MobileNavDropdown({
     <div>
       <button
         onClick={() => setIsOpen(!isOpen)}
-        className="w-full flex items-center justify-between px-4 py-2 text-gray-700 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-800 rounded-lg transition-colors"
+        className="site-mobile-link flex w-full items-center justify-between px-4 py-3 text-[0.78rem] font-semibold uppercase tracking-[0.2em]"
       >
         {label}
         <svg
-          className={`w-4 h-4 transition-transform ${isOpen ? 'rotate-180' : ''}`}
+          className={`h-4 w-4 transition-transform ${isOpen ? 'rotate-180' : ''}`}
           fill="none"
           stroke="currentColor"
           viewBox="0 0 24 24"
@@ -157,13 +155,13 @@ function MobileNavDropdown({
         </svg>
       </button>
       {isOpen && (
-        <div className="ml-4 mt-2 flex flex-col space-y-1">
+        <div className="ml-4 mt-2 flex flex-col gap-1">
           {links.map((link) => (
             <Link
               key={link.href}
               href={link.href}
               onClick={onClick}
-              className="px-4 py-2 text-gray-600 hover:bg-gray-100 dark:text-gray-400 dark:hover:bg-gray-800 rounded-lg transition-colors text-sm"
+              className="site-mobile-link px-4 py-2.5 text-[0.74rem] font-medium uppercase tracking-[0.18em]"
             >
               {link.label}
             </Link>
