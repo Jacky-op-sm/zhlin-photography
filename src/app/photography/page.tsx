@@ -1,43 +1,27 @@
-import PhotographyBoard from '@/components/photography/PhotographyBoard'
+import {
+  PhotographyLandingHero,
+  PhotographySeriesCard,
+  getSeriesCoverPhoto,
+  photographySeries,
+} from '@/components/photography'
 import { getAllPhotos } from '@/lib/data/photos'
-import type { CategoryInfo, PhotoCategory } from '@/lib/types'
+import { redirect } from 'next/navigation'
+import { PhotoCategory } from '@/lib/types'
 
 export const dynamic = 'force-dynamic'
 
-const categories: CategoryInfo[] = [
-  {
-    id: 'street',
-    name: 'Street',
-    description: '街头摄影 - 捕捉城市中的瞬间与情绪',
-    coverImage: '/assets/photos/street/street-scene-1.jpg',
-  },
-  {
-    id: 'pets',
-    name: 'Pets',
-    description: '宠物摄影 - 定格毛孩子的可爱时刻',
-    coverImage: '/assets/photos/pets/Z52_6041.jpg',
-  },
-  {
-    id: 'project',
-    name: 'Project',
-    description: '项目作品 - 持续创作的专题摄影',
-    coverImage: '/assets/photos/project/1.jpg',
-  },
-]
-
-function normalizeCategory(value?: string | string[]): PhotoCategory {
+function normalizeCategory(value?: string | string[]) {
   const category = Array.isArray(value) ? value[0] : value
 
   if (
-    category === 'all' ||
-    category === 'street' ||
-    category === 'pets' ||
-    category === 'project'
+    category === PhotoCategory.Street ||
+    category === PhotoCategory.Pets ||
+    category === PhotoCategory.Project
   ) {
     return category
   }
 
-  return 'all'
+  return null
 }
 
 interface PhotographyPageProps {
@@ -49,14 +33,50 @@ interface PhotographyPageProps {
 export default async function PhotographyPage({
   searchParams,
 }: PhotographyPageProps) {
-  const selectedCategory = normalizeCategory(searchParams?.category)
+  const category = normalizeCategory(searchParams?.category)
+
+  if (category === PhotoCategory.Street) {
+    redirect('/photography/street')
+  }
+
+  if (category === PhotoCategory.Pets) {
+    redirect('/photography/pets')
+  }
+
+  if (category === PhotoCategory.Project) {
+    redirect('/photography/project')
+  }
+
   const photos = await getAllPhotos()
 
   return (
-    <PhotographyBoard
-      categories={categories}
-      photos={photos}
-      selectedCategory={selectedCategory}
-    />
+    <main className="min-h-screen bg-[var(--portfolio-bg)] text-[var(--portfolio-text)]">
+      <PhotographyLandingHero
+        overline="Photography / Selected series"
+        title="Photography"
+        intro="A portfolio of quiet observations, held together by light, rhythm, and sustained attention."
+        description="This section is organized as a small authored system: each series keeps its own pace, statement, and visual entry point. Street, pets, and the long-form project remain independent while sharing one editorial language."
+      />
+
+      <section id="series" className="photography-section">
+        <div className="photography-shell">
+          <div className="grid gap-6 md:grid-cols-2 xl:grid-cols-3">
+            {photographySeries.map((series, index) => {
+              const previewPhoto =
+                getSeriesCoverPhoto(photos, series.slug) ?? undefined
+
+              return (
+                <PhotographySeriesCard
+                  key={series.slug}
+                  series={series}
+                  imageSrc={previewPhoto?.thumbnail ?? series.cover}
+                  index={index}
+                />
+              )
+            })}
+          </div>
+        </div>
+      </section>
+    </main>
   )
 }

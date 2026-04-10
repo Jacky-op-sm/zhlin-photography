@@ -37,6 +37,34 @@
   --transition-fast: 150ms ease;
   --transition-normal: 200ms ease;
   --transition-slow: 300ms ease;
+
+  /* 首页 portfolio token */
+  --portfolio-bg: #ddd4c8;
+  --portfolio-surface: #f4efe7;
+  --portfolio-surface-alt: #ece3d7;
+  --portfolio-panel: rgba(249, 244, 236, 0.9);
+  --portfolio-header-bg: rgba(244, 239, 231, 0.82);
+  --portfolio-text: #171411;
+  --portfolio-muted: rgba(23, 20, 17, 0.72);
+  --portfolio-soft: rgba(23, 20, 17, 0.54);
+  --portfolio-marquee: rgba(23, 20, 17, 0.08);
+  --portfolio-border: rgba(23, 20, 17, 0.12);
+  --portfolio-shadow: 0 24px 60px rgba(25, 18, 12, 0.08);
+  --portfolio-card-shadow: 0 18px 46px rgba(25, 18, 12, 0.07);
+  --portfolio-max-width: 82rem;
+  --portfolio-gutter: clamp(1.5rem, 4vw, 3rem);
+  --portfolio-section-space: clamp(5.5rem, 9vw, 8rem);
+  --portfolio-radius-xl: 1.9rem;
+
+  --photography-shell-width: 88rem;
+  --photography-body-width: 40rem;
+  --photography-section-space: clamp(3.75rem, 7vw, 6.75rem);
+  --photography-title-size: clamp(3.25rem, 8vw, 7rem);
+  --photography-intro-size: clamp(1.05rem, 2vw, 1.3rem);
+  --photography-image-gap: clamp(0.8rem, 1.5vw, 1.35rem);
+  --photography-border: rgba(23, 20, 17, 0.1);
+  --photography-hover-scale: 1.025;
+  --photography-radius: 1.15rem;
 }
 
 /* ============================
@@ -64,6 +92,21 @@
   --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.3);
   --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.4);
   --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.5);
+
+  --portfolio-bg: #15110d;
+  --portfolio-surface: #18130f;
+  --portfolio-surface-alt: #1e1813;
+  --portfolio-panel: rgba(31, 24, 19, 0.9);
+  --portfolio-header-bg: rgba(20, 16, 12, 0.86);
+  --portfolio-text: #f4ede2;
+  --portfolio-muted: rgba(244, 237, 226, 0.74);
+  --portfolio-soft: rgba(244, 237, 226, 0.56);
+  --portfolio-marquee: rgba(244, 237, 226, 0.08);
+  --portfolio-border: rgba(244, 237, 226, 0.12);
+  --portfolio-shadow: 0 24px 60px rgba(0, 0, 0, 0.3);
+  --portfolio-card-shadow: 0 18px 46px rgba(0, 0, 0, 0.24);
+
+  --photography-border: rgba(244, 237, 226, 0.11);
 }
 
 /* ============================
@@ -83,6 +126,8 @@ body {
   transition:
     background-color var(--transition-normal),
     color var(--transition-normal);
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
 }
 
 /* ============================
@@ -119,7 +164,6 @@ body {
     transition: color var(--transition-fast);
   }
 
-  /* 深色模式下链接颜色 */
   .dark a {
     color: var(--foreground-secondary);
   }
@@ -133,7 +177,6 @@ body {
    组件样式
    ============================ */
 @layer components {
-  /* 按钮样式 */
   .btn {
     display: inline-flex;
     align-items: center;
@@ -159,7 +202,6 @@ body {
     box-shadow: var(--shadow-md);
   }
 
-  /* 卡片样式 */
   .card {
     background-color: var(--card);
     border: 1px solid var(--border);
@@ -173,11 +215,211 @@ body {
     transform: translateY(-2px);
   }
 
-  /* 容器 */
   .container-custom {
     max-width: 1280px;
     margin: 0 auto;
     padding: 0 1.5rem;
+  }
+
+  .font-editorial-serif {
+    font-family: 'Iowan Old Style', 'Palatino Linotype', 'URW Palladio L', 'Book Antiqua', Georgia, serif;
+  }
+
+  .font-editorial-sans {
+    font-family: 'Avenir Next', 'Helvetica Neue', 'Segoe UI', sans-serif;
+  }
+
+  .portfolio-shell {
+    width: min(calc(100% - (var(--portfolio-gutter) * 2)), var(--portfolio-max-width));
+    margin-inline: auto;
+  }
+
+  .photography-shell {
+    width: min(calc(100% - (var(--portfolio-gutter) * 2)), var(--photography-shell-width));
+    margin-inline: auto;
+  }
+
+  .portfolio-hero {
+    padding-block: clamp(3.5rem, 9vw, 6.75rem);
+    background: var(--portfolio-bg);
+  }
+
+  .photography-section {
+    padding-block: var(--photography-section-space);
+  }
+
+  .portfolio-section {
+    position: relative;
+    padding-block: var(--portfolio-section-space);
+    border-top: 1px solid var(--portfolio-border);
+  }
+
+  .portfolio-panel {
+    border-radius: var(--portfolio-radius-xl);
+    border: 1px solid var(--portfolio-border);
+    background: var(--portfolio-panel);
+    box-shadow: var(--portfolio-shadow);
+    backdrop-filter: blur(12px);
+  }
+
+  .portfolio-eyebrow {
+    font-size: 0.68rem;
+    font-weight: 700;
+    letter-spacing: 0.34em;
+    text-transform: uppercase;
+    color: var(--portfolio-soft);
+  }
+
+  .portfolio-marquee {
+    position: absolute;
+    font-size: clamp(4.6rem, 16vw, 12rem);
+    font-weight: 800;
+    line-height: 0.82;
+    letter-spacing: -0.065em;
+    text-transform: uppercase;
+    color: var(--portfolio-marquee);
+    pointer-events: none;
+    user-select: none;
+    white-space: nowrap;
+  }
+
+  .portfolio-card-title {
+    font-size: 0.9rem;
+    font-weight: 800;
+    letter-spacing: 0.24em;
+    text-transform: uppercase;
+    color: var(--portfolio-text);
+  }
+
+  .portfolio-card-image-shell {
+    overflow: hidden;
+    border-radius: var(--portfolio-radius-xl);
+    border: 1px solid var(--portfolio-border);
+    background: color-mix(in srgb, var(--portfolio-panel) 88%, white 12%);
+    box-shadow: var(--portfolio-card-shadow);
+  }
+
+  .text-link-cta {
+    color: var(--portfolio-text) !important;
+    opacity: 0.82;
+    transition:
+      opacity var(--transition-fast),
+      color var(--transition-fast);
+  }
+
+  .text-link-cta:hover {
+    opacity: 1;
+  }
+
+  .text-link-cta span:first-child {
+    position: relative;
+  }
+
+  .text-link-cta span:first-child::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    bottom: -0.32rem;
+    width: 100%;
+    height: 1px;
+    background: currentColor;
+    transform: scaleX(0.4);
+    transform-origin: left;
+    transition: transform var(--transition-normal);
+  }
+
+  .text-link-cta:hover span:first-child::after {
+    transform: scaleX(1);
+  }
+
+  .photography-overline {
+    font-size: 0.68rem;
+    font-weight: 700;
+    letter-spacing: 0.34em;
+    text-transform: uppercase;
+    color: var(--portfolio-soft);
+  }
+
+  .photography-title {
+    font-size: var(--photography-title-size);
+    line-height: 0.92;
+    letter-spacing: -0.07em;
+    text-wrap: balance;
+  }
+
+  .photography-body {
+    max-width: var(--photography-body-width);
+    font-size: clamp(1rem, 1.5vw, 1.08rem);
+    line-height: 1.85;
+    color: var(--portfolio-muted);
+  }
+
+  .photography-media-shell {
+    overflow: hidden;
+    border-radius: var(--photography-radius);
+    border: 1px solid var(--photography-border);
+    background: color-mix(in srgb, var(--portfolio-panel) 90%, white 10%);
+  }
+
+  .photography-gallery-item {
+    transition:
+      transform var(--transition-normal),
+      opacity var(--transition-normal);
+  }
+
+  .photography-gallery-item:hover {
+    transform: translateY(-1px);
+  }
+
+  .site-header {
+    position: sticky;
+    top: 0;
+    z-index: 50;
+    border-bottom: 1px solid var(--portfolio-border);
+    background: var(--portfolio-header-bg);
+    backdrop-filter: blur(18px);
+  }
+
+  .site-nav-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    padding: 0.5rem 0.2rem;
+    font-size: 0.74rem;
+    font-weight: 700;
+    letter-spacing: 0.24em;
+    text-transform: uppercase;
+    color: var(--portfolio-soft);
+    transition:
+      color var(--transition-fast),
+      opacity var(--transition-fast);
+  }
+
+  .site-nav-link:hover,
+  .site-nav-link[data-active='true'] {
+    color: var(--portfolio-text);
+    opacity: 1;
+  }
+
+  .site-nav-dropdown {
+    border: 1px solid var(--portfolio-border);
+    border-radius: 1rem;
+    background: color-mix(in srgb, var(--portfolio-panel) 92%, white 8%);
+    box-shadow: var(--portfolio-shadow);
+    backdrop-filter: blur(18px);
+  }
+
+  .site-mobile-link {
+    border-radius: 1rem;
+    color: var(--portfolio-muted);
+    transition:
+      background-color var(--transition-fast),
+      color var(--transition-fast);
+  }
+
+  .site-mobile-link:hover {
+    color: var(--portfolio-text);
+    background: color-mix(in srgb, var(--portfolio-panel) 88%, white 12%);
   }
 }
 
@@ -189,7 +431,6 @@ body {
     text-wrap: balance;
   }
 
-  /* 深色模式背景类 */
   .bg-theme {
     background-color: var(--background);
   }
@@ -206,12 +447,10 @@ body {
     color: var(--foreground-secondary);
   }
 
-  /* 边框颜色 */
   .border-theme {
     border-color: var(--border);
   }
 
-  /* 过渡效果 */
   .transition-theme {
     transition:
       background-color var(--transition-normal),
@@ -220,7 +459,6 @@ body {
       box-shadow var(--transition-normal);
   }
 
-  /* 焦点环 */
   .focus-ring {
     outline: none;
   }
