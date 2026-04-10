@@ -91,8 +91,8 @@ export default async function TravelDetailPage({ params }: { params: { slug: str
         </div>
       </section>
 
-      <section className="mx-auto max-w-[1650px] px-6 py-14 sm:py-16 lg:px-8 lg:py-20">
-        <div className="grid gap-8 lg:grid-cols-[15rem_minmax(0,3fr)] lg:gap-10">
+      <section className="mx-auto max-w-[1880px] px-6 py-14 sm:py-16 lg:px-8 lg:py-20">
+        <div className="grid gap-8 lg:grid-cols-[minmax(11.5rem,0.82fr)_minmax(0,3.18fr)] lg:gap-8 xl:grid-cols-[minmax(12.5rem,0.88fr)_minmax(0,3.32fr)]">
           <aside className="self-start lg:sticky lg:top-8">
             <details className="group rounded-[1.5rem] border border-black/10 bg-white/70 p-3 shadow-[0_12px_32px_rgba(15,23,42,0.05)] backdrop-blur">
               <summary className="flex cursor-pointer list-none items-center justify-between gap-3 rounded-[1.1rem] px-3 py-3 text-sm font-medium text-neutral-900 outline-none transition hover:bg-black/[0.03]">
@@ -133,7 +133,7 @@ export default async function TravelDetailPage({ params }: { params: { slug: str
             </details>
           </aside>
 
-          <article className="min-w-0 rounded-[1.75rem] border border-black/10 bg-white/80 p-6 shadow-[0_12px_40px_rgba(15,23,42,0.06)] backdrop-blur sm:p-7 lg:p-8">
+          <article className="min-w-0 rounded-[1.75rem] border border-black/10 bg-white/80 p-6 shadow-[0_12px_40px_rgba(15,23,42,0.06)] backdrop-blur sm:p-7 lg:p-8 xl:p-10">
             <p className="text-xs uppercase tracking-[0.35em] text-neutral-400">原文正文</p>
             <div className="mt-5">
               <TravelStory bodyHtml={bodyHtml} />

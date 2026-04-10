@@ -102,55 +102,66 @@ export default async function Home() {
   const profile = await getProfile()
 
   return (
-    <main className="bg-[#efefef] text-black">
-      <section className="mx-auto max-w-[1550px] px-6 pb-16 pt-10 sm:px-10 lg:pb-24 lg:pt-14">
-        <div className="grid gap-12 lg:grid-cols-[1fr_34rem] lg:items-end lg:gap-16">
-          <div className="max-w-3xl">
-            <p className="text-xs font-semibold uppercase tracking-[0.42em] text-black/45">
-              Zhlin Photography
-            </p>
-            <h1 className="mt-6 text-[clamp(2.3rem,5.8vw,5.2rem)] font-black leading-[0.92] tracking-[-0.045em]">
-              在研究、旅行与日常之间，
-              <br />
-              持续记录正在发生的瞬间。
-            </h1>
-            <p className="mt-8 max-w-2xl text-lg leading-9 text-black/75">{profile.aboutParagraphs[0]}</p>
-            <p className="mt-5 max-w-2xl text-lg leading-9 text-black/75">{profile.aboutParagraphs[1]}</p>
-          </div>
-
-          <figure className="overflow-hidden rounded-[2rem] border border-black/12 bg-white shadow-[0_20px_70px_rgba(0,0,0,0.08)]">
-            <div className="relative aspect-[4/5]">
-              <Image
-                src={profile.avatar}
-                alt={`${profile.name} profile`}
-                fill
-                priority
-                sizes="(min-width: 1280px) 34rem, (min-width: 1024px) 40vw, 100vw"
-                className="object-cover"
-              />
+    <main className="bg-[#d7cebf] text-black">
+      <section className="bg-[#d7cebf]">
+        <div className="mx-auto max-w-[1320px] px-6 py-14 sm:px-10 sm:py-[4.5rem] lg:py-24">
+          <div className="grid gap-10 lg:grid-cols-[minmax(0,1fr)_23rem] lg:items-center lg:gap-14 xl:grid-cols-[minmax(0,1fr)_25rem]">
+            <div className="mx-auto max-w-[38rem] lg:mx-0">
+              <p className="text-[0.68rem] font-semibold uppercase tracking-[0.38em] text-black/45">
+                Zhlin Photography
+              </p>
+              <h1 className="mt-5 text-[clamp(2rem,5vw,4.35rem)] font-black leading-[0.94] tracking-[-0.045em]">
+                在研究、旅行与日常之间，
+                <br />
+                持续记录正在发生的瞬间。
+              </h1>
+              <p className="mt-6 max-w-[34rem] text-[1rem] leading-8 text-black/72 sm:text-[1.04rem]">
+                {profile.aboutParagraphs[0]}
+              </p>
+              <p className="mt-4 max-w-[34rem] text-[1rem] leading-8 text-black/72 sm:text-[1.04rem]">
+                {profile.aboutParagraphs[1]}
+              </p>
             </div>
-            <figcaption className="border-t border-black/10 px-6 py-5">
-              <p className="text-xs font-semibold uppercase tracking-[0.32em] text-black/45">Profile</p>
-              <p className="mt-2 text-2xl font-bold tracking-[-0.03em]">{profile.name}</p>
-              <p className="mt-2 text-sm text-black/65">{profile.title} · {profile.city}</p>
-            </figcaption>
-          </figure>
+
+            <figure className="mx-auto w-full max-w-[20rem] overflow-hidden rounded-[1.75rem] border border-black/10 bg-[#f5f1e8] shadow-[0_18px_50px_rgba(0,0,0,0.08)] sm:max-w-[22rem] lg:justify-self-end">
+              <div className="relative aspect-[4/5]">
+                <Image
+                  src={profile.avatar}
+                  alt={`${profile.name} profile`}
+                  fill
+                  priority
+                  sizes="(min-width: 1280px) 25rem, (min-width: 1024px) 23rem, (min-width: 640px) 22rem, 80vw"
+                  className="object-cover"
+                />
+              </div>
+              <figcaption className="border-t border-black/10 px-5 py-4 sm:px-6">
+                <p className="text-[0.68rem] font-semibold uppercase tracking-[0.3em] text-black/45">Profile</p>
+                <p className="mt-1.5 text-[1.55rem] font-bold tracking-[-0.03em]">{profile.name}</p>
+                <p className="mt-1.5 text-[0.82rem] uppercase tracking-[0.12em] text-black/58">
+                  {profile.title} · {profile.city}
+                </p>
+              </figcaption>
+            </figure>
+          </div>
         </div>
       </section>
 
       <ShowcaseSection
         marquee="PHOTOGRAPHER"
         cards={photographyCards}
+        tone="light"
       />
 
       <ShowcaseSection
         marquee="TRAVEL"
         cards={travelCards}
+        tone="warm"
       />
 
       <ShowcaseSection
         marquee="HOBBY"
         cards={hobbyCards}
+        tone="light"
         isLast
       />
     </main>
@@ -160,26 +171,35 @@ export default async function Home() {
 function ShowcaseSection({
   marquee,
   cards,
+  tone,
   isLast = false,
 }: {
   marquee: string
   cards: ShowcaseCard[]
+  tone: 'warm' | 'light'
   isLast?: boolean
 }) {
-  return (
-    <section className={`mx-auto max-w-[1550px] px-6 sm:px-10 ${isLast ? 'pb-20 lg:pb-28' : 'pb-12 lg:pb-16'}`}>
-      <div className="overflow-hidden">
-        <h2 className="whitespace-nowrap text-[clamp(3rem,8.8vw,8.6rem)] font-black uppercase leading-none tracking-[-0.045em]">
-          <span className="text-black/10">{marquee}</span>{' '}
-          <span className="text-black">{marquee}</span>{' '}
-          <span className="text-black/12">{marquee}</span>
-        </h2>
-      </div>
+  const sectionClassName =
+    tone === 'warm'
+      ? 'bg-[#d7cebf] border-t border-black/8'
+      : 'bg-[#f4f0e8] border-t border-black/8'
 
-      <div className="mt-10 grid gap-10 md:grid-cols-2 xl:mt-12 xl:grid-cols-3 xl:gap-12">
-        {cards.map((card) => (
-          <ShowcaseCardItem key={card.title} card={card} />
-        ))}
+  return (
+    <section className={sectionClassName}>
+      <div className={`mx-auto max-w-[1320px] px-6 pt-14 sm:px-10 sm:pt-16 lg:pt-20 ${isLast ? 'pb-[4.5rem] sm:pb-20 lg:pb-24' : 'pb-16 sm:pb-[4.5rem] lg:pb-20'}`}>
+        <div className="overflow-hidden">
+          <h2 className="whitespace-nowrap text-[clamp(2.8rem,8vw,6.8rem)] font-black uppercase leading-none tracking-[-0.05em]">
+            <span className="text-black/10">{marquee}</span>{' '}
+            <span className="text-black">{marquee}</span>{' '}
+            <span className="text-black/12">{marquee}</span>
+          </h2>
+        </div>
+
+        <div className="mt-10 grid gap-y-14 md:grid-cols-2 md:gap-x-10 lg:mt-12 lg:grid-cols-3 lg:gap-x-8 lg:gap-y-16">
+          {cards.map((card) => (
+            <ShowcaseCardItem key={card.title} card={card} />
+          ))}
+        </div>
       </div>
     </section>
   )
@@ -187,26 +207,26 @@ function ShowcaseSection({
 
 function ShowcaseCardItem({ card }: { card: ShowcaseCard }) {
   return (
-    <Link href={card.href} className="group block">
-      <h3 className="text-center text-[2.1rem] font-black uppercase tracking-[-0.02em] text-black">
+    <Link href={card.href} className="group mx-auto block w-full max-w-[18.5rem] sm:max-w-[19.5rem] xl:max-w-[20rem]">
+      <h3 className="text-center text-[1.22rem] font-black uppercase tracking-[0.08em] text-black sm:text-[1.28rem]">
         {card.title}
       </h3>
 
-      <div className="mt-8">
-        <div className="relative aspect-[4/5] overflow-hidden rounded-[2rem] bg-[#e7e7e7] shadow-[0_20px_50px_rgba(0,0,0,0.1)]">
+      <div className="mt-5">
+        <div className="relative aspect-[4/5] overflow-hidden rounded-[1.55rem] bg-[#e6e1d8] shadow-[0_16px_34px_rgba(0,0,0,0.08)]">
           <Image
             src={card.image}
             alt={card.alt}
             fill
-            sizes="(min-width: 1280px) 30vw, (min-width: 768px) 45vw, 100vw"
-            className={`object-cover transition duration-700 group-hover:scale-[1.03] ${card.imageClassName ?? ''}`}
+            sizes="(min-width: 1280px) 20rem, (min-width: 1024px) 18rem, (min-width: 768px) 42vw, 78vw"
+            className={`object-cover transition duration-700 group-hover:scale-[1.02] ${card.imageClassName ?? ''}`}
           />
         </div>
 
-        <p className="mx-auto mt-9 max-w-[28rem] text-center font-serif text-[1.95rem] italic leading-[1.35] tracking-[-0.01em] text-black/85">
+        <p className="mx-auto mt-5 max-w-[17rem] text-center font-serif text-[1.16rem] italic leading-[1.55] tracking-[-0.01em] text-black/82 sm:text-[1.2rem]">
           {card.lead}
         </p>
-        <p className="mx-auto mt-6 max-w-[28rem] text-center text-[1.12rem] leading-9 text-black/72">
+        <p className="mx-auto mt-4 max-w-[17rem] text-center text-[0.94rem] leading-7 text-black/68">
           {card.body}
         </p>
       </div>

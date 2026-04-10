@@ -30,11 +30,12 @@ export default function CategoryFilter({ currentCategory }: CategoryFilterProps)
           <button
             key={category.id}
             onClick={() => handleCategoryChange(category.id)}
+            aria-pressed={isActive}
             className={`
-              relative rounded-full px-4 py-2 text-sm font-medium transition-all duration-300 ease-out md:text-base
+              relative px-4 py-2.5 text-sm font-medium transition-colors duration-300 ease-out md:text-base
               ${
                 isActive
-                  ? 'text-white'
+                  ? 'text-gray-900 dark:text-white'
                   : 'text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white'
               }
             `}
@@ -42,7 +43,7 @@ export default function CategoryFilter({ currentCategory }: CategoryFilterProps)
             {isActive && (
               <motion.span
                 layoutId="activeCategory"
-                className="absolute inset-0 -z-10 rounded-full bg-gray-900 dark:bg-white"
+                className="absolute bottom-0 left-4 right-4 h-0.5 rounded-full bg-gray-900 dark:bg-white"
                 transition={{ type: 'spring', stiffness: 380, damping: 30 }}
               />
             )}
