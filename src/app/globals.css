@@ -6,6 +6,9 @@
    主题变量定义
    ============================ */
 :root {
+  --font-latin: "SF Pro SC", "SF Pro Text", "Helvetica Neue", "Helvetica", "Arial", sans-serif;
+  --font-cjk: "PingFang SC", "SF Pro SC", "SF Pro Text", "Helvetica Neue", "Helvetica", "Arial", sans-serif;
+
   /* 亮色主题 */
   --background: #ffffff;
   --background-secondary: #f9fafb;
@@ -39,7 +42,7 @@
   --transition-slow: 300ms ease;
 
   /* 首页 portfolio token */
-  --portfolio-bg: rgba(245, 245, 245, 1);
+  --portfolio-bg: rgba(245, 245, 247, 1);
   --portfolio-surface: #f4efe7;
   --portfolio-surface-alt: #ece3d7;
   --portfolio-panel: rgba(249, 244, 236, 0.9);
@@ -222,11 +225,11 @@ body {
   }
 
   .font-editorial-serif {
-    font-family: 'Iowan Old Style', 'Palatino Linotype', 'URW Palladio L', 'Book Antiqua', Georgia, serif;
+    font-family: var(--font-sans);
   }
 
   .font-editorial-sans {
-    font-family: 'Avenir Next', 'Helvetica Neue', 'Segoe UI', sans-serif;
+    font-family: var(--font-latin);
   }
 
   .portfolio-shell {
@@ -251,7 +254,7 @@ body {
   .portfolio-section {
     position: relative;
     padding-block: var(--portfolio-section-space);
-    border-top: 1px solid var(--portfolio-border);
+    border-top: 0;
   }
 
   .portfolio-panel {
@@ -375,8 +378,8 @@ body {
     position: sticky;
     top: 0;
     z-index: 50;
-    border-bottom: 1px solid var(--portfolio-border);
-    background: var(--portfolio-header-bg);
+    border-bottom: none;
+    background: #ffffff;
     backdrop-filter: blur(18px);
   }
 
@@ -475,12 +478,12 @@ body {
    Global Frame (Sean-like)
    ============================ */
 :root {
-  --font-sans: 'Archivo';
-  --font-display: 'Archivo Black';
+  --font-sans: var(--font-latin);
+  --font-display: var(--font-latin);
 
-  --site-bg: rgba(245, 245, 245, 1);
-  --site-bg-soft: rgba(245, 245, 245, 1);
-  --site-surface: rgba(245, 245, 245, 1);
+  --site-bg: rgba(245, 245, 247, 1);
+  --site-bg-soft: rgba(245, 245, 247, 1);
+  --site-surface: rgba(245, 245, 247, 1);
   --site-text: #141311;
   --site-muted: rgba(20, 19, 17, 0.72);
   --site-soft: rgba(20, 19, 17, 0.52);
@@ -489,14 +492,22 @@ body {
 
   --site-max-width: 1920px;
   --site-page-padding: 4vw;
-  --site-header-height: 6.25rem;
+  --site-header-height: 2.89rem;
 }
 
 .site-body {
   min-height: 100vh;
   background: var(--site-bg);
   color: var(--site-text);
-  font-family: var(--font-sans), 'Avenir Next', 'Helvetica Neue', sans-serif;
+  font-family: var(--font-latin);
+}
+
+:lang(zh), :lang(zh-CN), :lang(zh-Hans) {
+  font-family: var(--font-cjk);
+}
+
+:lang(en) {
+  font-family: var(--font-latin);
 }
 
 .site-main {
@@ -515,32 +526,46 @@ body {
   right: 0;
   z-index: 60;
   height: var(--site-header-height);
-  background: rgba(245, 245, 245, 1);
-  border-bottom: 1px solid var(--site-border);
+  background: #ffffff;
+  border-bottom: none;
   transition: background-color 220ms ease, border-color 220ms ease, box-shadow 220ms ease;
 }
 
 .site-header.is-scrolled {
-  background: rgba(245, 245, 245, 0.96);
-  border-color: var(--site-border);
-  box-shadow: 0 10px 28px rgba(15, 14, 12, 0.08);
-  backdrop-filter: blur(12px);
+  background: #ffffff;
+  border-color: transparent;
+  box-shadow: none;
+  backdrop-filter: none;
 }
 
 .site-header-inner {
   height: 100%;
   display: flex;
   align-items: center;
-  justify-content: space-between;
-  gap: 2rem;
+  justify-content: center;
+  gap: 2.1rem;
 }
 
 .site-brand {
   display: inline-flex;
-  align-items: baseline;
-  gap: 0.55rem;
-  text-transform: uppercase;
+  align-items: center;
+  gap: 0.5rem;
   text-decoration: none;
+  flex-shrink: 0;
+}
+
+.site-brand-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 1rem;
+  height: 1rem;
+  color: var(--site-soft);
+}
+
+.site-brand-icon svg {
+  width: 100%;
+  height: 100%;
 }
 
 .site-brand-mark {
@@ -548,13 +573,15 @@ body {
   font-weight: 700;
   letter-spacing: 0.42em;
   color: var(--site-soft);
+  display: none;
 }
 
 .site-brand-name {
-  font-size: 0.86rem;
-  font-weight: 700;
-  letter-spacing: 0.22em;
+  font-size: 1rem;
+  font-weight: 600;
+  letter-spacing: 0;
   color: var(--site-text);
+  text-transform: none;
 }
 
 .site-nav-list {
@@ -566,11 +593,11 @@ body {
 .site-nav-link {
   display: inline-flex;
   align-items: center;
-  gap: 0.32rem;
-  font-size: 0.86rem;
-  font-weight: 800;
-  letter-spacing: 0.26em;
-  text-transform: uppercase;
+  gap: 0;
+  font-size: 1rem;
+  font-weight: 500;
+  letter-spacing: 0;
+  text-transform: none;
   color: var(--site-soft);
   transition: color 160ms ease;
 }
@@ -591,43 +618,83 @@ body {
 }
 
 .site-nav-dropdown-shell {
-  position: absolute;
-  top: calc(100% + 0.6rem);
+  position: fixed;
+  top: var(--site-header-height);
   left: 0;
+  right: 0;
   opacity: 0;
-  visibility: hidden;
-  transform: translateY(8px);
-  transition: opacity 180ms ease, transform 180ms ease, visibility 180ms ease;
+  transform: none;
+  pointer-events: none;
+  transition: opacity 1000ms cubic-bezier(0.22, 1, 0.36, 1);
 }
 
-.site-nav-item:hover .site-nav-dropdown-shell,
-.site-nav-item:focus-within .site-nav-dropdown-shell {
+.site-nav-dropdown-shell[data-open='true'] {
   opacity: 1;
-  visibility: visible;
-  transform: translateY(0);
+  pointer-events: auto;
 }
 
 .site-nav-dropdown {
-  min-width: 10.5rem;
-  border: 1px solid var(--site-border);
-  background: #fbf9f5;
-  box-shadow: var(--site-shadow);
-  border-radius: 1rem;
-  padding: 0.45rem 0;
+  width: 100%;
+  background: #ffffff;
+  border: 0;
+  border-radius: 0;
+  box-shadow: none;
+  overflow: hidden;
+  will-change: transform, opacity;
+  transform-origin: top center;
+  transform: scaleY(0);
+  opacity: 0.72;
+  transition: transform 1000ms cubic-bezier(0.22, 1, 0.36, 1),
+    opacity 1000ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.site-nav-dropdown-shell[data-open='true'] .site-nav-dropdown {
+  transform: scaleY(1);
+  opacity: 1;
+}
+
+.site-nav-dropdown-inner {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding-block: 2rem 2.2rem;
+  min-height: 15rem;
+}
+
+.site-nav-dropdown-column {
+  min-width: min(20rem, 100%);
+  text-align: center;
+}
+
+.site-nav-dropdown-overline {
+  margin: 0;
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.16em;
+  color: rgba(124, 124, 129, 1);
+}
+
+.site-nav-dropdown-links {
+  margin-top: 0.7rem;
+  display: grid;
+  gap: 0.22rem;
+  justify-items: center;
 }
 
 .site-nav-dropdown-link {
-  display: block;
-  padding: 0.5rem 0.95rem;
-  font-size: 0.84rem;
+  display: inline-block;
+  width: fit-content;
+  padding: 0.2rem 0;
+  font-size: clamp(1.05rem, 0.94rem + 0.28vw, 1.26rem);
   font-weight: 800;
-  letter-spacing: 0.2em;
-  text-transform: uppercase;
-  color: var(--site-soft);
+  letter-spacing: 0.02em;
+  color: rgba(29, 29, 31, 1);
+  line-height: 1.36;
+  transition: color 180ms ease;
 }
 
 .site-nav-dropdown-link:hover {
-  color: var(--site-text);
+  color: rgba(29, 29, 31, 0.7);
   text-decoration: none;
 }
 
@@ -650,8 +717,8 @@ body {
 }
 
 .site-mobile-panel {
-  border-top: 1px solid var(--site-border);
-  background: rgba(245, 245, 245, 0.98);
+  border-top: 0;
+  background: rgba(245, 245, 247, 0.98);
   backdrop-filter: blur(12px);
   padding: 0.8rem 0 1rem;
 }
@@ -669,27 +736,68 @@ body {
 }
 
 .site-nav-mobile .site-nav-dropdown-shell {
+  position: static;
   opacity: 1;
   visibility: visible;
+  pointer-events: auto;
   transform: none;
-  position: static;
 }
 
 .site-nav-mobile .site-nav-dropdown {
   margin: 0.35rem 0 0.75rem;
   width: 100%;
+  border-radius: 1rem;
+  box-shadow: none;
+  border: 1px solid var(--site-border);
+  background: #fbf9f5;
+  transform: none;
+  transition: none;
+}
+
+.site-nav-mobile .site-nav-dropdown-inner {
+  display: block;
+  padding: 0.4rem 0.5rem;
+}
+
+.site-nav-mobile .site-nav-dropdown-overline {
+  padding: 0.3rem 0.35rem 0.15rem;
+}
+
+.site-nav-mobile .site-nav-dropdown-links {
+  margin-top: 0.15rem;
+}
+
+.site-nav-mobile .site-nav-dropdown-link {
+  display: block;
+  width: 100%;
+  padding: 0.48rem 0.35rem;
+  font-size: 0.84rem;
+  font-weight: 800;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--site-soft);
+}
+
+.site-nav-mobile .site-nav-dropdown-link:hover {
+  color: var(--site-text);
+}
+
+.site-nav-overlay-open .site-main,
+.site-nav-overlay-open footer {
+  filter: blur(8px);
+  transition: filter 180ms ease;
 }
 
 /* ============================
    Home Long Page
    ============================ */
 .home-band {
-  border-top: 1px solid var(--site-border);
+  border-top: 0;
   padding-block: clamp(4.75rem, 8vw, 7.25rem);
 }
 
 .home-band--light {
-  background: rgba(245, 245, 245, 1);
+  background: rgba(245, 245, 247, 1);
 }
 
 .home-band--white {
@@ -761,7 +869,7 @@ body {
 }
 
 .home-inline-link span {
-  border-bottom: 1px solid currentColor;
+  border-bottom: 0;
   padding-bottom: 0.22rem;
 }
 
@@ -785,7 +893,7 @@ body {
 
 .home-hero-panel figcaption {
   padding: 1.35rem 1.4rem 1.5rem;
-  border-top: 1px solid var(--site-border);
+  border-top: 0;
 }
 
 .home-hero-name {
@@ -916,19 +1024,19 @@ body {
 }
 
 .home-photographer-section {
-  border-top: 1px solid var(--site-border);
+  border-top: 0;
   background: #ffffff;
   padding: clamp(4.2rem, 7vw, 6.4rem) 0 clamp(4.8rem, 8vw, 7.2rem);
 }
 
 .home-traveller-section {
-  border-top: 1px solid var(--site-border);
-  background: rgba(245, 245, 245, 1);
+  border-top: 0;
+  background: rgba(245, 245, 247, 1);
   padding: clamp(4.2rem, 7vw, 6.4rem) 0 clamp(4.8rem, 8vw, 7.2rem);
 }
 
 .home-hobbyist-section {
-  border-top: 1px solid var(--site-border);
+  border-top: 0;
   background: #ffffff;
   padding: clamp(4.2rem, 7vw, 6.4rem) 0 clamp(4.8rem, 8vw, 7.2rem);
 }
@@ -1022,7 +1130,7 @@ body {
 .home-photographer-quote {
   margin: 0 auto 0;
   max-width: 30ch;
-  font-family: 'Iowan Old Style', 'Palatino Linotype', 'URW Palladio L', 'Book Antiqua', Georgia, serif;
+  font-family: var(--font-sans);
   font-size: clamp(0.82rem, 1.15vw, 1.38rem);
   font-style: italic;
   line-height: 1.38;
@@ -1033,7 +1141,7 @@ body {
 .home-photographer-body {
   margin: clamp(0.95rem, 1.3vw, 1.2rem) auto 0;
   max-width: 32ch;
-  font-family: 'Iowan Old Style', 'Palatino Linotype', 'URW Palladio L', 'Book Antiqua', Georgia, serif;
+  font-family: var(--font-sans);
   font-size: clamp(0.74rem, 0.8vw, 0.89rem);
   line-height: 1.48;
   text-align: center;
@@ -1069,7 +1177,7 @@ body {
 .home-traveller-body {
   margin: clamp(0.95rem, 1.3vw, 1.2rem) auto 0;
   max-width: 32ch;
-  font-family: 'Iowan Old Style', 'Palatino Linotype', 'URW Palladio L', 'Book Antiqua', Georgia, serif;
+  font-family: var(--font-sans);
   font-size: clamp(0.74rem, 0.8vw, 0.89rem);
   line-height: 1.48;
   text-align: center;
@@ -1099,7 +1207,7 @@ body {
 .home-hobbyist-body {
   margin: clamp(0.79rem, 1.08vw, 1rem) auto 0;
   max-width: 32ch;
-  font-family: 'Iowan Old Style', 'Palatino Linotype', 'URW Palladio L', 'Book Antiqua', Georgia, serif;
+  font-family: var(--font-sans);
   font-size: clamp(0.74rem, 0.8vw, 0.89rem);
   line-height: 1.48;
   text-align: center;
@@ -1193,7 +1301,7 @@ body {
    ============================ */
 .site-footer-band {
   background: #fff;
-  border-top: 1px solid var(--site-border);
+  border-top: 0;
   padding-block: clamp(3rem, 6vw, 4.8rem);
 }
 
@@ -1267,7 +1375,7 @@ body {
 }
 
 .site-footer-brand {
-  border-top: 1px solid var(--site-border);
+  border-top: 0;
   padding-top: 1.35rem;
 }
 
@@ -1287,7 +1395,7 @@ body {
 }
 
 .site-footer-social {
-  border-top: 1px solid var(--site-border);
+  border-top: 0;
   padding-top: 1.35rem;
 }
 
@@ -1319,7 +1427,7 @@ body {
 
 @media (min-width: 768px) {
   :root {
-    --site-header-height: 6.65rem;
+    --site-header-height: 3.08rem;
   }
 
   .site-header-inner {
@@ -1344,7 +1452,7 @@ body {
   .site-footer-social {
     border-top: 0;
     padding-top: 0;
-    border-left: 1px solid var(--site-border);
+    border-left: 0;
     padding-left: clamp(1.2rem, 1.8vw, 2rem);
   }
 }
@@ -1501,7 +1609,7 @@ body {
 }
 
 .photo-publications {
-  border-top: 1px solid var(--site-border);
+  border-top: 0;
   background: #fff;
   padding-block: clamp(3rem, 5.2vw, 4.6rem);
 }
@@ -1574,7 +1682,7 @@ body {
 
 .photo-viewer-close {
   right: 1.2rem;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.5);
+  border-bottom: 0;
   padding-bottom: 0.2rem;
 }
 
