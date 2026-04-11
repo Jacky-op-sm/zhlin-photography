@@ -31,12 +31,12 @@ export default async function TravelPage() {
                   className="group inline-flex w-full flex-col items-center text-neutral-800"
                   aria-label={`前往 ${travel.zhName} 旅行页`}
                 >
-                  <span className="relative block h-[3.7rem] w-[3.7rem] overflow-hidden rounded-[0.95rem] border border-neutral-200 bg-white shadow-[0_6px_16px_rgba(15,23,42,0.1)] transition duration-300 group-hover:-translate-y-0.5 group-hover:shadow-[0_10px_24px_rgba(15,23,42,0.16)] sm:h-[4.2rem] sm:w-[4.2rem]">
+                  <span className="home-like-hover-shell relative block h-[3.7rem] w-[3.7rem] overflow-hidden rounded-[0.95rem] border border-neutral-200 bg-white shadow-[0_6px_16px_rgba(15,23,42,0.1)] transition duration-300 group-hover:-translate-y-0.5 group-hover:shadow-[0_10px_24px_rgba(15,23,42,0.16)] sm:h-[4.2rem] sm:w-[4.2rem]">
                     <Image
                       src={travel.cover}
                       alt={`${travel.zhName} 缩略图`}
                       fill
-                      className="object-cover transition duration-500 group-hover:scale-[1.04]"
+                      className="object-cover"
                       sizes="(max-width: 640px) 59px, 67px"
                     />
                   </span>
@@ -76,14 +76,14 @@ function TravelCard({ travel }: { travel: Travel }) {
   return (
     <Link
       href={`/travel/${travel.slug}`}
-      className="group relative block overflow-hidden rounded-[2rem] bg-neutral-950 shadow-[0_12px_40px_rgba(15,23,42,0.08)] transition duration-300 hover:-translate-y-1 hover:shadow-[0_20px_54px_rgba(15,23,42,0.16)]"
+      className="travel-card-hover-shell group relative block overflow-hidden rounded-[2rem] bg-neutral-950 shadow-[0_12px_40px_rgba(15,23,42,0.08)] hover:shadow-[0_20px_54px_rgba(15,23,42,0.16)]"
     >
       <div className="relative aspect-[4/5] sm:aspect-[16/11] lg:aspect-[5/4]">
         <Image
           src={travel.cover}
           alt={travel.cardTitle}
           fill
-          className="object-cover transition duration-700 group-hover:scale-[1.04]"
+          className="object-cover"
           sizes="(max-width: 1024px) 100vw, 50vw"
         />
         <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(10,10,10,0.1),rgba(10,10,10,0.04)_30%,rgba(10,10,10,0.72))]" />
