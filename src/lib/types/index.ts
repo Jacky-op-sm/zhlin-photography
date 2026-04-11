@@ -142,6 +142,7 @@ export interface TravelCollection {
 export interface HobbyItem {
   name: string;
   why: string;
+  fullWhy?: string;
   rating?: string;
   date?: string;
 }

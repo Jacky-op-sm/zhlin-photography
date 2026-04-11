@@ -96,6 +96,7 @@ export interface Travel {
 export interface HobbyItem {
   name: string;
   why: string;
+  fullWhy?: string;
   rating?: string;
   date?: string;
 }

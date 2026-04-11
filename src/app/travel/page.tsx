@@ -10,34 +10,43 @@ export const metadata = {
 
 export default async function TravelPage() {
   const travelEntries = await getAllTravel();
-  const orderedSlugs = ['nanjing', 'hangzhou', 'shanghai', 'beijing', 'dongbei', 'japan'];
-  const orderIndex = new Map<string, number>(orderedSlugs.map((slug, index) => [slug, index]));
   const sortedTravelEntries = [...travelEntries].sort((a, b) => {
-    return (orderIndex.get(a.slug) ?? Number.MAX_SAFE_INTEGER) - (orderIndex.get(b.slug) ?? Number.MAX_SAFE_INTEGER);
+    const byPeriod = getTravelSortValue(b.period) - getTravelSortValue(a.period);
+    if (byPeriod !== 0) return byPeriod;
+    return a.zhName.localeCompare(b.zhName, 'zh-CN');
   });
 
   return (
-    <main className="min-h-screen bg-[rgba(245,245,245,1)] text-neutral-950">
-      <section className="relative overflow-hidden border-b border-black/10 bg-neutral-950 text-white">
-        <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_right,rgba(255,255,255,0.12),transparent_38%),radial-gradient(circle_at_bottom_left,rgba(244,114,182,0.18),transparent_40%)]" />
-        <div className="relative mx-auto max-w-7xl px-6 py-20 sm:py-24 lg:py-28">
-          <p className="text-xs uppercase tracking-[0.45em] text-white/45">Travel</p>
-          <div className="mt-6 max-w-4xl space-y-6">
-            <h1 className="text-4xl font-semibold tracking-tight sm:text-5xl lg:text-7xl">
-              6 城路书，重新整理路上的记忆。
-            </h1>
-            <p className="max-w-2xl text-base leading-8 text-white/72 sm:text-lg">
-              这里把旧站里的南京、杭州、上海、北京、东北和日本重新编排成现代化的旅行页面。
-              每一页都保留了原来的叙事气质，同时让阅读、跳转和图片浏览更顺手。
-            </p>
-          </div>
-          <div className="mt-10 flex flex-wrap gap-3 text-sm text-white/68">
-            {['南京', '杭州', '上海', '北京', '东北', '日本'].map((item) => (
-              <span key={item} className="rounded-full border border-white/15 bg-white/8 px-4 py-2 backdrop-blur">
-                {item}
-              </span>
+    <main className="min-h-screen bg-[rgba(245,245,247,1)] text-neutral-950">
+      <section className="bg-white">
+        <div className="mx-auto max-w-7xl px-6">
+          <ul
+            className="flex flex-wrap items-start justify-center gap-x-9 gap-y-10 py-10 sm:gap-x-12 sm:py-12 lg:gap-x-14"
+            aria-label="旅行地点快捷导航"
+          >
+            {sortedTravelEntries.map((travel) => (
+              <li key={travel.slug} className="w-[7.5rem] text-center sm:w-[8.25rem]">
+                <Link
+                  href={`/travel/${travel.slug}`}
+                  className="group inline-flex w-full flex-col items-center text-neutral-800"
+                  aria-label={`前往 ${travel.zhName} 旅行页`}
+                >
+                  <span className="relative block h-[3.7rem] w-[3.7rem] overflow-hidden rounded-[0.95rem] border border-neutral-200 bg-white shadow-[0_6px_16px_rgba(15,23,42,0.1)] transition duration-300 group-hover:-translate-y-0.5 group-hover:shadow-[0_10px_24px_rgba(15,23,42,0.16)] sm:h-[4.2rem] sm:w-[4.2rem]">
+                    <Image
+                      src={travel.cover}
+                      alt={`${travel.zhName} 缩略图`}
+                      fill
+                      className="object-cover transition duration-500 group-hover:scale-[1.04]"
+                      sizes="(max-width: 640px) 59px, 67px"
+                    />
+                  </span>
+                  <span className="mt-3 text-[1.18rem] font-medium leading-tight tracking-[-0.015em] text-neutral-700">
+                    {travel.zhName}
+                  </span>
+                </Link>
+              </li>
             ))}
-          </div>
+          </ul>
         </div>
       </section>
 
@@ -67,7 +76,7 @@ function TravelCard({ travel }: { travel: Travel }) {
   return (
     <Link
       href={`/travel/${travel.slug}`}
-      className="group relative block overflow-hidden rounded-[2rem] border border-black/10 bg-neutral-950 shadow-[0_12px_40px_rgba(15,23,42,0.08)] transition duration-300 hover:-translate-y-1 hover:shadow-[0_20px_54px_rgba(15,23,42,0.16)]"
+      className="group relative block overflow-hidden rounded-[2rem] bg-neutral-950 shadow-[0_12px_40px_rgba(15,23,42,0.08)] transition duration-300 hover:-translate-y-1 hover:shadow-[0_20px_54px_rgba(15,23,42,0.16)]"
     >
       <div className="relative aspect-[4/5] sm:aspect-[16/11] lg:aspect-[5/4]">
         <Image
@@ -79,15 +88,9 @@ function TravelCard({ travel }: { travel: Travel }) {
         />
         <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(10,10,10,0.1),rgba(10,10,10,0.04)_30%,rgba(10,10,10,0.72))]" />
 
-        <div className="absolute left-5 top-5 z-10">
-          <span className="inline-flex rounded-full border border-white/50 bg-white/[0.18] px-3 py-2 text-[11px] font-semibold uppercase tracking-[0.3em] text-white shadow-[0_10px_24px_rgba(15,23,42,0.14)] backdrop-blur-md">
-            {travel.period}
-          </span>
-        </div>
-
         <div className="absolute inset-x-0 bottom-0 z-10 flex items-end justify-between gap-4 p-5 sm:p-6">
           <div className="min-w-0 space-y-1.5">
-            <p className="text-[11px] font-semibold uppercase tracking-[0.42em] text-white/82 drop-shadow-[0_4px_16px_rgba(0,0,0,0.28)] sm:text-xs">
+            <p className="text-[11px] font-semibold uppercase tracking-[0.42em] text-white drop-shadow-[0_4px_16px_rgba(0,0,0,0.28)] sm:text-xs">
               {pinyin}
             </p>
             <p className="text-[1.75rem] font-semibold tracking-tight text-white drop-shadow-[0_6px_20px_rgba(0,0,0,0.35)] sm:text-[2rem]">
@@ -95,11 +98,34 @@ function TravelCard({ travel }: { travel: Travel }) {
             </p>
           </div>
 
-          <span className="inline-flex shrink-0 rounded-full border border-white/20 bg-white/12 px-4 py-2 text-sm font-medium text-white backdrop-blur-md transition group-hover:translate-x-1">
+          <span className="inline-flex shrink-0 rounded-full bg-white px-4 py-2 text-sm font-medium text-neutral-950 transition group-hover:translate-x-1">
             阅读更多
           </span>
         </div>
       </div>
     </Link>
   );
+}
+
+function getTravelSortValue(period: string): number {
+  if (period.includes('至今')) {
+    return Number.MAX_SAFE_INTEGER;
+  }
+
+  const regex = /(\d{4})\s*年\s*(\d{1,2})\s*月/g;
+  let latestYear = 0;
+  let latestMonth = 0;
+  let match: RegExpExecArray | null = regex.exec(period);
+
+  while (match) {
+    latestYear = Number(match[1]);
+    latestMonth = Number(match[2]);
+    match = regex.exec(period);
+  }
+
+  if (latestYear === 0 || latestMonth === 0) {
+    return 0;
+  }
+
+  return latestYear * 100 + latestMonth;
 }

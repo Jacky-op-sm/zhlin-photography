@@ -38,7 +38,7 @@ export default async function TravelDetailPage({ params }: { params: { slug: str
   const { html: bodyHtml, headings } = buildTravelStory(travel.bodyHtml);
 
   return (
-    <main className="min-h-screen bg-[rgba(245,245,245,1)] text-neutral-950">
+    <main className="min-h-screen bg-[rgba(245, 245, 247, 1)] text-neutral-950">
       <section className="relative isolate min-h-[78vh] overflow-hidden bg-neutral-950 text-white sm:min-h-[82vh] lg:min-h-[88vh]">
         <div className="absolute inset-0">
           <Image
@@ -106,7 +106,7 @@ export default async function TravelDetailPage({ params }: { params: { slug: str
                 <span className="text-[11px] uppercase tracking-[0.3em] text-neutral-400">TOC</span>
               </summary>
 
-              <nav className="mt-3 border-t border-black/6 px-2 pt-4" aria-label="目录">
+              <nav className="mt-3 px-2 pt-4" aria-label="目录">
                 <p className="text-[11px] uppercase tracking-[0.35em] text-neutral-400">章节导航</p>
                 {headings.length ? (
                   <ol className="mt-4 space-y-1.5">
@@ -147,7 +147,7 @@ export default async function TravelDetailPage({ params }: { params: { slug: str
 
 function MetaRow({ label, value }: { label: string; value: string }) {
   return (
-    <div className="flex items-start justify-between gap-4 border-b border-white/10 pb-4 last:border-0 last:pb-0">
+    <div className="flex items-start justify-between gap-4 pb-4 last:pb-0">
       <dt className="text-white/45">{label}</dt>
       <dd className="text-right text-white">{value}</dd>
     </div>
@@ -174,7 +174,7 @@ function TravelStory({ bodyHtml }: { bodyHtml: string }) {
         '[&_p.nanjing-rb-channel]:text-xs [&_p.nanjing-rb-channel]:uppercase [&_p.nanjing-rb-channel]:tracking-[0.35em] [&_p.nanjing-rb-channel]:text-neutral-500',
         '[&_p.nanjing-rb-section-index]:text-xs [&_p.nanjing-rb-section-index]:uppercase [&_p.nanjing-rb-section-index]:tracking-[0.35em] [&_p.nanjing-rb-section-index]:text-neutral-400',
         '[&_p.nanjing-rb-separator]:text-center [&_p.nanjing-rb-separator]:tracking-[0.5em] [&_p.nanjing-rb-separator]:text-neutral-400',
-        '[&_div.nanjing-rb-break]:my-8 [&_div.nanjing-rb-break]:h-px [&_div.nanjing-rb-break]:bg-black/10',
+        '[&_div.nanjing-rb-break]:hidden',
         '[&_ul]:flex [&_ul]:flex-wrap [&_ul]:gap-2',
         '[&_ul>li]:list-none',
         '[&_ul.nanjing-rb-tags>li]:rounded-full [&_ul.nanjing-rb-tags>li]:border [&_ul.nanjing-rb-tags>li]:border-black/10 [&_ul.nanjing-rb-tags>li]:bg-[#f8f4ed] [&_ul.nanjing-rb-tags>li]:px-3 [&_ul.nanjing-rb-tags>li]:py-1 [&_ul.nanjing-rb-tags>li]:text-xs [&_ul.nanjing-rb-tags>li]:text-neutral-600',

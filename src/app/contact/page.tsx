@@ -200,7 +200,7 @@ export default function ContactPage() {
 
           <input type="text" name="website" tabIndex={-1} autoComplete="off" className="hidden" />
 
-          <div className="flex flex-col items-start gap-4 border-t border-black/8 pt-4 sm:flex-row sm:items-center">
+          <div className="flex flex-col items-start gap-4 pt-4 sm:flex-row sm:items-center">
             <button
               type="submit"
               disabled={status === 'pending' || !canSubmit}
