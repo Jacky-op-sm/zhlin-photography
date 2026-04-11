@@ -266,7 +266,7 @@ export default async function HobbyPage() {
     电影: 'film',
     游戏: 'game',
   }
-  const hobbyThemeVars: CSSProperties = {
+  const hobbyThemeVars: CSSProperties & Record<`--${string}`, string> = {
     '--portfolio-bg': 'rgba(245, 245, 245, 1)',
     '--portfolio-surface': 'rgba(245, 245, 245, 1)',
     '--portfolio-surface-alt': 'rgba(241, 241, 241, 1)',
