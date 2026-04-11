@@ -39,7 +39,7 @@
   --transition-slow: 300ms ease;
 
   /* 首页 portfolio token */
-  --portfolio-bg: #ddd4c8;
+  --portfolio-bg: rgba(245, 245, 245, 1);
   --portfolio-surface: #f4efe7;
   --portfolio-surface-alt: #ece3d7;
   --portfolio-panel: rgba(249, 244, 236, 0.9);
@@ -478,9 +478,9 @@ body {
   --font-sans: 'Archivo';
   --font-display: 'Archivo Black';
 
-  --site-bg: #f6f4ef;
-  --site-bg-soft: #f1eee7;
-  --site-surface: #ffffff;
+  --site-bg: rgba(245, 245, 245, 1);
+  --site-bg-soft: rgba(245, 245, 245, 1);
+  --site-surface: rgba(245, 245, 245, 1);
   --site-text: #141311;
   --site-muted: rgba(20, 19, 17, 0.72);
   --site-soft: rgba(20, 19, 17, 0.52);
@@ -515,12 +515,13 @@ body {
   right: 0;
   z-index: 60;
   height: var(--site-header-height);
-  border-bottom: 1px solid transparent;
+  background: rgba(245, 245, 245, 1);
+  border-bottom: 1px solid var(--site-border);
   transition: background-color 220ms ease, border-color 220ms ease, box-shadow 220ms ease;
 }
 
 .site-header.is-scrolled {
-  background: rgba(246, 244, 239, 0.92);
+  background: rgba(245, 245, 245, 0.96);
   border-color: var(--site-border);
   box-shadow: 0 10px 28px rgba(15, 14, 12, 0.08);
   backdrop-filter: blur(12px);
@@ -566,8 +567,8 @@ body {
   display: inline-flex;
   align-items: center;
   gap: 0.32rem;
-  font-size: 0.72rem;
-  font-weight: 700;
+  font-size: 0.86rem;
+  font-weight: 800;
   letter-spacing: 0.26em;
   text-transform: uppercase;
   color: var(--site-soft);
@@ -618,7 +619,8 @@ body {
 .site-nav-dropdown-link {
   display: block;
   padding: 0.5rem 0.95rem;
-  font-size: 0.7rem;
+  font-size: 0.84rem;
+  font-weight: 800;
   letter-spacing: 0.2em;
   text-transform: uppercase;
   color: var(--site-soft);
@@ -649,7 +651,7 @@ body {
 
 .site-mobile-panel {
   border-top: 1px solid var(--site-border);
-  background: rgba(246, 244, 239, 0.98);
+  background: rgba(245, 245, 245, 0.98);
   backdrop-filter: blur(12px);
   padding: 0.8rem 0 1rem;
 }
@@ -687,7 +689,7 @@ body {
 }
 
 .home-band--light {
-  background: var(--site-bg-soft);
+  background: rgba(245, 245, 245, 1);
 }
 
 .home-band--white {
@@ -696,12 +698,13 @@ body {
 
 .home-hero-band {
   border-top: 0;
-  padding-top: clamp(5.75rem, 10vw, 9rem);
+  padding-top: clamp(4.8rem, 8.3vw, 7.5rem);
 }
 
 .home-hero-grid {
   display: grid;
-  gap: clamp(2.2rem, 4vw, 4.5rem);
+  gap: 3rem;
+  padding-inline: clamp(4.95rem, 7.15vw, 7.43rem);
 }
 
 .home-overline {
@@ -716,8 +719,8 @@ body {
 .home-hero-copy h1 {
   margin-top: 1.5rem;
   max-width: 13ch;
-  font-size: clamp(3rem, 8.4vw, 7.15rem);
-  line-height: 0.86;
+  font-size: clamp(1.5rem, 4.5vw, 3.5rem);
+  line-height: 1.35;
   letter-spacing: -0.055em;
   text-transform: uppercase;
   font-family: var(--font-display), var(--font-sans), sans-serif;
@@ -804,89 +807,385 @@ body {
 .home-section-head {
   max-width: 52rem;
   margin-inline: auto;
-  text-align: center;
-}
-
-.home-section-head h2 {
-  margin-top: 1.25rem;
-  font-size: clamp(2.2rem, 4.9vw, 4.85rem);
-  line-height: 0.9;
-  letter-spacing: -0.05em;
-  text-transform: uppercase;
-  font-family: var(--font-display), var(--font-sans), sans-serif;
-}
-
-.home-section-head p {
-  margin-top: 1.15rem;
-  color: var(--site-muted);
-  font-size: 1rem;
-  line-height: 1.95;
+  text-align: left;
+  margin-bottom: clamp(2rem, 4vw, 3.5rem);
+  border-bottom: none;
 }
 
 .home-feature-grid {
-  margin-top: clamp(2.3rem, 5vw, 4.4rem);
   display: grid;
-  gap: clamp(1.7rem, 3vw, 2.8rem);
+  grid-template-columns: repeat(3, 1fr);
+  gap: clamp(0.8rem, 1.2vw, 1.2rem);
 }
 
 .home-feature-card {
   display: flex;
   flex-direction: column;
-  gap: 1rem;
+  gap: clamp(0.35rem, 0.6vw, 0.5rem);
+}
+
+.home-feature-card-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
 }
 
 .home-feature-image-link {
   display: block;
-  border-radius: 1.55rem;
   overflow: hidden;
+  border-radius: 0.5rem;
   border: 1px solid var(--site-border);
-  box-shadow: var(--site-shadow);
 }
 
 .home-feature-image {
   position: relative;
-  aspect-ratio: 4 / 5;
+  aspect-ratio: 1 / 1;
 }
 
 .home-feature-image img {
-  transition: transform 700ms ease, filter 300ms ease;
+  transition: none;
 }
 
 .home-feature-card:hover .home-feature-image img {
-  transform: scale(1.03);
-  filter: brightness(1.04);
-}
-
-.home-feature-body {
-  max-width: 26rem;
+  transform: none;
+  filter: none;
 }
 
 .home-feature-title {
   margin: 0;
-  font-size: 0.8rem;
+  font-size: 0.65rem;
   font-weight: 700;
-  letter-spacing: 0.25em;
+  letter-spacing: 0.35em;
   text-transform: uppercase;
   color: var(--site-soft);
 }
 
+.home-feature-body {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+}
+
 .home-feature-lead {
-  margin-top: 0.85rem;
-  font-size: 1.16rem;
-  line-height: 1.74;
-  letter-spacing: -0.01em;
+  margin: 0;
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
   color: var(--site-text);
 }
 
 .home-feature-text {
-  margin-top: 0.8rem;
-  font-size: 0.95rem;
-  line-height: 1.8;
+  margin: 0;
+  font-size: 0.85rem;
+  line-height: 1.65;
   color: var(--site-muted);
 }
 
-.home-feature-body .home-inline-link {
-  margin-top: 1.05rem;
+.home-see-more-link {
+  display: inline-flex;
+  align-items: center;
+  background: var(--site-text);
+  color: #fff;
+  padding: 0.35rem 0.85rem;
+  font-size: 0.6rem;
+  font-weight: 700;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  border-radius: 999px;
+  transition: opacity 200ms ease;
+  width: fit-content;
+}
+
+.home-see-more-link:hover {
+  text-decoration: none;
+  opacity: 0.8;
+}
+
+.home-feature-footer {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.home-feature-desc {
+  margin: 0;
+  font-size: 0.8rem;
+  line-height: 1.6;
+  color: var(--site-muted);
+}
+
+.home-photographer-section {
+  border-top: 1px solid var(--site-border);
+  background: #ffffff;
+  padding: clamp(4.2rem, 7vw, 6.4rem) 0 clamp(4.8rem, 8vw, 7.2rem);
+}
+
+.home-traveller-section {
+  border-top: 1px solid var(--site-border);
+  background: rgba(245, 245, 245, 1);
+  padding: clamp(4.2rem, 7vw, 6.4rem) 0 clamp(4.8rem, 8vw, 7.2rem);
+}
+
+.home-hobbyist-section {
+  border-top: 1px solid var(--site-border);
+  background: #ffffff;
+  padding: clamp(4.2rem, 7vw, 6.4rem) 0 clamp(4.8rem, 8vw, 7.2rem);
+}
+
+.home-hobbyist-grid {
+  margin-top: clamp(2.8rem, 5.2vw, 4.7rem);
+}
+
+.home-photographer-marquee-wrap {
+  width: min(calc(100% - (var(--site-page-padding) * 2)), 100%);
+  margin-inline: auto;
+  overflow: hidden;
+}
+
+.home-photographer-marquee {
+  display: inline-flex;
+  align-items: center;
+  width: fit-content;
+  margin: 0 auto;
+  transform: translateX(clamp(2.6rem, 4.8vw, 5.8rem));
+  padding-inline: clamp(1.4rem, 2vw, 2.4rem);
+  white-space: nowrap;
+  font-family: var(--font-display), var(--font-sans), sans-serif;
+  font-size: clamp(1.4rem, 4.4vw, 5.1rem);
+  line-height: 0.86;
+  letter-spacing: -0.02em;
+  text-transform: uppercase;
+  background: linear-gradient(
+    90deg,
+    rgba(0, 0, 0, 0) 0%,
+    #000000 14%,
+    #000000 86%,
+    rgba(0, 0, 0, 0) 100%
+  );
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+.home-photographer-marquee span {
+  display: inline-block;
+}
+
+.home-photographer-grid {
+  margin-top: clamp(3.4rem, 6.2vw, 5.6rem);
+  display: grid;
+  width: min(100%, 1393px);
+  margin-inline: auto;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: clamp(4.4rem, 8.3vw, 9.4rem);
+}
+
+.home-photographer-card {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+.home-photographer-card h2 {
+  margin: 0 0 clamp(3.4rem, 5.1vw, 4.7rem);
+  font-family: var(--font-display), var(--font-sans), sans-serif;
+  font-size: clamp(1.25rem, 2.05vw, 2.35rem);
+  font-weight: 900;
+  line-height: 1;
+  letter-spacing: -0.01em;
+  text-transform: uppercase;
+  text-align: center;
+}
+
+.home-photographer-card h2 a,
+.home-photographer-image-link {
+  color: #000;
+  text-decoration: none;
+}
+
+.home-photographer-image-link {
+  display: block;
+}
+
+.home-photographer-image {
+  position: relative;
+  overflow: hidden;
+  border-radius: clamp(2rem, 3vw, 3rem);
+  aspect-ratio: 4 / 5;
+}
+
+.home-photographer-image img {
+  transition: none;
+}
+
+.home-photographer-quote {
+  margin: 0 auto 0;
+  max-width: 30ch;
+  font-family: 'Iowan Old Style', 'Palatino Linotype', 'URW Palladio L', 'Book Antiqua', Georgia, serif;
+  font-size: clamp(0.82rem, 1.15vw, 1.38rem);
+  font-style: italic;
+  line-height: 1.38;
+  text-align: center;
+  color: #111;
+}
+
+.home-photographer-body {
+  margin: clamp(0.95rem, 1.3vw, 1.2rem) auto 0;
+  max-width: 32ch;
+  font-family: 'Iowan Old Style', 'Palatino Linotype', 'URW Palladio L', 'Book Antiqua', Georgia, serif;
+  font-size: clamp(0.74rem, 0.8vw, 0.89rem);
+  line-height: 1.48;
+  text-align: center;
+  color: #161616;
+}
+
+.home-photographer-copy {
+  margin-top: clamp(3.4rem, 5.1vw, 4.7rem);
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+}
+
+.home-traveller-copy {
+  margin-top: clamp(3.4rem, 5.1vw, 4.7rem);
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+}
+
+.home-traveller-place {
+  margin: 0;
+  font-family: var(--font-display), var(--font-sans), sans-serif;
+  font-size: clamp(1.25rem, 2.05vw, 2.35rem);
+  font-weight: 900;
+  line-height: 1;
+  letter-spacing: -0.01em;
+  text-transform: uppercase;
+  text-align: center;
+  color: #111;
+}
+
+.home-traveller-body {
+  margin: clamp(0.95rem, 1.3vw, 1.2rem) auto 0;
+  max-width: 32ch;
+  font-family: 'Iowan Old Style', 'Palatino Linotype', 'URW Palladio L', 'Book Antiqua', Georgia, serif;
+  font-size: clamp(0.74rem, 0.8vw, 0.89rem);
+  line-height: 1.48;
+  text-align: center;
+  color: #161616;
+}
+
+.home-hobbyist-copy {
+  margin-bottom: clamp(2.25rem, 3.4vw, 3.15rem);
+}
+
+.home-hobbyist-title {
+  margin: 0;
+  font-family: var(--font-display), var(--font-sans), sans-serif;
+  font-size: clamp(1.25rem, 2.05vw, 2.35rem);
+  font-weight: 900;
+  line-height: 1;
+  letter-spacing: -0.01em;
+  text-transform: uppercase;
+  text-align: center;
+}
+
+.home-hobbyist-title a {
+  color: #000;
+  text-decoration: none;
+}
+
+.home-hobbyist-body {
+  margin: clamp(0.79rem, 1.08vw, 1rem) auto 0;
+  max-width: 32ch;
+  font-family: 'Iowan Old Style', 'Palatino Linotype', 'URW Palladio L', 'Book Antiqua', Georgia, serif;
+  font-size: clamp(0.74rem, 0.8vw, 0.89rem);
+  line-height: 1.48;
+  text-align: center;
+  color: #161616;
+}
+
+.home-photographer-see-more {
+  margin: clamp(1.5rem, 2vw, 2rem) auto 0;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  color: #ffffff;
+  text-decoration: none;
+  text-transform: uppercase;
+  letter-spacing: 0.11em;
+  font-size: clamp(0.78rem, 0.86vw, 0.95rem);
+  font-weight: 700;
+  line-height: 1.2;
+  background: #111111;
+  border: 1px solid #111111;
+  border-radius: 0.64rem;
+  padding: 0.5rem 1rem 0.48rem;
+}
+
+.home-photographer-see-more span {
+  border-bottom: 0;
+  padding-bottom: 0;
+}
+
+.home-photographer-see-more:hover {
+  opacity: 0.82;
+}
+
+@media (max-width: 767px) {
+  .home-feature-grid {
+    grid-template-columns: repeat(3, 1fr);
+    gap: clamp(0.5rem, 2vw, 0.8rem);
+  }
+
+  .home-feature-image {
+    aspect-ratio: 1 / 1;
+  }
+}
+
+@media (max-width: 1199px) {
+  .home-photographer-card h2 {
+    font-size: clamp(1.3rem, 3.1vw, 2.15rem);
+  }
+}
+
+@media (max-width: 991px) {
+  .home-photographer-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 767px) {
+  .home-photographer-marquee {
+    margin: 0;
+    padding-inline: 0;
+    transform: none;
+    animation: photographer-marquee-loop 11s linear infinite;
+    will-change: transform;
+  }
+
+  @keyframes photographer-marquee-loop {
+    from {
+      transform: translateX(0);
+    }
+    to {
+      transform: translateX(-33.3333%);
+    }
+  }
+
+  .home-photographer-grid {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 2.6rem;
+  }
+
+  .home-photographer-card h2 {
+    margin-bottom: 1rem;
+  }
+
+  .home-photographer-image {
+    aspect-ratio: 3 / 4;
+  }
 }
 
 /* ============================
@@ -1101,7 +1400,7 @@ body {
 
 .photo-index-series-grid {
   display: grid;
-  gap: clamp(1.25rem, 2vw, 2rem);
+  gap: 1.25rem;
 }
 
 .photo-index-card-media-link {
@@ -1110,9 +1409,10 @@ body {
 
 .photo-index-card-media {
   position: relative;
-  aspect-ratio: 3 / 4;
+  aspect-ratio: 4 / 3;
   overflow: hidden;
   background: #e8e5dd;
+  border-radius: 1.15rem;
 }
 
 .photo-index-card-media img {
@@ -1153,13 +1453,13 @@ body {
 }
 
 .photo-gallery-masonry {
-  column-gap: clamp(0.72rem, 1.15vw, 1.2rem);
+  column-gap: 1rem;
 }
 
 .photo-gallery-item {
   display: block;
   width: 100%;
-  margin-bottom: clamp(0.72rem, 1.15vw, 1.2rem);
+  margin-bottom: 1rem;
   break-inside: avoid;
   cursor: zoom-in;
 }
@@ -1220,9 +1520,9 @@ body {
 }
 
 .photo-publications-grid {
-  margin-top: clamp(1.5rem, 2.3vw, 2.25rem);
+  margin-top: 2rem;
   display: grid;
-  gap: clamp(1rem, 1.8vw, 1.6rem);
+  gap: 1.25rem;
 }
 
 .photo-publication-media {

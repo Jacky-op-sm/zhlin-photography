@@ -1,5 +1,6 @@
 import { getHobby } from '@/lib/data/hobby'
 import type { Hobby, HobbyCategory, HobbyItem, MonthlyDigest } from '@/lib/types'
+import type { CSSProperties } from 'react'
 
 function formatMonth(month: string) {
   const match = month.match(/^(\d{4})-(\d{1,2})$/)
@@ -58,34 +59,22 @@ type EntryTone = {
 
 const entryTones: Record<'reading' | 'film' | 'game', EntryTone> = {
   reading: {
-    panel:
-      'border-[#d8cfbf]/80 bg-[#f5f0e8]/80 dark:border-[#5f564a]/70 dark:bg-[#2b241e]/62',
-    badge:
-      'border-[#d1c8b9]/80 bg-[#f2ece3]/80 text-[#665844] dark:border-[#61584d]/70 dark:bg-[#302921]/70 dark:text-[#d5cab9]',
-    item:
-      'border-[#d8cebd]/70 bg-[#f9f5ef]/84 dark:border-[#62584b]/70 dark:bg-[#332b23]/74',
-    details:
-      'border-[#d2c8ba]/75 bg-[#f5f0e6]/80 text-[#675946] dark:border-[#5d5448]/70 dark:bg-[#2f2821]/72 dark:text-[#d3c8b6]',
+    panel: 'border-[color:var(--portfolio-border)] bg-[color:var(--portfolio-panel)]',
+    badge: 'border-[color:var(--portfolio-border)] bg-[color:var(--portfolio-bg)] text-[color:var(--portfolio-muted)]',
+    item: 'border-[color:var(--portfolio-border)] bg-[color:var(--portfolio-bg)]',
+    details: 'border-[color:var(--portfolio-border)] bg-[color:var(--portfolio-bg)] text-[color:var(--portfolio-muted)]',
   },
   film: {
-    panel:
-      'border-[#dccfca]/80 bg-[#f4eeec]/80 dark:border-[#62524c]/70 dark:bg-[#2d231f]/62',
-    badge:
-      'border-[#d7c8c3]/80 bg-[#f2ebea]/80 text-[#6a5550] dark:border-[#644f4a]/70 dark:bg-[#322622]/70 dark:text-[#d7c2bc]',
-    item:
-      'border-[#dccdc9]/70 bg-[#f8f2f0]/84 dark:border-[#634f4a]/70 dark:bg-[#352723]/74',
-    details:
-      'border-[#d7c8c4]/75 bg-[#f3ecea]/80 text-[#6b5551] dark:border-[#5f4b47]/70 dark:bg-[#302420]/72 dark:text-[#d6c1bb]',
+    panel: 'border-[color:var(--portfolio-border)] bg-[color:var(--portfolio-panel)]',
+    badge: 'border-[color:var(--portfolio-border)] bg-[color:var(--portfolio-bg)] text-[color:var(--portfolio-muted)]',
+    item: 'border-[color:var(--portfolio-border)] bg-[color:var(--portfolio-bg)]',
+    details: 'border-[color:var(--portfolio-border)] bg-[color:var(--portfolio-bg)] text-[color:var(--portfolio-muted)]',
   },
   game: {
-    panel:
-      'border-[#cfd8ca]/80 bg-[#edf2ea]/82 dark:border-[#4f5c4b]/70 dark:bg-[#1f2620]/64',
-    badge:
-      'border-[#c7d1c2]/80 bg-[#e9efe6]/82 text-[#495d46] dark:border-[#4f5e4c]/70 dark:bg-[#242d24]/70 dark:text-[#c2d0bf]',
-    item:
-      'border-[#ccd5c7]/70 bg-[#f2f6ef]/86 dark:border-[#536250]/70 dark:bg-[#273028]/74',
-    details:
-      'border-[#c5cfbf]/75 bg-[#e9efe5]/82 text-[#4a5f47] dark:border-[#4d5c4a]/70 dark:bg-[#232c24]/72 dark:text-[#c1cebe]',
+    panel: 'border-[color:var(--portfolio-border)] bg-[color:var(--portfolio-panel)]',
+    badge: 'border-[color:var(--portfolio-border)] bg-[color:var(--portfolio-bg)] text-[color:var(--portfolio-muted)]',
+    item: 'border-[color:var(--portfolio-border)] bg-[color:var(--portfolio-bg)]',
+    details: 'border-[color:var(--portfolio-border)] bg-[color:var(--portfolio-bg)] text-[color:var(--portfolio-muted)]',
   },
 }
 
@@ -108,13 +97,15 @@ function CategoryCard({
   category,
   tone,
   lolProfile,
+  anchorId,
 }: {
   category: HobbyCategory
   tone: EntryTone
   lolProfile?: Hobby['lolProfile']
+  anchorId?: string
 }) {
   return (
-    <article className={`rounded-[1.7rem] border p-5 sm:p-6 ${tone.panel}`}>
+    <article id={anchorId} className={`rounded-[1.7rem] border p-5 sm:p-6 ${tone.panel}`}>
       <div className="flex items-center justify-between gap-4">
         <h3 className="text-[1.06rem] font-semibold tracking-[-0.015em] text-[color:var(--portfolio-text)]">
           {category.title}
@@ -270,17 +261,30 @@ export default async function HobbyPage() {
   ]
 
   const toneOrder: Array<'reading' | 'film' | 'game'> = ['reading', 'film', 'game']
+  const categoryAnchorMap: Record<string, string> = {
+    阅读: 'reading',
+    电影: 'film',
+    游戏: 'game',
+  }
+  const hobbyThemeVars: CSSProperties = {
+    '--portfolio-bg': 'rgba(245, 245, 245, 1)',
+    '--portfolio-surface': 'rgba(245, 245, 245, 1)',
+    '--portfolio-surface-alt': 'rgba(241, 241, 241, 1)',
+    '--portfolio-panel': 'rgba(232, 232, 232, 1)',
+    '--portfolio-border': 'rgba(196, 196, 196, 0.9)',
+  }
 
   return (
-    <main className="relative isolate min-h-screen overflow-hidden bg-[var(--portfolio-bg)] text-[var(--portfolio-text)]">
-      <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_top_left,rgba(248,241,233,0.45),transparent_35%),radial-gradient(circle_at_top_right,rgba(240,233,228,0.32),transparent_34%)] dark:bg-[radial-gradient(circle_at_top_left,rgba(244,237,226,0.08),transparent_32%),radial-gradient(circle_at_top_right,rgba(244,237,226,0.06),transparent_32%)]" />
-
+    <main
+      className="relative isolate min-h-screen overflow-hidden bg-[var(--portfolio-bg)] text-[var(--portfolio-text)]"
+      style={hobbyThemeVars}
+    >
       <div className="portfolio-shell relative py-[clamp(3.5rem,8vw,6.25rem)]">
         <section className="grid gap-10 lg:grid-cols-[1.12fr_0.88fr] lg:items-end">
           <div className="max-w-4xl">
             <p className="portfolio-eyebrow">Hobby</p>
-            <h1 className="mt-6 max-w-[17ch] text-[clamp(2.45rem,6vw,4.8rem)] font-semibold leading-[0.95] tracking-[-0.05em] text-[color:var(--portfolio-text)]">
-              阅读、电影、游戏，都是我持续观察世界的入口。
+            <h1 className="mt-6 max-w-[17ch] text-[clamp(2.45rem,6vw,4.8rem)] font-semibold leading-[1.25] tracking-[-0.05em] text-[color:var(--portfolio-text)]">
+              阅读、电影、游戏，是坚持下来的爱好。
             </h1>
             <p className="mt-7 max-w-3xl text-[1.02rem] leading-8 text-[color:var(--portfolio-muted)] sm:text-[1.08rem]">
               {hobby.intro}
@@ -326,6 +330,7 @@ export default async function HobbyPage() {
                   category={category}
                   tone={entryTones[toneOrder[index] ?? 'reading']}
                   lolProfile={category.title === '游戏' ? hobby.lolProfile : undefined}
+                  anchorId={categoryAnchorMap[category.title]}
                 />
               ))}
             </div>

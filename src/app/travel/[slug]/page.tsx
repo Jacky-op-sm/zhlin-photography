@@ -38,7 +38,7 @@ export default async function TravelDetailPage({ params }: { params: { slug: str
   const { html: bodyHtml, headings } = buildTravelStory(travel.bodyHtml);
 
   return (
-    <main className="min-h-screen bg-[#f3efe7] text-neutral-950">
+    <main className="min-h-screen bg-[rgba(245,245,245,1)] text-neutral-950">
       <section className="relative isolate min-h-[78vh] overflow-hidden bg-neutral-950 text-white sm:min-h-[82vh] lg:min-h-[88vh]">
         <div className="absolute inset-0">
           <Image

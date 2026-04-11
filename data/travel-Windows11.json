@@ -1,0 +1,81 @@
+{
+  "travels": [
+    {
+      "slug": "nanjing",
+      "zhName": "南京",
+      "enName": "Nanjing",
+      "period": "2026年2月",
+      "cardTitle": "南京游记",
+      "cardSub": "中山陵与梧桐",
+      "cover": "https://images.unsplash.com/photo-1537531383496-f4749b8032cf?w=1200&q=80",
+      "coverLocal": "/assets/travel/nanjing-hero-wutong-street.jpg",
+      "summary": "阴雨和梧桐构成了南京的春天底色，适合做低饱和、慢节奏的影像记录。"
+    },
+    {
+      "slug": "beijing",
+      "zhName": "北京",
+      "enName": "Beijing",
+      "period": "2024年7月",
+      "cardTitle": "北京游记",
+      "cardSub": "城墙与烟火",
+      "cover": "https://images.unsplash.com/photo-1508804185872-d7badad00f7d?w=1200&q=80",
+      "coverLocal": "/assets/travel/beijing/beijing-hero-kunming-lake.jpeg",
+      "summary": "在冬天的北京，我把行程放慢，用步行连接历史肌理与当代城市节奏。"
+    },
+    {
+      "slug": "hangzhou",
+      "zhName": "杭州",
+      "enName": "Hangzhou",
+      "period": "2024年7月-至今",
+      "cardTitle": "杭州游记",
+      "cardSub": "西湖与烟雨",
+      "cover": "https://images.unsplash.com/photo-1598887142487-3c854d51eabb?w=1200&q=80",
+      "coverLocal": "/assets/travel/hangzhou-front.jpeg",
+      "summary": "杭州的光线偏柔和，适合连续记录同一地点在天气变化中的细微差异。"
+    },
+    {
+      "slug": "shanghai",
+      "zhName": "上海",
+      "enName": "Shanghai",
+      "period": "2025年5月",
+      "cardTitle": "上海行记",
+      "cardSub": "街巷与夜骑",
+      "cover": "https://images.unsplash.com/photo-1537531383496-f4749b8032cf?w=1200&q=80",
+      "coverLocal": "/assets/travel/shanghai-hero-cityscape.jpg",
+      "summary": "上海适合做「界面感」叙事：历史建筑、商业空间与生活巷弄不断切换。"
+    },
+    {
+      "slug": "dongbei",
+      "zhName": "东北",
+      "enName": "Northeast",
+      "period": "2025年2月",
+      "cardTitle": "东北游记",
+      "cardSub": "雪乡与冰城",
+      "cover": "https://images.unsplash.com/photo-1516912481808-3406841bd33c?w=1200&q=80",
+      "coverLocal": "/assets/travel/dongbei-front.jpg",
+      "summary": "极寒环境会改变人的行动方式，也会改变光线在城市中的传播方式。"
+    },
+    {
+      "slug": "japan",
+      "zhName": "日本",
+      "enName": "Japan",
+      "period": "2025年9月",
+      "cardTitle": "日本游记",
+      "cardSub": "岛与城之间",
+      "cover": "https://images.unsplash.com/photo-1493976040374-85c8e12f0c0e?w=1200&q=80",
+      "coverLocal": "/assets/travel/japan-front.jpeg",
+      "summary": "从高松、直岛、小豆岛到京都与奈良，沿途记下移动中的风景、陌生人和日落。"
+    },
+    {
+      "slug": "huzhou",
+      "zhName": "湖州",
+      "enName": "Huzhou",
+      "period": "2026年4月",
+      "cardTitle": "湖州游记",
+      "cardSub": "南浔与古镇",
+      "cover": "https://images.unsplash.com/photo-1537531383496-f4749b8032cf?w=1200&q=80",
+      "coverLocal": "/assets/travel/huzhou/huzhou-hero.jpg",
+      "summary": "湖州的自行车道与南浔古镇，在陌生城市的冰饮店里读完村上的游记，用相机记录旅途中的日常与光影。"
+    }
+  ]
+}

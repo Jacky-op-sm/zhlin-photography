@@ -17,7 +17,7 @@ export default async function TravelPage() {
   });
 
   return (
-    <main className="min-h-screen bg-[#f3efe7] text-neutral-950">
+    <main className="min-h-screen bg-[rgba(245,245,245,1)] text-neutral-950">
       <section className="relative overflow-hidden border-b border-black/10 bg-neutral-950 text-white">
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_right,rgba(255,255,255,0.12),transparent_38%),radial-gradient(circle_at_bottom_left,rgba(244,114,182,0.18),transparent_40%)]" />
         <div className="relative mx-auto max-w-7xl px-6 py-20 sm:py-24 lg:py-28">

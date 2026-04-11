@@ -1,0 +1,871 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ============================
+   主题变量定义
+   ============================ */
+:root {
+  /* 亮色主题 */
+  --background: #ffffff;
+  --background-secondary: #f9fafb;
+  --background-tertiary: #f3f4f6;
+  --foreground: #111827;
+  --foreground-secondary: #4b5563;
+  --foreground-muted: #9ca3af;
+
+  /* 主题色 */
+  --primary: #d946ef;
+  --primary-hover: #c026d3;
+  --accent: #f59e0b;
+  --accent-secondary: #06b6d4;
+
+  /* 边框 */
+  --border: #e5e7eb;
+  --border-light: #f3f4f6;
+
+  /* 卡片 */
+  --card: #ffffff;
+  --card-hover: #f9fafb;
+
+  /* 阴影 */
+  --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+  --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.1);
+  --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.1);
+
+  /* 平滑过渡 */
+  --transition-fast: 150ms ease;
+  --transition-normal: 200ms ease;
+  --transition-slow: 300ms ease;
+}
+
+/* ============================
+   深色模式变量
+   ============================ */
+.dark {
+  --background: #0a0a0a;
+  --background-secondary: #171717;
+  --background-tertiary: #262626;
+  --foreground: #f9fafb;
+  --foreground-secondary: #d1d5db;
+  --foreground-muted: #9ca3af;
+
+  --primary: #d946ef;
+  --primary-hover: #a21caf;
+  --accent: #fbbf24;
+  --accent-secondary: #22d3ee;
+
+  --border: #404040;
+  --border-light: #262626;
+
+  --card: #171717;
+  --card-hover: #1f1f1f;
+
+  --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.3);
+  --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.4);
+  --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.5);
+}
+
+/* ============================
+   基础样式
+   ============================ */
+* {
+  border-color: var(--border);
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  color: var(--foreground);
+  background: var(--background);
+  transition:
+    background-color var(--transition-normal),
+    color var(--transition-normal);
+}
+
+/* ============================
+   排版优化
+   ============================ */
+@layer base {
+  h1, h2, h3, h4, h5, h6 {
+    font-weight: 600;
+    line-height: 1.3;
+    letter-spacing: -0.02em;
+  }
+
+  h1 {
+    font-size: 2.25rem;
+  }
+
+  h2 {
+    font-size: 1.875rem;
+  }
+
+  h3 {
+    font-size: 1.5rem;
+  }
+
+  h4 {
+    font-size: 1.25rem;
+  }
+
+  p {
+    line-height: 1.75;
+  }
+
+  a {
+    transition: color var(--transition-fast);
+  }
+
+  /* 深色模式下链接颜色 */
+  .dark a {
+    color: var(--foreground-secondary);
+  }
+
+  .dark a:hover {
+    color: var(--primary);
+  }
+}
+
+/* ============================
+   组件样式
+   ============================ */
+@layer components {
+  /* 按钮样式 */
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0.625rem 1.25rem;
+    font-size: 0.875rem;
+    font-weight: 500;
+    border-radius: 0.5rem;
+    transition: all var(--transition-fast);
+    cursor: pointer;
+    border: none;
+    outline: none;
+  }
+
+  .btn-primary {
+    background-color: var(--primary);
+    color: white;
+  }
+
+  .btn-primary:hover {
+    background-color: var(--primary-hover);
+    transform: translateY(-1px);
+    box-shadow: var(--shadow-md);
+  }
+
+  /* 卡片样式 */
+  .card {
+    background-color: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 0.75rem;
+    padding: 1.5rem;
+    transition: all var(--transition-normal);
+  }
+
+  .card:hover {
+    box-shadow: var(--shadow-lg);
+    transform: translateY(-2px);
+  }
+
+  /* 容器 */
+  .container-custom {
+    max-width: 1280px;
+    margin: 0 auto;
+    padding: 0 1.5rem;
+  }
+}
+
+/* ============================
+   工具类
+   ============================ */
+@layer utilities {
+  .text-balance {
+    text-wrap: balance;
+  }
+
+  /* 深色模式背景类 */
+  .bg-theme {
+    background-color: var(--background);
+  }
+
+  .bg-theme-secondary {
+    background-color: var(--background-secondary);
+  }
+
+  .text-theme {
+    color: var(--foreground);
+  }
+
+  .text-theme-secondary {
+    color: var(--foreground-secondary);
+  }
+
+  /* 边框颜色 */
+  .border-theme {
+    border-color: var(--border);
+  }
+
+  /* 过渡效果 */
+  .transition-theme {
+    transition:
+      background-color var(--transition-normal),
+      border-color var(--transition-normal),
+      color var(--transition-normal),
+      box-shadow var(--transition-normal);
+  }
+
+  /* 焦点环 */
+  .focus-ring {
+    outline: none;
+  }
+
+  .focus-ring:focus-visible {
+    ring: 2px;
+    ring-offset: 2px;
+    ring-color: var(--primary);
+  }
+}
+
+/* ============================
+   Travel 页面样式
+   ============================ */
+
+/* Travel 列表页引导区 */
+.travel-intro {
+  margin-bottom: 3rem;
+}
+
+.travel-intro .travel-heading {
+  font-size: clamp(2.6rem, 5vw, 4.5rem);
+  font-weight: 700;
+  letter-spacing: -0.04em;
+  margin: 0 0 0.75rem;
+  line-height: 1;
+  color: var(--foreground);
+}
+
+.travel-intro .travel-desc {
+  font-size: clamp(1.25rem, 2.5vw, 1.75rem);
+  color: var(--foreground-muted);
+  margin: 0;
+  line-height: 1.4;
+}
+
+/* Travel 卡片网格 */
+.travel-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 2.5rem;
+}
+
+@media (min-width: 640px) {
+  .travel-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 3rem;
+  }
+}
+
+/* 单个 Travel 卡片 */
+.travel-card {
+  display: flex;
+  flex-direction: column;
+}
+
+.travel-card-image-wrap {
+  position: relative;
+  aspect-ratio: 3 / 2;
+  overflow: hidden;
+  background: var(--background-tertiary);
+  margin-bottom: 1.2rem;
+  border-radius: 0.5rem;
+}
+
+.travel-card-image-wrap img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  transition: transform 0.6s ease;
+}
+
+.travel-card:hover .travel-card-image-wrap img {
+  transform: scale(1.04);
+}
+
+.travel-card-overlay {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  padding: 1.8rem 1.4rem;
+  background: linear-gradient(to top, rgba(0, 0, 0, 0.55) 0%, transparent 55%);
+  color: #fff;
+}
+
+.travel-card-overlay-tag {
+  font-size: 0.72rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  opacity: 0.88;
+  margin-bottom: 0.25rem;
+}
+
+.travel-card-overlay-title {
+  font-size: clamp(2rem, 4vw, 2.8rem);
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  line-height: 1.1;
+  margin: 0;
+}
+
+.travel-card-overlay-sub {
+  font-size: 0.9rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  margin-top: 0.15rem;
+  opacity: 0.92;
+}
+
+.travel-card-meta {
+  font-size: clamp(1.1rem, 2vw, 1.5rem);
+  color: var(--foreground-muted);
+  margin: 0 0 0.4rem;
+}
+
+.travel-card-title {
+  font-size: clamp(1.4rem, 2.5vw, 1.9rem);
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  margin: 0 0 0.6rem;
+  color: var(--foreground);
+}
+
+.travel-card-summary {
+  font-size: clamp(0.95rem, 1.5vw, 1.05rem);
+  color: var(--foreground-secondary);
+  margin: 0 0 0.8rem;
+  line-height: 1.65;
+  text-wrap: pretty;
+}
+
+.travel-card-read {
+  font-size: 1.1rem;
+  color: var(--foreground-muted);
+  text-decoration: underline;
+  text-underline-offset: 0.2em;
+  display: inline-block;
+  transition: color var(--transition-fast);
+}
+
+.travel-card:hover .travel-card-read {
+  color: var(--accent);
+}
+
+/* ============================
+   Travel 详情页（路书风格）
+   ============================ */
+
+.travel-roadbook {
+  max-width: 1320px;
+  margin: 0 auto;
+  padding: 1.4rem 1.25rem 5rem;
+}
+
+@media (min-width: 900px) {
+  .travel-roadbook {
+    padding: 2.5rem 2.5rem 6rem;
+  }
+}
+
+/* 路书英雄图 */
+.travel-rb-hero {
+  margin: 0;
+  border-radius: 0.75rem;
+  overflow: hidden;
+}
+
+.travel-rb-hero img {
+  width: 100%;
+  max-height: 72vh;
+  object-fit: cover;
+  display: block;
+}
+
+/* 路书头部 */
+.travel-rb-header {
+  padding: 2rem 0 1.2rem;
+  border-bottom: 1px solid var(--border);
+}
+
+.travel-rb-channel {
+  margin: 0 0 0.55rem;
+  color: var(--accent);
+  font-size: 0.76rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+}
+
+.travel-rb-header h1 {
+  margin: 0;
+  font-size: clamp(2.6rem, 6vw, 5rem);
+  line-height: 0.95;
+  letter-spacing: -0.04em;
+  font-weight: 700;
+}
+
+.travel-rb-tags {
+  margin: 1rem 0 0;
+  padding: 0;
+  list-style: none;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.45rem;
+}
+
+.travel-rb-tags li {
+  border: 1px solid var(--border);
+  padding: 0.22rem 0.6rem;
+  font-size: 0.78rem;
+  color: var(--foreground-muted);
+  border-radius: 0.25rem;
+}
+
+/* 路书正文章节 */
+.travel-rb-section {
+  max-width: 780px;
+  margin: 2.3rem auto 0;
+}
+
+.travel-rb-section-index {
+  margin: 0 0 0.4rem;
+  color: var(--accent);
+  font-size: 0.74rem;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+}
+
+.travel-rb-section h2 {
+  margin: 0 0 1rem;
+  padding: 0.32rem 0 0.32rem 0.85rem;
+  border-left: 3px solid var(--accent);
+  background: linear-gradient(90deg, color-mix(in srgb, var(--accent) 12%, transparent 88%) 0%, transparent 82%);
+  font-size: clamp(1.38rem, 2.15vw, 1.98rem);
+  line-height: 1.3;
+  letter-spacing: -0.01em;
+  font-weight: 600;
+  max-width: 28ch;
+  text-wrap: balance;
+}
+
+.travel-rb-section p {
+  margin: 0 0 1rem;
+  color: var(--foreground-secondary);
+  font-size: 1.02rem;
+  line-height: 1.95;
+}
+
+.travel-rb-section blockquote {
+  margin: 1.7rem 0;
+  padding: 0.8rem 1.2rem;
+  border-left: 3px solid var(--accent);
+  background: color-mix(in srgb, var(--accent) 8%, transparent 92%);
+}
+
+.travel-rb-section blockquote p {
+  margin: 0;
+  color: var(--foreground);
+}
+
+/* 分隔线 */
+.travel-rb-break {
+  width: 6rem;
+  height: 1px;
+  margin: 1.9rem 0;
+  background: linear-gradient(90deg, transparent 0%, var(--accent) 50%, transparent 100%);
+}
+
+/* 路书图片 */
+.travel-rb-media {
+  margin: 2.2rem auto 0;
+  max-width: 980px;
+}
+
+.travel-rb-media img {
+  width: 100%;
+  height: auto;
+  display: block;
+  border-radius: 0.5rem;
+}
+
+.travel-rb-media--single img {
+  max-height: min(70vh, 860px);
+  object-fit: contain;
+  background: var(--background-tertiary);
+}
+
+.travel-rb-media figcaption {
+  margin-top: 0.7rem;
+  font-size: 0.88rem;
+  line-height: 1.6;
+  color: var(--foreground-muted);
+  text-align: center;
+}
+
+/* 路书图片网格 */
+.travel-rb-media-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1rem;
+  margin: 2.2rem auto 0;
+  max-width: 980px;
+}
+
+@media (min-width: 900px) {
+  .travel-rb-media-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1.2rem;
+  }
+}
+
+.travel-rb-media-grid .travel-rb-media {
+  margin: 0;
+}
+
+.travel-rb-media-grid .travel-rb-media img {
+  height: clamp(220px, 28vw, 420px);
+  object-fit: cover;
+}
+
+/* 附录人物卡片 */
+.travel-rb-appendix {
+  margin-top: 3.5rem;
+}
+
+.travel-rb-appendix-heading {
+  display: flex;
+  align-items: baseline;
+  gap: 0.75rem;
+  margin-bottom: 1.5rem;
+}
+
+.travel-rb-appendix-index {
+  color: var(--accent);
+  font-size: 0.72rem;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  margin: 0;
+}
+
+.travel-rb-appendix-heading h2 {
+  margin: 0;
+  font-size: clamp(1.5rem, 2.5vw, 2rem);
+  line-height: 1.1;
+  font-weight: 700;
+}
+
+.travel-card-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1rem;
+}
+
+@media (min-width: 640px) {
+  .travel-card-grid {
+    grid-template-columns: repeat(4, 1fr);
+  }
+}
+
+.travel-card-grid .travel-card-item {
+  overflow: hidden;
+  border: 1px solid var(--border);
+  background: var(--background-secondary);
+  border-radius: 0.5rem;
+}
+
+.travel-card-grid .travel-card-item img {
+  width: 100%;
+  aspect-ratio: 4 / 5;
+  object-fit: cover;
+  display: block;
+}
+
+.travel-card-grid .travel-card-item h3 {
+  margin: 0;
+  padding: 0.8rem 0.8rem 0.2rem;
+  font-size: 0.95rem;
+  font-weight: 600;
+}
+
+.travel-card-grid .travel-card-item p {
+  margin: 0;
+  padding: 0 0.8rem 0.8rem;
+  color: var(--foreground-muted);
+  font-size: 0.88rem;
+  line-height: 1.6;
+}
+
+/* 返回链接 */
+.travel-backlink {
+  margin-top: 3.5rem;
+  padding-top: 2rem;
+  border-top: 1px solid var(--border);
+}
+
+.travel-backlink a {
+  font-size: 1.1rem;
+  color: var(--foreground-muted);
+  text-decoration: underline;
+  text-underline-offset: 0.2em;
+  transition: color var(--transition-fast);
+}
+
+.travel-backlink a:hover {
+  color: var(--accent);
+}
+
+@media (max-width: 639px) {
+  .travel-intro .travel-heading {
+    font-size: 2rem;
+  }
+
+  .travel-intro .travel-desc {
+    font-size: 1.1rem;
+  }
+
+  .travel-card-overlay-title {
+    font-size: 1.8rem;
+  }
+
+  .travel-card-meta {
+    font-size: 1rem;
+  }
+
+  .travel-card-title {
+    font-size: 1.25rem;
+  }
+
+  .travel-card-read {
+    font-size: 0.95rem;
+  }
+}
+
+/* ============================
+   Travel 目录（TOC）侧边浮层
+   ============================ */
+[data-page^="travel-"] .travel-toc-shell {
+  position: fixed;
+  right: 1rem;
+  bottom: 1.5rem;
+  left: auto;
+  top: auto;
+  z-index: 103;
+  width: auto;
+}
+
+[data-page^="travel-"] .travel-toc-toggle {
+  position: relative;
+  z-index: 104;
+  width: auto;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  padding: 0.75rem 1rem;
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  background: var(--background);
+  color: var(--foreground-muted);
+  font-size: 0.85rem;
+  font-family: inherit;
+  cursor: pointer;
+  box-shadow: 0 2px 12px rgb(0 0 0 / 0.15);
+  transition: color var(--transition-fast), border-color var(--transition-fast);
+}
+
+[data-page^="travel-"] .travel-toc-toggle:hover {
+  color: var(--foreground);
+  border-color: var(--accent);
+}
+
+[data-page^="travel-"] .travel-toc-toggle-icon {
+  font-size: 1rem;
+  line-height: 1;
+  font-weight: 600;
+}
+
+[data-page^="travel-"] .travel-toc {
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  top: auto;
+  margin-top: 0;
+  max-height: 70vh;
+  border: none;
+  border-top-left-radius: 1rem;
+  border-top-right-radius: 1rem;
+  background: var(--background);
+  box-shadow: 0 -4px 24px rgb(0 0 0 / 0.18);
+  padding: 1.25rem 1rem 2rem;
+  overflow-y: auto;
+  transform: translateY(100%);
+  opacity: 0;
+  transition: transform 0.3s ease, opacity 0.3s ease;
+  z-index: 101;
+}
+
+[data-page^="travel-"] .travel-toc-title {
+  margin: 0 0 1rem;
+  color: var(--foreground);
+  font-size: 0.85rem;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  text-align: center;
+}
+
+[data-page^="travel-"] .travel-toc-content {
+  display: block;
+}
+
+[data-page^="travel-"] .travel-toc-progress {
+  display: none;
+}
+
+[data-page^="travel-"] .travel-toc-list {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+[data-page^="travel-"] .travel-toc-list li + li {
+  margin-top: 0;
+}
+
+[data-page^="travel-"] .travel-toc-list a {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.75rem 0.5rem;
+  border-radius: 0.5rem;
+  color: var(--foreground-muted);
+  font-size: 0.95rem;
+  text-decoration: none;
+  border-left: none;
+  background: transparent;
+  transition: color var(--transition-fast), background-color var(--transition-fast);
+}
+
+[data-page^="travel-"] .travel-toc-list a:hover {
+  color: var(--foreground);
+  background: color-mix(in srgb, var(--accent) 8%, transparent 92%);
+}
+
+[data-page^="travel-"] .travel-toc-list a.is-active {
+  color: var(--foreground);
+  background: color-mix(in srgb, var(--accent) 12%, transparent 88%);
+}
+
+@media (min-width: 900px) {
+  [data-page^="travel-"] .travel-toc-shell {
+    display: block;
+    left: max(1rem, calc((100vw - 1360px) / 2 - 210px));
+    top: 9rem;
+    right: auto;
+    bottom: auto;
+    z-index: 25;
+    width: 248px;
+  }
+
+  [data-page^="travel-"] .travel-toc-toggle {
+    width: 100%;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.45rem;
+    padding: 0.52rem 0.7rem;
+    border: 1px solid var(--border);
+    background: var(--background);
+    color: var(--foreground-muted);
+    font-size: 0.77rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    box-shadow: none;
+  }
+
+  [data-page^="travel-"] .travel-toc-toggle-icon {
+    font-size: 0.8rem;
+  }
+
+  [data-page^="travel-"] .travel-toc {
+    position: static;
+    left: auto;
+    right: auto;
+    bottom: auto;
+    margin-top: 0.55rem;
+    max-height: calc(100vh - 12rem);
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    background: var(--background);
+    padding: 0.75rem;
+    box-shadow: none;
+    transform: translateX(0);
+    opacity: 1;
+    transition: none;
+  }
+
+  [data-page^="travel-"] .travel-toc-title {
+    text-align: left;
+    margin: 0 0 0.65rem;
+  }
+
+  [data-page^="travel-"] .travel-toc-content {
+    display: grid;
+    grid-template-columns: 3px 1fr;
+    gap: 0.62rem;
+    align-items: stretch;
+  }
+
+  [data-page^="travel-"] .travel-toc-progress {
+    display: block;
+    position: relative;
+    width: 3px;
+    border-radius: 999px;
+    background: var(--border);
+  }
+
+  [data-page^="travel-"] .travel-toc-list {
+    display: block;
+  }
+
+  [data-page^="travel-"] .travel-toc-list li + li {
+    margin-top: 0.32rem;
+  }
+
+  [data-page^="travel-"] .travel-toc-list a {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    align-items: start;
+    column-gap: 0.45rem;
+    font-size: 0.78rem;
+    line-height: 1.4;
+    padding: 0.24rem 0.48rem;
+    border-left: 2px solid transparent;
+  }
+
+  [data-page^="travel-"] .travel-toc-list a.is-active {
+    border-left-color: var(--accent);
+    background: color-mix(in srgb, var(--accent) 12%, transparent 88%);
+  }
+}
