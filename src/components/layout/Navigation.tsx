@@ -54,6 +54,7 @@ export default function Navigation({
   const pathname = usePathname()
   const [panelHref, setPanelHref] = useState<string | null>(null)
   const [isPanelOpen, setIsPanelOpen] = useState(false)
+  const [expandedItems, setExpandedItems] = useState<Set<string>>(new Set())
   const closeTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null)
   const isDesktop = mode === 'desktop'
   const fallbackDropdownItem = useMemo(
@@ -99,6 +100,18 @@ export default function Navigation({
     }, NAV_TO_PANEL_GRACE_MS)
   }
 
+  const toggleExpand = (label: string) => {
+    setExpandedItems(prev => {
+      const next = new Set(prev)
+      if (next.has(label)) {
+        next.delete(label)
+      } else {
+        next.add(label)
+      }
+      return next
+    })
+  }
+
   useEffect(() => {
     if (!isDesktop) return
     onDropdownOpenChange?.(isPanelOpen)
@@ -111,6 +124,104 @@ export default function Navigation({
     }
   }, [onDropdownOpenChange])
 
+  const renderNavItem = (item: NavItem, index: number) => {
+    const hasChildren = !!item.children
+    const isExpanded = expandedItems.has(item.label)
+
+    if (!isDesktop && hasChildren) {
+      return (
+        <li
+          key={item.href}
+          className={`site-nav-item site-nav-item--has-dropdown ${isExpanded ? 'is-expanded' : ''}`}
+        >
+          <button
+            onClick={() => toggleExpand(item.label)}
+            className="site-nav-link site-nav-toggle-btn"
+            aria-expanded={isExpanded}
+            aria-controls={`submenu-${index}`}
+          >
+            <span>{item.label}</span>
+            <svg
+              className={`site-nav-chevron ${isExpanded ? 'is-rotated' : ''}`}
+              width="12"
+              height="12"
+              viewBox="0 0 12 12"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="2"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+            >
+              <path d="M3 4.5L6 7.5L9 4.5" />
+            </svg>
+          </button>
+
+          <div
+            id={`submenu-${index}`}
+            className={`site-nav-dropdown-shell site-nav-mobile-submenu ${isExpanded ? 'is-open' : ''}`}
+          >
+            <div className="site-nav-dropdown" role="menu">
+              <div className="site-nav-dropdown-inner">
+                <section className="site-nav-dropdown-column">
+                  <p className="site-nav-dropdown-overline">主题分类</p>
+                  <div className="site-nav-dropdown-links">
+                    {item.children?.map((child) => (
+                      <Link
+                        key={child.href}
+                        href={child.href}
+                        onClick={onNavigate}
+                        className="site-nav-dropdown-link"
+                      >
+                        {child.title ?? child.label}
+                      </Link>
+                    ))}
+                  </div>
+                </section>
+              </div>
+            </div>
+          </div>
+        </li>
+      )
+    }
+
+    return (
+      <li
+        key={item.href}
+        className={`site-nav-item ${item.children ? 'site-nav-item--has-dropdown' : ''}`}
+        onMouseEnter={() => setDropdownOpen(item.children ? item.href : null)}
+        onFocusCapture={() => setDropdownOpen(item.children ? item.href : null)}
+        onBlurCapture={(event) => {
+          const nextTarget = event.relatedTarget as Node | null
+          if (!event.currentTarget.contains(nextTarget)) {
+            scheduleCloseForCrossing()
+          }
+        }}
+      >
+        {item.children ? (
+          <Link
+            href={item.href}
+            onClick={onNavigate}
+            className="site-nav-link"
+            data-active={isActive(item.href)}
+            aria-haspopup="menu"
+            aria-expanded={isPanelOpen && panelHref === item.href}
+          >
+            <span>{item.label}</span>
+          </Link>
+        ) : (
+          <Link
+            href={item.href}
+            onClick={onNavigate}
+            className="site-nav-link"
+            data-active={isActive(item.href)}
+          >
+            {item.label}
+          </Link>
+        )}
+      </li>
+    )
+  }
+
   return (
     <nav
       className={className}
@@ -119,68 +230,7 @@ export default function Navigation({
       onMouseLeave={scheduleCloseForCrossing}
     >
       <ul className="site-nav-list">
-        {navigationItems.map((item) => (
-          <li
-            key={item.href}
-            className={`site-nav-item ${item.children ? 'site-nav-item--has-dropdown' : ''}`}
-            onMouseEnter={() => setDropdownOpen(item.children ? item.href : null)}
-            onFocusCapture={() => setDropdownOpen(item.children ? item.href : null)}
-            onBlurCapture={(event) => {
-              const nextTarget = event.relatedTarget as Node | null
-              if (!event.currentTarget.contains(nextTarget)) {
-                scheduleCloseForCrossing()
-              }
-            }}
-          >
-            {item.children ? (
-              <>
-                <Link
-                  href={item.href}
-                  onClick={onNavigate}
-                  className="site-nav-link"
-                  data-active={isActive(item.href)}
-                  aria-haspopup="menu"
-                  aria-expanded={isDesktop ? isPanelOpen && panelHref === item.href : true}
-                >
-                  <span>{item.label}</span>
-                </Link>
-
-                {!isDesktop ? (
-                  <div className="site-nav-dropdown-shell" data-open="true">
-                    <div className="site-nav-dropdown" role="menu">
-                      <div className="site-nav-dropdown-inner">
-                        <section className="site-nav-dropdown-column">
-                          <p className="site-nav-dropdown-overline">主题分类</p>
-                          <div className="site-nav-dropdown-links">
-                            {item.children.map((child) => (
-                              <Link
-                                key={child.href}
-                                href={child.href}
-                                onClick={onNavigate}
-                                className="site-nav-dropdown-link"
-                              >
-                                {child.title ?? child.label}
-                              </Link>
-                            ))}
-                          </div>
-                        </section>
-                      </div>
-                    </div>
-                  </div>
-                ) : null}
-              </>
-            ) : (
-              <Link
-                href={item.href}
-                onClick={onNavigate}
-                className="site-nav-link"
-                data-active={isActive(item.href)}
-              >
-                {item.label}
-              </Link>
-            )}
-          </li>
-        ))}
+        {navigationItems.map((item, index) => renderNavItem(item, index))}
       </ul>
 
       {isDesktop && displayDropdownItem ? (

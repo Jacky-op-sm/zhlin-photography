@@ -784,6 +784,50 @@ body {
   transform: none;
 }
 
+.site-nav-mobile .site-nav-mobile-submenu {
+  max-height: 0;
+  overflow: hidden;
+  opacity: 0;
+  transition: max-height 300ms ease, opacity 300ms ease;
+}
+
+.site-nav-mobile .site-nav-mobile-submenu.is-open {
+  max-height: 500px;
+  opacity: 1;
+}
+
+.site-nav-mobile .site-nav-toggle-btn {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  padding: 0.6rem 0;
+  background: transparent;
+  border: none;
+  font-size: inherit;
+  font-family: inherit;
+  cursor: pointer;
+  color: var(--site-text);
+  text-transform: uppercase;
+  letter-spacing: 0.2em;
+}
+
+.site-nav-mobile .site-nav-chevron {
+  transition: transform 250ms ease;
+}
+
+.site-nav-mobile .site-nav-chevron.is-rotated {
+  transform: rotate(180deg);
+}
+
+.site-nav-mobile .site-nav-item.is-expanded > .site-nav-toggle-btn {
+  color: var(--site-soft);
+}
+
+.site-nav-mobile .site-nav-item.is-expanded > .site-nav-toggle-btn:hover {
+  color: var(--site-text);
+}
+
 .site-nav-mobile .site-nav-dropdown {
   margin: 0.35rem 0 0.75rem;
   width: 100%;
@@ -793,6 +837,11 @@ body {
   background: #fbf9f5;
   transform: none;
   transition: none;
+  display: none;
+}
+
+.site-nav-mobile .site-nav-mobile-submenu.is-open .site-nav-dropdown {
+  display: block;
 }
 
 .site-nav-mobile .site-nav-dropdown-inner {
@@ -1328,6 +1377,7 @@ body {
   .home-feature-grid {
     grid-template-columns: repeat(3, 1fr);
     gap: clamp(0.5rem, 2vw, 0.8rem);
+    padding-inline: 1.25rem;
   }
 
   .home-feature-image {
@@ -1368,6 +1418,15 @@ body {
   .home-photographer-grid {
     grid-template-columns: minmax(0, 1fr);
     gap: 2.6rem;
+    padding-inline: 1.25rem;
+  }
+
+  .home-traveller-grid {
+    padding-inline: 1.25rem;
+  }
+
+  .home-hobbyist-grid {
+    padding-inline: 1.25rem;
   }
 
   .home-photographer-card h2 {

@@ -48,15 +48,16 @@ export default function PhotographySeriesHero({
                 className="photography-media-shell relative overflow-hidden"
                 style={{ aspectRatio: `${featuredPhoto.width} / ${featuredPhoto.height}` }}
               >
-                  <div className="photo-series-hero-media">
-                    <Image
-                      src={featuredPhoto.filename}
-                      alt={featuredPhoto.title}
-                      fill
-                      className="object-cover photo-gallery-hover brightness-hover"
-                      sizes="(max-width: 1024px) 100vw, 42vw"
-                  priority
-                />
+                <div className="photo-series-hero-media">
+                  <Image
+                    src={featuredPhoto.filename}
+                    alt={featuredPhoto.title}
+                    fill
+                    className="object-cover photo-gallery-hover brightness-hover"
+                    sizes="(max-width: 1024px) 100vw, 42vw"
+                    priority
+                  />
+                </div>
               </div>
               <figcaption className="mt-3 text-xs uppercase tracking-[0.22em] text-[var(--portfolio-soft)]">
                 {featuredPhoto.title}
