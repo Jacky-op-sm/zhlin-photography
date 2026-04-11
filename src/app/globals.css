@@ -830,10 +830,17 @@ body {
 
 .site-nav-mobile .site-nav-dropdown {
   margin: 0.35rem 0 0.75rem;
-  width: 100%;
-  border-radius: 1rem;
+  width: 100vw;
+  position: relative;
+  left: 50%;
+  right: 50%;
+  margin-left: -50vw;
+  margin-right: -50vw;
+  border-radius: 0;
   box-shadow: none;
-  border: 1px solid var(--site-border);
+  border: none;
+  border-top: 1px solid var(--site-border);
+  border-bottom: 1px solid var(--site-border);
   background: #fbf9f5;
   transform: none;
   transition: none;
@@ -846,11 +853,12 @@ body {
 
 .site-nav-mobile .site-nav-dropdown-inner {
   display: block;
-  padding: 0.4rem 0.5rem;
+  padding: 0.4rem 1.75rem;
 }
 
 .site-nav-mobile .site-nav-dropdown-overline {
-  padding: 0.3rem 0.35rem 0.15rem;
+  padding: 0.3rem 0;
+  font-size: 0.7rem;
 }
 
 .site-nav-mobile .site-nav-dropdown-links {
@@ -860,16 +868,21 @@ body {
 .site-nav-mobile .site-nav-dropdown-link {
   display: block;
   width: 100%;
-  padding: 0.48rem 0.35rem;
-  font-size: 0.84rem;
-  font-weight: 800;
-  letter-spacing: 0.2em;
-  text-transform: uppercase;
-  color: var(--site-soft);
+  padding: 0.75rem 0;
+  font-size: 1rem;
+  font-weight: 500;
+  letter-spacing: 0.05em;
+  text-transform: none;
+  color: var(--site-text);
+  border-bottom: 1px solid var(--site-border);
+}
+
+.site-nav-mobile .site-nav-dropdown-link:last-child {
+  border-bottom: none;
 }
 
 .site-nav-mobile .site-nav-dropdown-link:hover {
-  color: var(--site-text);
+  color: var(--site-soft);
 }
 
 .site-nav-overlay-open .site-main,
@@ -1377,7 +1390,7 @@ body {
   .home-feature-grid {
     grid-template-columns: repeat(3, 1fr);
     gap: clamp(0.5rem, 2vw, 0.8rem);
-    padding-inline: 1.25rem;
+    padding-inline: 1.75rem;
   }
 
   .home-feature-image {
@@ -1418,15 +1431,15 @@ body {
   .home-photographer-grid {
     grid-template-columns: minmax(0, 1fr);
     gap: 2.6rem;
-    padding-inline: 1.25rem;
+    padding-inline: 1.75rem;
   }
 
   .home-traveller-grid {
-    padding-inline: 1.25rem;
+    padding-inline: 1.75rem;
   }
 
   .home-hobbyist-grid {
-    padding-inline: 1.25rem;
+    padding-inline: 1.75rem;
   }
 
   .home-photographer-card h2 {
