@@ -370,9 +370,46 @@ body {
       opacity var(--transition-normal);
   }
 
-  .photography-gallery-item:hover {
-    transform: translateY(-1px);
-  }
+.photography-gallery-item:hover {
+  transform: translateY(0);
+}
+
+.portfolio-preview-card-media-shell {
+  overflow: hidden;
+  border-radius: var(--portfolio-radius-xl);
+}
+
+.next-image-container {
+  width: 100%;
+  height: 100%;
+}
+
+.portfolio-preview-card-media-shell:hover .next-image-container img,
+.portfolio-preview-card-media-shell:hover .next-image-container > span {
+  transform: scale(calc((100% + var(--image-hover-expand-px)) / 100%));
+  transition: transform 700ms ease-out !important;
+}
+
+/* Photography gallery hover - scale from center, no translate */
+.photo-gallery-hover {
+  transition: none !important;
+  transform: scale(1) !important;
+  transform-origin: center center !important;
+}
+
+.photo-gallery-media:hover .photo-gallery-hover,
+.photo-gallery-media:hover > * .photo-gallery-hover,
+.group:hover .photo-gallery-hover,
+.photography-media-shell:hover .photo-gallery-hover {
+  transform: scale(1.035) !important;
+  transition: transform 700ms ease-out !important;
+  transform-origin: center center !important;
+}
+
+/* Photography brightness hover */
+.brightness-hover:hover {
+  filter: brightness(0.98);
+}
 
   .site-header {
     position: sticky;
@@ -495,6 +532,8 @@ body {
   --site-header-height: 2.89rem;
   --home-image-hover-scale: 1.025;
   --travel-card-hover-scale: 1.025;
+  --image-hover-expand-px: 0.9px;
+  --photography-image-hover-expand-px: 0.9px;
 }
 
 .site-body {
@@ -1133,7 +1172,7 @@ body {
 }
 
 .home-photographer-image-link:hover .home-photographer-image {
-  transform: scale(var(--home-image-hover-scale));
+  transform: scale(calc((100% + var(--image-hover-expand-px)) / 100%));
 }
 
 .home-like-hover-shell {
@@ -1143,7 +1182,22 @@ body {
 }
 
 .group:hover .home-like-hover-shell {
-  transform: scale(var(--home-image-hover-scale));
+  transform: scale(calc((100% + var(--image-hover-expand-px)) / 100%));
+}
+
+.travel-nav-thumbnail-shell {
+  transform-origin: center center;
+  transition: transform 280ms ease;
+  will-change: transform;
+}
+
+.travel-nav-thumbnail-hover {
+  transition: none;
+}
+
+.travel-nav-thumbnail-shell:hover .travel-nav-thumbnail-hover {
+  transform: scale(calc((100% + var(--image-hover-expand-px)) / 100%));
+  transition: transform 280ms ease !important;
 }
 
 .travel-card-hover-shell {
@@ -1153,7 +1207,7 @@ body {
 }
 
 .travel-card-hover-shell:hover {
-  transform: scale(var(--travel-card-hover-scale));
+  transform: scale(calc((100% + var(--image-hover-expand-px)) / 100%));
 }
 
 .home-photographer-quote {

@@ -23,7 +23,7 @@ export default function PhotographySeriesCard({
             src={imageSrc}
             alt={series.title}
             fill
-            className="object-cover transition duration-700 ease-out group-hover:scale-[1.025] group-hover:brightness-[0.98]"
+            className="object-cover photo-gallery-hover brightness-hover"
             sizes="(max-width: 768px) 100vw, (max-width: 1280px) 50vw, 33vw"
             priority={index === 0}
           />

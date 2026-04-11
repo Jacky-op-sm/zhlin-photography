@@ -31,12 +31,12 @@ export default async function TravelPage() {
                   className="group inline-flex w-full flex-col items-center text-neutral-800"
                   aria-label={`前往 ${travel.zhName} 旅行页`}
                 >
-                  <span className="home-like-hover-shell relative block h-[3.7rem] w-[3.7rem] overflow-hidden rounded-[0.95rem] border border-neutral-200 bg-white shadow-[0_6px_16px_rgba(15,23,42,0.1)] transition duration-300 group-hover:-translate-y-0.5 group-hover:shadow-[0_10px_24px_rgba(15,23,42,0.16)] sm:h-[4.2rem] sm:w-[4.2rem]">
+                  <span className="travel-nav-thumbnail-shell home-like-hover-shell relative block h-[3.7rem] w-[3.7rem] overflow-hidden rounded-[0.95rem] border border-neutral-200 bg-white shadow-[0_6px_16px_rgba(15,23,42,0.1)] transition duration-300 group-hover:-translate-y-0.5 group-hover:shadow-[0_10px_24px_rgba(15,23,42,0.16)] sm:h-[4.2rem] sm:w-[4.2rem]">
                     <Image
                       src={travel.cover}
                       alt={`${travel.zhName} 缩略图`}
                       fill
-                      className="object-cover"
+                      className="object-cover travel-nav-thumbnail-hover"
                       sizes="(max-width: 640px) 59px, 67px"
                     />
                   </span>

@@ -65,7 +65,8 @@ export default function TightGalleryGrid({ photos }: TightGalleryGridProps) {
                     src={photo.thumbnail}
                     alt={photo.title}
                     fill
-                    className="object-cover transition duration-700 ease-out group-hover:scale-[1.02]"
+                    className="object-cover photo-gallery-hover"
+                    style={{ transform: 'scale(1)' }}
                     sizes="(max-width: 768px) 100vw, (max-width: 1280px) 50vw, 33vw"
                     priority={index < 2}
                   />
