@@ -3,6 +3,7 @@ import Image from 'next/image';
 import { notFound } from 'next/navigation';
 import { getTravelBySlug, getTravelSlugs } from '@/lib/data/travel';
 import SpotSlider from './SpotSlider';
+import FoodSlider from './FoodSlider';
 
 const SPOT_MARGIN_PX = 0;
 
@@ -86,6 +87,20 @@ export default async function TravelDetailPage({ params }: { params: { slug: str
           <SpotSlider slug={params.slug} />
         </div>
       </section>
+
+      {['japan', 'nanjing', 'shanghai', 'beijing', 'dongbei'].includes(params.slug) ? (
+        <section className="bg-white px-6 py-16 sm:px-[9.4rem] sm:py-20 lg:px-[12.56rem] lg:py-24">
+          <div className="mx-auto w-full max-w-[1880px]">
+            <h2
+              className="text-4xl font-semibold tracking-tight text-neutral-900 sm:text-5xl"
+              style={{ marginLeft: `${SPOT_MARGIN_PX}px` }}
+            >
+              美食
+            </h2>
+            <FoodSlider slug={params.slug} />
+          </div>
+        </section>
+      ) : null}
     </main>
   );
 }
