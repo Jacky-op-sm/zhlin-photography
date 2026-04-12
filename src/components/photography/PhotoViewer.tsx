@@ -90,7 +90,7 @@ export default function PhotoViewer({
         }}
         aria-label="Close fullsize viewer"
       >
-        Close
+        <span className="photo-viewer-close-icon" aria-hidden="true" />
       </button>
 
       <p className="photo-viewer-counter" aria-live="polite">
@@ -106,7 +106,7 @@ export default function PhotoViewer({
           }}
           aria-label="Previous image"
         >
-          Prev
+          <span className="photo-viewer-chevron photo-viewer-chevron--left" aria-hidden="true" />
         </button>
       ) : null}
 
@@ -119,7 +119,7 @@ export default function PhotoViewer({
           }}
           aria-label="Next image"
         >
-          Next
+          <span className="photo-viewer-chevron photo-viewer-chevron--right" aria-hidden="true" />
         </button>
       ) : null}
 

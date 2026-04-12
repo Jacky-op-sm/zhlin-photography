@@ -56,6 +56,11 @@ const streetCardCovers = [
   '/assets/photos/street/street-scene-3.jpg',
 ]
 
+const petsCardCovers = [
+  '/assets/photos/pets/Z52_2359.jpg',
+  '/assets/photos/pets/Z52_3679.jpg',
+]
+
 export default async function PhotographyPage({
   searchParams,
 }: PhotographyPageProps) {
@@ -119,20 +124,32 @@ export default async function PhotographyPage({
             const previewPhoto = getSeriesCoverPhoto(photos, series.slug)
             const zhLabel = seriesZhLabel[series.slug]
             const cardCover = seriesCardCoverOverride[series.slug] ?? previewPhoto?.thumbnail ?? series.cover
-            const tripleCovers =
+            const multiCovers =
               series.slug === PhotoCategory.Project
                 ? projectCardCovers
                 : series.slug === PhotoCategory.Street
                   ? streetCardCovers
+                  : series.slug === PhotoCategory.Pets
+                    ? petsCardCovers
                   : null
 
             return (
               <article key={series.slug} className="photo-index-card">
                 <Link href={series.href} className="photo-index-card-media-link">
-                  <div className="photo-index-card-media">
-                    {tripleCovers ? (
-                      <div className="photo-index-card-media-triple">
-                        {tripleCovers.map((src, index) => (
+                  <div
+                    className={`photo-index-card-media ${
+                      series.slug === PhotoCategory.Pets ? 'photo-index-card-media--pets' : ''
+                    }`}
+                  >
+                    {multiCovers ? (
+                      <div
+                        className={`photo-index-card-media-multi ${
+                          series.slug === PhotoCategory.Pets
+                            ? 'photo-index-card-media-multi--two'
+                            : 'photo-index-card-media-multi--three'
+                        }`}
+                      >
+                        {multiCovers.map((src, index) => (
                           <div key={src} className="photo-index-card-media-triple-item">
                             <Image
                               src={src}

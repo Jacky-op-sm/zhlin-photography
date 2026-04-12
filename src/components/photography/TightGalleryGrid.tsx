@@ -53,7 +53,7 @@ export default function TightGalleryGrid({ photos }: TightGalleryGridProps) {
               <button
                 key={photo.id}
                 type="button"
-                className="group photo-gallery-item"
+                className="group photo-gallery-item photo-gallery-item--no-hover"
                 onClick={() => openViewer(index)}
                 aria-label={`View fullsize ${photo.title}`}
               >
@@ -70,9 +70,6 @@ export default function TightGalleryGrid({ photos }: TightGalleryGridProps) {
                     sizes="(max-width: 768px) 100vw, (max-width: 1280px) 50vw, 33vw"
                     priority={index < 2}
                   />
-                  <div className="photo-gallery-overlay">
-                    <span>View fullsize</span>
-                  </div>
                 </div>
               </button>
             ))}
