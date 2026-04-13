@@ -2,6 +2,7 @@ import type { Metadata } from 'next';
 import Image from 'next/image';
 import { notFound } from 'next/navigation';
 import { getTravelBySlug, getTravelSlugs } from '@/lib/data/travel';
+import { getTravelExpandMapBySlug } from '@/lib/data/travel-card-expand';
 import SpotSlider from './SpotSlider';
 import FoodSlider from './FoodSlider';
 
@@ -33,6 +34,7 @@ export async function generateMetadata({ params }: { params: { slug: string } })
 
 export default async function TravelDetailPage({ params }: { params: { slug: string } }) {
   const travel = await getTravelBySlug(params.slug);
+  const expandMap = await getTravelExpandMapBySlug(params.slug);
 
   if (!travel) {
     notFound();
@@ -84,7 +86,7 @@ export default async function TravelDetailPage({ params }: { params: { slug: str
           >
             景点
           </h2>
-          <SpotSlider slug={params.slug} />
+          <SpotSlider slug={params.slug} expandMap={expandMap} />
         </div>
       </section>
 

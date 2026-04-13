@@ -2,6 +2,7 @@
 
 import Image from 'next/image';
 import { useEffect, useMemo, useRef, useState } from 'react';
+import type { TravelExpandMap } from '@/lib/types/travel-expand';
 
 const VISIBLE_CARDS = 3;
 const CARD_GAP_PX = 19.2;
@@ -10,6 +11,7 @@ const CARD_WIDTH_PX = 370.5;
 const MARGIN_PX = 260;
 const SLIDE_FINE_TUNE_PX = 0;
 const CARD_HEIGHT_REM = 28;
+const CARD_HEIGHT_MULTIPLIER = 1.1;
 type CardItem = {
   eyebrow: string;
   title: string;
@@ -481,7 +483,7 @@ const BEIJING_CARD_ITEMS: CardItem[] = [
   },
 ];
 
-export default function SpotSlider({ slug }: { slug?: string }) {
+export default function SpotSlider({ slug, expandMap }: { slug?: string; expandMap?: TravelExpandMap | null }) {
   const cards = useMemo(() => {
     if (slug === 'japan') return JAPAN_CARD_ITEMS;
     if (slug === 'shanghai') return SHANGHAI_CARD_ITEMS;
@@ -489,6 +491,7 @@ export default function SpotSlider({ slug }: { slug?: string }) {
     if (slug === 'beijing') return BEIJING_CARD_ITEMS;
     return NANJING_CARD_ITEMS;
   }, [slug]);
+  const cardHeightRem = CARD_HEIGHT_REM * CARD_HEIGHT_MULTIPLIER;
   const [startIndex, setStartIndex] = useState(0);
   const [activeCard, setActiveCard] = useState<number | null>(null);
   const maxStartIndex = Math.max(0, cards.length - VISIBLE_CARDS);
@@ -525,6 +528,23 @@ export default function SpotSlider({ slug }: { slug?: string }) {
     };
   }, [activeCard]);
 
+  const activeCardData = activeCard !== null ? cards[activeCard - 1] : null;
+  const activeExpandCard = activeCardData ? expandMap?.[activeCardData.title] : null;
+  const detailBlocks =
+    activeExpandCard && activeExpandCard.blocks.length > 0
+      ? activeExpandCard.blocks.map((block) => ({
+          text: block.body,
+          imageSrc: block.imageSrc || activeCardData?.imageSrc || '',
+          imageAlt: activeCardData?.imageAlt || activeCardData?.title || 'travel image',
+        }))
+      : [
+          {
+            text: activeCardData?.body ?? '',
+            imageSrc: activeCardData?.imageSrc ?? '',
+            imageAlt: activeCardData?.imageAlt ?? '',
+          },
+        ];
+
   return (
     <div className="mt-8 w-full lg:max-w-[1150px]">
       <div className="relative left-[calc(50%-50vw)] w-screen overflow-x-hidden overflow-y-visible py-3">
@@ -546,7 +566,7 @@ export default function SpotSlider({ slug }: { slug?: string }) {
               onClick={() => setActiveCard(cardId)}
               aria-label={`Open card ${cardId}`}
             >
-              <article className="overflow-hidden rounded-[1.9rem] bg-white p-6" style={{ height: `${CARD_HEIGHT_REM}rem` }}>
+              <article className="overflow-hidden rounded-[1.9rem] bg-white p-6" style={{ height: `${cardHeightRem}rem` }}>
                 <CardContent card={card} />
               </article>
             </button>
@@ -584,12 +604,12 @@ export default function SpotSlider({ slug }: { slug?: string }) {
 
       {activeCard !== null ? (
         <div
-          className="fixed inset-0 z-[90] bg-[rgba(15,15,18,0.34)] p-6 backdrop-blur-[10px] sm:p-10 lg:p-14"
+          className="fixed inset-0 z-[90] overflow-y-auto bg-[rgba(15,15,18,0.34)] p-6 backdrop-blur-[10px] sm:p-10 lg:p-14"
           onClick={() => setActiveCard(null)}
         >
-          <div className="mx-auto h-full w-full max-w-[1280px]">
+          <div className="mx-auto w-full max-w-[1280px]">
             <div
-              className="relative h-full overflow-auto rounded-[2.1rem] bg-white p-7 shadow-[0_30px_80px_rgba(0,0,0,0.28)] sm:p-10 lg:p-12"
+              className="relative rounded-[2.1rem] bg-white p-7 shadow-[0_30px_80px_rgba(0,0,0,0.28)] sm:p-10 lg:p-12"
               onClick={(event) => event.stopPropagation()}
             >
               <button
@@ -601,15 +621,31 @@ export default function SpotSlider({ slug }: { slug?: string }) {
                 <span className="photo-viewer-close-icon" aria-hidden="true" />
               </button>
 
-              <div className="max-w-[42rem]">
-                <p className="text-sm font-semibold text-neutral-800/80">景点详情</p>
-                <h3 className="mt-3 text-4xl font-semibold tracking-tight text-neutral-900 sm:text-5xl">
-                  圆角矩阵 #{activeCard}
+              <div className="mx-[1rem] max-w-[42rem] sm:mx-[1.57rem] lg:mx-[2.09rem]">
+                <p className="text-base font-semibold text-[rgba(29,29,31,1)]">
+                  {activeExpandCard?.eyebrow || cards[activeCard - 1]?.eyebrow}
+                </p>
+                <h3 className="mt-3 text-[2.375rem] font-semibold leading-[1.2] tracking-tight text-[rgba(29,29,31,1)] sm:text-[3.125rem]">
+                  {cards[activeCard - 1]?.title}
                 </h3>
               </div>
 
-              <div className="mt-8 rounded-[1.75rem] bg-[rgba(245,245,247,1)] p-8 sm:p-10">
-                <div className="min-h-[28rem] rounded-[1.5rem] bg-white/70" />
+              <div className="mt-16 mx-[1rem] space-y-5 sm:mx-[1.57rem] sm:space-y-6 lg:mx-[2.09rem]">
+                {detailBlocks.map((block, blockIndex) => (
+                  <div
+                    key={`${activeCardData?.title ?? 'detail'}-${blockIndex}`}
+                    className="min-h-[28rem] rounded-[1.75rem] bg-[rgba(245,245,247,1)] px-24 pt-12 pb-8 sm:min-h-[30rem] sm:px-[7.5rem] sm:pt-[3.75rem] sm:pb-10"
+                  >
+                    <div className="space-y-12">
+                      <p className="w-full whitespace-pre-line text-[1.25rem] leading-[1.9] tracking-[0.01em] text-[rgba(29,29,31,1)]">
+                        {block.text}
+                      </p>
+                      <div className="mx-4 overflow-hidden rounded-[1.35rem] sm:mx-5">
+                        <DetailImage src={block.imageSrc} alt={block.imageAlt} />
+                      </div>
+                    </div>
+                  </div>
+                ))}
               </div>
             </div>
           </div>
@@ -656,7 +692,7 @@ function CardContent({
     };
   }, [card.title]);
   const shouldAnchorImageBottom = card.body.length > 90 || isMultiLineTitle;
-  const imageHeightClass = shouldAnchorImageBottom ? 'h-[11.2rem]' : 'h-[12.8rem]';
+  const imageHeightClass = shouldAnchorImageBottom ? 'h-[12.3rem]' : 'h-[14.1rem]';
 
   return (
     <div className="flex h-full flex-col overflow-hidden">
@@ -667,7 +703,7 @@ function CardContent({
       >
         {card.title}
       </h3>
-      <p className="mt-[1.23rem] text-[0.95rem] leading-[1.5] text-neutral-800">{card.body}</p>
+      <p className="mt-[1.32rem] text-[0.95rem] leading-[1.5] text-neutral-800">{card.body}</p>
 
       <div className="relative mt-auto overflow-hidden rounded-[1.35rem] bg-[rgba(245,245,247,1)]">
         <Image
@@ -679,5 +715,26 @@ function CardContent({
         />
       </div>
     </div>
+  );
+}
+
+function DetailImage({ src, alt }: { src: string; alt: string }) {
+  const [isPortrait, setIsPortrait] = useState(false);
+
+  return (
+    <Image
+      src={src}
+      alt={alt}
+      width={1400}
+      height={900}
+      onLoadingComplete={(img) => {
+        setIsPortrait(img.naturalHeight > img.naturalWidth);
+      }}
+      className={
+        isPortrait
+          ? 'h-[86vh] w-full object-cover object-[50%_40%]'
+          : 'h-auto w-full object-contain'
+      }
+    />
   );
 }
