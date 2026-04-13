@@ -7,6 +7,7 @@ import { useEffect, useMemo, useRef, useState } from 'react'
 interface NavigationProps {
   className?: string
   onNavigate?: () => void
+  onClose?: () => void
   onDropdownOpenChange?: (open: boolean) => void
   mode?: 'desktop' | 'mobile'
 }
@@ -47,6 +48,7 @@ const navigationItems: NavItem[] = [
 export default function Navigation({
   className = '',
   onNavigate,
+  onClose,
   onDropdownOpenChange,
   mode = 'desktop',
 }: NavigationProps) {
@@ -57,6 +59,7 @@ export default function Navigation({
   const [mobileSubmenuHref, setMobileSubmenuHref] = useState<string | null>(null)
   const closeTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null)
   const isDesktop = mode === 'desktop'
+
   const fallbackDropdownItem = useMemo(
     () => navigationItems.find((item) => item.children?.length),
     [],
@@ -66,10 +69,9 @@ export default function Navigation({
     [panelHref],
   )
   const displayDropdownItem = activeDropdownItem ?? fallbackDropdownItem
-  const activeMobileSubmenuItem = useMemo(
-    () => navigationItems.find((item) => item.href === mobileSubmenuHref && item.children?.length) ?? null,
-    [mobileSubmenuHref],
-  )
+  const activeMobileSubmenuItem = useMemo(() => {
+    return navigationItems.find((item) => item.href === mobileSubmenuHref && item.children?.length) ?? null
+  }, [mobileSubmenuHref])
 
   const isActive = (href: string) => {
     if (href === '/') return pathname === '/'
@@ -107,6 +109,11 @@ export default function Navigation({
   const handleMobileNavigate = () => {
     setMobileSubmenuHref(null)
     onNavigate?.()
+  }
+
+  const handleMobileClose = () => {
+    setMobileSubmenuHref(null)
+    onClose?.()
   }
 
   useEffect(() => {
@@ -200,6 +207,36 @@ export default function Navigation({
     )
   }
 
+  const rootMobileLinks = (
+    <ul className="site-nav-list">
+      {navigationItems.map((item, index) => renderNavItem(item, index))}
+    </ul>
+  )
+
+  const submenuMobileLinks = activeMobileSubmenuItem ? (
+    <div className="site-nav-mobile-submenu-screen" id={`submenu-${navigationItems.findIndex((item) => item.href === activeMobileSubmenuItem.href)}`}>
+      <Link
+        href={activeMobileSubmenuItem.href}
+        onClick={handleMobileNavigate}
+        className="site-nav-mobile-submenu-link site-nav-mobile-submenu-link--primary"
+      >
+        Explore {activeMobileSubmenuItem.label}
+      </Link>
+      {activeMobileSubmenuItem.children?.map((child) => (
+        <Link
+          key={child.href}
+          href={child.href}
+          onClick={handleMobileNavigate}
+          className="site-nav-mobile-submenu-link"
+        >
+          {child.title ?? child.label}
+        </Link>
+      ))}
+    </div>
+  ) : (
+    <div className="site-nav-mobile-submenu-screen" aria-hidden="true" />
+  )
+
   return (
     <nav
       className={className}
@@ -207,37 +244,34 @@ export default function Navigation({
       onMouseEnter={clearCloseTimer}
       onMouseLeave={scheduleCloseForCrossing}
     >
-      {!isDesktop && activeMobileSubmenuItem ? (
-        <div className="site-nav-mobile-drawer" id={`submenu-${navigationItems.findIndex((item) => item.href === activeMobileSubmenuItem.href)}`}>
-          <div className="site-nav-mobile-drawer-head">
+      {!isDesktop ? (
+        <div className="site-nav-mobile-stack">
+          <div className="site-nav-mobile-head">
+            {activeMobileSubmenuItem ? (
+              <button
+                type="button"
+                className="site-nav-mobile-head-action"
+                onClick={() => setMobileSubmenuHref(null)}
+                aria-label="Back to main menu"
+              >
+                <span aria-hidden="true">‹</span>
+              </button>
+            ) : (
+              <span className="site-nav-mobile-head-spacer" aria-hidden="true" />
+            )}
             <button
               type="button"
-              className="site-nav-mobile-drawer-back"
-              onClick={() => setMobileSubmenuHref(null)}
-              aria-label="Back to main menu"
+              className="site-nav-mobile-head-action"
+              onClick={handleMobileClose}
+              aria-label="Close menu"
             >
-              返回
+              <span aria-hidden="true">×</span>
             </button>
-            <p className="site-nav-mobile-drawer-title">{activeMobileSubmenuItem.label}</p>
           </div>
-          <div className="site-nav-mobile-drawer-body">
-            <Link
-              href={activeMobileSubmenuItem.href}
-              onClick={handleMobileNavigate}
-              className="site-nav-mobile-drawer-link site-nav-mobile-drawer-link--primary"
-            >
-              查看全部 {activeMobileSubmenuItem.label}
-            </Link>
-            {activeMobileSubmenuItem.children?.map((child) => (
-              <Link
-                key={child.href}
-                href={child.href}
-                onClick={handleMobileNavigate}
-                className="site-nav-mobile-drawer-link"
-              >
-                {child.title ?? child.label}
-              </Link>
-            ))}
+
+          <div className={`site-nav-mobile-stage ${activeMobileSubmenuItem ? 'is-submenu' : ''}`}>
+            <section className="site-nav-mobile-screen">{rootMobileLinks}</section>
+            <section className="site-nav-mobile-screen">{submenuMobileLinks}</section>
           </div>
         </div>
       ) : (

@@ -5,9 +5,11 @@ import Link from 'next/link'
 import Navigation from './Navigation'
 
 export default function Header() {
-  const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
+  const [mobileMenuState, setMobileMenuState] = useState<'closed' | 'opening' | 'open' | 'closing'>('closed')
   const [isScrolled, setIsScrolled] = useState(false)
   const [desktopDropdownOpen, setDesktopDropdownOpen] = useState(false)
+  const mobileMenuVisible = mobileMenuState !== 'closed'
+  const mobileMenuExpanded = mobileMenuState === 'opening' || mobileMenuState === 'open'
 
   useEffect(() => {
     const onScroll = () => {
@@ -25,6 +27,45 @@ export default function Header() {
       document.body.classList.remove('site-nav-overlay-open')
     }
   }, [desktopDropdownOpen])
+
+  useEffect(() => {
+    if (!mobileMenuVisible) return
+    const id = window.requestAnimationFrame(() => {
+      setMobileMenuState((prev) => (prev === 'opening' ? 'open' : prev))
+    })
+    return () => window.cancelAnimationFrame(id)
+  }, [mobileMenuVisible])
+
+  useEffect(() => {
+    if (!mobileMenuVisible) return
+    document.body.style.overflow = 'hidden'
+    return () => {
+      document.body.style.overflow = ''
+    }
+  }, [mobileMenuVisible])
+
+  const closeMobileMenu = () => {
+    setMobileMenuState((prev) => {
+      if (prev === 'closed' || prev === 'closing') return prev
+      return 'closing'
+    })
+    window.setTimeout(() => {
+      setMobileMenuState('closed')
+    }, 320)
+  }
+
+  const toggleMobileMenu = () => {
+    setMobileMenuState((prev) => {
+      if (prev === 'closed') return 'opening'
+      if (prev === 'opening' || prev === 'open') return 'closing'
+      return prev
+    })
+    if (mobileMenuExpanded) {
+      window.setTimeout(() => {
+        setMobileMenuState('closed')
+      }, 320)
+    }
+  }
 
   return (
     <header className={`site-header ${isScrolled ? 'is-scrolled' : ''}`}>
@@ -47,23 +88,24 @@ export default function Header() {
         />
 
         <button
-          onClick={() => setMobileMenuOpen((open) => !open)}
+          onClick={toggleMobileMenu}
           className="site-mobile-toggle md:hidden"
           aria-label="Toggle menu"
-          aria-expanded={mobileMenuOpen}
+          aria-expanded={mobileMenuExpanded}
         >
           <span />
           <span />
         </button>
       </div>
 
-      {mobileMenuOpen ? (
-        <div className="site-mobile-panel md:hidden">
+      {mobileMenuVisible ? (
+        <div className="site-mobile-panel md:hidden" data-state={mobileMenuState}>
           <div className="site-shell">
             <Navigation
               className="site-nav-mobile"
               mode="mobile"
-              onNavigate={() => setMobileMenuOpen(false)}
+              onNavigate={closeMobileMenu}
+              onClose={closeMobileMenu}
             />
           </div>
         </div>

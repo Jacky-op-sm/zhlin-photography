@@ -97,32 +97,6 @@ export default function PhotoViewer({
         {initialIndex + 1} / {photos.length}
       </p>
 
-      {hasPrevious ? (
-        <button
-          className="photo-viewer-nav photo-viewer-nav-prev"
-          onClick={(event) => {
-            event.stopPropagation()
-            onPrevious()
-          }}
-          aria-label="Previous image"
-        >
-          <span className="photo-viewer-chevron photo-viewer-chevron--left" aria-hidden="true" />
-        </button>
-      ) : null}
-
-      {hasNext ? (
-        <button
-          className="photo-viewer-nav photo-viewer-nav-next"
-          onClick={(event) => {
-            event.stopPropagation()
-            onNext()
-          }}
-          aria-label="Next image"
-        >
-          <span className="photo-viewer-chevron photo-viewer-chevron--right" aria-hidden="true" />
-        </button>
-      ) : null}
-
       <div className="photo-viewer-image-wrap" onClick={(event) => event.stopPropagation()}>
         <AnimatePresence mode="wait">
           <motion.div
@@ -143,6 +117,42 @@ export default function PhotoViewer({
           </motion.div>
         </AnimatePresence>
       </div>
+
+      {(hasPrevious || hasNext) ? (
+        <div className="photo-viewer-controls" onClick={(event) => event.stopPropagation()}>
+          {hasPrevious ? (
+            <button
+              className="photo-viewer-nav photo-viewer-nav-prev"
+              onClick={(event) => {
+                event.stopPropagation()
+                onPrevious()
+              }}
+              aria-label="Previous image"
+            >
+              <span
+                className="photo-viewer-chevron photo-viewer-chevron--left scale-x-110 -translate-x-[1px]"
+                aria-hidden="true"
+              />
+            </button>
+          ) : <span className="photo-viewer-nav-placeholder" aria-hidden="true" />}
+
+          {hasNext ? (
+            <button
+              className="photo-viewer-nav photo-viewer-nav-next"
+              onClick={(event) => {
+                event.stopPropagation()
+                onNext()
+              }}
+              aria-label="Next image"
+            >
+              <span
+                className="photo-viewer-chevron photo-viewer-chevron--right scale-x-110 translate-x-[1px]"
+                aria-hidden="true"
+              />
+            </button>
+          ) : <span className="photo-viewer-nav-placeholder" aria-hidden="true" />}
+        </div>
+      ) : null}
     </motion.div>
   )
 }
