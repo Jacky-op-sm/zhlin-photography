@@ -9,7 +9,7 @@ async function openMobileMenu(page: import('@playwright/test').Page) {
   await expect(toggle).toBeVisible()
   await expect(toggle).toHaveAttribute('aria-expanded', 'false')
   for (let attempt = 0; attempt < 3; attempt += 1) {
-    await toggle.evaluate((el) => (el as HTMLButtonElement).click())
+    await toggle.click()
     if ((await toggle.getAttribute('aria-expanded')) === 'true') {
       break
     }
@@ -19,12 +19,12 @@ async function openMobileMenu(page: import('@playwright/test').Page) {
   await expect(mobilePanel(page)).toHaveAttribute('data-state', 'open')
 }
 
-async function activate(locator: import('@playwright/test').Locator) {
-  await locator.evaluate((el) => (el as HTMLElement).click())
-}
-
 function mobilePanel(page: import('@playwright/test').Page) {
   return page.locator('.site-mobile-panel')
+}
+
+function mobileParentLink(page: import('@playwright/test').Page, label: string) {
+  return mobilePanel(page).locator('.site-nav-parent-link', { hasText: label }).first()
 }
 
 test.describe('mobile navigation behavior', () => {
@@ -34,12 +34,16 @@ test.describe('mobile navigation behavior', () => {
     await page.goto('/')
     await openMobileMenu(page)
 
-    await activate(mobilePanel(page).getByRole('link', { name: 'Photography' }).first())
-    await expect(page).toHaveURL(/\/photography$/)
+    await mobilePanel(page).getByRole('link', { name: 'Home' }).click()
+    await expect(page).toHaveURL(/\/$/)
 
     await openMobileMenu(page)
-    await activate(mobilePanel(page).getByRole('link', { name: 'Travel' }).first())
-    await expect(page).toHaveURL(/\/travel$/)
+    await mobilePanel(page).getByRole('link', { name: 'Hobby' }).click()
+    await expect(page).toHaveURL(/\/hobby$/)
+
+    await openMobileMenu(page)
+    await mobilePanel(page).getByRole('link', { name: 'Contact' }).click()
+    await expect(page).toHaveURL(/\/contact$/)
   })
 
   test('submenu entry, back, and close work in second-level mobile menu', async ({ page }, testInfo) => {
@@ -48,25 +52,30 @@ test.describe('mobile navigation behavior', () => {
     await page.goto('/')
     await openMobileMenu(page)
 
-    await activate(mobilePanel(page).getByRole('button', { name: 'Expand Travel submenu' }))
+    await mobileParentLink(page, 'Travel').click()
     await expect(mobilePanel(page).getByRole('button', { name: 'Back to main menu' })).toBeVisible()
     await expect(mobilePanel(page).getByRole('link', { name: 'Explore Travel' })).toBeVisible()
     await expect(mobilePanel(page).getByRole('link', { name: '南京' })).toBeVisible()
 
-    await activate(mobilePanel(page).getByRole('button', { name: 'Back to main menu' }))
+    await mobilePanel(page).getByRole('button', { name: 'Back to main menu' }).click()
     await expect(mobilePanel(page).getByRole('button', { name: 'Expand Travel submenu' })).toBeVisible()
 
-    await activate(mobilePanel(page).getByRole('button', { name: 'Expand Photography submenu' }))
-    await activate(mobilePanel(page).getByRole('link', { name: '街头摄影' }))
+    await mobilePanel(page).getByRole('button', { name: 'Expand Photography submenu' }).click()
+    await mobilePanel(page).getByRole('link', { name: '街头摄影' }).click()
     await expect(page).toHaveURL(/\/photography\/street$/)
 
     await openMobileMenu(page)
-    await activate(mobilePanel(page).getByRole('button', { name: 'Close menu' }))
+    await mobilePanel(page).getByRole('button', { name: 'Close menu' }).click()
     await expect(mobilePanel(page)).toHaveCount(0)
 
     await openMobileMenu(page)
-    await activate(mobilePanel(page).getByRole('button', { name: 'Expand Travel submenu' }))
-    await activate(mobilePanel(page).getByRole('link', { name: '上海' }))
+    await mobileParentLink(page, 'Travel').click()
+    await mobilePanel(page).getByRole('link', { name: 'Explore Travel' }).click()
+    await expect(page).toHaveURL(/\/travel$/)
+
+    await openMobileMenu(page)
+    await mobileParentLink(page, 'Travel').click()
+    await mobilePanel(page).getByRole('link', { name: '上海' }).click()
     await expect(page).toHaveURL(/\/travel\/shanghai$/)
   })
 })

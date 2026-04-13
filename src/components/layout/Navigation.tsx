@@ -112,7 +112,6 @@ export default function Navigation({
   }
 
   const handleMobileClose = () => {
-    setMobileSubmenuHref(null)
     onClose?.()
   }
 
@@ -134,37 +133,16 @@ export default function Navigation({
     if (!isDesktop && hasChildren) {
       return (
         <li key={item.href} className="site-nav-item site-nav-item--has-dropdown">
-          <div className="site-nav-parent-row">
-            <Link
-              href={item.href}
-              onClick={handleMobileNavigate}
-              className="site-nav-link site-nav-parent-link"
-              data-active={isActive(item.href)}
-            >
-              <span>{item.label}</span>
-            </Link>
-            <button
-              onClick={() => setMobileSubmenuHref(item.href)}
-              className="site-nav-toggle-btn"
-              aria-expanded={mobileSubmenuHref === item.href}
-              aria-controls={`submenu-${index}`}
-              aria-label={`Expand ${item.label} submenu`}
-            >
-              <svg
-                className="site-nav-chevron"
-                width="12"
-                height="12"
-                viewBox="0 0 12 12"
-                fill="none"
-                stroke="currentColor"
-                strokeWidth="2"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-              >
-                <path d="M4 2.5L7.5 6L4 9.5" />
-              </svg>
-            </button>
-          </div>
+          <button
+            type="button"
+            onClick={() => setMobileSubmenuHref(item.href)}
+            className="site-nav-link site-nav-parent-link"
+            aria-expanded={mobileSubmenuHref === item.href}
+            aria-controls={`submenu-${index}`}
+            aria-label={`Expand ${item.label} submenu`}
+          >
+            <span>{item.label}</span>
+          </button>
         </li>
       )
     }

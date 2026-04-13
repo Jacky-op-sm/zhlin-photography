@@ -1,13 +1,16 @@
 'use client'
 
-import { useEffect, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import Link from 'next/link'
 import Navigation from './Navigation'
 
 export default function Header() {
+  const MOBILE_MENU_ANIMATION_MS = 1000
   const [mobileMenuState, setMobileMenuState] = useState<'closed' | 'opening' | 'open' | 'closing'>('closed')
   const [isScrolled, setIsScrolled] = useState(false)
   const [desktopDropdownOpen, setDesktopDropdownOpen] = useState(false)
+  const closeTimerRef = useRef<number | null>(null)
+  const openTimerRef = useRef<number | null>(null)
   const mobileMenuVisible = mobileMenuState !== 'closed'
   const mobileMenuExpanded = mobileMenuState === 'opening' || mobileMenuState === 'open'
 
@@ -29,12 +32,23 @@ export default function Header() {
   }, [desktopDropdownOpen])
 
   useEffect(() => {
-    if (!mobileMenuVisible) return
-    const id = window.requestAnimationFrame(() => {
+    if (mobileMenuState !== 'opening') return
+    if (openTimerRef.current !== null) {
+      window.clearTimeout(openTimerRef.current)
+      openTimerRef.current = null
+    }
+    openTimerRef.current = window.setTimeout(() => {
       setMobileMenuState((prev) => (prev === 'opening' ? 'open' : prev))
-    })
-    return () => window.cancelAnimationFrame(id)
-  }, [mobileMenuVisible])
+      openTimerRef.current = null
+    }, MOBILE_MENU_ANIMATION_MS)
+
+    return () => {
+      if (openTimerRef.current !== null) {
+        window.clearTimeout(openTimerRef.current)
+        openTimerRef.current = null
+      }
+    }
+  }, [mobileMenuState])
 
   useEffect(() => {
     if (!mobileMenuVisible) return
@@ -44,31 +58,61 @@ export default function Header() {
     }
   }, [mobileMenuVisible])
 
+  useEffect(() => {
+    return () => {
+      if (closeTimerRef.current !== null) {
+        window.clearTimeout(closeTimerRef.current)
+      }
+      if (openTimerRef.current !== null) {
+        window.clearTimeout(openTimerRef.current)
+      }
+    }
+  }, [])
+
   const closeMobileMenu = () => {
+    if (openTimerRef.current !== null) {
+      window.clearTimeout(openTimerRef.current)
+      openTimerRef.current = null
+    }
+    if (closeTimerRef.current !== null) {
+      window.clearTimeout(closeTimerRef.current)
+      closeTimerRef.current = null
+    }
     setMobileMenuState((prev) => {
       if (prev === 'closed' || prev === 'closing') return prev
       return 'closing'
     })
-    window.setTimeout(() => {
+    closeTimerRef.current = window.setTimeout(() => {
       setMobileMenuState('closed')
-    }, 320)
+      closeTimerRef.current = null
+    }, MOBILE_MENU_ANIMATION_MS)
   }
 
   const toggleMobileMenu = () => {
+    if (openTimerRef.current !== null) {
+      window.clearTimeout(openTimerRef.current)
+      openTimerRef.current = null
+    }
+    if (closeTimerRef.current !== null) {
+      window.clearTimeout(closeTimerRef.current)
+      closeTimerRef.current = null
+    }
     setMobileMenuState((prev) => {
       if (prev === 'closed') return 'opening'
+      if (prev === 'closing') return 'opening'
       if (prev === 'opening' || prev === 'open') return 'closing'
       return prev
     })
     if (mobileMenuExpanded) {
-      window.setTimeout(() => {
+      closeTimerRef.current = window.setTimeout(() => {
         setMobileMenuState('closed')
-      }, 320)
+        closeTimerRef.current = null
+      }, MOBILE_MENU_ANIMATION_MS)
     }
   }
 
   return (
-    <header className={`site-header ${isScrolled ? 'is-scrolled' : ''}`}>
+    <header className={`site-header ${isScrolled ? 'is-scrolled' : ''} ${mobileMenuExpanded ? 'is-mobile-menu-open' : ''}`}>
       <div className="site-shell site-header-inner">
         <Link href="/" className="site-brand" aria-label="Go to homepage">
           <span className="site-brand-icon" aria-hidden="true">
