@@ -30,7 +30,7 @@ export default function TightGalleryGrid({ photos }: TightGalleryGridProps) {
     setCurrentIndex((prev) => (prev < photos.length - 1 ? prev + 1 : prev))
   }, [photos.length])
 
-  const columnCountClass = useMemo(() => 'columns-1 md:columns-2 xl:columns-3', [])
+  const columnCountClass = useMemo(() => 'columns-2 md:columns-2 xl:columns-3', [])
 
   if (photos.length === 0) {
     return (
@@ -67,7 +67,7 @@ export default function TightGalleryGrid({ photos }: TightGalleryGridProps) {
                     fill
                     className="object-cover photo-gallery-hover"
                     style={{ transform: 'scale(1)' }}
-                    sizes="(max-width: 768px) 100vw, (max-width: 1280px) 50vw, 33vw"
+                    sizes="(max-width: 768px) 50vw, (max-width: 1280px) 50vw, 33vw"
                     priority={index < 2}
                   />
                 </div>

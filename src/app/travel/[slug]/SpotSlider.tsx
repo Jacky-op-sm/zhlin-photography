@@ -13,6 +13,7 @@ const MARGIN_PX = 260;
 const SLIDE_FINE_TUNE_PX = 0;
 const CARD_HEIGHT_REM = 28;
 const CARD_HEIGHT_MULTIPLIER = 1.1;
+const MOBILE_BREAKPOINT_PX = 768;
 type CardItem = {
   eyebrow: string;
   title: string;
@@ -514,9 +515,18 @@ export default function SpotSlider({
     return NANJING_CARD_ITEMS;
   }, [slug, expandMap, extractItems]);
   const cardHeightRem = CARD_HEIGHT_REM * CARD_HEIGHT_MULTIPLIER;
+  const [viewportWidth, setViewportWidth] = useState<number>(1200);
   const [startIndex, setStartIndex] = useState(0);
   const [activeCard, setActiveCard] = useState<number | null>(null);
-  const maxStartIndex = Math.max(0, cards.length - VISIBLE_CARDS);
+  const isMobile = viewportWidth < MOBILE_BREAKPOINT_PX;
+  const visibleCards = isMobile ? 1 : VISIBLE_CARDS;
+  const cardGapPx = isMobile ? 12 : CARD_GAP_PX;
+  const sidePeekPx = isMobile ? 20 : SIDE_PEEK_PX;
+  const cardWidthPx = isMobile
+    ? Math.max(248, Math.min(360, viewportWidth - 52))
+    : CARD_WIDTH_PX;
+  const marginPx = isMobile ? 16 : MARGIN_PX;
+  const maxStartIndex = Math.max(0, cards.length - visibleCards);
 
   const handlePrev = () => {
     setStartIndex((prev) => Math.max(0, prev - 1));
@@ -526,10 +536,24 @@ export default function SpotSlider({
     setStartIndex((prev) => Math.min(maxStartIndex, prev + 1));
   };
 
-  const edgePeekOffsetPx = startIndex === 0 ? 0 : SIDE_PEEK_PX;
-  const stepPx = CARD_WIDTH_PX + CARD_GAP_PX + SLIDE_FINE_TUNE_PX;
-  const firstStepCorrectionPx = startIndex > 0 ? SIDE_PEEK_PX : 0;
-  const translateX = MARGIN_PX + edgePeekOffsetPx - firstStepCorrectionPx - startIndex * stepPx;
+  const edgePeekOffsetPx = startIndex === 0 ? 0 : sidePeekPx;
+  const stepPx = cardWidthPx + cardGapPx + SLIDE_FINE_TUNE_PX;
+  const firstStepCorrectionPx = startIndex > 0 ? sidePeekPx : 0;
+  const translateX = marginPx + edgePeekOffsetPx - firstStepCorrectionPx - startIndex * stepPx;
+
+  useEffect(() => {
+    const updateViewportWidth = () => {
+      setViewportWidth(window.innerWidth);
+    };
+
+    updateViewportWidth();
+    window.addEventListener('resize', updateViewportWidth, { passive: true });
+    return () => window.removeEventListener('resize', updateViewportWidth);
+  }, []);
+
+  useEffect(() => {
+    setStartIndex((prev) => Math.min(prev, maxStartIndex));
+  }, [maxStartIndex]);
 
   useEffect(() => {
     if (activeCard === null) return;
@@ -574,7 +598,7 @@ export default function SpotSlider({
           className="flex transition-transform duration-500 ease-out"
           style={{
             transform: `translateX(${translateX}px)`,
-            gap: `${CARD_GAP_PX}px`,
+            gap: `${cardGapPx}px`,
           }}
         >
           {cards.map((card, index) => {
@@ -584,7 +608,7 @@ export default function SpotSlider({
               key={cardId}
               type="button"
               className="travel-card-hover-shell block text-left"
-              style={{ flex: `0 0 ${CARD_WIDTH_PX}px` }}
+              style={{ flex: `0 0 ${cardWidthPx}px` }}
               onClick={() => setActiveCard(cardId)}
               aria-label={`Open card ${cardId}`}
             >
@@ -626,12 +650,12 @@ export default function SpotSlider({
 
       {activeCard !== null ? (
         <div
-          className="fixed inset-0 z-[90] overflow-y-auto bg-[rgba(15,15,18,0.34)] p-6 backdrop-blur-[10px] sm:p-10 lg:p-14"
+          className="fixed inset-0 z-[90] overflow-y-auto bg-[rgba(15,15,18,0.34)] p-3 backdrop-blur-[10px] sm:p-10 lg:p-14"
           onClick={() => setActiveCard(null)}
         >
           <div className="mx-auto w-full max-w-[1280px]">
             <div
-              className="relative rounded-[2.1rem] bg-white p-7 shadow-[0_30px_80px_rgba(0,0,0,0.28)] sm:p-10 lg:p-12"
+              className="relative rounded-[1.5rem] bg-white p-5 shadow-[0_30px_80px_rgba(0,0,0,0.28)] sm:rounded-[2.1rem] sm:p-10 lg:p-12"
               onClick={(event) => event.stopPropagation()}
             >
               <button
@@ -643,26 +667,26 @@ export default function SpotSlider({
                 <span className="photo-viewer-close-icon" aria-hidden="true" />
               </button>
 
-              <div className="mx-[1rem] max-w-[42rem] sm:mx-[1.57rem] lg:mx-[2.09rem]">
-                <p className="text-base font-semibold text-[rgba(29,29,31,1)]">
+              <div className="mx-0 max-w-[42rem] sm:mx-[1.57rem] lg:mx-[2.09rem]">
+                <p className="text-sm font-semibold text-[rgba(29,29,31,1)] sm:text-base">
                   {activeExpandCard?.eyebrow || cards[activeCard - 1]?.eyebrow}
                 </p>
-                <h3 className="mt-3 text-[2.375rem] font-semibold leading-[1.2] tracking-tight text-[rgba(29,29,31,1)] sm:text-[3.125rem]">
+                <h3 className="mt-2 text-[2rem] font-semibold leading-[1.18] tracking-tight text-[rgba(29,29,31,1)] sm:mt-3 sm:text-[3.125rem]">
                   {cards[activeCard - 1]?.title}
                 </h3>
               </div>
 
-              <div className="mt-16 mx-[1rem] space-y-5 sm:mx-[1.57rem] sm:space-y-6 lg:mx-[2.09rem]">
+              <div className="mt-8 mx-0 space-y-4 sm:mt-16 sm:mx-[1.57rem] sm:space-y-6 lg:mx-[2.09rem]">
                 {detailBlocks.map((block, blockIndex) => (
                   <div
                     key={`${activeCardData?.title ?? 'detail'}-${blockIndex}`}
-                    className="min-h-[28rem] rounded-[1.75rem] bg-[rgba(245,245,247,1)] px-24 pt-12 pb-8 sm:min-h-[30rem] sm:px-[7.5rem] sm:pt-[3.75rem] sm:pb-10"
+                    className="rounded-[1.2rem] bg-[rgba(245,245,247,1)] px-5 pb-5 pt-6 sm:min-h-[30rem] sm:rounded-[1.75rem] sm:px-[4.25rem] sm:pb-10 sm:pt-[3.25rem] lg:px-[7.5rem] lg:pt-[3.75rem]"
                   >
-                    <div className="space-y-12">
-                      <p className="w-full whitespace-pre-line text-[1.25rem] leading-[1.9] tracking-[0.01em] text-[rgba(29,29,31,1)]">
+                    <div className="space-y-6 sm:space-y-10 lg:space-y-12">
+                      <p className="w-full whitespace-pre-line text-[1rem] leading-[1.8] tracking-[0.01em] text-[rgba(29,29,31,1)] sm:text-[1.15rem] lg:text-[1.25rem]">
                         {block.text}
                       </p>
-                      <div className="mx-4 overflow-hidden rounded-[1.35rem] sm:mx-5">
+                      <div className="mx-0 overflow-hidden rounded-[1rem] sm:mx-3 sm:rounded-[1.35rem] lg:mx-5">
                         <DetailImage src={block.imageSrc} alt={block.imageAlt} />
                       </div>
                     </div>
@@ -758,18 +782,20 @@ function CardContent({
     };
   }, [card.title]);
   const shouldAnchorImageBottom = card.body.length > 90 || isMultiLineTitle;
-  const imageHeightClass = shouldAnchorImageBottom ? 'h-[12.3rem]' : 'h-[14.1rem]';
+  const imageHeightClass = shouldAnchorImageBottom
+    ? 'h-[11.3rem] sm:h-[12.3rem]'
+    : 'h-[12.9rem] sm:h-[14.1rem]';
 
   return (
     <div className="flex h-full flex-col overflow-hidden">
-      <p className="text-[0.95rem] font-semibold tracking-tight text-neutral-900">{card.eyebrow}</p>
+      <p className="text-[0.85rem] font-semibold tracking-tight text-neutral-900 sm:text-[0.95rem]">{card.eyebrow}</p>
       <h3
         ref={titleRef}
-        className={`mt-3 text-[1.5rem] font-semibold tracking-tight text-neutral-900 ${isMultiLineTitle ? 'leading-[1.43]' : 'leading-[1.1]'}`}
+        className={`mt-3 text-[1.3rem] font-semibold tracking-tight text-neutral-900 sm:text-[1.5rem] ${isMultiLineTitle ? 'leading-[1.38]' : 'leading-[1.1]'}`}
       >
         {card.title}
       </h3>
-      <p className="mt-[1.32rem] text-[0.95rem] leading-[1.5] text-neutral-800">{card.body}</p>
+      <p className="mt-4 text-[0.9rem] leading-[1.52] text-neutral-800 sm:mt-[1.32rem] sm:text-[0.95rem]">{card.body}</p>
 
       <div className="relative mt-auto overflow-hidden rounded-[1.35rem] bg-[rgba(245,245,247,1)]">
         <Image
@@ -798,8 +824,8 @@ function DetailImage({ src, alt }: { src: string; alt: string }) {
       }}
       className={
         isPortrait
-          ? 'h-[86vh] w-full object-cover object-[50%_40%]'
-          : 'h-auto w-full object-contain'
+          ? 'h-[55vh] w-full object-cover object-[50%_40%] sm:h-[70vh] lg:h-[86vh]'
+          : 'h-auto max-h-[50vh] w-full object-contain sm:max-h-[70vh] lg:max-h-none'
       }
     />
   );

@@ -54,7 +54,7 @@ export default function Navigation({
   const pathname = usePathname()
   const [panelHref, setPanelHref] = useState<string | null>(null)
   const [isPanelOpen, setIsPanelOpen] = useState(false)
-  const [expandedItems, setExpandedItems] = useState<Set<string>>(new Set())
+  const [mobileSubmenuHref, setMobileSubmenuHref] = useState<string | null>(null)
   const closeTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null)
   const isDesktop = mode === 'desktop'
   const fallbackDropdownItem = useMemo(
@@ -66,6 +66,10 @@ export default function Navigation({
     [panelHref],
   )
   const displayDropdownItem = activeDropdownItem ?? fallbackDropdownItem
+  const activeMobileSubmenuItem = useMemo(
+    () => navigationItems.find((item) => item.href === mobileSubmenuHref && item.children?.length) ?? null,
+    [mobileSubmenuHref],
+  )
 
   const isActive = (href: string) => {
     if (href === '/') return pathname === '/'
@@ -100,16 +104,9 @@ export default function Navigation({
     }, NAV_TO_PANEL_GRACE_MS)
   }
 
-  const toggleExpand = (label: string) => {
-    setExpandedItems(prev => {
-      const next = new Set(prev)
-      if (next.has(label)) {
-        next.delete(label)
-      } else {
-        next.add(label)
-      }
-      return next
-    })
+  const handleMobileNavigate = () => {
+    setMobileSubmenuHref(null)
+    onNavigate?.()
   }
 
   useEffect(() => {
@@ -126,32 +123,28 @@ export default function Navigation({
 
   const renderNavItem = (item: NavItem, index: number) => {
     const hasChildren = !!item.children
-    const isExpanded = expandedItems.has(item.label)
 
     if (!isDesktop && hasChildren) {
       return (
-        <li
-          key={item.href}
-          className={`site-nav-item site-nav-item--has-dropdown ${isExpanded ? 'is-expanded' : ''}`}
-        >
+        <li key={item.href} className="site-nav-item site-nav-item--has-dropdown">
           <div className="site-nav-parent-row">
             <Link
               href={item.href}
-              onClick={onNavigate}
+              onClick={handleMobileNavigate}
               className="site-nav-link site-nav-parent-link"
               data-active={isActive(item.href)}
             >
               <span>{item.label}</span>
             </Link>
             <button
-              onClick={() => toggleExpand(item.label)}
+              onClick={() => setMobileSubmenuHref(item.href)}
               className="site-nav-toggle-btn"
-              aria-expanded={isExpanded}
+              aria-expanded={mobileSubmenuHref === item.href}
               aria-controls={`submenu-${index}`}
-              aria-label={`${isExpanded ? 'Collapse' : 'Expand'} ${item.label} submenu`}
+              aria-label={`Expand ${item.label} submenu`}
             >
               <svg
-                className={`site-nav-chevron ${isExpanded ? 'is-rotated' : ''}`}
+                className="site-nav-chevron"
                 width="12"
                 height="12"
                 viewBox="0 0 12 12"
@@ -161,34 +154,9 @@ export default function Navigation({
                 strokeLinecap="round"
                 strokeLinejoin="round"
               >
-                <path d="M3 4.5L6 7.5L9 4.5" />
+                <path d="M4 2.5L7.5 6L4 9.5" />
               </svg>
             </button>
-          </div>
-
-          <div
-            id={`submenu-${index}`}
-            className={`site-nav-dropdown-shell site-nav-mobile-submenu ${isExpanded ? 'is-open' : ''}`}
-          >
-            <div className="site-nav-dropdown" role="menu">
-              <div className="site-nav-dropdown-inner">
-                <section className="site-nav-dropdown-column">
-                  <p className="site-nav-dropdown-overline">主题分类</p>
-                  <div className="site-nav-dropdown-links">
-                    {item.children?.map((child) => (
-                      <Link
-                        key={child.href}
-                        href={child.href}
-                        onClick={onNavigate}
-                        className="site-nav-dropdown-link"
-                      >
-                        {child.title ?? child.label}
-                      </Link>
-                    ))}
-                  </div>
-                </section>
-              </div>
-            </div>
           </div>
         </li>
       )
@@ -239,9 +207,44 @@ export default function Navigation({
       onMouseEnter={clearCloseTimer}
       onMouseLeave={scheduleCloseForCrossing}
     >
-      <ul className="site-nav-list">
-        {navigationItems.map((item, index) => renderNavItem(item, index))}
-      </ul>
+      {!isDesktop && activeMobileSubmenuItem ? (
+        <div className="site-nav-mobile-drawer" id={`submenu-${navigationItems.findIndex((item) => item.href === activeMobileSubmenuItem.href)}`}>
+          <div className="site-nav-mobile-drawer-head">
+            <button
+              type="button"
+              className="site-nav-mobile-drawer-back"
+              onClick={() => setMobileSubmenuHref(null)}
+              aria-label="Back to main menu"
+            >
+              返回
+            </button>
+            <p className="site-nav-mobile-drawer-title">{activeMobileSubmenuItem.label}</p>
+          </div>
+          <div className="site-nav-mobile-drawer-body">
+            <Link
+              href={activeMobileSubmenuItem.href}
+              onClick={handleMobileNavigate}
+              className="site-nav-mobile-drawer-link site-nav-mobile-drawer-link--primary"
+            >
+              查看全部 {activeMobileSubmenuItem.label}
+            </Link>
+            {activeMobileSubmenuItem.children?.map((child) => (
+              <Link
+                key={child.href}
+                href={child.href}
+                onClick={handleMobileNavigate}
+                className="site-nav-mobile-drawer-link"
+              >
+                {child.title ?? child.label}
+              </Link>
+            ))}
+          </div>
+        </div>
+      ) : (
+        <ul className="site-nav-list">
+          {navigationItems.map((item, index) => renderNavItem(item, index))}
+        </ul>
+      )}
 
       {isDesktop && displayDropdownItem ? (
         <div

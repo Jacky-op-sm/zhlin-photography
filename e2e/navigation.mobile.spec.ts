@@ -17,6 +17,10 @@ async function openMobileMenu(page: import('@playwright/test').Page) {
   await expect(toggle).toHaveAttribute('aria-expanded', 'true')
 }
 
+function mobilePanel(page: import('@playwright/test').Page) {
+  return page.locator('.site-mobile-panel')
+}
+
 test.describe('mobile navigation behavior', () => {
   test('parent pages are directly reachable from mobile menu', async ({ page }, testInfo) => {
     test.skip(!isMobileProject(testInfo.project.name), 'mobile-only test')
@@ -24,11 +28,11 @@ test.describe('mobile navigation behavior', () => {
     await page.goto('/travel')
     await openMobileMenu(page)
 
-    await page.getByRole('link', { name: 'Photography' }).first().click()
+    await mobilePanel(page).getByRole('link', { name: 'Photography' }).first().click()
     await expect(page).toHaveURL(/\/photography$/)
 
     await openMobileMenu(page)
-    await page.getByRole('link', { name: 'Travel' }).first().click()
+    await mobilePanel(page).getByRole('link', { name: 'Travel' }).first().click()
     await expect(page).toHaveURL(/\/travel$/)
   })
 
@@ -38,13 +42,13 @@ test.describe('mobile navigation behavior', () => {
     await page.goto('/travel')
     await openMobileMenu(page)
 
-    await page.getByRole('button', { name: 'Expand Photography submenu' }).click()
-    await page.getByRole('link', { name: '街头摄影' }).click()
+    await mobilePanel(page).getByRole('button', { name: 'Expand Photography submenu' }).click()
+    await mobilePanel(page).getByRole('link', { name: '街头摄影' }).click()
     await expect(page).toHaveURL(/\/photography\/street$/)
 
     await openMobileMenu(page)
-    await page.getByRole('button', { name: 'Expand Travel submenu' }).click()
-    await page.getByRole('link', { name: '上海' }).click()
+    await mobilePanel(page).getByRole('button', { name: 'Expand Travel submenu' }).click()
+    await mobilePanel(page).getByRole('link', { name: '上海' }).click()
     await expect(page).toHaveURL(/\/travel\/shanghai$/)
   })
 })
