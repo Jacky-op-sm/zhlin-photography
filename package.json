@@ -7,8 +7,13 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
+    "build:japan-card-expand": "node scripts/build-japan-card-expand.mjs",
     "test:e2e": "playwright test",
-    "test:e2e:update": "playwright test --update-snapshots"
+    "test:e2e:update": "playwright test --update-snapshots",
+    "build:shanghai-card-expand": "node scripts/build-shanghai-card-expand.mjs",
+    "build:beijing-card-expand": "node scripts/build-beijing-card-expand.mjs",
+    "build:dongbei-card-expand": "node scripts/build-dongbei-card-expand.mjs",
+    "polish:card-expand": "node scripts/polish-card-expand.mjs"
   },
   "dependencies": {
     "clsx": "^2.1.0",

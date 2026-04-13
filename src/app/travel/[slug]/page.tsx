@@ -3,6 +3,9 @@ import Image from 'next/image';
 import { notFound } from 'next/navigation';
 import { getTravelBySlug, getTravelSlugs } from '@/lib/data/travel';
 import { getTravelExpandMapBySlug } from '@/lib/data/travel-card-expand';
+import { getTravelCardExtractItemsBySlug } from '@/lib/data/travel-card-extract';
+import { getTravelFoodExpandMapBySlug } from '@/lib/data/travel-food-expand';
+import { getTravelFoodExtractItemsBySlug } from '@/lib/data/travel-food-extract';
 import SpotSlider from './SpotSlider';
 import FoodSlider from './FoodSlider';
 
@@ -35,6 +38,9 @@ export async function generateMetadata({ params }: { params: { slug: string } })
 export default async function TravelDetailPage({ params }: { params: { slug: string } }) {
   const travel = await getTravelBySlug(params.slug);
   const expandMap = await getTravelExpandMapBySlug(params.slug);
+  const extractItems = await getTravelCardExtractItemsBySlug(params.slug);
+  const foodExpandMap = await getTravelFoodExpandMapBySlug(params.slug);
+  const foodExtractItems = await getTravelFoodExtractItemsBySlug(params.slug);
 
   if (!travel) {
     notFound();
@@ -86,7 +92,7 @@ export default async function TravelDetailPage({ params }: { params: { slug: str
           >
             景点
           </h2>
-          <SpotSlider slug={params.slug} expandMap={expandMap} />
+          <SpotSlider slug={params.slug} expandMap={expandMap} extractItems={extractItems} />
         </div>
       </section>
 
@@ -99,7 +105,7 @@ export default async function TravelDetailPage({ params }: { params: { slug: str
             >
               美食
             </h2>
-            <FoodSlider slug={params.slug} />
+            <FoodSlider slug={params.slug} expandMap={foodExpandMap} extractItems={foodExtractItems} />
           </div>
         </section>
       ) : null}

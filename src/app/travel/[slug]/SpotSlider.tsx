@@ -2,7 +2,8 @@
 
 import Image from 'next/image';
 import { useEffect, useMemo, useRef, useState } from 'react';
-import type { TravelExpandMap } from '@/lib/types/travel-expand';
+import type { TravelCardExtractItem } from '@/lib/data/travel-card-extract';
+import type { TravelExpandCard, TravelExpandMap } from '@/lib/types/travel-expand';
 
 const VISIBLE_CARDS = 3;
 const CARD_GAP_PX = 19.2;
@@ -407,7 +408,7 @@ const BEIJING_CARD_ITEMS: CardItem[] = [
   {
     eyebrow: '南锣鼓巷',
     title: '南锣鼓巷和天安门',
-    body: '吃完晚饭后，我们便前往了附近的商业街：南锣鼓巷。提前看了大众点评上的评论，有一句总结的很好，"不来要后悔，来了也要后悔的地方"。果然商业街都是大差不差的样子。',
+    body: '吃完晚饭后，我们便前往了附近的商业街：南锣鼓巷。提前看了大众点评上的评论，有一句总结的很好，"不来要后悔，来了也要后悔的地方"。',
     imageSrc: '/assets/travel/beijing/nanluo-sunglasses-cat.jpeg',
     imageAlt: '南锣鼓巷和天安门',
   },
@@ -421,28 +422,28 @@ const BEIJING_CARD_ITEMS: CardItem[] = [
   {
     eyebrow: '清华园',
     title: '游清华园',
-    body: '等到四点下课，我们一行三个人便前往了隔壁清华。我们从一个只有两个保安的小门进入，出示了北大的校园卡，就被放行了。果然如网上所说，清华和北大是兄弟学校哪。',
+    body: '等到四点下课，我们一行三个人便前往了隔壁清华。我们从一个只有两个保安的小门进入，出示了北大的校园卡，就被放行了。',
     imageSrc: '/assets/travel/beijing/tsinghua-gate.png',
     imageAlt: '游清华园',
   },
   {
     eyebrow: '喜剧现场',
     title: '魔脱喜剧',
-    body: '昨天就和呆傻说好，今天要面基，然后去看点只有老北京才有的东西。下午四点半订好了票，我们五点半在地铁站见到了面，一路前往在三里屯的魔脱喜剧。',
+    body: '昨天就和呆傻说好，今天要面基，然后去看点只有老北京才有的东西。话剧似乎需要长时间的预约，那么就只剩下脱口秀了。',
     imageSrc: '/assets/travel/beijing/motuo-stage.png',
     imageAlt: '魔脱喜剧',
   },
   {
     eyebrow: '三里屯',
     title: '三里屯商业街',
-    body: '这里是北京最大的三里屯商业街，前去的路上，迎面走来许多潮男潮女，这大概就是商业街的气息吧，哪里都是一样的，风吹过来都有一丝金钱的味道。',
+    body: '这里是北京最大的三里屯商业街，前去的路上，迎面走来许多潮男潮女，这大概就是商业街的气息吧，哪里都是一样的',
     imageSrc: '/assets/travel/beijing/sanlitun-taikoo-li.png',
     imageAlt: '三里屯商业街',
   },
   {
     eyebrow: '出租车',
     title: '听北京老司机键政',
-    body: '在来的路上，遇到一个挺有意思的司机，听声音，像是四五十岁的中年人。当我们在聊北京还有什么好玩的时候，谈到了故宫的票价和难以预约，他倒是慷慨地给了我们建议。',
+    body: '在来的路上，遇到一个挺有意思的司机，听声音，像是四五十岁的中年人。',
     imageSrc: '/assets/travel/beijing/taxi-driver-profile.jpeg',
     imageAlt: '听北京老司机键政',
   },
@@ -456,41 +457,62 @@ const BEIJING_CARD_ITEMS: CardItem[] = [
   {
     eyebrow: '颐和园',
     title: '怒走颐和园',
-    body: '有了上次和同伴们一起逛圆明园、自己却根本没有体会到一点漫步的快乐的经历后，我这次就选择独自前往颐和园，这个坐落在圆明园隔壁的大公园。',
+    body: '有了上次和同伴们一起逛圆明园、自己却根本没有体会到一点漫步的快乐的经历后，我这次就选择独自前往颐和园',
     imageSrc: '/assets/travel/beijing/summer-palace-kunming-lake-overlook.jpeg',
     imageAlt: '怒走颐和园',
   },
   {
     eyebrow: '798',
     title: '798艺术区',
-    body: '下午1点半，等公交的都是老爷爷和老太太们。逃离了外界的高温，躲进了车内，还幸运地有位置坐。我把书包放在身体的前面，双手怀抱着它，逐渐睡了过去。',
+    body: '下午1点半，等公交的都是老爷爷和老太太们。逃离了外界的高温，躲进了车内，还幸运地有位置坐。',
     imageSrc: '/assets/travel/beijing/798-art-district-poster.jpeg',
     imageAlt: '798艺术区',
   },
   {
     eyebrow: '植物园',
     title: '植物园',
-    body: '下午慢慢悠悠地在植物园里散步，偏僻的植物园里根本见不到几个行人，我甚至可以外放起舒缓的钢琴乐。',
+    body: '下午前去植物园，上午想了一圈，问了GPT一圈，也还是没有找到其他更好的去处。',
     imageSrc: '/assets/travel/beijing/botanical-garden-gate.jpeg',
     imageAlt: '植物园',
   },
   {
     eyebrow: '溜冰',
     title: '溜冰体验',
-    body: '下课后，我们便去到了"国家速滑馆"，一样，北京还是那么喜欢在地名前面加上国家二字，里面的溜冰场像塑胶跑道一样的。',
+    body: '下课后，我们便去到了"国家速滑馆"，一样，北京还是那么喜欢在地名前面加上国家二字。检票进馆，一路上似乎没有见到很多人。',
     imageSrc: '/assets/travel/beijing/ice-skating-first-try.jpeg',
     imageAlt: '溜冰体验',
   },
 ];
 
-export default function SpotSlider({ slug, expandMap }: { slug?: string; expandMap?: TravelExpandMap | null }) {
+export default function SpotSlider({
+  slug,
+  expandMap,
+  extractItems,
+}: {
+  slug?: string;
+  expandMap?: TravelExpandMap | null;
+  extractItems?: TravelCardExtractItem[] | null;
+}) {
   const cards = useMemo(() => {
+    if (extractItems && extractItems.length > 0) {
+      return extractItems.map((item) => ({
+        eyebrow: item.eyebrow,
+        title: item.title,
+        body: item.body,
+        imageSrc: item.imageSrc,
+        imageAlt: item.title,
+      }));
+    }
+
+    if (expandMap && Object.keys(expandMap).length > 0) {
+      return buildCardItemsFromExpandMap(expandMap);
+    }
     if (slug === 'japan') return JAPAN_CARD_ITEMS;
     if (slug === 'shanghai') return SHANGHAI_CARD_ITEMS;
     if (slug === 'dongbei') return DONGBEI_CARD_ITEMS;
     if (slug === 'beijing') return BEIJING_CARD_ITEMS;
     return NANJING_CARD_ITEMS;
-  }, [slug]);
+  }, [slug, expandMap, extractItems]);
   const cardHeightRem = CARD_HEIGHT_REM * CARD_HEIGHT_MULTIPLIER;
   const [startIndex, setStartIndex] = useState(0);
   const [activeCard, setActiveCard] = useState<number | null>(null);
@@ -529,7 +551,7 @@ export default function SpotSlider({ slug, expandMap }: { slug?: string; expandM
   }, [activeCard]);
 
   const activeCardData = activeCard !== null ? cards[activeCard - 1] : null;
-  const activeExpandCard = activeCardData ? expandMap?.[activeCardData.title] : null;
+  const activeExpandCard = activeCardData ? findBestExpandCard(activeCardData.title, activeCard, expandMap) : null;
   const detailBlocks =
     activeExpandCard && activeExpandCard.blocks.length > 0
       ? activeExpandCard.blocks.map((block) => ({
@@ -653,6 +675,50 @@ export default function SpotSlider({ slug, expandMap }: { slug?: string; expandM
       ) : null}
     </div>
   );
+}
+
+function buildCardItemsFromExpandMap(expandMap: TravelExpandMap): CardItem[] {
+  return Object.values(expandMap)
+    .sort((a, b) => a.cardIndex - b.cardIndex)
+    .map((card: TravelExpandCard) => {
+      const firstBlock = card.blocks[0];
+      const firstParagraph = firstBlock?.body?.split(/\n\s*\n/).find((line) => line.trim().length > 0) ?? '';
+
+      return {
+        eyebrow: card.eyebrow || card.cardName,
+        title: card.title,
+        body: firstParagraph,
+        imageSrc: firstBlock?.imageSrc || '',
+        imageAlt: card.title,
+      };
+    });
+}
+
+function findBestExpandCard(title: string, cardIndex: number | null, expandMap?: TravelExpandMap | null) {
+  if (!expandMap) return null;
+  const cards = Object.values(expandMap);
+  if (cards.length === 0) return null;
+
+  const normalizedTitle = normalizeCompareText(title);
+  const exactMatch = cards.find((card) => normalizeCompareText(card.title) === normalizedTitle);
+  if (exactMatch) return exactMatch;
+
+  const fuzzyMatch = cards.find((card) => {
+    const target = normalizeCompareText(card.title);
+    return target.includes(normalizedTitle) || normalizedTitle.includes(target);
+  });
+  if (fuzzyMatch) return fuzzyMatch;
+
+  if (cardIndex !== null) {
+    const indexMatch = cards.find((card) => card.cardIndex === cardIndex);
+    if (indexMatch) return indexMatch;
+  }
+
+  return null;
+}
+
+function normalizeCompareText(text: string): string {
+  return text.replace(/\s+/g, '').replace(/[^a-zA-Z0-9\u4e00-\u9fff]/g, '').toLowerCase();
 }
 
 function CardContent({
