@@ -10,6 +10,7 @@ const CARD_WIDTH_PX = 370.5;
 const MARGIN_PX = 260;
 const SLIDE_FINE_TUNE_PX = 0;
 const CARD_HEIGHT_REM = 28;
+const CARD_HEIGHT_MULTIPLIER = 1.1;
 
 type FoodCardItem = {
   eyebrow: string;
@@ -483,18 +484,21 @@ export default function FoodSlider({ slug }: { slug?: string }) {
           {cards.map((card, index) => {
             const cardId = index + 1;
             return (
-              <button
-                key={cardId}
-                type="button"
-                className="travel-card-hover-shell block text-left"
-                style={{ flex: `0 0 ${CARD_WIDTH_PX}px` }}
-                onClick={() => setActiveCard(cardId)}
-                aria-label={`Open food card ${cardId}`}
+            <button
+              key={cardId}
+              type="button"
+              className="travel-card-hover-shell block text-left"
+              style={{ flex: `0 0 ${CARD_WIDTH_PX}px` }}
+              onClick={() => setActiveCard(cardId)}
+              aria-label={`Open food card ${cardId}`}
+            >
+              <article
+                className="overflow-hidden rounded-[1.9rem] bg-[rgba(245,245,247,1)] p-6"
+                style={{ height: `${CARD_HEIGHT_REM * CARD_HEIGHT_MULTIPLIER}rem` }}
               >
-                <article className="overflow-hidden rounded-[1.9rem] bg-[rgba(245,245,247,1)] p-6" style={{ height: `${CARD_HEIGHT_REM}rem` }}>
-                  <FoodCardContent card={card} />
-                </article>
-              </button>
+                <FoodCardContent card={card} />
+              </article>
+            </button>
             );
           })}
         </div>
@@ -604,7 +608,7 @@ function FoodCardContent({ card }: { card: FoodCardItem }) {
   }, [card.title]);
 
   const shouldAnchorImageBottom = card.body.length > 90 || isMultiLineTitle;
-  const imageHeightClass = shouldAnchorImageBottom ? 'h-[11.2rem]' : 'h-[12.8rem]';
+  const imageHeightClass = shouldAnchorImageBottom ? 'h-[12.3rem]' : 'h-[14.1rem]';
 
   return (
     <div className="flex h-full flex-col overflow-hidden">
@@ -617,7 +621,7 @@ function FoodCardContent({ card }: { card: FoodCardItem }) {
       >
         {card.title}
       </h3>
-      <p className="mt-[1.23rem] text-[0.95rem] leading-[1.5] text-neutral-800">{card.body}</p>
+      <p className="mt-[1.32rem] text-[0.95rem] leading-[1.5] text-neutral-800">{card.body}</p>
 
       <div className="relative mt-auto overflow-hidden rounded-[1.35rem] bg-[rgba(245,245,247,1)]">
         <Image

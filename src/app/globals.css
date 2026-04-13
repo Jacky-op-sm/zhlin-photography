@@ -997,9 +997,10 @@ body {
 }
 
 .home-hero-panel {
-  border: 1px solid var(--site-border);
-  background: #fcf9f4;
-  box-shadow: var(--site-shadow);
+  position: relative;
+  border: 0;
+  background: transparent;
+  box-shadow: none;
   border-radius: 1.8rem;
   overflow: hidden;
 }
@@ -1010,8 +1011,17 @@ body {
 }
 
 .home-hero-panel figcaption {
-  padding: 1.35rem 1.4rem 1.5rem;
-  border-top: 0;
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  padding: 1.35rem 1.6rem 1.5rem;
+  color: #fff;
+  background: linear-gradient(to top, rgba(0, 0, 0, 0.52), rgba(0, 0, 0, 0));
+}
+
+.home-hero-panel figcaption .home-overline {
+  color: rgba(255, 255, 255, 0.85);
 }
 
 .home-hero-name {
@@ -1025,7 +1035,7 @@ body {
 
 .home-hero-meta {
   margin-top: 0.9rem;
-  color: var(--site-muted);
+  color: rgba(255, 255, 255, 0.92);
   font-size: 0.92rem;
   line-height: 1.75;
 }
@@ -1681,8 +1691,14 @@ body {
   }
 
   .home-hero-grid {
-    grid-template-columns: minmax(0, 1.2fr) 22rem;
+    grid-template-columns: minmax(0, 1.2fr) 24.2rem;
     align-items: end;
+  }
+
+  .home-hero-panel {
+    width: 26.2rem;
+    justify-self: end;
+    align-self: end;
   }
 
   .home-feature-grid {
