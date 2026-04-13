@@ -83,22 +83,22 @@ export default async function PhotographyPage({
   return (
     <main className="photo-index-page">
       <section className="bg-white">
-        <div className="mx-auto max-w-7xl px-6">
+        <div className="mx-auto max-w-7xl px-4 sm:px-6">
           <ul
-            className="flex flex-wrap items-start justify-center gap-x-9 gap-y-10 py-10 sm:gap-x-12 sm:py-12 lg:gap-x-14"
+            className="flex flex-wrap items-start justify-center gap-x-6 gap-y-8 py-8 sm:gap-x-12 sm:gap-y-10 sm:py-12 lg:gap-x-14"
             aria-label="摄影系列快捷导航"
           >
             {photographySeries.map((series) => {
               const previewPhoto = getSeriesCoverPhoto(photos, series.slug)
 
               return (
-                <li key={series.slug} className="w-[7.5rem] text-center sm:w-[8.25rem]">
+                <li key={series.slug} className="w-[6.5rem] text-center sm:w-[8.25rem]">
                   <Link
                     href={series.href}
                     className="group inline-flex w-full flex-col items-center text-neutral-800"
                     aria-label={`前往 ${series.title} 系列`}
                   >
-                    <span className="travel-nav-thumbnail-shell home-like-hover-shell relative block h-[3.7rem] w-[3.7rem] overflow-hidden rounded-[0.95rem] border border-neutral-200 bg-white shadow-[0_6px_16px_rgba(15,23,42,0.1)] transition duration-300 sm:h-[4.2rem] sm:w-[4.2rem]">
+                    <span className="travel-nav-thumbnail-shell home-like-hover-shell relative block h-[3.25rem] w-[3.25rem] overflow-hidden rounded-[0.85rem] border border-neutral-200 bg-white shadow-[0_6px_16px_rgba(15,23,42,0.1)] transition duration-300 sm:h-[4.2rem] sm:w-[4.2rem] sm:rounded-[0.95rem]">
                       <Image
                         src={previewPhoto?.thumbnail ?? series.cover}
                         alt={`${series.title} 缩略图`}
@@ -107,7 +107,7 @@ export default async function PhotographyPage({
                         sizes="(max-width: 640px) 59px, 67px"
                       />
                     </span>
-                    <span className="mt-3 text-[1.18rem] font-medium leading-tight tracking-[-0.015em] text-neutral-700">
+                    <span className="mt-2.5 text-[0.98rem] font-medium leading-tight tracking-[-0.015em] text-neutral-700 sm:mt-3 sm:text-[1.18rem]">
                       {series.title}
                     </span>
                   </Link>

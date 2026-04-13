@@ -134,27 +134,37 @@ export default function Navigation({
           key={item.href}
           className={`site-nav-item site-nav-item--has-dropdown ${isExpanded ? 'is-expanded' : ''}`}
         >
-          <button
-            onClick={() => toggleExpand(item.label)}
-            className="site-nav-link site-nav-toggle-btn"
-            aria-expanded={isExpanded}
-            aria-controls={`submenu-${index}`}
-          >
-            <span>{item.label}</span>
-            <svg
-              className={`site-nav-chevron ${isExpanded ? 'is-rotated' : ''}`}
-              width="12"
-              height="12"
-              viewBox="0 0 12 12"
-              fill="none"
-              stroke="currentColor"
-              strokeWidth="2"
-              strokeLinecap="round"
-              strokeLinejoin="round"
+          <div className="site-nav-parent-row">
+            <Link
+              href={item.href}
+              onClick={onNavigate}
+              className="site-nav-link site-nav-parent-link"
+              data-active={isActive(item.href)}
             >
-              <path d="M3 4.5L6 7.5L9 4.5" />
-            </svg>
-          </button>
+              <span>{item.label}</span>
+            </Link>
+            <button
+              onClick={() => toggleExpand(item.label)}
+              className="site-nav-toggle-btn"
+              aria-expanded={isExpanded}
+              aria-controls={`submenu-${index}`}
+              aria-label={`${isExpanded ? 'Collapse' : 'Expand'} ${item.label} submenu`}
+            >
+              <svg
+                className={`site-nav-chevron ${isExpanded ? 'is-rotated' : ''}`}
+                width="12"
+                height="12"
+                viewBox="0 0 12 12"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="2"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+              >
+                <path d="M3 4.5L6 7.5L9 4.5" />
+              </svg>
+            </button>
+          </div>
 
           <div
             id={`submenu-${index}`}
