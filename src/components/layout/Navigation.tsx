@@ -25,6 +25,7 @@ const navigationItems: NavItem[] = [
     label: 'Photography',
     href: '/photography',
     children: [
+      { label: 'All', title: '探索全部', href: '/photography' },
       { label: 'Pets', title: '宠物摄影', href: '/photography/pets' },
       { label: 'Street', title: '街头摄影', href: '/photography/street' },
       { label: 'Project', title: '项目摄影', href: '/photography/project' },
@@ -34,6 +35,7 @@ const navigationItems: NavItem[] = [
     label: 'Travel',
     href: '/travel',
     children: [
+      { label: 'All', title: '探索全部', href: '/travel' },
       { label: 'Hangzhou', title: '杭州', href: '/travel/hangzhou' },
       { label: 'Nanjing', title: '南京', href: '/travel/nanjing' },
       { label: 'Japan', title: '日本', href: '/travel/japan' },
@@ -110,7 +112,6 @@ export default function Navigation({
   }
 
   const handleMobileNavigate = () => {
-    setMobileSubmenuHref(null)
     onNavigate?.()
   }
 
@@ -152,6 +153,12 @@ export default function Navigation({
   }
 
   const handleDesktopBackdropPointerDown = (event: PointerEvent<HTMLButtonElement>) => {
+    event.preventDefault()
+    event.stopPropagation()
+    setDropdownOpen(null)
+  }
+
+  const handleDesktopBackdropClick = (event: MouseEvent<HTMLButtonElement>) => {
     event.preventDefault()
     event.stopPropagation()
     setDropdownOpen(null)
@@ -248,13 +255,6 @@ export default function Navigation({
 
   const submenuMobileLinks = activeMobileSubmenuItem ? (
     <div className="site-nav-mobile-submenu-screen" id={`submenu-${navigationItems.findIndex((item) => item.href === activeMobileSubmenuItem.href)}`}>
-      <Link
-        href={activeMobileSubmenuItem.href}
-        onClick={handleMobileNavigate}
-        className="site-nav-mobile-submenu-link site-nav-mobile-submenu-link--primary"
-      >
-        Explore {activeMobileSubmenuItem.label}
-      </Link>
       {activeMobileSubmenuItem.children?.map((child) => (
         <Link
           key={child.href}
@@ -319,6 +319,7 @@ export default function Navigation({
           className="site-nav-dropdown-backdrop"
           aria-label="Close navigation menu"
           onPointerDown={handleDesktopBackdropPointerDown}
+          onClick={handleDesktopBackdropClick}
         />
       ) : null}
 

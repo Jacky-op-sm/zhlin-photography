@@ -54,8 +54,18 @@ test.describe('mobile navigation behavior', () => {
 
     await mobileParentLink(page, 'Travel').click()
     await expect(mobilePanel(page).getByRole('button', { name: 'Back to main menu' })).toBeVisible()
-    await expect(mobilePanel(page).getByRole('link', { name: 'Explore Travel' })).toBeVisible()
+    await expect(mobilePanel(page).getByRole('link', { name: '探索全部' })).toBeVisible()
     await expect(mobilePanel(page).getByRole('link', { name: '南京' })).toBeVisible()
+
+    await mobilePanel(page).getByRole('button', { name: 'Close menu' }).click()
+    await expect(mobilePanel(page)).toHaveAttribute('data-state', 'closing')
+    await expect(mobilePanel(page).getByRole('link', { name: '南京' })).toBeVisible()
+    await expect(mobilePanel(page).getByRole('button', { name: 'Expand Travel submenu' })).toHaveCount(0)
+    await expect(mobilePanel(page)).toHaveCount(0)
+
+    await openMobileMenu(page)
+    await mobileParentLink(page, 'Travel').click()
+    await expect(mobilePanel(page).getByRole('button', { name: 'Back to main menu' })).toBeVisible()
 
     await mobilePanel(page).getByRole('button', { name: 'Back to main menu' }).click()
     await expect(mobilePanel(page).getByRole('button', { name: 'Expand Travel submenu' })).toBeVisible()
@@ -65,12 +75,8 @@ test.describe('mobile navigation behavior', () => {
     await expect(page).toHaveURL(/\/photography\/street$/)
 
     await openMobileMenu(page)
-    await mobilePanel(page).getByRole('button', { name: 'Close menu' }).click()
-    await expect(mobilePanel(page)).toHaveCount(0)
-
-    await openMobileMenu(page)
     await mobileParentLink(page, 'Travel').click()
-    await mobilePanel(page).getByRole('link', { name: 'Explore Travel' }).click()
+    await mobilePanel(page).getByRole('link', { name: '探索全部' }).click()
     await expect(page).toHaveURL(/\/travel$/)
 
     await openMobileMenu(page)

@@ -20,12 +20,25 @@ const navigationItems: NavItem[] = [
     label: 'Photography',
     href: '/photography',
     children: [
+      { label: '探索全部', href: '/photography' },
       { label: 'Pets', href: '/photography/pets' },
       { label: 'Street', href: '/photography/street' },
       { label: 'Project', href: '/photography/project' },
     ],
   },
-  { label: 'Travel', href: '/travel' },
+  {
+    label: 'Travel',
+    href: '/travel',
+    children: [
+      { label: '探索全部', href: '/travel' },
+      { label: 'Hangzhou', href: '/travel/hangzhou' },
+      { label: 'Nanjing', href: '/travel/nanjing' },
+      { label: 'Japan', href: '/travel/japan' },
+      { label: 'Shanghai', href: '/travel/shanghai' },
+      { label: 'Dongbei', href: '/travel/dongbei' },
+      { label: 'Beijing', href: '/travel/beijing' },
+    ],
+  },
   { label: 'Hobby', href: '/hobby' },
   { label: 'Contact', href: '/contact' },
 ]

@@ -155,4 +155,61 @@ test.describe('responsive adaptation regressions', () => {
     await expect(page.locator('.site-nav-dropdown-shell')).toHaveAttribute('data-open', 'false')
     expect(page.url()).toBe(urlBefore)
   })
+
+  test('iPad portrait travel expand keeps portrait image within readable height', async ({ page }, testInfo) => {
+    test.skip(testInfo.project.name !== 'ipad-portrait', 'ipad portrait-only test')
+
+    await page.goto('/travel/nanjing')
+    await page.waitForLoadState('networkidle')
+
+    await page.getByRole('button', { name: 'Open card 1', exact: true }).click()
+    await expect(page.getByRole('button', { name: 'Close detail' })).toBeVisible()
+
+    const imageRatio = await page.evaluate(() => {
+      const overlay = document.querySelector('div.fixed.inset-0') as HTMLElement | null
+      const image = overlay?.querySelector('img') as HTMLImageElement | null
+      if (!overlay || !image) return null
+      const imageRect = image.getBoundingClientRect()
+      return imageRect.height / window.innerHeight
+    })
+
+    expect(imageRatio).not.toBeNull()
+    expect(imageRatio!).toBeLessThanOrEqual(0.68)
+  })
+
+  test('iPad photo viewer controls avoid center overlap on landscape image', async ({ page }, testInfo) => {
+    test.skip(!isIPadProject(testInfo.project.name), 'ipad-only test')
+
+    await page.goto('/photography/pets')
+    await page.waitForLoadState('networkidle')
+
+    await page.locator('.photo-gallery-item').nth(1).click()
+    await expect(page.locator('.photo-viewer-image')).toBeVisible()
+
+    const overlap = await page.evaluate(() => {
+      const viewer = document.querySelector('.photo-viewer') as HTMLElement | null
+      if (!viewer) return null
+      const image = viewer.querySelector('.photo-viewer-image') as HTMLElement | null
+      const prev = viewer.querySelector('.photo-viewer-nav-prev') as HTMLElement | null
+      const next = viewer.querySelector('.photo-viewer-nav-next') as HTMLElement | null
+      if (!image || !prev || !next) return null
+
+      const imageRect = image.getBoundingClientRect()
+      const prevRect = prev.getBoundingClientRect()
+      const nextRect = next.getBoundingClientRect()
+      const centerLeft = imageRect.left + imageRect.width * 0.2
+      const centerRight = imageRect.right - imageRect.width * 0.2
+
+      return {
+        prevRight: prevRect.right,
+        nextLeft: nextRect.left,
+        centerLeft,
+        centerRight,
+      }
+    })
+
+    expect(overlap).not.toBeNull()
+    expect(overlap!.prevRight).toBeLessThanOrEqual(overlap!.centerLeft)
+    expect(overlap!.nextLeft).toBeGreaterThanOrEqual(overlap!.centerRight)
+  })
 })

@@ -1,9 +1,8 @@
 'use client';
 
 import Image from 'next/image';
-import { useEffect, useMemo, useRef, useState, type TouchEvent } from 'react';
-import type { TravelCardExtractItem } from '@/lib/data/travel-card-extract';
-import type { TravelExpandCard, TravelExpandMap } from '@/lib/types/travel-expand';
+import { useEffect, useMemo, useRef, useState } from 'react';
+import type { TravelExpandMap } from '@/lib/types/travel-expand';
 
 const VISIBLE_CARDS = 3;
 const CARD_GAP_PX = 19.2;
@@ -13,8 +12,6 @@ const MARGIN_PX = 260;
 const SLIDE_FINE_TUNE_PX = 0;
 const CARD_HEIGHT_REM = 28;
 const CARD_HEIGHT_MULTIPLIER = 1.1;
-const MOBILE_BREAKPOINT_PX = 768;
-const SWIPE_MIN_DISTANCE_PX = 44;
 type CardItem = {
   eyebrow: string;
   title: string;
@@ -22,6 +19,30 @@ type CardItem = {
   imageSrc: string;
   imageAlt: string;
 };
+
+function normalizeTitle(input: string): string {
+  return input.replace(/[\s:：，。、“”"'？?！!（）()《》·…\-]/g, '').toLowerCase();
+}
+
+function resolveExpandCardByTitle(title: string, expandMap?: TravelExpandMap | null) {
+  if (!expandMap) return null;
+  if (expandMap[title]) return expandMap[title];
+
+  const normalizedTarget = normalizeTitle(title);
+  if (!normalizedTarget) return null;
+
+  const cards = Object.values(expandMap);
+  const exact = cards.find((card) => normalizeTitle(card.title) === normalizedTarget);
+  if (exact) return exact;
+
+  const inclusion = cards.find((card) => {
+    const normalizedCardTitle = normalizeTitle(card.title);
+    return normalizedCardTitle.includes(normalizedTarget) || normalizedTarget.includes(normalizedCardTitle);
+  });
+  if (inclusion) return inclusion;
+
+  return null;
+}
 
 const NANJING_CARD_ITEMS: CardItem[] = [
   {
@@ -410,7 +431,7 @@ const BEIJING_CARD_ITEMS: CardItem[] = [
   {
     eyebrow: '南锣鼓巷',
     title: '南锣鼓巷和天安门',
-    body: '吃完晚饭后，我们便前往了附近的商业街：南锣鼓巷。提前看了大众点评上的评论，有一句总结的很好，"不来要后悔，来了也要后悔的地方"。',
+    body: '吃完晚饭后，我们便前往了附近的商业街：南锣鼓巷。提前看了大众点评上的评论，有一句总结的很好，"不来要后悔，来了也要后悔的地方"。果然商业街都是大差不差的样子。',
     imageSrc: '/assets/travel/beijing/nanluo-sunglasses-cat.jpeg',
     imageAlt: '南锣鼓巷和天安门',
   },
@@ -424,28 +445,28 @@ const BEIJING_CARD_ITEMS: CardItem[] = [
   {
     eyebrow: '清华园',
     title: '游清华园',
-    body: '等到四点下课，我们一行三个人便前往了隔壁清华。我们从一个只有两个保安的小门进入，出示了北大的校园卡，就被放行了。',
+    body: '等到四点下课，我们一行三个人便前往了隔壁清华。我们从一个只有两个保安的小门进入，出示了北大的校园卡，就被放行了。果然如网上所说，清华和北大是兄弟学校哪。',
     imageSrc: '/assets/travel/beijing/tsinghua-gate.png',
     imageAlt: '游清华园',
   },
   {
     eyebrow: '喜剧现场',
     title: '魔脱喜剧',
-    body: '昨天就和呆傻说好，今天要面基，然后去看点只有老北京才有的东西。话剧似乎需要长时间的预约，那么就只剩下脱口秀了。',
+    body: '昨天就和呆傻说好，今天要面基，然后去看点只有老北京才有的东西。下午四点半订好了票，我们五点半在地铁站见到了面，一路前往在三里屯的魔脱喜剧。',
     imageSrc: '/assets/travel/beijing/motuo-stage.png',
     imageAlt: '魔脱喜剧',
   },
   {
     eyebrow: '三里屯',
     title: '三里屯商业街',
-    body: '这里是北京最大的三里屯商业街，前去的路上，迎面走来许多潮男潮女，这大概就是商业街的气息吧，哪里都是一样的',
+    body: '这里是北京最大的三里屯商业街，前去的路上，迎面走来许多潮男潮女，这大概就是商业街的气息吧，哪里都是一样的，风吹过来都有一丝金钱的味道。',
     imageSrc: '/assets/travel/beijing/sanlitun-taikoo-li.png',
     imageAlt: '三里屯商业街',
   },
   {
     eyebrow: '出租车',
     title: '听北京老司机键政',
-    body: '在来的路上，遇到一个挺有意思的司机，听声音，像是四五十岁的中年人。',
+    body: '在来的路上，遇到一个挺有意思的司机，听声音，像是四五十岁的中年人。当我们在聊北京还有什么好玩的时候，谈到了故宫的票价和难以预约，他倒是慷慨地给了我们建议。',
     imageSrc: '/assets/travel/beijing/taxi-driver-profile.jpeg',
     imageAlt: '听北京老司机键政',
   },
@@ -459,87 +480,45 @@ const BEIJING_CARD_ITEMS: CardItem[] = [
   {
     eyebrow: '颐和园',
     title: '怒走颐和园',
-    body: '有了上次和同伴们一起逛圆明园、自己却根本没有体会到一点漫步的快乐的经历后，我这次就选择独自前往颐和园',
+    body: '有了上次和同伴们一起逛圆明园、自己却根本没有体会到一点漫步的快乐的经历后，我这次就选择独自前往颐和园，这个坐落在圆明园隔壁的大公园。',
     imageSrc: '/assets/travel/beijing/summer-palace-kunming-lake-overlook.jpeg',
     imageAlt: '怒走颐和园',
   },
   {
     eyebrow: '798',
     title: '798艺术区',
-    body: '下午1点半，等公交的都是老爷爷和老太太们。逃离了外界的高温，躲进了车内，还幸运地有位置坐。',
+    body: '下午1点半，等公交的都是老爷爷和老太太们。逃离了外界的高温，躲进了车内，还幸运地有位置坐。我把书包放在身体的前面，双手怀抱着它，逐渐睡了过去。',
     imageSrc: '/assets/travel/beijing/798-art-district-poster.jpeg',
     imageAlt: '798艺术区',
   },
   {
     eyebrow: '植物园',
     title: '植物园',
-    body: '下午前去植物园，上午想了一圈，问了GPT一圈，也还是没有找到其他更好的去处。',
+    body: '下午慢慢悠悠地在植物园里散步，偏僻的植物园里根本见不到几个行人，我甚至可以外放起舒缓的钢琴乐。',
     imageSrc: '/assets/travel/beijing/botanical-garden-gate.jpeg',
     imageAlt: '植物园',
   },
   {
     eyebrow: '溜冰',
     title: '溜冰体验',
-    body: '下课后，我们便去到了"国家速滑馆"，一样，北京还是那么喜欢在地名前面加上国家二字。检票进馆，一路上似乎没有见到很多人。',
+    body: '下课后，我们便去到了"国家速滑馆"，一样，北京还是那么喜欢在地名前面加上国家二字，里面的溜冰场像塑胶跑道一样的。',
     imageSrc: '/assets/travel/beijing/ice-skating-first-try.jpeg',
     imageAlt: '溜冰体验',
   },
 ];
 
-export default function SpotSlider({
-  slug,
-  expandMap,
-  extractItems,
-}: {
-  slug?: string;
-  expandMap?: TravelExpandMap | null;
-  extractItems?: TravelCardExtractItem[] | null;
-}) {
+export default function SpotSlider({ slug, expandMap }: { slug?: string; expandMap?: TravelExpandMap | null }) {
   const cards = useMemo(() => {
-    if (extractItems && extractItems.length > 0) {
-      return extractItems.map((item) => ({
-        eyebrow: item.eyebrow,
-        title: item.title,
-        body: item.body,
-        imageSrc: item.imageSrc,
-        imageAlt: item.title,
-      }));
-    }
-
-    if (expandMap && Object.keys(expandMap).length > 0) {
-      return buildCardItemsFromExpandMap(expandMap);
-    }
     if (slug === 'japan') return JAPAN_CARD_ITEMS;
     if (slug === 'shanghai') return SHANGHAI_CARD_ITEMS;
     if (slug === 'dongbei') return DONGBEI_CARD_ITEMS;
     if (slug === 'beijing') return BEIJING_CARD_ITEMS;
     return NANJING_CARD_ITEMS;
-  }, [slug, expandMap, extractItems]);
+  }, [slug]);
   const cardHeightRem = CARD_HEIGHT_REM * CARD_HEIGHT_MULTIPLIER;
-  const sliderRootRef = useRef<HTMLDivElement | null>(null);
-  const [viewportWidth, setViewportWidth] = useState<number>(1200);
-  const [isCoarsePointer, setIsCoarsePointer] = useState(false);
-  const [measuredTabletMarginPx, setMeasuredTabletMarginPx] = useState<number | null>(null);
   const [startIndex, setStartIndex] = useState(0);
   const [activeCard, setActiveCard] = useState<number | null>(null);
-  const touchStartRef = useRef<{ x: number; y: number } | null>(null);
-  const touchCurrentRef = useRef<{ x: number; y: number } | null>(null);
-  const swipeTriggeredRef = useRef(false);
-  const isMobile = viewportWidth < MOBILE_BREAKPOINT_PX;
-  const useTabletAlignment = !isMobile && (isCoarsePointer || viewportWidth <= 1180);
-  const visibleCards = isMobile ? 1 : VISIBLE_CARDS;
-  const cardGapPx = isMobile ? 12 : CARD_GAP_PX;
-  const sidePeekPx = isMobile ? 20 : SIDE_PEEK_PX;
-  const cardWidthPx = isMobile
-    ? Math.max(248, Math.min(360, viewportWidth - 52))
-    : CARD_WIDTH_PX;
-  const tabletSectionMarginPx = viewportWidth >= 1024 ? 12.56 * 16 : 9.4 * 16;
-  const marginPx = isMobile
-    ? 16
-    : useTabletAlignment
-      ? measuredTabletMarginPx ?? tabletSectionMarginPx
-      : MARGIN_PX;
-  const maxStartIndex = Math.max(0, cards.length - visibleCards);
+  const maxStartIndex = Math.max(0, cards.length - VISIBLE_CARDS);
 
   const handlePrev = () => {
     setStartIndex((prev) => Math.max(0, prev - 1));
@@ -549,83 +528,10 @@ export default function SpotSlider({
     setStartIndex((prev) => Math.min(maxStartIndex, prev + 1));
   };
 
-  const handleTouchStart = (event: TouchEvent<HTMLDivElement>) => {
-    if (!isMobile) return;
-    const touch = event.touches[0];
-    touchStartRef.current = { x: touch.clientX, y: touch.clientY };
-    touchCurrentRef.current = { x: touch.clientX, y: touch.clientY };
-    swipeTriggeredRef.current = false;
-  };
-
-  const handleTouchMove = (event: TouchEvent<HTMLDivElement>) => {
-    if (!isMobile) return;
-    const touch = event.touches[0];
-    touchCurrentRef.current = { x: touch.clientX, y: touch.clientY };
-  };
-
-  const handleTouchEnd = () => {
-    if (!isMobile || !touchStartRef.current || !touchCurrentRef.current) {
-      touchStartRef.current = null;
-      touchCurrentRef.current = null;
-      return;
-    }
-
-    const deltaX = touchCurrentRef.current.x - touchStartRef.current.x;
-    const deltaY = touchCurrentRef.current.y - touchStartRef.current.y;
-    const absX = Math.abs(deltaX);
-    const absY = Math.abs(deltaY);
-
-    if (absX >= SWIPE_MIN_DISTANCE_PX && absX > absY) {
-      if (deltaX < 0) {
-        handleNext();
-      } else {
-        handlePrev();
-      }
-      swipeTriggeredRef.current = true;
-    }
-
-    touchStartRef.current = null;
-    touchCurrentRef.current = null;
-  };
-
-  const edgePeekOffsetPx = startIndex === 0 ? 0 : sidePeekPx;
-  const stepPx = cardWidthPx + cardGapPx + SLIDE_FINE_TUNE_PX;
-  const firstStepCorrectionPx = startIndex > 0 ? sidePeekPx : 0;
-  const translateX = marginPx + edgePeekOffsetPx - firstStepCorrectionPx - startIndex * stepPx;
-
-  useEffect(() => {
-    const updateViewportWidth = () => {
-      setViewportWidth(window.innerWidth);
-    };
-    const updateMeasuredTabletMargin = () => {
-      const root = sliderRootRef.current;
-      const viewport = root?.querySelector('[data-travel-slider-viewport]') as HTMLElement | null;
-      const container = root?.parentElement as HTMLElement | null;
-      if (!viewport || !container) return;
-      setMeasuredTabletMarginPx(container.getBoundingClientRect().left - viewport.getBoundingClientRect().left);
-    };
-    const coarsePointerQuery = window.matchMedia('(hover: none) and (pointer: coarse)');
-    const updatePointerMode = () => {
-      setIsCoarsePointer(coarsePointerQuery.matches || navigator.maxTouchPoints > 0);
-    };
-    const updateLayout = () => {
-      updateViewportWidth();
-      updateMeasuredTabletMargin();
-    };
-
-    updateLayout();
-    updatePointerMode();
-    window.addEventListener('resize', updateLayout, { passive: true });
-    coarsePointerQuery.addEventListener('change', updatePointerMode);
-    return () => {
-      window.removeEventListener('resize', updateLayout);
-      coarsePointerQuery.removeEventListener('change', updatePointerMode);
-    };
-  }, []);
-
-  useEffect(() => {
-    setStartIndex((prev) => Math.min(prev, maxStartIndex));
-  }, [maxStartIndex]);
+  const edgePeekOffsetPx = startIndex === 0 ? 0 : SIDE_PEEK_PX;
+  const stepPx = CARD_WIDTH_PX + CARD_GAP_PX + SLIDE_FINE_TUNE_PX;
+  const firstStepCorrectionPx = startIndex > 0 ? SIDE_PEEK_PX : 0;
+  const translateX = MARGIN_PX + edgePeekOffsetPx - firstStepCorrectionPx - startIndex * stepPx;
 
   useEffect(() => {
     if (activeCard === null) return;
@@ -647,7 +553,7 @@ export default function SpotSlider({
   }, [activeCard]);
 
   const activeCardData = activeCard !== null ? cards[activeCard - 1] : null;
-  const activeExpandCard = activeCardData ? findBestExpandCard(activeCardData.title, activeCard, expandMap) : null;
+  const activeExpandCard = activeCardData ? resolveExpandCardByTitle(activeCardData.title, expandMap) : null;
   const detailBlocks =
     activeExpandCard && activeExpandCard.blocks.length > 0
       ? activeExpandCard.blocks.map((block) => ({
@@ -664,26 +570,13 @@ export default function SpotSlider({
         ];
 
   return (
-    <div ref={sliderRootRef} className="mt-8 w-full lg:max-w-[1150px]">
-      <div
-        className="relative left-[calc(50%-50vw)] w-screen overflow-x-hidden overflow-y-visible py-3"
-        data-travel-slider-viewport
-        onTouchStart={handleTouchStart}
-        onTouchMove={handleTouchMove}
-        onTouchEnd={handleTouchEnd}
-        onTouchCancel={handleTouchEnd}
-        onClickCapture={(event) => {
-          if (!swipeTriggeredRef.current) return;
-          event.preventDefault();
-          event.stopPropagation();
-          swipeTriggeredRef.current = false;
-        }}
-      >
+    <div className="mt-8 w-full lg:max-w-[1150px]">
+      <div className="relative left-[calc(50%-50vw)] w-screen overflow-x-hidden overflow-y-visible py-3">
         <div
           className="flex transition-transform duration-500 ease-out"
           style={{
             transform: `translateX(${translateX}px)`,
-            gap: `${cardGapPx}px`,
+            gap: `${CARD_GAP_PX}px`,
           }}
         >
           {cards.map((card, index) => {
@@ -693,7 +586,7 @@ export default function SpotSlider({
               key={cardId}
               type="button"
               className="travel-card-hover-shell block text-left"
-              style={{ flex: `0 0 ${cardWidthPx}px` }}
+              style={{ flex: `0 0 ${CARD_WIDTH_PX}px` }}
               onClick={() => setActiveCard(cardId)}
               aria-label={`Open card ${cardId}`}
             >
@@ -735,43 +628,43 @@ export default function SpotSlider({
 
       {activeCard !== null ? (
         <div
-          className="fixed inset-0 z-[90] overflow-y-auto bg-[rgba(15,15,18,0.34)] p-3 backdrop-blur-[10px] sm:p-10 lg:p-14"
+          className="fixed inset-0 z-[90] overflow-y-auto bg-[rgba(15,15,18,0.34)] p-6 backdrop-blur-[10px] sm:p-10 lg:p-14"
           onClick={() => setActiveCard(null)}
         >
           <div className="mx-auto w-full max-w-[1280px]">
             <div
-              className="relative rounded-[1.5rem] bg-white p-5 shadow-[0_30px_80px_rgba(0,0,0,0.28)] sm:rounded-[2.1rem] sm:p-10 lg:p-12"
+              className="relative rounded-[2.1rem] bg-white p-7 shadow-[0_30px_80px_rgba(0,0,0,0.28)] sm:p-10 lg:p-12"
               onClick={(event) => event.stopPropagation()}
             >
               <button
                 type="button"
                 onClick={() => setActiveCard(null)}
                 aria-label="Close detail"
-                className="fixed right-5 top-[calc(var(--site-header-height)+0.65rem)] z-[120] grid h-[2.26rem] w-[2.26rem] place-items-center rounded-full bg-[rgba(236,236,240,1)] text-[rgba(104,104,108,1)] transition-[background-color,color,transform] duration-150 ease-out hover:scale-[1.02] sm:absolute sm:right-8 sm:top-8 sm:z-auto"
+                className="absolute right-6 top-6 grid h-[2.26rem] w-[2.26rem] place-items-center rounded-full bg-[rgba(236,236,240,1)] text-[rgba(104,104,108,1)] transition-[background-color,color,transform] duration-150 ease-out hover:scale-[1.02] sm:right-8 sm:top-8"
               >
                 <span className="photo-viewer-close-icon" aria-hidden="true" />
               </button>
 
-              <div className="mx-0 max-w-[42rem] sm:mx-[1.57rem] lg:mx-[2.09rem]">
-                <p className="text-sm font-semibold text-[rgba(29,29,31,1)] sm:text-base">
+              <div className="mx-[1rem] max-w-[42rem] sm:mx-[1.57rem] lg:mx-[2.09rem]">
+                <p className="text-base font-semibold text-[rgba(29,29,31,1)]">
                   {activeExpandCard?.eyebrow || cards[activeCard - 1]?.eyebrow}
                 </p>
-                <h3 className="mt-2 text-[2rem] font-semibold leading-[1.18] tracking-tight text-[rgba(29,29,31,1)] sm:mt-3 sm:text-[3.125rem]">
+                <h3 className="mt-3 text-[2.375rem] font-semibold leading-[1.2] tracking-tight text-[rgba(29,29,31,1)] sm:text-[3.125rem]">
                   {cards[activeCard - 1]?.title}
                 </h3>
               </div>
 
-              <div className="mt-8 mx-0 space-y-4 sm:mt-16 sm:mx-[1.57rem] sm:space-y-6 lg:mx-[2.09rem]">
+              <div className="mt-16 mx-[1rem] space-y-5 sm:mx-[1.57rem] sm:space-y-6 lg:mx-[2.09rem]">
                 {detailBlocks.map((block, blockIndex) => (
                   <div
                     key={`${activeCardData?.title ?? 'detail'}-${blockIndex}`}
-                    className="rounded-[1.2rem] bg-[rgba(245,245,247,1)] px-5 pb-5 pt-6 sm:min-h-[30rem] sm:rounded-[1.75rem] sm:px-[4.25rem] sm:pb-10 sm:pt-[3.25rem] lg:px-[7.5rem] lg:pt-[3.75rem]"
+                    className="min-h-[28rem] rounded-[1.75rem] bg-[rgba(245,245,247,1)] px-24 pt-12 pb-8 sm:min-h-[30rem] sm:px-[7.5rem] sm:pt-[3.75rem] sm:pb-10"
                   >
-                    <div className="space-y-6 sm:space-y-10 lg:space-y-12">
-                      <p className="w-full whitespace-pre-line text-[1rem] leading-[1.8] tracking-[0.01em] text-[rgba(29,29,31,1)] sm:text-[1.15rem] lg:text-[1.25rem]">
+                    <div className="space-y-12">
+                      <p className="w-full whitespace-pre-line text-[1.25rem] leading-[1.9] tracking-[0.01em] text-[rgba(29,29,31,1)]">
                         {block.text}
                       </p>
-                      <div className="mx-0 overflow-hidden rounded-[1rem] sm:mx-3 sm:rounded-[1.35rem] lg:mx-5">
+                      <div className="mx-4 overflow-hidden rounded-[1.35rem] sm:mx-5">
                         <DetailImage src={block.imageSrc} alt={block.imageAlt} />
                       </div>
                     </div>
@@ -784,50 +677,6 @@ export default function SpotSlider({
       ) : null}
     </div>
   );
-}
-
-function buildCardItemsFromExpandMap(expandMap: TravelExpandMap): CardItem[] {
-  return Object.values(expandMap)
-    .sort((a, b) => a.cardIndex - b.cardIndex)
-    .map((card: TravelExpandCard) => {
-      const firstBlock = card.blocks[0];
-      const firstParagraph = firstBlock?.body?.split(/\n\s*\n/).find((line) => line.trim().length > 0) ?? '';
-
-      return {
-        eyebrow: card.eyebrow || card.cardName,
-        title: card.title,
-        body: firstParagraph,
-        imageSrc: firstBlock?.imageSrc || '',
-        imageAlt: card.title,
-      };
-    });
-}
-
-function findBestExpandCard(title: string, cardIndex: number | null, expandMap?: TravelExpandMap | null) {
-  if (!expandMap) return null;
-  const cards = Object.values(expandMap);
-  if (cards.length === 0) return null;
-
-  const normalizedTitle = normalizeCompareText(title);
-  const exactMatch = cards.find((card) => normalizeCompareText(card.title) === normalizedTitle);
-  if (exactMatch) return exactMatch;
-
-  const fuzzyMatch = cards.find((card) => {
-    const target = normalizeCompareText(card.title);
-    return target.includes(normalizedTitle) || normalizedTitle.includes(target);
-  });
-  if (fuzzyMatch) return fuzzyMatch;
-
-  if (cardIndex !== null) {
-    const indexMatch = cards.find((card) => card.cardIndex === cardIndex);
-    if (indexMatch) return indexMatch;
-  }
-
-  return null;
-}
-
-function normalizeCompareText(text: string): string {
-  return text.replace(/\s+/g, '').replace(/[^a-zA-Z0-9\u4e00-\u9fff]/g, '').toLowerCase();
 }
 
 function CardContent({
@@ -867,20 +716,18 @@ function CardContent({
     };
   }, [card.title]);
   const shouldAnchorImageBottom = card.body.length > 90 || isMultiLineTitle;
-  const imageHeightClass = shouldAnchorImageBottom
-    ? 'h-[11.3rem] sm:h-[12.3rem]'
-    : 'h-[12.9rem] sm:h-[14.1rem]';
+  const imageHeightClass = shouldAnchorImageBottom ? 'h-[12.3rem]' : 'h-[14.1rem]';
 
   return (
     <div className="flex h-full flex-col overflow-hidden">
-      <p className="text-[0.85rem] font-semibold tracking-tight text-neutral-900 sm:text-[0.95rem]">{card.eyebrow}</p>
+      <p className="text-[0.95rem] font-semibold tracking-tight text-neutral-900">{card.eyebrow}</p>
       <h3
         ref={titleRef}
-        className={`mt-3 text-[1.3rem] font-semibold tracking-tight text-neutral-900 sm:text-[1.5rem] ${isMultiLineTitle ? 'leading-[1.38]' : 'leading-[1.1]'}`}
+        className={`mt-3 text-[1.5rem] font-semibold tracking-tight text-neutral-900 ${isMultiLineTitle ? 'leading-[1.43]' : 'leading-[1.1]'}`}
       >
         {card.title}
       </h3>
-      <p className="mt-4 text-[0.9rem] leading-[1.52] text-neutral-800 sm:mt-[1.32rem] sm:text-[0.95rem]">{card.body}</p>
+      <p className="mt-[1.32rem] text-[0.95rem] leading-[1.5] text-neutral-800">{card.body}</p>
 
       <div className="relative mt-auto overflow-hidden rounded-[1.35rem] bg-[rgba(245,245,247,1)]">
         <Image
@@ -897,24 +744,6 @@ function CardContent({
 
 function DetailImage({ src, alt }: { src: string; alt: string }) {
   const [isPortrait, setIsPortrait] = useState(false);
-  const [isIPadPortraitTouch, setIsIPadPortraitTouch] = useState(false);
-
-  useEffect(() => {
-    const query = window.matchMedia(
-      '(min-width: 768px) and (max-width: 1366px) and (orientation: portrait) and (hover: none) and (pointer: coarse)',
-    );
-    const updateMode = () => {
-      setIsIPadPortraitTouch(query.matches || (window.innerWidth >= 768 && window.innerWidth <= 1366 && window.innerHeight > window.innerWidth && navigator.maxTouchPoints > 0));
-    };
-
-    updateMode();
-    query.addEventListener('change', updateMode);
-    window.addEventListener('resize', updateMode, { passive: true });
-    return () => {
-      query.removeEventListener('change', updateMode);
-      window.removeEventListener('resize', updateMode);
-    };
-  }, []);
 
   return (
     <Image
@@ -927,10 +756,8 @@ function DetailImage({ src, alt }: { src: string; alt: string }) {
       }}
       className={
         isPortrait
-          ? isIPadPortraitTouch
-            ? 'h-[52dvh] w-full object-cover object-[50%_40%] sm:h-[58dvh] lg:h-[60dvh]'
-            : 'h-[55vh] w-full object-cover object-[50%_40%] sm:h-[70vh] lg:h-[86vh]'
-          : 'h-auto max-h-[50vh] w-full object-contain sm:max-h-[70vh] lg:max-h-none'
+          ? 'h-[86vh] w-full object-cover object-[50%_40%]'
+          : 'h-auto w-full object-contain'
       }
     />
   );

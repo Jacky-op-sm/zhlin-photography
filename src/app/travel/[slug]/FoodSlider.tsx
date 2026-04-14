@@ -1,7 +1,7 @@
 'use client';
 
 import Image from 'next/image';
-import { useEffect, useMemo, useRef, useState } from 'react';
+import { useEffect, useMemo, useRef, useState, type TouchEvent } from 'react';
 import type { TravelFoodExtractItem } from '@/lib/data/travel-food-extract';
 import type { TravelExpandMap } from '@/lib/types/travel-expand';
 
@@ -14,6 +14,7 @@ const SLIDE_FINE_TUNE_PX = 0;
 const CARD_HEIGHT_REM = 28;
 const CARD_HEIGHT_MULTIPLIER = 1.1;
 const MOBILE_BREAKPOINT_PX = 768;
+const SWIPE_MIN_DISTANCE_PX = 44;
 
 type FoodCardItem = {
   eyebrow: string;
@@ -441,6 +442,9 @@ export default function FoodSlider({
   const [measuredTabletMarginPx, setMeasuredTabletMarginPx] = useState<number | null>(null);
   const [startIndex, setStartIndex] = useState(0);
   const [activeCard, setActiveCard] = useState<number | null>(null);
+  const touchStartRef = useRef<{ x: number; y: number } | null>(null);
+  const touchCurrentRef = useRef<{ x: number; y: number } | null>(null);
+  const swipeTriggeredRef = useRef(false);
   const isMobile = viewportWidth < MOBILE_BREAKPOINT_PX;
   const useTabletAlignment = !isMobile && (isCoarsePointer || viewportWidth <= 1180);
   const visibleCards = isMobile ? 1 : VISIBLE_CARDS;
@@ -463,6 +467,45 @@ export default function FoodSlider({
 
   const handleNext = () => {
     setStartIndex((prev) => Math.min(maxStartIndex, prev + 1));
+  };
+
+  const handleTouchStart = (event: TouchEvent<HTMLDivElement>) => {
+    if (!isMobile) return;
+    const touch = event.touches[0];
+    touchStartRef.current = { x: touch.clientX, y: touch.clientY };
+    touchCurrentRef.current = { x: touch.clientX, y: touch.clientY };
+    swipeTriggeredRef.current = false;
+  };
+
+  const handleTouchMove = (event: TouchEvent<HTMLDivElement>) => {
+    if (!isMobile) return;
+    const touch = event.touches[0];
+    touchCurrentRef.current = { x: touch.clientX, y: touch.clientY };
+  };
+
+  const handleTouchEnd = () => {
+    if (!isMobile || !touchStartRef.current || !touchCurrentRef.current) {
+      touchStartRef.current = null;
+      touchCurrentRef.current = null;
+      return;
+    }
+
+    const deltaX = touchCurrentRef.current.x - touchStartRef.current.x;
+    const deltaY = touchCurrentRef.current.y - touchStartRef.current.y;
+    const absX = Math.abs(deltaX);
+    const absY = Math.abs(deltaY);
+
+    if (absX >= SWIPE_MIN_DISTANCE_PX && absX > absY) {
+      if (deltaX < 0) {
+        handleNext();
+      } else {
+        handlePrev();
+      }
+      swipeTriggeredRef.current = true;
+    }
+
+    touchStartRef.current = null;
+    touchCurrentRef.current = null;
   };
 
   const edgePeekOffsetPx = startIndex === 0 ? 0 : sidePeekPx;
@@ -545,6 +588,16 @@ export default function FoodSlider({
       <div
         className="relative left-[calc(50%-50vw)] w-screen overflow-x-hidden overflow-y-visible py-3"
         data-travel-slider-viewport
+        onTouchStart={handleTouchStart}
+        onTouchMove={handleTouchMove}
+        onTouchEnd={handleTouchEnd}
+        onTouchCancel={handleTouchEnd}
+        onClickCapture={(event) => {
+          if (!swipeTriggeredRef.current) return;
+          event.preventDefault();
+          event.stopPropagation();
+          swipeTriggeredRef.current = false;
+        }}
       >
         <div
           className="flex transition-transform duration-500 ease-out"
@@ -611,7 +664,7 @@ export default function FoodSlider({
                 type="button"
                 onClick={() => setActiveCard(null)}
                 aria-label="Close detail"
-                className="absolute right-6 top-6 grid h-[2.26rem] w-[2.26rem] place-items-center rounded-full bg-[rgba(236,236,240,1)] text-[rgba(104,104,108,1)] transition-[background-color,color,transform] duration-150 ease-out hover:scale-[1.02] sm:right-8 sm:top-8"
+                className="fixed right-5 top-[calc(var(--site-header-height)+0.65rem)] z-[120] grid h-[2.26rem] w-[2.26rem] place-items-center rounded-full bg-[rgba(236,236,240,1)] text-[rgba(104,104,108,1)] transition-[background-color,color,transform] duration-150 ease-out hover:scale-[1.02] sm:absolute sm:right-8 sm:top-8 sm:z-auto"
               >
                 <span className="photo-viewer-close-icon" aria-hidden="true" />
               </button>
@@ -679,6 +732,24 @@ function normalizeCompareText(text: string): string {
 
 function DetailImage({ src, alt }: { src: string; alt: string }) {
   const [isPortrait, setIsPortrait] = useState(false);
+  const [isIPadPortraitTouch, setIsIPadPortraitTouch] = useState(false);
+
+  useEffect(() => {
+    const query = window.matchMedia(
+      '(min-width: 768px) and (max-width: 1366px) and (orientation: portrait) and (hover: none) and (pointer: coarse)',
+    );
+    const updateMode = () => {
+      setIsIPadPortraitTouch(query.matches || (window.innerWidth >= 768 && window.innerWidth <= 1366 && window.innerHeight > window.innerWidth && navigator.maxTouchPoints > 0));
+    };
+
+    updateMode();
+    query.addEventListener('change', updateMode);
+    window.addEventListener('resize', updateMode, { passive: true });
+    return () => {
+      query.removeEventListener('change', updateMode);
+      window.removeEventListener('resize', updateMode);
+    };
+  }, []);
 
   return (
     <Image
@@ -691,7 +762,9 @@ function DetailImage({ src, alt }: { src: string; alt: string }) {
       }}
       className={
         isPortrait
-          ? 'h-[55vh] w-full object-cover object-[50%_40%] sm:h-[70vh] lg:h-[86vh]'
+          ? isIPadPortraitTouch
+            ? 'h-[52dvh] w-full object-cover object-[50%_40%] sm:h-[58dvh] lg:h-[60dvh]'
+            : 'h-[55vh] w-full object-cover object-[50%_40%] sm:h-[70vh] lg:h-[86vh]'
           : 'h-auto max-h-[50vh] w-full object-contain sm:max-h-[70vh] lg:max-h-none'
       }
     />
