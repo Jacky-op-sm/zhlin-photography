@@ -435,17 +435,26 @@ export default function FoodSlider({
     if (slug === 'dongbei') return DONGBEI_FOOD_CARD_ITEMS;
     return JAPAN_FOOD_CARD_ITEMS;
   }, [slug, extractItems]);
+  const sliderRootRef = useRef<HTMLDivElement | null>(null);
   const [viewportWidth, setViewportWidth] = useState<number>(1200);
+  const [isCoarsePointer, setIsCoarsePointer] = useState(false);
+  const [measuredTabletMarginPx, setMeasuredTabletMarginPx] = useState<number | null>(null);
   const [startIndex, setStartIndex] = useState(0);
   const [activeCard, setActiveCard] = useState<number | null>(null);
   const isMobile = viewportWidth < MOBILE_BREAKPOINT_PX;
+  const useTabletAlignment = !isMobile && (isCoarsePointer || viewportWidth <= 1180);
   const visibleCards = isMobile ? 1 : VISIBLE_CARDS;
   const cardGapPx = isMobile ? 12 : CARD_GAP_PX;
   const sidePeekPx = isMobile ? 20 : SIDE_PEEK_PX;
   const cardWidthPx = isMobile
     ? Math.max(248, Math.min(360, viewportWidth - 52))
     : CARD_WIDTH_PX;
-  const marginPx = isMobile ? 16 : MARGIN_PX;
+  const tabletSectionMarginPx = viewportWidth >= 1024 ? 12.56 * 16 : 9.4 * 16;
+  const marginPx = isMobile
+    ? 16
+    : useTabletAlignment
+      ? measuredTabletMarginPx ?? tabletSectionMarginPx
+      : MARGIN_PX;
   const maxStartIndex = Math.max(0, cards.length - visibleCards);
 
   const handlePrev = () => {
@@ -465,10 +474,30 @@ export default function FoodSlider({
     const updateViewportWidth = () => {
       setViewportWidth(window.innerWidth);
     };
+    const updateMeasuredTabletMargin = () => {
+      const root = sliderRootRef.current;
+      const viewport = root?.querySelector('[data-travel-slider-viewport]') as HTMLElement | null;
+      const container = root?.parentElement as HTMLElement | null;
+      if (!viewport || !container) return;
+      setMeasuredTabletMarginPx(container.getBoundingClientRect().left - viewport.getBoundingClientRect().left);
+    };
+    const coarsePointerQuery = window.matchMedia('(hover: none) and (pointer: coarse)');
+    const updatePointerMode = () => {
+      setIsCoarsePointer(coarsePointerQuery.matches || navigator.maxTouchPoints > 0);
+    };
+    const updateLayout = () => {
+      updateViewportWidth();
+      updateMeasuredTabletMargin();
+    };
 
-    updateViewportWidth();
-    window.addEventListener('resize', updateViewportWidth, { passive: true });
-    return () => window.removeEventListener('resize', updateViewportWidth);
+    updateLayout();
+    updatePointerMode();
+    window.addEventListener('resize', updateLayout, { passive: true });
+    coarsePointerQuery.addEventListener('change', updatePointerMode);
+    return () => {
+      window.removeEventListener('resize', updateLayout);
+      coarsePointerQuery.removeEventListener('change', updatePointerMode);
+    };
   }, []);
 
   useEffect(() => {
@@ -512,8 +541,11 @@ export default function FoodSlider({
         ];
 
   return (
-    <div className="mt-8 w-full lg:max-w-[1150px]">
-      <div className="relative left-[calc(50%-50vw)] w-screen overflow-x-hidden overflow-y-visible py-3">
+    <div ref={sliderRootRef} className="mt-8 w-full lg:max-w-[1150px]">
+      <div
+        className="relative left-[calc(50%-50vw)] w-screen overflow-x-hidden overflow-y-visible py-3"
+        data-travel-slider-viewport
+      >
         <div
           className="flex transition-transform duration-500 ease-out"
           style={{

@@ -40,6 +40,20 @@ export default defineConfig({
       },
     },
     {
+      name: 'ipad-portrait',
+      use: {
+        ...devices['iPad (gen 7)'],
+        viewport: { width: 768, height: 1024 },
+      },
+    },
+    {
+      name: 'ipad-landscape',
+      use: {
+        ...devices['iPad (gen 7) landscape'],
+        viewport: { width: 1024, height: 768 },
+      },
+    },
+    {
       name: 'desktop-1280',
       use: {
         viewport: { width: 1280, height: 800 },

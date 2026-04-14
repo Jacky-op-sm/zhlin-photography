@@ -2,6 +2,7 @@
 
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
+import type { MouseEvent, PointerEvent } from 'react'
 import { useEffect, useMemo, useRef, useState } from 'react'
 
 interface NavigationProps {
@@ -56,8 +57,10 @@ export default function Navigation({
   const pathname = usePathname()
   const [panelHref, setPanelHref] = useState<string | null>(null)
   const [isPanelOpen, setIsPanelOpen] = useState(false)
+  const [isCoarsePointer, setIsCoarsePointer] = useState(false)
   const [mobileSubmenuHref, setMobileSubmenuHref] = useState<string | null>(null)
   const closeTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null)
+  const handledTouchParentHrefRef = useRef<string | null>(null)
   const isDesktop = mode === 'desktop'
 
   const fallbackDropdownItem = useMemo(
@@ -115,6 +118,57 @@ export default function Navigation({
     onClose?.()
   }
 
+  const handleDesktopParentClick = (
+    event: MouseEvent<HTMLAnchorElement>,
+    href: string,
+  ) => {
+    if (handledTouchParentHrefRef.current === href) {
+      handledTouchParentHrefRef.current = null
+      event.preventDefault()
+      event.stopPropagation()
+      return
+    }
+    const useTouchDropdown = isCoarsePointer || navigator.maxTouchPoints > 0
+    if (!useTouchDropdown) {
+      onNavigate?.()
+      return
+    }
+    event.preventDefault()
+    event.stopPropagation()
+    setDropdownOpen(isPanelOpen && panelHref === href ? null : href)
+  }
+
+  const handleDesktopParentPointerDown = (
+    event: PointerEvent<HTMLAnchorElement>,
+    href: string,
+  ) => {
+    const useTouchDropdown =
+      event.pointerType === 'touch' || isCoarsePointer || navigator.maxTouchPoints > 0
+    if (!useTouchDropdown) return
+    event.preventDefault()
+    event.stopPropagation()
+    handledTouchParentHrefRef.current = href
+    setDropdownOpen(isPanelOpen && panelHref === href ? null : href)
+  }
+
+  const handleDesktopBackdropPointerDown = (event: PointerEvent<HTMLButtonElement>) => {
+    event.preventDefault()
+    event.stopPropagation()
+    setDropdownOpen(null)
+  }
+
+  useEffect(() => {
+    if (!isDesktop) return
+    const coarsePointerQuery = window.matchMedia('(hover: none) and (pointer: coarse)')
+    const updatePointerMode = () => {
+      setIsCoarsePointer(coarsePointerQuery.matches || navigator.maxTouchPoints > 0)
+    }
+
+    updatePointerMode()
+    coarsePointerQuery.addEventListener('change', updatePointerMode)
+    return () => coarsePointerQuery.removeEventListener('change', updatePointerMode)
+  }, [isDesktop])
+
   useEffect(() => {
     if (!isDesktop) return
     onDropdownOpenChange?.(isPanelOpen)
@@ -163,7 +217,8 @@ export default function Navigation({
         {item.children ? (
           <Link
             href={item.href}
-            onClick={onNavigate}
+            onPointerDown={(event) => handleDesktopParentPointerDown(event, item.href)}
+            onClick={(event) => handleDesktopParentClick(event, item.href)}
             className="site-nav-link"
             data-active={isActive(item.href)}
             aria-haspopup="menu"
@@ -257,6 +312,15 @@ export default function Navigation({
           {navigationItems.map((item, index) => renderNavItem(item, index))}
         </ul>
       )}
+
+      {isDesktop && isPanelOpen ? (
+        <button
+          type="button"
+          className="site-nav-dropdown-backdrop"
+          aria-label="Close navigation menu"
+          onPointerDown={handleDesktopBackdropPointerDown}
+        />
+      ) : null}
 
       {isDesktop && displayDropdownItem ? (
         <div
