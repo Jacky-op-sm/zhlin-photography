@@ -1,6 +1,6 @@
 'use client'
 
-import { useEffect, useState } from 'react'
+import { useCallback, useEffect, useState } from 'react'
 import Image from 'next/image'
 import { motion, AnimatePresence } from 'framer-motion'
 import type { Photo } from '@/lib/types'
@@ -24,20 +24,45 @@ export default function PhotoViewer({
 }: PhotoViewerProps) {
   const [touchStart, setTouchStart] = useState<number | null>(null)
   const [touchEnd, setTouchEnd] = useState<number | null>(null)
+  const [slideDirection, setSlideDirection] = useState<1 | -1>(1)
+  const [isTouchLike, setIsTouchLike] = useState(false)
 
   const currentPhoto = photos[initialIndex]
   const hasPrevious = initialIndex > 0
   const hasNext = initialIndex < photos.length - 1
   const minSwipeDistance = 50
 
+  const handlePrevious = useCallback(() => {
+    if (!hasPrevious) return
+    setSlideDirection(-1)
+    onPrevious()
+  }, [hasPrevious, onPrevious])
+
+  const handleNext = useCallback(() => {
+    if (!hasNext) return
+    setSlideDirection(1)
+    onNext()
+  }, [hasNext, onNext])
+
+  useEffect(() => {
+    const coarsePointerQuery = window.matchMedia('(hover: none) and (pointer: coarse)')
+    const updatePointerMode = () => {
+      setIsTouchLike(coarsePointerQuery.matches || navigator.maxTouchPoints > 0)
+    }
+
+    updatePointerMode()
+    coarsePointerQuery.addEventListener('change', updatePointerMode)
+    return () => coarsePointerQuery.removeEventListener('change', updatePointerMode)
+  }, [])
+
   useEffect(() => {
     const handleKeyDown = (event: KeyboardEvent) => {
       if (event.key === 'Escape') {
         onClose()
       } else if (event.key === 'ArrowLeft' && hasPrevious) {
-        onPrevious()
+        handlePrevious()
       } else if (event.key === 'ArrowRight' && hasNext) {
-        onNext()
+        handleNext()
       }
     }
 
@@ -50,7 +75,7 @@ export default function PhotoViewer({
       document.removeEventListener('keydown', handleKeyDown)
       document.body.style.overflow = ''
     }
-  }, [hasNext, hasPrevious, isOpen, onClose, onNext, onPrevious])
+  }, [handleNext, handlePrevious, hasNext, hasPrevious, isOpen, onClose])
 
   if (!isOpen || !currentPhoto) {
     return null
@@ -63,6 +88,7 @@ export default function PhotoViewer({
       exit={{ opacity: 0 }}
       transition={{ duration: 0.24 }}
       className="photo-viewer"
+      data-touch={isTouchLike ? 'true' : 'false'}
       onClick={onClose}
       onTouchStart={(event) => {
         setTouchEnd(null)
@@ -76,9 +102,9 @@ export default function PhotoViewer({
         const distance = touchStart - touchEnd
 
         if (distance > minSwipeDistance && hasNext) {
-          onNext()
+          handleNext()
         } else if (distance < -minSwipeDistance && hasPrevious) {
-          onPrevious()
+          handlePrevious()
         }
       }}
     >
@@ -101,10 +127,10 @@ export default function PhotoViewer({
         <AnimatePresence mode="wait">
           <motion.div
             key={currentPhoto.id}
-            initial={{ opacity: 0.3 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0.3 }}
-            transition={{ duration: 0.18 }}
+            initial={{ opacity: 0.22, x: slideDirection * 26 }}
+            animate={{ opacity: 1, x: 0 }}
+            exit={{ opacity: 0.2, x: slideDirection * -22 }}
+            transition={{ duration: 0.22, ease: [0.22, 1, 0.36, 1] }}
           >
             <Image
               src={currentPhoto.filename}
@@ -125,7 +151,7 @@ export default function PhotoViewer({
               className="photo-viewer-nav photo-viewer-nav-prev"
               onClick={(event) => {
                 event.stopPropagation()
-                onPrevious()
+                handlePrevious()
               }}
               aria-label="Previous image"
             >
@@ -141,7 +167,7 @@ export default function PhotoViewer({
               className="photo-viewer-nav photo-viewer-nav-next"
               onClick={(event) => {
                 event.stopPropagation()
-                onNext()
+                handleNext()
               }}
               aria-label="Next image"
             >

@@ -54,6 +54,20 @@ export default defineConfig({
       },
     },
     {
+      name: 'ipad-pro-12-9-portrait',
+      use: {
+        ...devices['iPad Pro 11'],
+        viewport: { width: 1024, height: 1366 },
+      },
+    },
+    {
+      name: 'ipad-pro-12-9-landscape',
+      use: {
+        ...devices['iPad Pro 11 landscape'],
+        viewport: { width: 1366, height: 1024 },
+      },
+    },
+    {
       name: 'desktop-1280',
       use: {
         viewport: { width: 1280, height: 800 },

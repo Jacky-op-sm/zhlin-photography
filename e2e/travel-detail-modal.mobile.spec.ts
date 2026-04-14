@@ -16,7 +16,7 @@ test.describe('travel detail modal mobile layout', () => {
 
     const metrics = await page.evaluate(() => {
       const closeButton = document.querySelector('button[aria-label="Close detail"]') as HTMLElement | null
-      const overlay = closeButton?.closest('div.fixed')
+      const overlay = document.querySelector('div.fixed.inset-0.overflow-y-auto') as HTMLElement | null
       if (!overlay) return null
 
       const textNode = overlay.querySelector('p.whitespace-pre-line') as HTMLElement | null
@@ -60,5 +60,26 @@ test.describe('travel detail modal mobile layout', () => {
     })
 
     expect(inViewport).toBe(true)
+    await closeButton.click()
+    await expect(closeButton).toHaveCount(0)
+
+    const foodTitle = page.locator('h2').filter({ hasText: /^美食$/ })
+    await foodTitle.scrollIntoViewIfNeeded()
+    await page.getByRole('button', { name: 'Open food card 1', exact: true }).click()
+    const foodCloseButton = page.getByRole('button', { name: 'Close detail' })
+    await expect(foodCloseButton).toBeVisible()
+
+    const foodOverlay = page.locator('div.fixed.inset-0').first()
+    await foodOverlay.evaluate((node) => {
+      ;(node as HTMLElement).scrollTo({ top: 1200, behavior: 'auto' })
+    })
+    await page.waitForTimeout(100)
+
+    const foodInViewport = await foodCloseButton.evaluate((button) => {
+      const rect = button.getBoundingClientRect()
+      return rect.top >= 0 && rect.bottom <= window.innerHeight && rect.right <= window.innerWidth
+    })
+
+    expect(foodInViewport).toBe(true)
   })
 })

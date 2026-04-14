@@ -1417,6 +1417,12 @@ body {
   background: transparent;
 }
 
+.travel-slider-viewport {
+  touch-action: pan-y pinch-zoom;
+  -webkit-user-select: none;
+  user-select: none;
+}
+
 .travel-card-hover-shell:hover {
   transform: scale(calc((100% + var(--image-hover-expand-px)) / 100%));
 }
@@ -2153,6 +2159,7 @@ body {
 
 .photo-gallery-masonry {
   column-gap: 0.35rem;
+  line-height: 0;
 }
 
 .photo-gallery-item {
@@ -2381,12 +2388,22 @@ body {
 }
 
 .photo-viewer-controls {
-  margin-top: 0.72rem;
-  width: min(92vw, 32rem);
+  position: fixed;
+  left: 50%;
+  bottom: calc(env(safe-area-inset-bottom, 0px) + 0.9rem);
+  transform: translateX(-50%);
+  z-index: 2;
+  margin-top: 0;
+  width: auto;
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 1rem;
+  gap: 0.9rem;
+  border-radius: 999px;
+  padding: 0.34rem 0.42rem;
+  background: rgba(245, 245, 247, 0.82);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
 }
 
 .photo-viewer-nav-placeholder {
@@ -2450,6 +2467,10 @@ body {
   max-width: 92vw;
 }
 
+.photo-viewer[data-touch='true'] .photo-viewer-image-wrap {
+  padding-bottom: calc(env(safe-area-inset-bottom, 0px) + 3.4rem);
+}
+
 .photo-viewer-image {
   width: auto;
   max-width: 92vw;
@@ -2468,9 +2489,28 @@ body {
     font-size: 0.62rem;
   }
 
+  .photo-viewer-image-wrap {
+    max-height: 88vh;
+  }
+
+  .photo-viewer-image {
+    max-height: 88vh;
+  }
+}
+
+@media (min-width: 768px) and (hover: hover) and (pointer: fine) {
+  .photo-viewer {
+    --photo-viewer-edge-offset: 9rem;
+  }
+
   .photo-viewer-controls {
-    margin-top: 0;
+    position: static;
+    transform: none;
     width: 0;
+    background: transparent;
+    padding: 0;
+    backdrop-filter: none;
+    -webkit-backdrop-filter: none;
   }
 
   .photo-viewer-nav {
@@ -2490,18 +2530,11 @@ body {
   .photo-viewer-nav-next {
     right: var(--photo-viewer-edge-offset);
   }
-
-  .photo-viewer-image-wrap {
-    max-height: 88vh;
-  }
-
-  .photo-viewer-image {
-    max-height: 88vh;
-  }
 }
 
-@media (min-width: 768px) and (hover: hover) and (pointer: fine) {
-  .photo-viewer {
-    --photo-viewer-edge-offset: 9rem;
+@media (min-width: 1024px) and (max-width: 1366px) and (hover: none) and (pointer: coarse) {
+  .photo-gallery-masonry {
+    column-count: 2;
+    column-gap: 0.3rem;
   }
 }

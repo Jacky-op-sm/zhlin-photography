@@ -4,6 +4,8 @@ import Image from 'next/image';
 import { useEffect, useMemo, useRef, useState, type TouchEvent } from 'react';
 import type { TravelFoodExtractItem } from '@/lib/data/travel-food-extract';
 import type { TravelExpandMap } from '@/lib/types/travel-expand';
+import { useIPadPortraitTouch } from '@/lib/hooks/useIPadPortraitTouch';
+import { getTravelDetailImageClass } from '@/lib/utils/travelDetailImage';
 
 const VISIBLE_CARDS = 3;
 const CARD_GAP_PX = 19.2;
@@ -444,6 +446,8 @@ export default function FoodSlider({
   const [activeCard, setActiveCard] = useState<number | null>(null);
   const touchStartRef = useRef<{ x: number; y: number } | null>(null);
   const touchCurrentRef = useRef<{ x: number; y: number } | null>(null);
+  const touchAxisLockRef = useRef<'x' | 'y' | null>(null);
+  const touchStartScrollYRef = useRef(0);
   const swipeTriggeredRef = useRef(false);
   const isMobile = viewportWidth < MOBILE_BREAKPOINT_PX;
   const useTabletAlignment = !isMobile && (isCoarsePointer || viewportWidth <= 1180);
@@ -474,19 +478,40 @@ export default function FoodSlider({
     const touch = event.touches[0];
     touchStartRef.current = { x: touch.clientX, y: touch.clientY };
     touchCurrentRef.current = { x: touch.clientX, y: touch.clientY };
+    touchAxisLockRef.current = null;
+    touchStartScrollYRef.current = window.scrollY;
     swipeTriggeredRef.current = false;
   };
 
   const handleTouchMove = (event: TouchEvent<HTMLDivElement>) => {
     if (!isMobile) return;
+    if (!touchStartRef.current) return;
     const touch = event.touches[0];
-    touchCurrentRef.current = { x: touch.clientX, y: touch.clientY };
+    const current = { x: touch.clientX, y: touch.clientY };
+    touchCurrentRef.current = current;
+
+    const deltaX = current.x - touchStartRef.current.x;
+    const deltaY = current.y - touchStartRef.current.y;
+    const absX = Math.abs(deltaX);
+    const absY = Math.abs(deltaY);
+
+    if (touchAxisLockRef.current === null && (absX > 8 || absY > 8)) {
+      touchAxisLockRef.current = absX > absY ? 'x' : 'y';
+    }
+
+    if (touchAxisLockRef.current === 'x') {
+      event.preventDefault();
+      if (Math.abs(window.scrollY - touchStartScrollYRef.current) > 0.5) {
+        window.scrollTo({ top: touchStartScrollYRef.current, behavior: 'auto' });
+      }
+    }
   };
 
   const handleTouchEnd = () => {
     if (!isMobile || !touchStartRef.current || !touchCurrentRef.current) {
       touchStartRef.current = null;
       touchCurrentRef.current = null;
+      touchAxisLockRef.current = null;
       return;
     }
 
@@ -506,6 +531,7 @@ export default function FoodSlider({
 
     touchStartRef.current = null;
     touchCurrentRef.current = null;
+    touchAxisLockRef.current = null;
   };
 
   const edgePeekOffsetPx = startIndex === 0 ? 0 : sidePeekPx;
@@ -586,7 +612,7 @@ export default function FoodSlider({
   return (
     <div ref={sliderRootRef} className="mt-8 w-full lg:max-w-[1150px]">
       <div
-        className="relative left-[calc(50%-50vw)] w-screen overflow-x-hidden overflow-y-visible py-3"
+        className="travel-slider-viewport relative left-[calc(50%-50vw)] w-screen overflow-x-hidden overflow-y-visible py-3"
         data-travel-slider-viewport
         onTouchStart={handleTouchStart}
         onTouchMove={handleTouchMove}
@@ -651,24 +677,16 @@ export default function FoodSlider({
       </div>
 
       {activeCard !== null ? (
-        <div
-          className="fixed inset-0 z-[90] overflow-y-auto bg-[rgba(15,15,18,0.34)] p-3 backdrop-blur-[10px] sm:p-10 lg:p-14"
-          onClick={() => setActiveCard(null)}
-        >
-          <div className="mx-auto w-full max-w-[1280px]">
-            <div
-              className="relative rounded-[1.5rem] bg-white p-5 shadow-[0_30px_80px_rgba(0,0,0,0.28)] sm:rounded-[2.1rem] sm:p-10 lg:p-12"
-              onClick={(event) => event.stopPropagation()}
-            >
-              <button
-                type="button"
-                onClick={() => setActiveCard(null)}
-                aria-label="Close detail"
-                className="fixed right-5 top-[calc(var(--site-header-height)+0.65rem)] z-[120] grid h-[2.26rem] w-[2.26rem] place-items-center rounded-full bg-[rgba(236,236,240,1)] text-[rgba(104,104,108,1)] transition-[background-color,color,transform] duration-150 ease-out hover:scale-[1.02] sm:absolute sm:right-8 sm:top-8 sm:z-auto"
+        <>
+          <div
+            className="fixed inset-0 z-[90] overflow-y-auto bg-[rgba(15,15,18,0.34)] p-3 backdrop-blur-[10px] sm:p-10 lg:p-14"
+            onClick={() => setActiveCard(null)}
+          >
+            <div className="mx-auto w-full max-w-[1280px]">
+              <div
+                className="relative rounded-[1.5rem] bg-white p-5 shadow-[0_30px_80px_rgba(0,0,0,0.28)] sm:rounded-[2.1rem] sm:p-10 lg:p-12"
+                onClick={(event) => event.stopPropagation()}
               >
-                <span className="photo-viewer-close-icon" aria-hidden="true" />
-              </button>
-
               <div className="mx-0 max-w-[42rem] sm:mx-[1.57rem] lg:mx-[2.09rem]">
                 <p className="text-sm font-semibold text-[rgba(29,29,31,1)] sm:text-base">
                   {activeExpandCard?.eyebrow || cards[activeCard - 1]?.eyebrow}
@@ -697,7 +715,20 @@ export default function FoodSlider({
               </div>
             </div>
           </div>
-        </div>
+          </div>
+          <button
+            type="button"
+            onClick={() => setActiveCard(null)}
+            aria-label="Close detail"
+            className="fixed z-[130] grid h-[2.26rem] w-[2.26rem] place-items-center rounded-full bg-[rgba(236,236,240,1)] text-[rgba(104,104,108,1)] transition-[background-color,color,transform] duration-150 ease-out hover:scale-[1.02]"
+            style={{
+              right: 'calc(env(safe-area-inset-right, 0px) + 1rem)',
+              top: 'calc(env(safe-area-inset-top, 0px) + var(--site-header-height) + 0.65rem)',
+            }}
+          >
+            <span className="photo-viewer-close-icon" aria-hidden="true" />
+          </button>
+        </>
       ) : null}
     </div>
   );
@@ -732,24 +763,7 @@ function normalizeCompareText(text: string): string {
 
 function DetailImage({ src, alt }: { src: string; alt: string }) {
   const [isPortrait, setIsPortrait] = useState(false);
-  const [isIPadPortraitTouch, setIsIPadPortraitTouch] = useState(false);
-
-  useEffect(() => {
-    const query = window.matchMedia(
-      '(min-width: 768px) and (max-width: 1366px) and (orientation: portrait) and (hover: none) and (pointer: coarse)',
-    );
-    const updateMode = () => {
-      setIsIPadPortraitTouch(query.matches || (window.innerWidth >= 768 && window.innerWidth <= 1366 && window.innerHeight > window.innerWidth && navigator.maxTouchPoints > 0));
-    };
-
-    updateMode();
-    query.addEventListener('change', updateMode);
-    window.addEventListener('resize', updateMode, { passive: true });
-    return () => {
-      query.removeEventListener('change', updateMode);
-      window.removeEventListener('resize', updateMode);
-    };
-  }, []);
+  const isIPadPortraitTouch = useIPadPortraitTouch();
 
   return (
     <Image
@@ -760,13 +774,7 @@ function DetailImage({ src, alt }: { src: string; alt: string }) {
       onLoadingComplete={(img) => {
         setIsPortrait(img.naturalHeight > img.naturalWidth);
       }}
-      className={
-        isPortrait
-          ? isIPadPortraitTouch
-            ? 'h-[52dvh] w-full object-cover object-[50%_40%] sm:h-[58dvh] lg:h-[60dvh]'
-            : 'h-[55vh] w-full object-cover object-[50%_40%] sm:h-[70vh] lg:h-[86vh]'
-          : 'h-auto max-h-[50vh] w-full object-contain sm:max-h-[70vh] lg:max-h-none'
-      }
+      className={getTravelDetailImageClass({ isPortrait, isIPadPortraitTouch })}
     />
   );
 }
