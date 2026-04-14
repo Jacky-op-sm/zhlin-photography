@@ -19,6 +19,7 @@ type TravellerShowcaseCard = {
   alt: string
   body: string
   imageClassName?: string
+  bodyClassName?: string
 }
 
 type HobbyistShowcaseCard = {
@@ -32,31 +33,38 @@ type HobbyistShowcaseCard = {
 
 const photographerShowcaseCards: PhotographerShowcaseCard[] = [
   {
-    title: 'STREET',
+    title: '街拍',
     href: '/photography?category=street',
     image: '/assets/photos/street/street-scene-1.jpg',
     alt: 'Street photography cover',
-    quote:
-      'Street photography keeps me close to instinct — to observing quietly before trying to explain anything.',
-    body: 'I follow fleeting expressions, changing light, and small interactions that shape the pulse of everyday city life.',
+    quote: `什么是街拍？
+街拍是对城市的观察，
+街拍是去展现平日被人忽略的美。`,
+    body: `我喜欢去观察光影，
+去捕捉人们生存的状态。`,
   },
   {
-    title: 'PET',
+    title: '动物',
     href: '/photography?category=pets',
     image: '/assets/photos/pets/Z52_6039.jpg',
     alt: 'Pet photography cover',
-    quote:
-      'Pet photography slows the pace down and turns every frame into a record of trust, personality, and companionship.',
-    body: 'Rather than staged gestures, I focus on natural movement and the ordinary moments that reveal character over time.',
+    quote: `动物给予我感情，
+热情的狗，高冷的猫，
+关在动物园的老虎。`,
+    body: `我最喜欢拍狗狗们，
+它们来自故乡，各有个性。`,
     imageClassName: 'object-[52%_center]',
   },
   {
-    title: 'PROJECT',
+    title: '项目',
     href: '/photography?category=project',
     image: '/assets/photos/project/1.jpg',
     alt: 'Project photography cover',
-    quote: 'Long-term projects give isolated observations a clearer direction and a stronger narrative rhythm.',
-    body: 'By returning to the same themes across time, each series becomes a structured chapter rather than a single image.',
+    quote: `我看着宿舍阳台下的十字路口，
+不同的天气，晴天、阴天、下雨，
+不同的四季，春夏秋冬。`,
+    body: `这是我第一个个人项目，
+真期待它会演变成什么样呢？`,
     imageClassName: 'object-[50%_center]',
   },
 ]
@@ -67,48 +75,61 @@ const travellerShowcaseCards: TravellerShowcaseCard[] = [
     href: '/travel/japan',
     image: '/assets/travel/japan-front.jpeg',
     alt: '日本旅行封面',
-    body: '旅行不是景点清单，而是把步行、天气和陌生城市重新组织成观看经验。',
+    body: `我记住日本，
+不仅因为高松的悠闲、京都的红，
+鸭川的夜和奈良的鹿，也因为朋友同行的时光，
+以及初识相机时那份欣喜。`,
     imageClassName: 'object-[56%_center]',
+    bodyClassName: 'home-traveller-body--japan',
   },
   {
     place: '南京',
     href: '/travel/nanjing',
     image: '/assets/travel/nanjing-hero-wutong-street.jpg',
     alt: '南京旅行封面',
-    body: '南京这一页更接近一次缓慢的城市阅读，梧桐、街区与雨天共同定义了它的气质。',
+    body: `春节的南京大概不是最好的旅行时机，
+可旅行本就不只有轻松和快乐，
+也有拥挤、劳累和意外。`,
   },
   {
     place: '北京',
     href: '/travel/beijing',
     image: '/assets/travel/beijing-front.jpeg',
     alt: '北京旅行封面',
-    body: '北京像一条不断延伸的路径，校园、街口与夜色在同一天里切换尺度。',
+    body: `北京给了我太多第一次：
+第一次独自旅行，第一次走进音乐酒吧，
+第一次在艺术展里结识朋友。`,
     imageClassName: 'object-[56%_center]',
   },
 ]
 
 const hobbyistShowcaseCards: HobbyistShowcaseCard[] = [
   {
-    title: 'BOOK',
+    title: '阅读',
     href: '/hobby#reading',
     image: '/assets/home/ward-no-6-cover.jpg',
     alt: 'Book cover',
-    body: '阅读让我在影像之外维持另一种缓慢而深入的注意力。',
+    body: `阅读教会我耐心，
+让我学会感受契诃夫的温柔、海明威的力量，
+和陀思妥耶夫斯基笔下的人心。`,
   },
   {
-    title: 'FILM',
+    title: '电影',
     href: '/hobby#film',
     image: '/assets/home/three-colours-trilogy-cover.png',
     alt: 'Film cover',
-    body: '电影帮助我重新感受镜头距离、色彩秩序，以及沉默本身的表达力量。',
+    body: `看哪，红白蓝三部曲的美学，
+小津安二郎讲述的家庭，今敏的时空跳跃。`,
     imageClassName: 'object-cover object-center scale-[1.05]',
   },
   {
-    title: 'VIDEO GAME',
+    title: '游戏',
     href: '/hobby#game',
     image: '/assets/home/league-of-legends-cover.jpg',
     alt: 'Video game cover',
-    body: '游戏提供的是另一种节奏训练，在判断、协作和重复中建立稳定手感。',
+    body: `游戏对我到底意味着什么？
+是考验反应、团队协作的激情，
+还是结束后的疲惫与空虚。`,
   },
 ]
 
@@ -120,7 +141,6 @@ export default async function Home() {
       <section className="home-band home-band--light home-hero-band">
         <div className="site-shell home-hero-grid">
           <div className="home-hero-copy">
-            <p className="home-overline">林志濠 · 摄影</p>
             <h1>
               摄影，
               <br />
@@ -129,11 +149,8 @@ export default async function Home() {
               爱好。
             </h1>
             <p className="home-hero-summary">
-              常驻杭州，主要拍摄街头、宠物与长期项目，也把旅行与日常兴趣整理成持续更新的记录。
-              影像是最先开口的部分，身份与研究背景则留在更安静的边侧。
-            </p>
-            <p className="home-hero-detail">
-              {profile.title} · {profile.city}。{profile.aboutParagraphs[0]}
+              常驻杭州，穷学生一枚。现有三大爱好，摄影 - 已拥有相机三个月，常在散步时拍照，现快门数6897；旅行
+              - 走在陌生的地方，看着沿路风景的同时，也看着自己；读书和写作 - 读书培养语感，日记让我自省，游记让我定格回忆。
             </p>
             <div className="home-hero-links">
               <Link href="/photography" className="home-inline-link">
@@ -158,11 +175,11 @@ export default async function Home() {
             </div>
             <figcaption>
               <p className="home-overline">个人简介</p>
-              <p className="home-hero-name">{profile.name}</p>
+              <p className="home-hero-name">林志濠</p>
               <p className="home-hero-meta">
-                {profile.title}
+                在读博士
                 <br />
-                {profile.city}
+                杭州，中国
               </p>
             </figcaption>
           </figure>
@@ -212,7 +229,7 @@ function HobbyistShowcase({ cards }: { cards: HobbyistShowcaseCard[] }) {
             </Link>
 
             <Link href={card.href} className="home-photographer-see-more">
-              <span>SEE MORE</span>
+              <span>进一步了解</span>
             </Link>
           </article>
         ))}
@@ -248,10 +265,10 @@ function TravellerShowcase({ cards }: { cards: TravellerShowcaseCard[] }) {
             </Link>
             <div className="home-traveller-copy">
               <p className="home-traveller-place">{card.place}</p>
-              <p className="home-traveller-body">{card.body}</p>
+              <p className={`home-traveller-body ${card.bodyClassName || ''}`}>{card.body}</p>
             </div>
             <Link href={card.href} className="home-photographer-see-more">
-              <span>SEE MORE</span>
+              <span>进一步了解</span>
             </Link>
           </article>
         ))}
@@ -293,7 +310,7 @@ function PhotographerShowcase({ cards }: { cards: PhotographerShowcaseCard[] }) 
               <p className="home-photographer-body">{card.body}</p>
             </div>
             <Link href={card.href} className="home-photographer-see-more">
-              <span>SEE MORE</span>
+              <span>进一步了解</span>
             </Link>
           </article>
         ))}
