@@ -6,6 +6,8 @@ export type TravelCardExtractItem = TravelExtractItem;
 
 const EXTRACT_MD_BY_SLUG: Record<string, string> = {
   nanjing: 'data/travel-card-extracts/nanjing-card-2.md',
+  hangzhou: 'data/travel-card-extracts/hangzhou-card-extracts.md',
+  huzhou: 'data/travel-card-extracts/huzhou-card-extracts.md',
   japan: 'data/travel-card-extracts/japan-card-extracts.md',
   shanghai: 'data/travel-card-extracts/shanghai-card-extracts.md',
   beijing: 'data/travel-card-extracts/beijing-card-extracts.md',

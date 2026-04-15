@@ -517,7 +517,6 @@ export default function SpotSlider({
     if (slug === 'beijing') return BEIJING_CARD_ITEMS;
     return NANJING_CARD_ITEMS;
   }, [slug, expandMap, extractItems]);
-  const cardHeightRem = CARD_HEIGHT_REM * CARD_HEIGHT_MULTIPLIER;
   const sliderRootRef = useRef<HTMLDivElement | null>(null);
   const [viewportWidth, setViewportWidth] = useState<number>(1200);
   const [isCoarsePointer, setIsCoarsePointer] = useState(false);
@@ -527,9 +526,9 @@ export default function SpotSlider({
   const touchStartRef = useRef<{ x: number; y: number } | null>(null);
   const touchCurrentRef = useRef<{ x: number; y: number } | null>(null);
   const touchAxisLockRef = useRef<'x' | 'y' | null>(null);
-  const touchStartScrollYRef = useRef(0);
   const swipeTriggeredRef = useRef(false);
   const isMobile = viewportWidth < MOBILE_BREAKPOINT_PX;
+  const cardHeightRem = isMobile ? CARD_HEIGHT_REM : CARD_HEIGHT_REM * CARD_HEIGHT_MULTIPLIER;
   const useTabletAlignment = !isMobile && (isCoarsePointer || viewportWidth <= 1180);
   const visibleCards = isMobile ? 1 : VISIBLE_CARDS;
   const cardGapPx = isMobile ? 12 : CARD_GAP_PX;
@@ -559,7 +558,6 @@ export default function SpotSlider({
     touchStartRef.current = { x: touch.clientX, y: touch.clientY };
     touchCurrentRef.current = { x: touch.clientX, y: touch.clientY };
     touchAxisLockRef.current = null;
-    touchStartScrollYRef.current = window.scrollY;
     swipeTriggeredRef.current = false;
   };
 
@@ -580,9 +578,8 @@ export default function SpotSlider({
     }
 
     if (touchAxisLockRef.current === 'x') {
-      event.preventDefault();
-      if (Math.abs(window.scrollY - touchStartScrollYRef.current) > 0.5) {
-        window.scrollTo({ top: touchStartScrollYRef.current, behavior: 'auto' });
+      if (event.cancelable) {
+        event.preventDefault();
       }
     }
   };
@@ -632,7 +629,7 @@ export default function SpotSlider({
     };
     const coarsePointerQuery = window.matchMedia('(hover: none) and (pointer: coarse)');
     const updatePointerMode = () => {
-      setIsCoarsePointer(coarsePointerQuery.matches || navigator.maxTouchPoints > 0);
+      setIsCoarsePointer(coarsePointerQuery.matches);
     };
     const updateLayout = () => {
       updateViewportWidth();
@@ -907,11 +904,11 @@ function CardContent({
       <p className="text-[0.85rem] font-semibold tracking-tight text-neutral-900 sm:text-[0.95rem]">{card.eyebrow}</p>
       <h3
         ref={titleRef}
-        className={`mt-3 text-[1.3rem] font-semibold tracking-tight text-neutral-900 sm:text-[1.5rem] ${isMultiLineTitle ? 'leading-[1.38]' : 'leading-[1.1]'}`}
+        className={`mt-4 text-[1.3rem] font-semibold tracking-tight text-neutral-900 sm:mt-[0.95rem] sm:text-[1.5rem] ${isMultiLineTitle ? 'leading-[1.38]' : 'leading-[1.1]'}`}
       >
         {card.title}
       </h3>
-      <p className="mt-4 text-[0.9rem] leading-[1.52] text-neutral-800 sm:mt-[1.32rem] sm:text-[0.95rem]">{card.body}</p>
+      <p className="mt-[1.15rem] text-[0.9rem] leading-[1.52] text-neutral-800 sm:mt-[1.32rem] sm:text-[0.95rem]">{card.body}</p>
 
       <div className="relative mt-auto overflow-hidden rounded-[1.35rem] bg-[rgba(245,245,247,1)]">
         <Image

@@ -1,4 +1,4 @@
-import { getHobby } from '@/lib/data/hobby'
+﻿import { getHobby } from '@/lib/data/hobby'
 import Link from 'next/link'
 import type { Hobby, HobbyCategory, HobbyItem, MonthlyDigest } from '@/lib/types'
 import { Fragment, type CSSProperties } from 'react'
@@ -12,6 +12,11 @@ function monthScore(month: string) {
 
 function sortDigest(monthlyDigest: MonthlyDigest[]) {
   return [...monthlyDigest].sort((a, b) => monthScore(b.month) - monthScore(a.month))
+}
+
+function isGameCategoryTitle(title: string) {
+  const normalized = title.trim()
+  return normalized === '游戏' || normalized === '娓告垙'
 }
 
 function SectionLabel({
@@ -82,7 +87,7 @@ function CategoryCard({
   lolProfile?: Hobby['lolProfile']
   anchorId?: string
 }) {
-  const isGameCategory = category.title === '游戏' && !!lolProfile
+  const isGameCategory = isGameCategoryTitle(category.title) && !!lolProfile
 
   return (
     <article id={anchorId} className={`flex h-full flex-col rounded-[1.7rem] p-5 sm:p-6 ${tone.panel}`}>
@@ -231,6 +236,7 @@ export default async function HobbyPage({
     阅读: 'reading',
     电影: 'film',
     游戏: 'game',
+    娓告垙: 'game',
   }
   const hobbyThemeVars: CSSProperties & Record<`--${string}`, string> = {
     '--portfolio-bg': '#ffffff',
@@ -249,34 +255,16 @@ export default async function HobbyPage({
       <div className="portfolio-shell relative">
         <section className="relative pb-[clamp(1.8rem,3.6vw,3rem)] pt-[clamp(3.5rem,8vw,6.25rem)]">
           <div aria-hidden className="pointer-events-none absolute inset-y-0 left-1/2 w-screen -translate-x-1/2 bg-[rgba(245,245,247,1)]" />
-          <div className="relative grid gap-10 lg:grid-cols-[1.12fr_0.88fr] lg:items-end">
+          <div className="relative">
             <div className="max-w-4xl">
               <p className="portfolio-eyebrow">Hobby</p>
               <h1 className="mt-6 max-w-[17ch] text-[clamp(2.45rem,6vw,4.8rem)] font-semibold leading-[1.25] tracking-[-0.05em] text-[color:var(--portfolio-text)]">
-                阅读、电影、游戏，是坚持下来的爱好。
+                阅读、电影、游戏，是我坚持下来的爱好。
               </h1>
               <p className="mt-7 max-w-3xl text-[1.02rem] leading-8 text-[color:var(--portfolio-muted)] sm:text-[1.08rem]">
                 {hobby.intro}
               </p>
             </div>
-
-            <aside className="p-5 sm:p-6">
-              <p className="portfolio-eyebrow">Snapshot</p>
-              <div className="mt-5 grid gap-2.5">
-                {categories.map((category) => (
-                  <div
-                    key={category.title}
-                    className="flex items-center justify-between gap-4 rounded-xl bg-white px-4 py-3 transition hover:bg-white"
-                  >
-                    <div>
-                      <p className="font-medium text-[color:var(--portfolio-text)]">{category.title}</p>
-                      <p className="text-sm text-[color:var(--portfolio-soft)]">{category.items.length} 条精选记录</p>
-                    </div>
-                    <span className="text-sm text-[color:var(--portfolio-soft)]">→</span>
-                  </div>
-                ))}
-              </div>
-            </aside>
           </div>
         </section>
 
@@ -293,7 +281,7 @@ export default async function HobbyPage({
                   key={category.title}
                   category={category}
                   tone={entryTones[toneOrder[index] ?? 'reading']}
-                  lolProfile={category.title === '游戏' ? hobby.lolProfile : undefined}
+                  lolProfile={isGameCategoryTitle(category.title) ? hobby.lolProfile : undefined}
                   anchorId={categoryAnchorMap[category.title]}
                 />
               ))}
@@ -361,7 +349,7 @@ export default async function HobbyPage({
                       <p className="mt-2 text-sm leading-7 text-[color:var(--portfolio-muted)]">{entry.description}</p>
                     </div>
                     <span className="text-[color:var(--portfolio-soft)] transition group-hover:-translate-y-0.5 group-hover:translate-x-0.5">
-                      ↗
+                      →
                     </span>
                   </div>
                 </a>
@@ -382,3 +370,4 @@ function InfoTile({ label, value }: { label: string; value: string }) {
     </div>
   )
 }
+

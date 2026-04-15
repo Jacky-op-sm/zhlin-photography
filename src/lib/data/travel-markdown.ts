@@ -56,7 +56,7 @@ export function parseExtractMarkdown(markdown: string): TravelExtractItem[] {
       continue;
     }
 
-    const imageMatch = line.match(/^-\s*图片：\s*`([^`]+)`\s*$/);
+    const imageMatch = line.match(/^-\s*图片：\s*`?([^`]+?)`?\s*$/);
     if (imageMatch) {
       imageSrc = imageMatch[1];
       continue;
@@ -106,7 +106,7 @@ export function parseExpandMarkdown(markdown: string): TravelExpandMap {
         const bodyLines: string[] = [];
 
         while (i < lines.length && !lines[i].startsWith('### 内容块') && !lines[i].startsWith('## 卡片：')) {
-          const imageMatch = lines[i].match(/^-\s*图片：\s*`([^`]+)`\s*$/);
+          const imageMatch = lines[i].match(/^-\s*图片：\s*`?([^`]+?)`?\s*$/);
           if (imageMatch) {
             imageSrc = normalizeImagePath(imageMatch[1].trim());
             i += 1;
@@ -114,8 +114,18 @@ export function parseExpandMarkdown(markdown: string): TravelExpandMap {
           }
 
           if (lines[i].startsWith('- 正文：')) {
+            const inlineBody = lines[i].replace(/^-+\s*正文：\s*/, '').trim();
+            if (inlineBody) {
+              bodyLines.push(inlineBody);
+            }
             i += 1;
             while (i < lines.length && !lines[i].startsWith('### 内容块') && !lines[i].startsWith('## 卡片：')) {
+              const imageInsideBodyMatch = lines[i].match(/^-\s*图片：\s*`?([^`]+?)`?\s*$/);
+              if (imageInsideBodyMatch) {
+                imageSrc = normalizeImagePath(imageInsideBodyMatch[1].trim());
+                i += 1;
+                continue;
+              }
               bodyLines.push(lines[i]);
               i += 1;
             }
@@ -154,8 +164,10 @@ export function parseExpandMarkdown(markdown: string): TravelExpandMap {
 }
 
 function normalizeImagePath(imagePath: string): string {
-  if (imagePath.startsWith('public/')) {
-    return `/${imagePath.slice('public/'.length)}`;
+  const normalizedPath = imagePath.replace(/\\/g, '/').trim();
+
+  if (normalizedPath.startsWith('public/')) {
+    return `/${normalizedPath.slice('public/'.length)}`;
   }
-  return imagePath;
+  return normalizedPath;
 }

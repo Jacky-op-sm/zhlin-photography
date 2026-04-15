@@ -5,6 +5,8 @@ import { parseExpandMarkdown } from '@/lib/data/travel-markdown';
 
 const EXPAND_MD_BY_SLUG: Record<string, string> = {
   nanjing: 'data/travel-card-expand-extract/nanjing-card-expand.md',
+  hangzhou: 'data/travel-card-expand-extract/hangzhou-card-expand.md',
+  huzhou: 'data/travel-card-expand-extract/huzhou-card-expand.md',
   japan: 'data/travel-card-expand-extract/japan-card-expand.md',
   shanghai: 'data/travel-card-expand-extract/shanghai-card-expand.md',
   beijing: 'data/travel-card-expand-extract/beijing-card-expand.md',

@@ -1,4 +1,4 @@
-'use client'
+﻿'use client'
 
 import { useMemo, useState } from 'react'
 import type { FormEvent, ReactNode } from 'react'
@@ -82,17 +82,13 @@ export default function ContactPage() {
   }
 
   return (
-    <main className="relative min-h-screen overflow-hidden bg-[radial-gradient(circle_at_top_left,_rgba(244,114,182,0.14),_transparent_24%),radial-gradient(circle_at_top_right,_rgba(251,191,36,0.16),_transparent_24%),linear-gradient(180deg,_#faf7f2_0%,_#f3efe7_100%)] px-4 py-10 text-neutral-950 sm:px-6 lg:px-8 lg:py-14">
-      <div className="pointer-events-none absolute inset-x-0 top-0 h-64 bg-[linear-gradient(180deg,rgba(255,255,255,0.72),rgba(255,255,255,0))]" />
-
-      <section className="relative mx-auto grid w-full max-w-6xl gap-8 rounded-[2rem] border border-black/10 bg-white/78 p-6 shadow-[0_24px_70px_rgba(15,23,42,0.08)] backdrop-blur-md md:p-8 lg:grid-cols-[0.92fr_1.08fr] lg:p-10">
-        <aside className="flex flex-col gap-6 rounded-[1.75rem] border border-black/8 bg-[#1b1511] p-6 text-[#f6efe6] shadow-[0_18px_50px_rgba(15,23,42,0.12)]">
+    <main className="min-h-screen bg-[rgba(245,245,247,1)] px-4 py-10 text-[rgba(29,29,31,1)] sm:px-6 lg:px-8 lg:py-14">
+      <section className="mx-auto grid w-full max-w-7xl gap-6 rounded-[2.2rem] bg-[rgba(245,245,247,1)] p-1 sm:p-2 lg:grid-cols-[0.9fr_1.1fr]">
+        <aside className="flex flex-col gap-6 rounded-[1.7rem] bg-white p-6 shadow-[0_20px_48px_rgba(15,23,42,0.08)] md:p-7">
           <div className="space-y-3">
-            <p className="text-xs uppercase tracking-[0.45em] text-[#d9c3ae]">Contact</p>
-            <h1 className="text-4xl font-semibold tracking-[-0.06em] sm:text-5xl">{contactInfo.title}</h1>
-            <p className="max-w-md text-base leading-8 text-[#e8ddd2]">
-              {contactInfo.intro}
-            </p>
+            <p className="text-xs uppercase tracking-[0.42em] text-[rgba(110,110,115,1)]">Contact</p>
+            <h1 className="text-4xl font-semibold tracking-[-0.055em] sm:text-5xl">{contactInfo.title}</h1>
+            <p className="max-w-md text-base leading-8 text-[rgba(99,99,104,1)]">{contactInfo.intro}</p>
           </div>
 
           <div className="grid gap-3 sm:grid-cols-2">
@@ -100,32 +96,30 @@ export default function ContactPage() {
             <InfoTile label="WeChat" value={contactInfo.wechat} />
           </div>
 
-          <div className="rounded-[1.5rem] border border-white/10 bg-white/5 p-5">
-            <p className="text-xs uppercase tracking-[0.3em] text-[#d9c3ae]">Response time</p>
-            <p className="mt-3 text-lg leading-8 text-white">{contactInfo.responseTime}</p>
+          <div className="rounded-[1.25rem] bg-[rgba(245,245,247,1)] p-5">
+            <p className="text-xs uppercase tracking-[0.3em] text-[rgba(110,110,115,1)]">Response time</p>
+            <p className="mt-3 text-lg leading-8 text-[rgba(29,29,31,1)]">{contactInfo.responseTime}</p>
           </div>
 
-          <div className="rounded-[1.5rem] border border-white/10 bg-white/5 p-5">
-            <p className="text-xs uppercase tracking-[0.3em] text-[#d9c3ae]">Expected uses</p>
+          <div className="rounded-[1.25rem] bg-[rgba(245,245,247,1)] p-5">
+            <p className="text-xs uppercase tracking-[0.3em] text-[rgba(110,110,115,1)]">Expected uses</p>
             <div className="mt-4 flex flex-wrap gap-2">
               {contactInfo.types.map((item) => (
-                <span key={item} className="rounded-full border border-white/12 bg-white/10 px-3 py-1 text-sm text-white/85">
+                <span key={item} className="rounded-full bg-white px-3 py-1 text-sm text-[rgba(81,81,84,1)]">
                   {item}
                 </span>
               ))}
             </div>
           </div>
 
-          <p className="text-sm leading-7 text-[#d8c9bc]">
+          <p className="text-sm leading-7 text-[rgba(110,110,115,1)]">
             如果你更习惯直接发邮件，也可以通过上面的邮箱联系我。表单提交失败时会自动打开邮件草稿，避免内容丢失。
           </p>
         </aside>
 
-        <form onSubmit={handleSubmit} className="space-y-5">
-          <fieldset className="rounded-[1.5rem] border border-black/8 bg-[#fffaf3] p-5">
-            <legend className="px-2 text-xs font-semibold uppercase tracking-[0.32em] text-neutral-500">
-              Name
-            </legend>
+        <form onSubmit={handleSubmit} className="space-y-5 rounded-[1.7rem] bg-white p-6 shadow-[0_20px_48px_rgba(15,23,42,0.08)] md:p-7">
+          <fieldset className="rounded-[1.25rem] bg-[rgba(245,245,247,1)] p-5">
+            <legend className="px-2 text-xs font-semibold uppercase tracking-[0.32em] text-[rgba(110,110,115,1)]">Name</legend>
             <div className="mt-4 grid gap-4 sm:grid-cols-2">
               <FormField id="first-name" label="First Name (required)">
                 <input
@@ -135,7 +129,7 @@ export default function ContactPage() {
                   onChange={(event) => setFirstName(event.target.value)}
                   required
                   autoComplete="given-name"
-                  className="w-full rounded-xl border border-black/12 bg-white px-4 py-3 text-sm text-neutral-900 outline-none transition focus:border-neutral-950"
+                  className="w-full rounded-xl bg-white px-4 py-3 text-sm text-[rgba(29,29,31,1)] outline-none transition focus:shadow-[0_0_0_2px_rgba(29,29,31,0.15)]"
                 />
               </FormField>
 
@@ -147,7 +141,7 @@ export default function ContactPage() {
                   onChange={(event) => setLastName(event.target.value)}
                   required
                   autoComplete="family-name"
-                  className="w-full rounded-xl border border-black/12 bg-white px-4 py-3 text-sm text-neutral-900 outline-none transition focus:border-neutral-950"
+                  className="w-full rounded-xl bg-white px-4 py-3 text-sm text-[rgba(29,29,31,1)] outline-none transition focus:shadow-[0_0_0_2px_rgba(29,29,31,0.15)]"
                 />
               </FormField>
             </div>
@@ -163,7 +157,7 @@ export default function ContactPage() {
                 onChange={(event) => setEmail(event.target.value)}
                 required
                 autoComplete="email"
-                className="w-full rounded-xl border border-black/12 bg-white px-4 py-3 text-sm text-neutral-900 outline-none transition focus:border-neutral-950"
+                className="w-full rounded-xl bg-[rgba(245,245,247,1)] px-4 py-3 text-sm text-[rgba(29,29,31,1)] outline-none transition focus:bg-white focus:shadow-[0_0_0_2px_rgba(29,29,31,0.15)]"
               />
             </FormField>
 
@@ -174,7 +168,7 @@ export default function ContactPage() {
                 value={type}
                 onChange={(event) => setType(event.target.value)}
                 required
-                className="w-full rounded-xl border border-black/12 bg-white px-4 py-3 text-sm text-neutral-900 outline-none transition focus:border-neutral-950"
+                className="w-full rounded-xl bg-[rgba(245,245,247,1)] px-4 py-3 text-sm text-[rgba(29,29,31,1)] outline-none transition focus:bg-white focus:shadow-[0_0_0_2px_rgba(29,29,31,0.15)]"
               >
                 <option value="">请选择类型</option>
                 {contactInfo.types.map((item) => (
@@ -194,17 +188,17 @@ export default function ContactPage() {
               onChange={(event) => setMessage(event.target.value)}
               rows={8}
               required
-              className="w-full rounded-[1.25rem] border border-black/12 bg-white px-4 py-3 text-sm text-neutral-900 outline-none transition focus:border-neutral-950"
+              className="w-full rounded-[1.25rem] bg-[rgba(245,245,247,1)] px-4 py-3 text-sm text-[rgba(29,29,31,1)] outline-none transition focus:bg-white focus:shadow-[0_0_0_2px_rgba(29,29,31,0.15)]"
             />
           </FormField>
 
           <input type="text" name="website" tabIndex={-1} autoComplete="off" className="hidden" />
 
-          <div className="flex flex-col items-start gap-4 pt-4 sm:flex-row sm:items-center">
+          <div className="flex flex-col items-start gap-4 pt-2 sm:flex-row sm:items-center">
             <button
               type="submit"
               disabled={status === 'pending' || !canSubmit}
-              className="inline-flex items-center justify-center rounded-full border border-neutral-950 bg-neutral-950 px-6 py-3 text-xs font-semibold uppercase tracking-[0.22em] text-white transition hover:-translate-y-0.5 disabled:cursor-not-allowed disabled:opacity-60 disabled:hover:translate-y-0"
+              className="inline-flex items-center justify-center rounded-full bg-[rgba(29,29,31,1)] px-6 py-3 text-xs font-semibold uppercase tracking-[0.22em] text-white transition hover:bg-black disabled:cursor-not-allowed disabled:opacity-60"
             >
               {status === 'pending' ? 'Sending...' : 'Send'}
             </button>
@@ -216,7 +210,7 @@ export default function ContactPage() {
                   ? 'text-emerald-700'
                   : status === 'error'
                     ? 'text-rose-700'
-                    : 'text-neutral-500'
+                    : 'text-[rgba(110,110,115,1)]'
               }`}
             >
               {statusText}
@@ -239,7 +233,7 @@ function FormField({
 }) {
   return (
     <div className="space-y-2">
-      <label htmlFor={id} className="block text-xs font-medium uppercase tracking-[0.2em] text-neutral-500">
+      <label htmlFor={id} className="block text-[11px] font-medium uppercase tracking-[0.2em] text-[rgba(110,110,115,1)]">
         {label}
       </label>
       {children}
@@ -257,16 +251,16 @@ function InfoTile({
   href?: string
 }) {
   const content = href ? (
-    <a href={href} className="break-all text-lg font-semibold leading-7 text-white underline decoration-white/20 underline-offset-4">
+    <a href={href} className="break-all text-lg font-semibold leading-7 text-[rgba(29,29,31,1)]">
       {value}
     </a>
   ) : (
-    <p className="break-all text-lg font-semibold leading-7 text-white">{value}</p>
+    <p className="break-all text-lg font-semibold leading-7 text-[rgba(29,29,31,1)]">{value}</p>
   )
 
   return (
-    <div className="rounded-[1.5rem] border border-white/10 bg-white/5 p-4">
-      <p className="text-xs uppercase tracking-[0.24em] text-[#d9c3ae]">{label}</p>
+    <div className="rounded-[1.2rem] bg-[rgba(245,245,247,1)] p-4">
+      <p className="text-xs uppercase tracking-[0.24em] text-[rgba(110,110,115,1)]">{label}</p>
       <div className="mt-2">{content}</div>
     </div>
   )

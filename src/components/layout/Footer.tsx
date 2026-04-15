@@ -68,13 +68,27 @@ export default function Footer() {
     if (!footer) return
 
     const rect = footer.getBoundingClientRect()
-    const sampleY = Math.max(0, Math.floor(rect.top) - 1)
-    const sampleX = Math.floor(window.innerWidth / 2)
+    if (rect.top > window.innerHeight + 8 || rect.bottom < -8) {
+      return
+    }
 
-    const elementAboveFooter = document.elementFromPoint(sampleX, sampleY)
-    const colorAboveFooter =
-      resolveSolidBackgroundColor(elementAboveFooter) ??
-      resolveSolidBackgroundColor(footer.previousElementSibling)
+    const sampleY = Math.min(window.innerHeight - 1, Math.max(0, Math.floor(rect.top) - 2))
+    const sampleXs = [0.2, 0.5, 0.8].map((ratio) => Math.floor(window.innerWidth * ratio))
+    let colorAboveFooter: [number, number, number] | null = null
+
+    for (const sampleX of sampleXs) {
+      const stack = document.elementsFromPoint(sampleX, sampleY)
+      const candidate = stack.find((element) => !footer.contains(element))
+      const resolved = resolveSolidBackgroundColor(candidate ?? null)
+      if (resolved) {
+        colorAboveFooter = resolved
+        break
+      }
+    }
+
+    if (!colorAboveFooter) {
+      colorAboveFooter = resolveSolidBackgroundColor(footer.previousElementSibling)
+    }
 
     if (!colorAboveFooter) {
       setTone('gray')
@@ -91,12 +105,18 @@ export default function Footer() {
       return
     }
 
-    setTone('gray')
+    const luminance = (0.2126 * colorAboveFooter[0] + 0.7152 * colorAboveFooter[1] + 0.0722 * colorAboveFooter[2]) / 255
+    setTone(luminance > 0.9 ? 'gray' : 'white')
   }, [])
 
   useEffect(() => {
+    let rafId: number | null = null
     const scheduleDetect = () => {
-      window.requestAnimationFrame(() => {
+      if (rafId !== null) {
+        window.cancelAnimationFrame(rafId)
+      }
+      rafId = window.requestAnimationFrame(() => {
+        rafId = null
         detectTone()
       })
     }
@@ -115,11 +135,16 @@ export default function Footer() {
     }
 
     window.addEventListener('resize', scheduleDetect)
+    window.addEventListener('scroll', scheduleDetect, { passive: true })
     window.addEventListener('load', scheduleDetect)
 
     return () => {
+      if (rafId !== null) {
+        window.cancelAnimationFrame(rafId)
+      }
       observer.disconnect()
       window.removeEventListener('resize', scheduleDetect)
+      window.removeEventListener('scroll', scheduleDetect)
       window.removeEventListener('load', scheduleDetect)
     }
   }, [pathname, detectTone])
@@ -154,22 +179,13 @@ export default function Footer() {
                   <Link href="/travel">总览</Link>
                 </li>
                 <li>
+                  <Link href="/travel/japan">日本</Link>
+                </li>
+                <li>
                   <Link href="/travel/nanjing">南京</Link>
                 </li>
                 <li>
                   <Link href="/travel/hangzhou">杭州</Link>
-                </li>
-                <li>
-                  <Link href="/travel/shanghai">上海</Link>
-                </li>
-                <li>
-                  <Link href="/travel/beijing">北京</Link>
-                </li>
-                <li>
-                  <Link href="/travel/dongbei">东北</Link>
-                </li>
-                <li>
-                  <Link href="/travel/japan">日本</Link>
                 </li>
               </ul>
             </section>

@@ -1424,6 +1424,7 @@ body {
 
 .travel-slider-viewport {
   touch-action: pan-y pinch-zoom;
+  overscroll-behavior-x: contain;
   -webkit-user-select: none;
   user-select: none;
 }
@@ -1783,7 +1784,9 @@ body {
 }
 
 .site-footer-contact-email {
-  white-space: nowrap;
+  white-space: normal;
+  overflow-wrap: anywhere;
+  word-break: break-word;
 }
 
 .site-footer-simple-column {
@@ -1819,7 +1822,19 @@ body {
   }
 }
 
+@media (min-width: 1024px) {
+  .site-footer-contact-email {
+    white-space: nowrap;
+    overflow-wrap: normal;
+    word-break: normal;
+  }
+}
+
 @media (max-width: 767px) {
+  .site-footer-simple {
+    padding-inline: 0.5rem;
+  }
+
   .site-footer-contact-email {
     white-space: normal;
     overflow-wrap: anywhere;

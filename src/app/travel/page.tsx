@@ -21,26 +21,26 @@ export default async function TravelPage() {
       <section className="bg-white">
         <div className="mx-auto max-w-7xl px-4 sm:px-6">
           <ul
-            className="flex flex-wrap items-start justify-center gap-x-6 gap-y-8 py-8 sm:gap-x-12 sm:gap-y-10 sm:py-12 lg:gap-x-14"
+            className="flex flex-wrap items-start justify-center gap-x-4 gap-y-5 py-6 sm:gap-x-8 sm:gap-y-7 sm:py-9 lg:gap-x-9"
             aria-label="旅行地点快捷导航"
           >
             {sortedTravelEntries.map((travel) => (
-              <li key={travel.slug} className="w-[6.5rem] text-center sm:w-[8.25rem]">
+              <li key={travel.slug} className="w-[6rem] text-center sm:w-[7.1rem]">
                 <Link
                   href={`/travel/${travel.slug}`}
                   className="group inline-flex w-full flex-col items-center text-neutral-800"
                   aria-label={`前往 ${travel.zhName} 旅行页`}
                 >
-                  <span className="travel-nav-thumbnail-shell home-like-hover-shell relative block h-[3.25rem] w-[3.25rem] overflow-hidden rounded-[0.85rem] border border-neutral-200 bg-white shadow-[0_6px_16px_rgba(15,23,42,0.1)] transition duration-300 sm:h-[4.2rem] sm:w-[4.2rem] sm:rounded-[0.95rem]">
+                  <span className="travel-nav-thumbnail-shell home-like-hover-shell relative block h-[2.95rem] w-[2.95rem] overflow-hidden rounded-[0.8rem] border border-neutral-200 bg-white shadow-[0_6px_16px_rgba(15,23,42,0.1)] transition duration-300 sm:h-[3.8rem] sm:w-[3.8rem] sm:rounded-[0.9rem]">
                     <Image
                       src={travel.cover}
                       alt={`${travel.zhName} 缩略图`}
                       fill
                       className="object-cover travel-nav-thumbnail-hover"
-                      sizes="(max-width: 640px) 59px, 67px"
+                      sizes="(max-width: 640px) 53px, 61px"
                     />
                   </span>
-                  <span className="mt-2.5 text-[0.98rem] font-medium leading-tight tracking-[-0.015em] text-neutral-700 sm:mt-3 sm:text-[1.18rem]">
+                  <span className="mt-2 text-[0.98rem] font-medium leading-tight tracking-[-0.015em] text-neutral-700 sm:mt-2.5 sm:text-[1.12rem]">
                     {travel.zhName}
                   </span>
                 </Link>
@@ -64,6 +64,7 @@ export default async function TravelPage() {
 const pinyinBySlug: Record<string, string> = {
   nanjing: 'NANJING',
   hangzhou: 'HANGZHOU',
+  huzhou: 'HUZHOU',
   shanghai: 'SHANGHAI',
   beijing: 'BEIJING',
   dongbei: 'DONGBEI',

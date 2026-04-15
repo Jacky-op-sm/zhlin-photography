@@ -2304,6 +2304,58 @@
       ]
     },
     {
+      "slug": "huzhou",
+      "zhName": "湖州",
+      "enName": "Huzhou",
+      "period": "2026 年 4 月",
+      "location": "湖州，中国",
+      "cardTitle": "湖州游记",
+      "cover": "/assets/travel/huzhou-front.jpg",
+      "hero": "/assets/travel/huzhou-front.jpg",
+      "summary": "在南浔的景区与居民街道之间慢慢走，拍下湖州四月里更接近日常的片段。",
+      "tags": [
+        "南浔",
+        "湖州",
+        "四月",
+        "日常"
+      ],
+      "itinerary": [
+        "下午在南浔步行拍摄",
+        "穿过景区与居民街道的分界",
+        "在咖啡店整理照片与文字",
+        "夜里在冰饮店读《边境·近境》"
+      ],
+      "spots": [
+        {
+          "name": "南浔古镇",
+          "description": "热门景区的人潮和统一的打卡姿态，是这次观察的起点。"
+        },
+        {
+          "name": "居民街道",
+          "description": "离开景区后，河道、旧自行车和安静生活形成强烈对比。"
+        },
+        {
+          "name": "冰饮店",
+          "description": "夜晚阅读与思考旅行方式的地方。"
+        }
+      ],
+      "photoStory": "这页更像湖州的一组步行记录：景区的人潮退到背景，日常细节被放到画面中央。",
+      "reflection": "2026 年 4 月这次湖州行让我更确定，旅行里最值得记录的常常不是景点本身，而是与日常重新连接的瞬间。",
+      "gallery": [
+        {
+          "title": "湖州封面",
+          "layout": "single",
+          "images": [
+            {
+              "src": "/assets/travel/huzhou-front.jpg",
+              "alt": "湖州旅行封面",
+              "caption": "2026 年 4 月，湖州。"
+            }
+          ]
+        }
+      ]
+    },
+    {
       "slug": "beijing",
       "zhName": "北京",
       "enName": "Beijing",
