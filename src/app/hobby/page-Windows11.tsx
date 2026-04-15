@@ -312,7 +312,7 @@ export default async function HobbyPage() {
           </aside>
         </section>
 
-        <section className="mt-[clamp(3.25rem,7vw,5.25rem)] border-t border-[color:var(--portfolio-border)] pt-[clamp(2.6rem,5.8vw,4.4rem)]">
+        <section className="mt-[clamp(3.25rem,7vw,5.25rem)] border-t border-[color:var(--portfolio-border)] pb-[clamp(3.2rem,6.8vw,5.2rem)] pt-[clamp(2.6rem,5.8vw,4.4rem)]">
           <div className="space-y-6">
             <SectionLabel
               eyebrow="Long-term entries"
@@ -375,14 +375,14 @@ export default async function HobbyPage() {
               title="外部链接"
               description="更完整的阅读和观影轨迹放在第三方平台维护，这里只保留入口。"
             />
-            <div className="mt-6 grid gap-4 sm:grid-cols-2">
+            <div className="mt-6 grid gap-5 sm:grid-cols-2">
               {externalLinks.map((entry) => (
                 <a
                   key={entry.label}
                   href={entry.href}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="group rounded-xl border border-[color:var(--portfolio-border)] bg-white/20 p-4 transition hover:bg-white/35 dark:bg-white/[0.03] dark:hover:bg-white/[0.06]"
+                  className="group rounded-xl border border-[color:var(--portfolio-border)] bg-white/20 p-5 transition hover:bg-white/35 dark:bg-white/[0.03] dark:hover:bg-white/[0.06]"
                 >
                   <div className="flex items-start justify-between gap-4">
                     <div>

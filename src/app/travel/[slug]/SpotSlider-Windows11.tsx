@@ -645,7 +645,7 @@ export default function SpotSlider({ slug, expandMap }: { slug?: string; expandM
                 <span className="photo-viewer-close-icon" aria-hidden="true" />
               </button>
 
-              <div className="mx-[1rem] max-w-[42rem] sm:mx-[1.57rem] lg:mx-[2.09rem]">
+              <div className="mx-[1rem] max-w-[72rem] sm:mx-[1.57rem] lg:mx-[2.09rem]">
                 <p className="text-base font-semibold text-[rgba(29,29,31,1)]">
                   {activeExpandCard?.eyebrow || cards[activeCard - 1]?.eyebrow}
                 </p>

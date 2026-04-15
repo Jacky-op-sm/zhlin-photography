@@ -90,25 +90,26 @@ export default async function PhotographyPage({
           >
             {photographySeries.map((series) => {
               const previewPhoto = getSeriesCoverPhoto(photos, series.slug)
+              const zhLabel = seriesZhLabel[series.slug]
 
               return (
                 <li key={series.slug} className="w-[6.5rem] text-center sm:w-[8.25rem]">
                   <Link
                     href={series.href}
                     className="group inline-flex w-full flex-col items-center text-neutral-800"
-                    aria-label={`前往 ${series.title} 系列`}
+                    aria-label={`前往 ${zhLabel} 系列`}
                   >
                     <span className="travel-nav-thumbnail-shell home-like-hover-shell relative block h-[3.25rem] w-[3.25rem] overflow-hidden rounded-[0.85rem] border border-neutral-200 bg-white shadow-[0_6px_16px_rgba(15,23,42,0.1)] transition duration-300 sm:h-[4.2rem] sm:w-[4.2rem] sm:rounded-[0.95rem]">
                       <Image
                         src={previewPhoto?.thumbnail ?? series.cover}
-                        alt={`${series.title} 缩略图`}
+                        alt={`${zhLabel} 缩略图`}
                         fill
                         className="object-cover travel-nav-thumbnail-hover"
                         sizes="(max-width: 640px) 59px, 67px"
                       />
                     </span>
                     <span className="mt-2.5 text-[0.98rem] font-medium leading-tight tracking-[-0.015em] text-neutral-700 sm:mt-3 sm:text-[1.18rem]">
-                      {series.title}
+                      {zhLabel}
                     </span>
                   </Link>
                 </li>

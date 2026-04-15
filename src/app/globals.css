@@ -6,8 +6,8 @@
    主题变量定义
    ============================ */
 :root {
-  --font-latin: "SF Pro SC", "SF Pro Text", "Helvetica Neue", "Helvetica", "Arial", sans-serif;
-  --font-cjk: "PingFang SC", "SF Pro SC", "SF Pro Text", "Helvetica Neue", "Helvetica", "Arial", sans-serif;
+  --font-latin: -apple-system, BlinkMacSystemFont, "SF Pro Text", "SF Pro Display", "Segoe UI Variable Text", "Segoe UI", "Helvetica Neue", "Helvetica", "Arial", "Noto Sans", sans-serif;
+  --font-cjk: "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei UI", "Microsoft YaHei", "Noto Sans CJK SC", "Source Han Sans SC", "Segoe UI", "Helvetica Neue", "Arial", sans-serif;
 
   /* 亮色主题 */
   --background: #ffffff;
@@ -521,6 +521,7 @@ body {
   --site-bg: rgba(245, 245, 247, 1);
   --site-bg-soft: rgba(245, 245, 247, 1);
   --site-surface: rgba(245, 245, 247, 1);
+  --site-footer-gray: rgba(245, 245, 247, 1);
   --site-text: #141311;
   --site-muted: rgba(20, 19, 17, 0.72);
   --site-soft: rgba(20, 19, 17, 0.52);
@@ -1726,9 +1727,18 @@ body {
    Footer Frame
    ============================ */
 .site-footer-band {
-  background: rgba(245, 245, 247, 1);
+  background: var(--site-footer-gray);
   border-top: 0;
   padding-block: clamp(1.8rem, 3.2vw, 2.6rem);
+  transition: background-color 220ms ease;
+}
+
+.site-footer-band--gray {
+  background: var(--site-footer-gray);
+}
+
+.site-footer-band--white {
+  background: #ffffff;
 }
 
 .site-footer-simple {
@@ -1776,6 +1786,10 @@ body {
   white-space: nowrap;
 }
 
+.site-footer-simple-column {
+  min-width: 0;
+}
+
 @media (min-width: 768px) {
   :root {
     --site-header-height: 3.08rem;
@@ -1802,6 +1816,14 @@ body {
 
   .site-footer-simple-grid {
     grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 767px) {
+  .site-footer-contact-email {
+    white-space: normal;
+    overflow-wrap: anywhere;
+    word-break: break-word;
   }
 }
 
@@ -1962,6 +1984,18 @@ body {
   line-height: 0.9;
   letter-spacing: -0.045em;
   text-transform: uppercase;
+}
+
+.photo-series-intro-copy {
+  max-width: min(100%, 72rem);
+}
+
+.photo-series-intro-copy h1 {
+  font-size: clamp(1.85rem, 4.8vw, 3.8rem);
+  line-height: 1.04;
+  letter-spacing: -0.03em;
+  text-transform: none;
+  white-space: nowrap;
 }
 
 .photo-index-intro-copy p,

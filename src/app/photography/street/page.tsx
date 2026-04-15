@@ -23,7 +23,6 @@ export default async function StreetPage() {
       intro={series.landingSummary}
       description={series.landingDescription}
       photos={seriesPhotos}
-      featuredPublications={series.featuredPublications}
     />
   )
 }

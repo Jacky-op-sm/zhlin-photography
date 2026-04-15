@@ -339,21 +339,21 @@ export default async function HobbyPage({
           </div>
         </section>
 
-        <section className="mt-[clamp(3.25rem,7vw,5.25rem)] bg-white pt-[clamp(2.6rem,5.8vw,4.4rem)]">
+        <section className="mt-[clamp(3.25rem,7vw,5.25rem)] bg-white pb-[clamp(3.2rem,6.8vw,5.2rem)] pt-[clamp(2.6rem,5.8vw,4.4rem)]">
           <article className="p-0">
             <SectionLabel
               eyebrow="External links"
               title="外部链接"
               description="更完整的阅读和观影轨迹放在第三方平台维护，这里只保留入口。"
             />
-            <div className="mt-6 grid gap-4 sm:grid-cols-2">
+            <div className="mt-6 grid gap-5 sm:grid-cols-2">
               {externalLinks.map((entry) => (
                 <a
                   key={entry.label}
                   href={entry.href}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="group rounded-xl bg-[rgba(245,245,247,1)] p-4 transition hover:bg-[rgba(245,245,247,1)]"
+                  className="group rounded-xl bg-[rgba(245,245,247,1)] p-5 transition hover:bg-[rgba(245,245,247,1)]"
                 >
                   <div className="flex items-start justify-between gap-4">
                     <div>

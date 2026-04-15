@@ -770,7 +770,7 @@ export default function SpotSlider({
                 className="relative rounded-[1.5rem] bg-white p-5 shadow-[0_30px_80px_rgba(0,0,0,0.28)] sm:rounded-[2.1rem] sm:p-10 lg:p-12"
                 onClick={(event) => event.stopPropagation()}
               >
-              <div className="mx-0 max-w-[42rem] sm:mx-[1.57rem] lg:mx-[2.09rem]">
+              <div className="mx-0 max-w-[72rem] sm:mx-[1.57rem] lg:mx-[2.09rem]">
                 <p className="text-sm font-semibold text-[rgba(29,29,31,1)] sm:text-base">
                   {activeExpandCard?.eyebrow || cards[activeCard - 1]?.eyebrow}
                 </p>

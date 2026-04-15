@@ -1,8 +1,6 @@
 import SectionOverline from './SectionOverline'
 import TightGalleryGrid from './TightGalleryGrid'
-import PhotographyFeaturedPublications from './PhotographyFeaturedPublications'
 import type { Photo } from '@/lib/types'
-import type { PhotographyFeaturedPublication } from './series'
 
 interface PhotographySeriesTemplateProps {
   overline: string
@@ -10,7 +8,6 @@ interface PhotographySeriesTemplateProps {
   intro: string
   description: string
   photos: Photo[]
-  featuredPublications?: PhotographyFeaturedPublication[]
 }
 
 export default function PhotographySeriesTemplate({
@@ -19,7 +16,6 @@ export default function PhotographySeriesTemplate({
   intro,
   description,
   photos,
-  featuredPublications = [],
 }: PhotographySeriesTemplateProps) {
   return (
     <main className="photo-series-page">
@@ -35,11 +31,6 @@ export default function PhotographySeriesTemplate({
       </section>
 
       <TightGalleryGrid photos={photos} />
-
-      <PhotographyFeaturedPublications
-        title="Selected related work"
-        items={featuredPublications}
-      />
     </main>
   )
 }

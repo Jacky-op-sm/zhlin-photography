@@ -2,7 +2,7 @@ import {
   PhotographySeriesTemplate,
   getPhotographySeries,
 } from '@/components/photography'
-import { getAllPhotos, getProjectMeta } from '@/lib/data/photos'
+import { getAllPhotos } from '@/lib/data/photos'
 import { PhotoCategory } from '@/lib/types'
 
 export const dynamic = 'force-dynamic'
@@ -11,7 +11,6 @@ export default async function ProjectPage() {
   const photos = await getAllPhotos()
   const series = getPhotographySeries('project')
   const seriesPhotos = photos.filter((photo) => photo.category === PhotoCategory.Project)
-  const projectMeta = getProjectMeta()
 
   if (!series) {
     return null
@@ -20,11 +19,10 @@ export default async function ProjectPage() {
   return (
     <PhotographySeriesTemplate
       overline={series.overline}
-      title={projectMeta.title}
-      intro={projectMeta.titleEn}
-      description={projectMeta.description}
+      title={series.title}
+      intro={series.landingSummary}
+      description={series.landingDescription}
       photos={seriesPhotos}
-      featuredPublications={series.featuredPublications}
     />
   )
 }
