@@ -34,7 +34,7 @@ type HobbyistShowcaseCard = {
 const photographerShowcaseCards: PhotographerShowcaseCard[] = [
   {
     title: '街拍',
-    href: '/photography?category=street',
+    href: '/photography/street',
     image: '/assets/photos/street/street-scene-1.jpg',
     alt: 'Street photography cover',
     quote: `什么是街拍？
@@ -45,7 +45,7 @@ const photographerShowcaseCards: PhotographerShowcaseCard[] = [
   },
   {
     title: '动物',
-    href: '/photography?category=pets',
+    href: '/photography/pets',
     image: '/assets/photos/pets/Z52_6039.jpg',
     alt: 'Pet photography cover',
     quote: `动物给予我感情，
@@ -57,7 +57,7 @@ const photographerShowcaseCards: PhotographerShowcaseCard[] = [
   },
   {
     title: '项目',
-    href: '/photography?category=project',
+    href: '/photography/project',
     image: '/assets/photos/project/1.jpg',
     alt: 'Project photography cover',
     quote: `我看着宿舍阳台下的十字路口，

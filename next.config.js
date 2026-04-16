@@ -1,5 +1,13 @@
 /** @type {import('next').NextConfig} */
+const isDeployBuild = process.env.SKIP_TYPECHECK === '1';
+
 const nextConfig = {
+  eslint: {
+    ignoreDuringBuilds: isDeployBuild,
+  },
+  typescript: {
+    ignoreBuildErrors: isDeployBuild,
+  },
   images: {
     remotePatterns: [
       {

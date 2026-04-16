@@ -1,9 +1,11 @@
 'use client'
 
-import { useCallback, useEffect, useMemo, useState } from 'react'
+import { useCallback, useMemo, useState } from 'react'
+import dynamic from 'next/dynamic'
 import Image from 'next/image'
-import PhotoViewer from './PhotoViewer'
 import type { Photo } from '@/lib/types'
+
+const PhotoViewer = dynamic(() => import('./PhotoViewer'))
 
 interface TightGalleryGridProps {
   photos: Photo[]
@@ -31,33 +33,6 @@ export default function TightGalleryGrid({ photos }: TightGalleryGridProps) {
   }, [photos.length])
 
   const columnCountClass = useMemo(() => 'columns-2 md:columns-2 xl:columns-3', [])
-
-  useEffect(() => {
-    if (typeof window === 'undefined' || photos.length === 0) return
-
-    let cancelled = false
-    const preloadAll = () => {
-      photos.forEach((photo) => {
-        if (cancelled) return
-        const preloadImage = new window.Image()
-        preloadImage.src = photo.filename
-      })
-    }
-
-    const idleCallback = window.requestIdleCallback?.(() => preloadAll())
-    if (idleCallback == null) {
-      const timeoutId = window.setTimeout(preloadAll, 120)
-      return () => {
-        cancelled = true
-        window.clearTimeout(timeoutId)
-      }
-    }
-
-    return () => {
-      cancelled = true
-      window.cancelIdleCallback?.(idleCallback)
-    }
-  }, [photos])
 
   if (photos.length === 0) {
     return (

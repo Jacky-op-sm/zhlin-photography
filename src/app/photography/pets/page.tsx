@@ -1,11 +1,7 @@
-import {
-  PhotographySeriesTemplate,
-  getPhotographySeries,
-} from '@/components/photography'
+import PhotographySeriesTemplate from '@/components/photography/PhotographySeriesTemplate'
+import { getPhotographySeries } from '@/components/photography/series'
 import { getAllPhotos } from '@/lib/data/photos'
 import { PhotoCategory } from '@/lib/types'
-
-export const dynamic = 'force-dynamic'
 
 export default async function PetsPage() {
   const photos = await getAllPhotos()

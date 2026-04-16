@@ -75,14 +75,24 @@ export default function PhotoViewer({
 
   useEffect(() => {
     if (!isOpen || typeof window === 'undefined' || photos.length === 0) return
-    photos.forEach((photo) => {
+    const preloadIndexes = [
+      initialIndex - 2,
+      initialIndex - 1,
+      initialIndex + 1,
+      initialIndex + 2,
+    ].filter((index) => index >= 0 && index < photos.length)
+
+    const deduped = Array.from(new Set(preloadIndexes))
+    deduped.forEach((index) => {
+      const photo = photos[index]
+      if (!photo) return
       const preloadImage = new window.Image()
       preloadImage.src = photo.filename
       if (typeof preloadImage.decode === 'function') {
         void preloadImage.decode().catch(() => undefined)
       }
     })
-  }, [isOpen, photos])
+  }, [initialIndex, isOpen, photos])
 
   if (!isOpen || !currentPhoto) {
     return null

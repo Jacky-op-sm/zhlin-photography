@@ -89,7 +89,7 @@ export default function PhotographyBoard({
               当前展示 {activeCount} 张作品
             </p>
             <Link
-              href="/photography?category=all"
+              href="/photography"
               className="text-sm font-medium text-neutral-900 underline-offset-4 hover:underline dark:text-white"
             >
               查看全部

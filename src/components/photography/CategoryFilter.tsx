@@ -19,7 +19,8 @@ export default function CategoryFilter({ currentCategory }: CategoryFilterProps)
   const router = useRouter()
 
   const handleCategoryChange = (category: PhotoCategory) => {
-    router.push(`/photography?category=${category}`, { scroll: false })
+    const target = category === 'all' ? '/photography' : `/photography/${category}`
+    router.push(target, { scroll: false })
   }
 
   return (

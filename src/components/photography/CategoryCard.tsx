@@ -22,7 +22,7 @@ export default function CategoryCard({ category, index }: CategoryCardProps) {
   const [isHovered, setIsHovered] = useState(false)
 
   return (
-    <Link href={`/photography?category=${category.id}`}>
+    <Link href={`/photography/${category.id}`}>
       <motion.article
         className="relative group cursor-pointer overflow-hidden rounded-xl bg-gray-100 dark:bg-gray-800 aspect-[4/3]"
         initial={{ opacity: 0, y: 30 }}

@@ -1,9 +1,11 @@
 'use client'
 
 import { useState, useEffect, useRef, useCallback } from 'react'
+import dynamic from 'next/dynamic'
 import PhotoCard from './PhotoCard'
-import PhotoViewer from './PhotoViewer'
 import type { Photo, PhotoCategory } from '@/lib/types'
+
+const PhotoViewer = dynamic(() => import('./PhotoViewer'))
 
 interface PhotoGridProps {
   photos: Photo[]
@@ -67,33 +69,6 @@ export default function PhotoGrid({ photos, selectedCategory }: PhotoGridProps) 
 
     return () => {
       observer.disconnect()
-    }
-  }, [filteredPhotos])
-
-  useEffect(() => {
-    if (typeof window === 'undefined' || filteredPhotos.length === 0) return
-
-    let cancelled = false
-    const preloadAll = () => {
-      filteredPhotos.forEach((photo) => {
-        if (cancelled) return
-        const preloadImage = new window.Image()
-        preloadImage.src = photo.filename
-      })
-    }
-
-    const idleCallback = window.requestIdleCallback?.(() => preloadAll())
-    if (idleCallback == null) {
-      const timeoutId = window.setTimeout(preloadAll, 120)
-      return () => {
-        cancelled = true
-        window.clearTimeout(timeoutId)
-      }
-    }
-
-    return () => {
-      cancelled = true
-      window.cancelIdleCallback?.(idleCallback)
     }
   }, [filteredPhotos])
 

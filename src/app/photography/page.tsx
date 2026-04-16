@@ -1,35 +1,9 @@
 import Image from 'next/image'
 import Link from 'next/link'
-import {
-  getSeriesCoverPhoto,
-  photographySeries,
-} from '@/components/photography'
+import { getSeriesCoverPhoto, photographySeries } from '@/components/photography/series'
 import { getAllPhotos } from '@/lib/data/photos'
-import { redirect } from 'next/navigation'
 import { PhotoCategory } from '@/lib/types'
 import type { PhotoCategory as PhotoCategoryType } from '@/lib/types'
-
-export const dynamic = 'force-dynamic'
-
-function normalizeCategory(value?: string | string[]) {
-  const category = Array.isArray(value) ? value[0] : value
-
-  if (
-    category === PhotoCategory.Street ||
-    category === PhotoCategory.Pets ||
-    category === PhotoCategory.Project
-  ) {
-    return category
-  }
-
-  return null
-}
-
-interface PhotographyPageProps {
-  searchParams?: {
-    category?: string | string[]
-  }
-}
 
 type SeriesCategory = Exclude<PhotoCategoryType, typeof PhotoCategory.All>
 
@@ -61,23 +35,7 @@ const petsCardCovers = [
   '/assets/photos/pets/Z52_3679.jpg',
 ]
 
-export default async function PhotographyPage({
-  searchParams,
-}: PhotographyPageProps) {
-  const category = normalizeCategory(searchParams?.category)
-
-  if (category === PhotoCategory.Street) {
-    redirect('/photography/street')
-  }
-
-  if (category === PhotoCategory.Pets) {
-    redirect('/photography/pets')
-  }
-
-  if (category === PhotoCategory.Project) {
-    redirect('/photography/project')
-  }
-
+export default async function PhotographyPage() {
   const photos = await getAllPhotos()
 
   return (

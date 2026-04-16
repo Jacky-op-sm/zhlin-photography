@@ -161,13 +161,13 @@ export default function Footer() {
                   <Link href="/photography">总览</Link>
                 </li>
                 <li>
-                  <Link href="/photography?category=street">街拍</Link>
+                  <Link href="/photography/street">街拍</Link>
                 </li>
                 <li>
-                  <Link href="/photography?category=pets">动物</Link>
+                  <Link href="/photography/pets">动物</Link>
                 </li>
                 <li>
-                  <Link href="/photography?category=project">项目</Link>
+                  <Link href="/photography/project">项目</Link>
                 </li>
               </ul>
             </section>
