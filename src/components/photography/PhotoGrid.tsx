@@ -1,7 +1,6 @@
 'use client'
 
 import { useState, useEffect, useRef, useCallback } from 'react'
-import { AnimatePresence } from 'framer-motion'
 import PhotoCard from './PhotoCard'
 import PhotoViewer from './PhotoViewer'
 import type { Photo, PhotoCategory } from '@/lib/types'
@@ -71,6 +70,33 @@ export default function PhotoGrid({ photos, selectedCategory }: PhotoGridProps) 
     }
   }, [filteredPhotos])
 
+  useEffect(() => {
+    if (typeof window === 'undefined' || filteredPhotos.length === 0) return
+
+    let cancelled = false
+    const preloadAll = () => {
+      filteredPhotos.forEach((photo) => {
+        if (cancelled) return
+        const preloadImage = new window.Image()
+        preloadImage.src = photo.filename
+      })
+    }
+
+    const idleCallback = window.requestIdleCallback?.(() => preloadAll())
+    if (idleCallback == null) {
+      const timeoutId = window.setTimeout(preloadAll, 120)
+      return () => {
+        cancelled = true
+        window.clearTimeout(timeoutId)
+      }
+    }
+
+    return () => {
+      cancelled = true
+      window.cancelIdleCallback?.(idleCallback)
+    }
+  }, [filteredPhotos])
+
   return (
     <>
       {!hasPhotos ? (
@@ -115,18 +141,16 @@ export default function PhotoGrid({ photos, selectedCategory }: PhotoGridProps) 
             .grid-item:nth-child(8) { transition-delay: 350ms; }
           `}</style>
 
-          <AnimatePresence>
-            {viewerOpen && (
-              <PhotoViewer
-                photos={filteredPhotos}
-                initialIndex={currentIndex}
-                isOpen={viewerOpen}
-                onClose={closeViewer}
-                onPrevious={goToPrevious}
-                onNext={goToNext}
-              />
-            )}
-          </AnimatePresence>
+          {viewerOpen && (
+            <PhotoViewer
+              photos={filteredPhotos}
+              initialIndex={currentIndex}
+              isOpen={viewerOpen}
+              onClose={closeViewer}
+              onPrevious={goToPrevious}
+              onNext={goToNext}
+            />
+          )}
         </>
       )}
     </>

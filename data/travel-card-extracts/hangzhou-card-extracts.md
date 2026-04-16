@@ -6,9 +6,15 @@
 - 正文（原文摘录，60-90字）：天下着小雨，路标被黄色和紫色的小花围绕着。我走进一旁的小道，因为天气的缘故，即使是周末，这儿也望不见人影。我轻轻踏在路上，摘下耳机，听着森林里传来的啾啾鸟叫声。
 - 图片：`/assets/travel/hangzhou/hangzhou-xixi-rain-walk.jpg`
 
+## 第2块
+- 小标题：尤利西斯书店
+- 大标题：去尤利西斯书店
+- 正文（原文摘录，60-90字）：今天久违地去了次书店。熬了几次夜，感觉时间不再属于自己。书不读了，文字也不写了。来时本打算接着看契诃夫的短篇《我的一生》，可在书店里转了一圈，没找到契诃夫的短篇。
+- 图片：`待补充（当前仓库仅有西溪湿地图片）`
+
 ## 来源说明（统一）
 
-- 映射规则：`data/杭州/content.tex` 中每个 `### 标题` + 紧随的 `### 正文` 组成 1 张卡片。
-- 大标题来源：`### 标题` 原文。
-- 正文来源：`### 正文` 内逐字摘录，不做改写。
-- 图片来源：`public/assets/travel/hangzhou/hangzhou-xixi-rain-walk.jpg`。
+- 映射规则：`/Users/jackylin/Library/Mobile Documents/com~apple~CloudDocs/写作/四月/碎碎念.tex` 中带 `\label{special:*}` 的段落按顺序映射为卡片。
+- 大标题来源：各 `\label` 上方对应小节标题（`\hh{...}`）语义化命名。
+- 正文来源：各 `\label` 对应正文段逐字摘录，不做改写。
+- 图片来源：第1块来自 `public/assets/travel/hangzhou/hangzhou-xixi-rain-walk.jpg`；第2块图片待补。

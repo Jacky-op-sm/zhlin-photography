@@ -2,7 +2,6 @@
 
 import { useCallback, useEffect, useState } from 'react'
 import Image from 'next/image'
-import { motion, AnimatePresence } from 'framer-motion'
 import type { Photo } from '@/lib/types'
 
 interface PhotoViewerProps {
@@ -24,7 +23,6 @@ export default function PhotoViewer({
 }: PhotoViewerProps) {
   const [touchStart, setTouchStart] = useState<number | null>(null)
   const [touchEnd, setTouchEnd] = useState<number | null>(null)
-  const [slideDirection, setSlideDirection] = useState<1 | -1>(1)
   const [isTouchLike, setIsTouchLike] = useState(false)
 
   const currentPhoto = photos[initialIndex]
@@ -34,13 +32,11 @@ export default function PhotoViewer({
 
   const handlePrevious = useCallback(() => {
     if (!hasPrevious) return
-    setSlideDirection(-1)
     onPrevious()
   }, [hasPrevious, onPrevious])
 
   const handleNext = useCallback(() => {
     if (!hasNext) return
-    setSlideDirection(1)
     onNext()
   }, [hasNext, onNext])
 
@@ -77,16 +73,23 @@ export default function PhotoViewer({
     }
   }, [handleNext, handlePrevious, hasNext, hasPrevious, isOpen, onClose])
 
+  useEffect(() => {
+    if (!isOpen || typeof window === 'undefined' || photos.length === 0) return
+    photos.forEach((photo) => {
+      const preloadImage = new window.Image()
+      preloadImage.src = photo.filename
+      if (typeof preloadImage.decode === 'function') {
+        void preloadImage.decode().catch(() => undefined)
+      }
+    })
+  }, [isOpen, photos])
+
   if (!isOpen || !currentPhoto) {
     return null
   }
 
   return (
-    <motion.div
-      initial={{ opacity: 0 }}
-      animate={{ opacity: 1 }}
-      exit={{ opacity: 0 }}
-      transition={{ duration: 0.24 }}
+    <div
       className="photo-viewer"
       data-touch={isTouchLike ? 'true' : 'false'}
       onClick={onClose}
@@ -124,24 +127,17 @@ export default function PhotoViewer({
       </p>
 
       <div className="photo-viewer-image-wrap" onClick={(event) => event.stopPropagation()}>
-        <AnimatePresence mode="wait">
-          <motion.div
-            key={currentPhoto.id}
-            initial={{ opacity: 0.22, x: slideDirection * 26 }}
-            animate={{ opacity: 1, x: 0 }}
-            exit={{ opacity: 0.2, x: slideDirection * -22 }}
-            transition={{ duration: 0.22, ease: [0.22, 1, 0.36, 1] }}
-          >
-            <Image
-              src={currentPhoto.filename}
-              alt={currentPhoto.title}
-              width={currentPhoto.width}
-              height={currentPhoto.height}
-              className="photo-viewer-image"
-              priority
-            />
-          </motion.div>
-        </AnimatePresence>
+        <Image
+          key={currentPhoto.id}
+          src={currentPhoto.filename}
+          alt={currentPhoto.title}
+          width={currentPhoto.width}
+          height={currentPhoto.height}
+          className="photo-viewer-image"
+          priority
+          loading="eager"
+          sizes="92vw"
+        />
       </div>
 
       {(hasPrevious || hasNext) ? (
@@ -179,6 +175,6 @@ export default function PhotoViewer({
           ) : <span className="photo-viewer-nav-placeholder" aria-hidden="true" />}
         </div>
       ) : null}
-    </motion.div>
+    </div>
   )
 }

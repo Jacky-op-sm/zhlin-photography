@@ -2,7 +2,7 @@ import type { ContactInfo } from '../types'
 import { profile } from './profile'
 
 export const contactInfo: ContactInfo = {
-  title: 'Let’s chat.',
+  title: '欢迎联系',
   email: profile.email,
   wechat: profile.socials.wechat,
   intro: '联系我：影像合作、学术交流、创作讨论，都可以从这里开始。',

@@ -43,9 +43,9 @@ export default function ContactPage() {
       website: '',
     }
 
-    const fallbackSubject = encodeURIComponent(`[Website Contact] ${payload.type}`)
+    const fallbackSubject = encodeURIComponent(`[网站联系] ${payload.type}`)
     const fallbackBody = encodeURIComponent(
-      `Name: ${payload.firstName} ${payload.lastName}\nEmail: ${payload.email}\nType: ${payload.type}\n\n${payload.message}`
+      `姓名: ${payload.firstName} ${payload.lastName}\n邮箱: ${payload.email}\n类型: ${payload.type}\n\n${payload.message}`
     )
 
     try {
@@ -83,29 +83,29 @@ export default function ContactPage() {
 
   return (
     <main className="min-h-screen bg-[rgba(245,245,247,1)] px-4 py-10 text-[rgba(29,29,31,1)] sm:px-6 lg:px-8 lg:py-14">
-      <section className="mx-auto grid w-full max-w-7xl gap-6 rounded-[2.2rem] bg-[rgba(245,245,247,1)] p-1 sm:p-2 lg:grid-cols-[0.9fr_1.1fr]">
+      <section className="mx-auto grid w-full max-w-7xl gap-6 lg:grid-cols-[0.9fr_1.1fr]">
         <aside className="flex flex-col gap-6 rounded-[1.7rem] bg-white p-6 shadow-[0_20px_48px_rgba(15,23,42,0.08)] md:p-7">
           <div className="space-y-3">
-            <p className="text-xs uppercase tracking-[0.42em] text-[rgba(110,110,115,1)]">Contact</p>
+            <p className="text-xs tracking-[0.2em] text-[rgba(110,110,115,1)]">联系方式</p>
             <h1 className="text-4xl font-semibold tracking-[-0.055em] sm:text-5xl">{contactInfo.title}</h1>
             <p className="max-w-md text-base leading-8 text-[rgba(99,99,104,1)]">{contactInfo.intro}</p>
           </div>
 
           <div className="grid gap-3 sm:grid-cols-2">
-            <InfoTile label="Email" value={contactInfo.email} href={`mailto:${contactInfo.email}`} />
-            <InfoTile label="WeChat" value={contactInfo.wechat} />
+            <InfoTile label="邮箱" value={contactInfo.email} href={`mailto:${contactInfo.email}`} />
+            <InfoTile label="微信" value={contactInfo.wechat} />
           </div>
 
-          <div className="rounded-[1.25rem] bg-[rgba(245,245,247,1)] p-5">
-            <p className="text-xs uppercase tracking-[0.3em] text-[rgba(110,110,115,1)]">Response time</p>
+          <div className="rounded-[1.25rem] bg-white p-5">
+            <p className="text-xs tracking-[0.16em] text-[rgba(110,110,115,1)]">回复时间</p>
             <p className="mt-3 text-lg leading-8 text-[rgba(29,29,31,1)]">{contactInfo.responseTime}</p>
           </div>
 
-          <div className="rounded-[1.25rem] bg-[rgba(245,245,247,1)] p-5">
-            <p className="text-xs uppercase tracking-[0.3em] text-[rgba(110,110,115,1)]">Expected uses</p>
+          <div className="rounded-[1.25rem] bg-white p-5">
+            <p className="text-xs tracking-[0.16em] text-[rgba(110,110,115,1)]">常见用途</p>
             <div className="mt-4 flex flex-wrap gap-2">
               {contactInfo.types.map((item) => (
-                <span key={item} className="rounded-full bg-white px-3 py-1 text-sm text-[rgba(81,81,84,1)]">
+                <span key={item} className="rounded-full bg-[rgba(245,245,247,1)] px-3 py-1 text-sm text-[rgba(81,81,84,1)]">
                   {item}
                 </span>
               ))}
@@ -117,11 +117,11 @@ export default function ContactPage() {
           </p>
         </aside>
 
-        <form onSubmit={handleSubmit} className="space-y-5 rounded-[1.7rem] bg-white p-6 shadow-[0_20px_48px_rgba(15,23,42,0.08)] md:p-7">
-          <fieldset className="rounded-[1.25rem] bg-[rgba(245,245,247,1)] p-5">
-            <legend className="px-2 text-xs font-semibold uppercase tracking-[0.32em] text-[rgba(110,110,115,1)]">Name</legend>
+        <form onSubmit={handleSubmit} className="space-y-5 rounded-[1.7rem] bg-white p-6 text-left shadow-[0_20px_48px_rgba(15,23,42,0.08)] md:p-7">
+          <fieldset className="rounded-[1.25rem] bg-white p-5">
+            <legend className="text-xs font-semibold tracking-[0.18em] text-[rgba(110,110,115,1)]">姓名</legend>
             <div className="mt-4 grid gap-4 sm:grid-cols-2">
-              <FormField id="first-name" label="First Name (required)">
+              <FormField id="first-name" label="名（必填）">
                 <input
                   id="first-name"
                   name="first_name"
@@ -133,7 +133,7 @@ export default function ContactPage() {
                 />
               </FormField>
 
-              <FormField id="last-name" label="Last Name (required)">
+              <FormField id="last-name" label="姓（必填）">
                 <input
                   id="last-name"
                   name="last_name"
@@ -148,7 +148,7 @@ export default function ContactPage() {
           </fieldset>
 
           <div className="grid gap-5 sm:grid-cols-2">
-            <FormField id="email" label="Email (required)">
+            <FormField id="email" label="邮箱（必填）">
               <input
                 id="email"
                 type="email"
@@ -157,18 +157,18 @@ export default function ContactPage() {
                 onChange={(event) => setEmail(event.target.value)}
                 required
                 autoComplete="email"
-                className="w-full rounded-xl bg-[rgba(245,245,247,1)] px-4 py-3 text-sm text-[rgba(29,29,31,1)] outline-none transition focus:bg-white focus:shadow-[0_0_0_2px_rgba(29,29,31,0.15)]"
+                className="w-full rounded-xl bg-white px-4 py-3 text-sm text-[rgba(29,29,31,1)] outline-none transition focus:shadow-[0_0_0_2px_rgba(29,29,31,0.15)]"
               />
             </FormField>
 
-            <FormField id="type" label="Type (required)">
+            <FormField id="type" label="类型（必填）">
               <select
                 id="type"
                 name="type"
                 value={type}
                 onChange={(event) => setType(event.target.value)}
                 required
-                className="w-full rounded-xl bg-[rgba(245,245,247,1)] px-4 py-3 text-sm text-[rgba(29,29,31,1)] outline-none transition focus:bg-white focus:shadow-[0_0_0_2px_rgba(29,29,31,0.15)]"
+                className="w-full rounded-xl bg-white px-4 py-3 text-sm text-[rgba(29,29,31,1)] outline-none transition focus:shadow-[0_0_0_2px_rgba(29,29,31,0.15)]"
               >
                 <option value="">请选择类型</option>
                 {contactInfo.types.map((item) => (
@@ -180,7 +180,7 @@ export default function ContactPage() {
             </FormField>
           </div>
 
-          <FormField id="message" label="Message (required)">
+          <FormField id="message" label="留言内容（必填）">
             <textarea
               id="message"
               name="message"
@@ -188,7 +188,7 @@ export default function ContactPage() {
               onChange={(event) => setMessage(event.target.value)}
               rows={8}
               required
-              className="w-full rounded-[1.25rem] bg-[rgba(245,245,247,1)] px-4 py-3 text-sm text-[rgba(29,29,31,1)] outline-none transition focus:bg-white focus:shadow-[0_0_0_2px_rgba(29,29,31,0.15)]"
+              className="w-full rounded-[1.25rem] bg-white px-4 py-3 text-sm text-[rgba(29,29,31,1)] outline-none transition focus:shadow-[0_0_0_2px_rgba(29,29,31,0.15)]"
             />
           </FormField>
 
@@ -200,12 +200,12 @@ export default function ContactPage() {
               disabled={status === 'pending' || !canSubmit}
               className="inline-flex items-center justify-center rounded-full bg-[rgba(29,29,31,1)] px-6 py-3 text-xs font-semibold uppercase tracking-[0.22em] text-white transition hover:bg-black disabled:cursor-not-allowed disabled:opacity-60"
             >
-              {status === 'pending' ? 'Sending...' : 'Send'}
+              {status === 'pending' ? '发送中...' : '发送'}
             </button>
             <p
               role="status"
               aria-live="polite"
-              className={`text-sm leading-7 ${
+              className={`text-left text-sm leading-7 ${
                 status === 'success'
                   ? 'text-emerald-700'
                   : status === 'error'
@@ -232,8 +232,8 @@ function FormField({
   children: ReactNode
 }) {
   return (
-    <div className="space-y-2">
-      <label htmlFor={id} className="block text-[11px] font-medium uppercase tracking-[0.2em] text-[rgba(110,110,115,1)]">
+    <div className="space-y-2 text-left">
+      <label htmlFor={id} className="block text-[11px] font-medium tracking-[0.12em] text-[rgba(110,110,115,1)]">
         {label}
       </label>
       {children}
@@ -259,8 +259,8 @@ function InfoTile({
   )
 
   return (
-    <div className="rounded-[1.2rem] bg-[rgba(245,245,247,1)] p-4">
-      <p className="text-xs uppercase tracking-[0.24em] text-[rgba(110,110,115,1)]">{label}</p>
+    <div className="rounded-[1.2rem] bg-white p-4">
+      <p className="text-xs tracking-[0.14em] text-[rgba(110,110,115,1)]">{label}</p>
       <div className="mt-2">{content}</div>
     </div>
   )
