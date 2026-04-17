@@ -54,6 +54,7 @@ export default async function PhotographyPage() {
                 <li key={series.slug} className="w-[6.5rem] text-center sm:w-[8.25rem]">
                   <Link
                     href={series.href}
+                    prefetch={false}
                     className="group inline-flex w-full flex-col items-center text-neutral-800"
                     aria-label={`前往 ${zhLabel} 系列`}
                   >
@@ -94,7 +95,7 @@ export default async function PhotographyPage() {
 
             return (
               <article key={series.slug} className="photo-index-card">
-                <Link href={series.href} className="photo-index-card-media-link">
+                <Link href={series.href} prefetch={false} className="photo-index-card-media-link">
                   <div
                     className={`photo-index-card-media ${
                       series.slug === PhotoCategory.Pets ? 'photo-index-card-media--pets' : ''

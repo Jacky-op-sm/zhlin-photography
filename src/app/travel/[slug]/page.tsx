@@ -2,10 +2,7 @@ import type { Metadata } from 'next';
 import Image from 'next/image';
 import { notFound } from 'next/navigation';
 import { getTravelBySlug, getTravelSlugs } from '@/lib/data/travel';
-import { getTravelExpandMapBySlug } from '@/lib/data/travel-card-expand';
-import { getTravelCardExtractItemsBySlug } from '@/lib/data/travel-card-extract';
-import { getTravelFoodExpandMapBySlug } from '@/lib/data/travel-food-expand';
-import { getTravelFoodExtractItemsBySlug } from '@/lib/data/travel-food-extract';
+import { getTravelFoodSliderCardsBySlug, getTravelSpotSliderCardsBySlug } from '@/lib/data/travel-slider';
 import SpotSlider from './SpotSlider';
 import FoodSlider from './FoodSlider';
 
@@ -37,10 +34,10 @@ export async function generateMetadata({ params }: { params: { slug: string } })
 
 export default async function TravelDetailPage({ params }: { params: { slug: string } }) {
   const travel = await getTravelBySlug(params.slug);
-  const expandMap = await getTravelExpandMapBySlug(params.slug);
-  const extractItems = await getTravelCardExtractItemsBySlug(params.slug);
-  const foodExpandMap = await getTravelFoodExpandMapBySlug(params.slug);
-  const foodExtractItems = await getTravelFoodExtractItemsBySlug(params.slug);
+  const [spotCards, foodCards] = await Promise.all([
+    getTravelSpotSliderCardsBySlug(params.slug),
+    getTravelFoodSliderCardsBySlug(params.slug),
+  ]);
 
   if (!travel) {
     notFound();
@@ -92,7 +89,7 @@ export default async function TravelDetailPage({ params }: { params: { slug: str
           >
             景点
           </h2>
-          <SpotSlider slug={params.slug} expandMap={expandMap} extractItems={extractItems} />
+          <SpotSlider cards={spotCards} />
         </div>
       </section>
 
@@ -105,7 +102,7 @@ export default async function TravelDetailPage({ params }: { params: { slug: str
             >
               美食
             </h2>
-            <FoodSlider slug={params.slug} expandMap={foodExpandMap} extractItems={foodExtractItems} />
+            <FoodSlider cards={foodCards} />
           </div>
         </section>
       ) : null}

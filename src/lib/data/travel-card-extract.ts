@@ -14,9 +14,15 @@ const EXTRACT_MD_BY_SLUG: Record<string, string> = {
   dongbei: 'data/travel-card-extracts/dongbei-card-extracts.md',
 };
 
+const extractCache = new Map<string, Promise<TravelCardExtractItem[] | null>>();
+
 export async function getTravelCardExtractItemsBySlug(slug: string): Promise<TravelCardExtractItem[] | null> {
+  const cached = extractCache.get(slug);
+  if (cached) return cached;
+
+  const promise = (async () => {
   const file = EXTRACT_MD_BY_SLUG[slug];
-  if (!file) return null;
+    if (!file) return null;
 
   const abs = path.join(process.cwd(), file);
   let md = '';
@@ -29,4 +35,8 @@ export async function getTravelCardExtractItemsBySlug(slug: string): Promise<Tra
 
   const items = parseExtractMarkdown(md);
   return items.length > 0 ? items : null;
+  })();
+
+  extractCache.set(slug, promise);
+  return promise;
 }

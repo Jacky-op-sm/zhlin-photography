@@ -13,9 +13,15 @@ const EXPAND_MD_BY_SLUG: Record<string, string> = {
   dongbei: 'data/travel-card-expand-extract/dongbei-card-expand.md',
 };
 
+const expandCache = new Map<string, Promise<TravelExpandMap | null>>();
+
 export async function getTravelExpandMapBySlug(slug: string): Promise<TravelExpandMap | null> {
+  const cached = expandCache.get(slug);
+  if (cached) return cached;
+
+  const promise = (async () => {
   const file = EXPAND_MD_BY_SLUG[slug];
-  if (!file) return null;
+    if (!file) return null;
 
   const abs = path.join(process.cwd(), file);
   let md = '';
@@ -26,5 +32,9 @@ export async function getTravelExpandMapBySlug(slug: string): Promise<TravelExpa
     return null;
   }
 
-  return parseExpandMarkdown(md);
+    return parseExpandMarkdown(md);
+  })();
+
+  expandCache.set(slug, promise);
+  return promise;
 }

@@ -28,6 +28,7 @@ export default async function TravelPage() {
               <li key={travel.slug} className="w-[6rem] text-center sm:w-[7.1rem]">
                 <Link
                   href={`/travel/${travel.slug}`}
+                  prefetch={false}
                   className="group inline-flex w-full flex-col items-center text-neutral-800"
                   aria-label={`前往 ${travel.zhName} 旅行页`}
                 >
@@ -77,6 +78,7 @@ function TravelCard({ travel }: { travel: Travel }) {
   return (
     <Link
       href={`/travel/${travel.slug}`}
+      prefetch={false}
       className="travel-card-hover-shell group relative block overflow-hidden rounded-[2rem] bg-neutral-950 shadow-[0_12px_40px_rgba(15,23,42,0.08)] hover:shadow-[0_20px_54px_rgba(15,23,42,0.16)]"
     >
       <div className="relative aspect-[4/5] sm:aspect-[16/11] lg:aspect-[5/4]">

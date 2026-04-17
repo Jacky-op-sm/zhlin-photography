@@ -84,7 +84,7 @@ export default function ContactPage() {
   return (
     <main className="min-h-screen bg-[rgba(245,245,247,1)] px-4 py-10 text-[rgba(29,29,31,1)] sm:px-6 lg:px-8 lg:py-14">
       <section className="mx-auto grid w-full max-w-7xl gap-6 lg:grid-cols-[0.9fr_1.1fr]">
-        <aside className="flex flex-col gap-6 rounded-[1.7rem] bg-white p-6 shadow-[0_20px_48px_rgba(15,23,42,0.08)] md:p-7">
+        <aside className="flex flex-col gap-6 rounded-[1.7rem] p-6 md:p-7">
           <div className="space-y-3">
             <p className="text-xs tracking-[0.2em] text-[rgba(110,110,115,1)]">联系方式</p>
             <h1 className="text-4xl font-semibold tracking-[-0.055em] sm:text-5xl">{contactInfo.title}</h1>
@@ -117,9 +117,9 @@ export default function ContactPage() {
           </p>
         </aside>
 
-        <form onSubmit={handleSubmit} className="space-y-5 rounded-[1.7rem] bg-white p-6 text-left shadow-[0_20px_48px_rgba(15,23,42,0.08)] md:p-7">
+        <form onSubmit={handleSubmit} className="space-y-5 rounded-[1.7rem] p-6 text-left md:p-7">
           <fieldset className="rounded-[1.25rem] bg-white p-5">
-            <legend className="text-xs font-semibold tracking-[0.18em] text-[rgba(110,110,115,1)]">姓名</legend>
+            <legend className="px-1 text-xs font-semibold tracking-[0.18em] text-[rgba(110,110,115,1)]">姓名</legend>
             <div className="mt-4 grid gap-4 sm:grid-cols-2">
               <FormField id="first-name" label="名（必填）">
                 <input
@@ -129,7 +129,7 @@ export default function ContactPage() {
                   onChange={(event) => setFirstName(event.target.value)}
                   required
                   autoComplete="given-name"
-                  className="w-full rounded-xl bg-white px-4 py-3 text-sm text-[rgba(29,29,31,1)] outline-none transition focus:shadow-[0_0_0_2px_rgba(29,29,31,0.15)]"
+                  className="h-12 w-full rounded-[1rem] border border-[rgba(208,208,214,1)] bg-white px-4 text-[15px] text-[rgba(29,29,31,1)] outline-none transition focus:border-[rgba(29,29,31,0.36)] focus:shadow-[0_0_0_2px_rgba(29,29,31,0.08)]"
                 />
               </FormField>
 
@@ -141,14 +141,14 @@ export default function ContactPage() {
                   onChange={(event) => setLastName(event.target.value)}
                   required
                   autoComplete="family-name"
-                  className="w-full rounded-xl bg-white px-4 py-3 text-sm text-[rgba(29,29,31,1)] outline-none transition focus:shadow-[0_0_0_2px_rgba(29,29,31,0.15)]"
+                  className="h-12 w-full rounded-[1rem] border border-[rgba(208,208,214,1)] bg-white px-4 text-[15px] text-[rgba(29,29,31,1)] outline-none transition focus:border-[rgba(29,29,31,0.36)] focus:shadow-[0_0_0_2px_rgba(29,29,31,0.08)]"
                 />
               </FormField>
             </div>
           </fieldset>
 
           <div className="grid gap-5 sm:grid-cols-2">
-            <FormField id="email" label="邮箱（必填）">
+            <FormField id="email" label="邮箱（必填）" card>
               <input
                 id="email"
                 type="email"
@@ -157,18 +157,18 @@ export default function ContactPage() {
                 onChange={(event) => setEmail(event.target.value)}
                 required
                 autoComplete="email"
-                className="w-full rounded-xl bg-white px-4 py-3 text-sm text-[rgba(29,29,31,1)] outline-none transition focus:shadow-[0_0_0_2px_rgba(29,29,31,0.15)]"
+                className="h-12 w-full rounded-[1rem] border border-[rgba(208,208,214,1)] bg-white px-4 text-[15px] text-[rgba(29,29,31,1)] outline-none transition focus:border-[rgba(29,29,31,0.36)] focus:shadow-[0_0_0_2px_rgba(29,29,31,0.08)]"
               />
             </FormField>
 
-            <FormField id="type" label="类型（必填）">
+            <FormField id="type" label="类型（必填）" card>
               <select
                 id="type"
                 name="type"
                 value={type}
                 onChange={(event) => setType(event.target.value)}
                 required
-                className="w-full rounded-xl bg-white px-4 py-3 text-sm text-[rgba(29,29,31,1)] outline-none transition focus:shadow-[0_0_0_2px_rgba(29,29,31,0.15)]"
+                className="h-12 w-full rounded-[1rem] border border-[rgba(208,208,214,1)] bg-white px-4 text-left text-[15px] text-[rgba(29,29,31,1)] outline-none transition focus:border-[rgba(29,29,31,0.36)] focus:shadow-[0_0_0_2px_rgba(29,29,31,0.08)]"
               >
                 <option value="">请选择类型</option>
                 {contactInfo.types.map((item) => (
@@ -180,7 +180,7 @@ export default function ContactPage() {
             </FormField>
           </div>
 
-          <FormField id="message" label="留言内容（必填）">
+          <FormField id="message" label="留言内容（必填）" card>
             <textarea
               id="message"
               name="message"
@@ -188,7 +188,7 @@ export default function ContactPage() {
               onChange={(event) => setMessage(event.target.value)}
               rows={8}
               required
-              className="w-full rounded-[1.25rem] bg-white px-4 py-3 text-sm text-[rgba(29,29,31,1)] outline-none transition focus:shadow-[0_0_0_2px_rgba(29,29,31,0.15)]"
+              className="w-full rounded-[1.25rem] border border-[rgba(208,208,214,1)] bg-white px-4 py-3 text-[15px] text-[rgba(29,29,31,1)] outline-none transition focus:border-[rgba(29,29,31,0.36)] focus:shadow-[0_0_0_2px_rgba(29,29,31,0.08)]"
             />
           </FormField>
 
@@ -225,15 +225,17 @@ export default function ContactPage() {
 function FormField({
   id,
   label,
+  card = false,
   children,
 }: {
   id: string
   label: string
+  card?: boolean
   children: ReactNode
 }) {
   return (
-    <div className="space-y-2 text-left">
-      <label htmlFor={id} className="block text-[11px] font-medium tracking-[0.12em] text-[rgba(110,110,115,1)]">
+    <div className={`space-y-2 text-left ${card ? 'rounded-[1.25rem] bg-white p-5' : ''}`}>
+      <label htmlFor={id} className="block text-[11px] font-semibold tracking-[0.12em] text-[rgba(110,110,115,1)]">
         {label}
       </label>
       {children}

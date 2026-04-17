@@ -285,6 +285,7 @@ export default function Navigation({
         <Link
           key={child.href}
           href={child.href}
+          prefetch={false}
           onClick={handleMobileNavigate}
           className="site-nav-mobile-submenu-link"
         >
@@ -367,6 +368,7 @@ export default function Navigation({
                     <Link
                       key={child.href}
                       href={child.href}
+                      prefetch={false}
                       onClick={onNavigate}
                       className="site-nav-dropdown-link"
                     >

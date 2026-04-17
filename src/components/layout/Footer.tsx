@@ -61,6 +61,7 @@ function resolveSolidBackgroundColor(start: Element | null): [number, number, nu
 export default function Footer() {
   const pathname = usePathname()
   const footerRef = useRef<HTMLElement | null>(null)
+  const isNearViewportRef = useRef(false)
   const [tone, setTone] = useState<FooterTone>('gray')
 
   const detectTone = useCallback(() => {
@@ -111,7 +112,11 @@ export default function Footer() {
 
   useEffect(() => {
     let rafId: number | null = null
-    const scheduleDetect = () => {
+
+    const scheduleDetect = (force = false) => {
+      if (!force && !isNearViewportRef.current) {
+        return
+      }
       if (rafId !== null) {
         window.cancelAnimationFrame(rafId)
       }
@@ -121,31 +126,54 @@ export default function Footer() {
       })
     }
 
-    scheduleDetect()
+    scheduleDetect(true)
 
-    const main = document.querySelector('.site-main')
-    const observer = new MutationObserver(scheduleDetect)
-    if (main) {
-      observer.observe(main, {
-        subtree: true,
-        childList: true,
-        attributes: true,
-        attributeFilter: ['class', 'style'],
-      })
+    const footer = footerRef.current
+    const intersectionObserver = new IntersectionObserver(
+      (entries) => {
+        const entry = entries[0]
+        isNearViewportRef.current = entry.isIntersecting
+        if (entry.isIntersecting) {
+          scheduleDetect(true)
+        }
+      },
+      {
+        root: null,
+        rootMargin: '220px 0px 220px 0px',
+        threshold: 0,
+      }
+    )
+
+    if (footer) {
+      intersectionObserver.observe(footer)
     }
 
-    window.addEventListener('resize', scheduleDetect)
-    window.addEventListener('scroll', scheduleDetect, { passive: true })
-    window.addEventListener('load', scheduleDetect)
+    const resizeObserver = new ResizeObserver(() => {
+      scheduleDetect()
+    })
+
+    if (footer) {
+      resizeObserver.observe(footer)
+    }
+
+    const main = document.querySelector('.site-main')
+    if (main) {
+      resizeObserver.observe(main)
+    }
+
+    const onResize = () => {
+      scheduleDetect(true)
+    }
+
+    window.addEventListener('resize', onResize, { passive: true })
 
     return () => {
       if (rafId !== null) {
         window.cancelAnimationFrame(rafId)
       }
-      observer.disconnect()
-      window.removeEventListener('resize', scheduleDetect)
-      window.removeEventListener('scroll', scheduleDetect)
-      window.removeEventListener('load', scheduleDetect)
+      window.removeEventListener('resize', onResize)
+      intersectionObserver.disconnect()
+      resizeObserver.disconnect()
     }
   }, [pathname, detectTone])
 
