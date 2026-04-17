@@ -5,7 +5,7 @@
   "scripts": {
     "dev": "next dev",
     "build": "next build",
-    "build:deploy": "npm run check:assets && SKIP_TYPECHECK=1 next build --no-lint",
+    "build:deploy": "ASSET_TOTAL_MB=150 npm run check:assets && SKIP_TYPECHECK=1 next build --no-lint",
     "start": "next start",
     "lint": "next lint",
     "typecheck": "tsc --noEmit",
