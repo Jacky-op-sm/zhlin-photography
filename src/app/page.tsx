@@ -110,7 +110,7 @@ const hobbyistShowcaseCards: HobbyistShowcaseCard[] = [
     image: '/assets/home/ward-no-6-cover.jpg',
     alt: 'Book cover',
     body: `阅读教会我耐心，
-让我学会感受契诃夫的温柔、海明威的力量，
+契诃夫的温柔、海明威的力量，
 和陀思妥耶夫斯基笔下的人心。`,
   },
   {
@@ -146,7 +146,7 @@ export default async function Home() {
               <br />
               旅行，
               <br />
-              爱好。
+              读书。
             </h1>
             <p className="home-hero-summary">
               常驻杭州，穷学生一枚。现有三大爱好，摄影 - 已拥有相机三个月，常在散步时拍照，现快门数6897；旅行

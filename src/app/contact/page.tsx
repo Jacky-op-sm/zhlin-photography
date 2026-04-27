@@ -113,7 +113,7 @@ export default function ContactPage() {
           </div>
 
           <p className="text-sm leading-7 text-[rgba(110,110,115,1)]">
-            如果你更习惯直接发邮件，也可以通过上面的邮箱联系我。表单提交失败时会自动打开邮件草稿，避免内容丢失。
+            如果你更习惯直接发邮件，也可以通过上面的邮箱联系我。
           </p>
         </aside>
 
@@ -202,19 +202,6 @@ export default function ContactPage() {
             >
               {status === 'pending' ? '发送中...' : '发送'}
             </button>
-            <p
-              role="status"
-              aria-live="polite"
-              className={`text-left text-sm leading-7 ${
-                status === 'success'
-                  ? 'text-emerald-700'
-                  : status === 'error'
-                    ? 'text-rose-700'
-                    : 'text-[rgba(110,110,115,1)]'
-              }`}
-            >
-              {statusText}
-            </p>
           </div>
         </form>
       </section>
@@ -252,12 +239,13 @@ function InfoTile({
   value: string
   href?: string
 }) {
+  const valueClassName = 'whitespace-nowrap text-base font-semibold leading-7 text-[rgba(29,29,31,1)] sm:text-[17px]'
   const content = href ? (
-    <a href={href} className="break-all text-lg font-semibold leading-7 text-[rgba(29,29,31,1)]">
+    <a href={href} className={valueClassName}>
       {value}
     </a>
   ) : (
-    <p className="break-all text-lg font-semibold leading-7 text-[rgba(29,29,31,1)]">{value}</p>
+    <p className={valueClassName}>{value}</p>
   )
 
   return (

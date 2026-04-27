@@ -259,7 +259,9 @@ export default async function HobbyPage({
             <div className="max-w-4xl">
               <p className="portfolio-eyebrow">Hobby</p>
               <h1 className="mt-6 max-w-[17ch] text-[clamp(2.45rem,6vw,4.8rem)] font-semibold leading-[1.25] tracking-[-0.05em] text-[color:var(--portfolio-text)]">
-                阅读、电影、游戏，是我坚持下来的爱好。
+                阅读、电影、游戏，
+                <br />
+                是我坚持下来的爱好。
               </h1>
               <p className="mt-7 max-w-3xl text-[1.02rem] leading-8 text-[color:var(--portfolio-muted)] sm:text-[1.08rem]">
                 {hobby.intro}
@@ -272,8 +274,8 @@ export default async function HobbyPage({
           <div className="space-y-6">
             <SectionLabel
               eyebrow="Long-term entries"
-              title="长期入口"
-              description="这些内容不是一次性的清单，而是我会持续回看的三个方向。"
+              title="我的精选"
+              description="如果一生只能读三本书，看三部电影的话，我会选..."
             />
             <div className="grid gap-5 lg:grid-cols-3">
               {categories.map((category, index) => (
@@ -297,8 +299,8 @@ export default async function HobbyPage({
           <div className="relative space-y-6">
             <SectionLabel
               eyebrow="Monthly digest"
-              title="本月更新"
-              description="把最近读完的书、看过的电影整理在一起，保留短期兴趣的变化轨迹。"
+              title="每月更新"
+              description="把每月读过的书、看过的电影整理到一起，方便一年的回顾。"
             />
             {monthTabs.length ? (
               <div className="inline-flex w-fit flex-wrap items-center gap-1 rounded-full bg-[rgba(232,232,237,1)] p-1.5">
