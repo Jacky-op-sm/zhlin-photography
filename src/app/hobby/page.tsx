@@ -217,13 +217,14 @@ export default async function HobbyPage({
   const digest = sortDigest(hobby.monthlyDigest || [])
   const latestYear = digest[0]?.month.split('-')[0]
   const monthTabs = digest.filter((entry) => {
-    const [year, month] = entry.month.split('-')
-    return year === latestYear && ['01', '02', '03', '04'].includes(month)
+    const [year] = entry.month.split('-')
+    return year === latestYear
   }).sort((a, b) => monthScore(a.month) - monthScore(b.month))
   const requestedMonth = typeof searchParams?.month === 'string' ? searchParams.month : undefined
+  const latestMonth = monthTabs[monthTabs.length - 1]?.month
   const selectedMonth = monthTabs.some((entry) => entry.month === requestedMonth)
     ? requestedMonth
-    : monthTabs[0]?.month
+    : latestMonth
   const selectedDigest = monthTabs.find((entry) => entry.month === selectedMonth)
 
   const externalLinks = [

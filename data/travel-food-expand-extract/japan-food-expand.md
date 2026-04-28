@@ -36,9 +36,9 @@
 
 注 2：自从喝过日本的生啤后，在旅行剩下的日子里，我基本一天都会喝上一杯冰啤酒。生啤和国内啤酒最大的不同，在于它不涩，口感干爽。我是第一次体会到喝酒的乐趣：冰啤酒不仅能搭配食物，还能享受到喝完后的微醺感。那时头晕乎乎的，却会比平日更加惬意和放松。
 
-## 卡片：三次烧鸟
-- 页面小标题（eyebrow）：高松、直岛、京都
-- 页面主标题（title）：没有照片的三次烧鸟
+## 卡片：直岛拉面
+- 页面小标题（eyebrow）：直岛
+- 页面主标题（title）：直岛上的穷鬼拉面
 - 对应卡片序号：3
 
 ### 内容块 1
@@ -51,8 +51,13 @@
 
 注：这是唯一一顿在直岛上吃的饭。我们走在直岛的街上，接近 70% 的店面都闭门不营业。想必九月初艺术祭已过，岛上已不剩多少游客。
 
-### 内容块 2
-- 图片：`public/assets/travel/japan/food-10-naoshima-ramen.jpeg`
+## 卡片：三次烧鸟
+- 页面小标题（eyebrow）：高松、京都
+- 页面主标题（title）：没有照片的三次烧鸟
+- 对应卡片序号：4
+
+### 内容块 1
+- 图片：`public/assets/travel/japan/food-13-shaoniao.jpeg`
 - 正文：
 
 没有照片的三次烧鸟，整体给 7-8/10。
@@ -66,7 +71,7 @@
 ## 卡片：屋岛汉堡肉
 - 页面小标题（eyebrow）：屋岛
 - 页面主标题（title）：山顶的汉堡肉套餐
-- 对应卡片序号：4
+- 对应卡片序号：5
 
 ### 内容块 1
 - 图片：`public/assets/travel/japan/food-06-yashima-hamburg.jpeg`
@@ -81,7 +86,7 @@
 ## 卡片：骨付鸟
 - 页面小标题（eyebrow）：高松
 - 页面主标题（title）：本地的骨付鸟
-- 对应卡片序号：5
+- 对应卡片序号：6
 
 ### 内容块 1
 - 图片：`public/assets/travel/japan/food-08-honetsukidori.jpeg`
@@ -98,7 +103,7 @@
 ## 卡片：京都早餐
 - 页面小标题（eyebrow）：京都
 - 页面主标题（title）：上午简单的开始
-- 对应卡片序号：6
+- 对应卡片序号：7
 
 ### 内容块 1
 - 图片：`public/assets/travel/japan/food-12-kyoto-toast-set.jpeg`
@@ -113,7 +118,7 @@
 ## 卡片：鹿肉饭百佳店
 - 页面小标题（eyebrow）：京都
 - 页面主标题（title）：清水寺附近的百佳店：印度香料鹿肉饭
-- 对应卡片序号：7
+- 对应卡片序号：8
 
 ### 内容块 1
 - 图片：`public/assets/travel/japan/food-02-spiced-deer-rice.jpeg`
@@ -130,7 +135,7 @@
 ## 卡片：鸭川晚餐
 - 页面小标题（eyebrow）：京都
 - 页面主标题（title）：鸭川旁的单人晚餐
-- 对应卡片序号：8
+- 对应卡片序号：9
 
 ### 内容块 1
 - 图片：`public/assets/travel/japan/food-09-kamogawa-dinner.jpeg`
@@ -145,7 +150,7 @@
 ## 卡片：奈良午饭
 - 页面小标题（eyebrow）：奈良
 - 页面主标题（title）：没有成功搭讪的午饭
-- 对应卡片序号：9
+- 对应卡片序号：10
 
 ### 内容块 1
 - 图片：`public/assets/travel/japan/food-03-nara-lunch.jpeg`
@@ -164,7 +169,7 @@
 ## 卡片：大阪烧
 - 页面小标题（eyebrow）：京都
 - 页面主标题（title）：超级腻的大阪烧
-- 对应卡片序号：10
+- 对应卡片序号：11
 
 ### 内容块 1
 - 图片：`public/assets/travel/japan/food-04-okonomiyaki.jpeg`
@@ -179,7 +184,7 @@
 ## 卡片：芭菲
 - 页面小标题（eyebrow）：京都
 - 页面主标题（title）：小新园长大人的芭菲
-- 对应卡片序号：11
+- 对应卡片序号：12
 
 ### 内容块 1
 - 图片：`public/assets/travel/japan/food-05-parfait.jpeg`

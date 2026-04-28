@@ -27,6 +27,40 @@ function makeSingleDetailBlock(card: BaseCard): TravelSliderDetailBlock[] {
   ];
 }
 
+function mergeDuplicateCardsByTitle(cards: TravelSliderCard[]): TravelSliderCard[] {
+  const mergedCards: TravelSliderCard[] = [];
+  const cardByTitle = new Map<string, TravelSliderCard>();
+
+  for (const card of cards) {
+    const key = normalizeCompareText(card.title);
+    const existingCard = cardByTitle.get(key);
+
+    if (!existingCard) {
+      const clonedCard = {
+        ...card,
+        detailBlocks: [...card.detailBlocks],
+      };
+      mergedCards.push(clonedCard);
+      cardByTitle.set(key, clonedCard);
+      continue;
+    }
+
+    const existingBlockKeys = new Set(
+      existingCard.detailBlocks.map((block) => `${block.imageSrc}|${normalizeCompareText(block.text)}`),
+    );
+
+    for (const block of card.detailBlocks) {
+      const blockKey = `${block.imageSrc}|${normalizeCompareText(block.text)}`;
+      if (!existingBlockKeys.has(blockKey)) {
+        existingCard.detailBlocks.push(block);
+        existingBlockKeys.add(blockKey);
+      }
+    }
+  }
+
+  return mergedCards;
+}
+
 function buildBaseCardsFromExtract(items: ExtractLikeItem[]): BaseCard[] {
   return items.map((item) => ({
     eyebrow: item.eyebrow,
@@ -94,22 +128,27 @@ function buildCards({
   extractItems,
   expandMap,
   fallbackCards,
+  mergeDuplicateTitles = false,
 }: {
   extractItems: ExtractLikeItem[] | null;
   expandMap: TravelExpandMap | null;
   fallbackCards: BaseCard[];
+  mergeDuplicateTitles?: boolean;
 }): TravelSliderCard[] {
   const fromExtract = extractItems && extractItems.length > 0 ? buildBaseCardsFromExtract(extractItems) : [];
   if (fromExtract.length > 0) {
-    return attachDetailBlocks(fromExtract, expandMap);
+    const cards = attachDetailBlocks(fromExtract, expandMap);
+    return mergeDuplicateTitles ? mergeDuplicateCardsByTitle(cards) : cards;
   }
 
   const fromExpand = expandMap ? buildBaseCardsFromExpand(expandMap) : [];
   if (fromExpand.length > 0) {
-    return attachDetailBlocks(fromExpand, expandMap);
+    const cards = attachDetailBlocks(fromExpand, expandMap);
+    return mergeDuplicateTitles ? mergeDuplicateCardsByTitle(cards) : cards;
   }
 
-  return attachDetailBlocks(fallbackCards, expandMap);
+  const cards = attachDetailBlocks(fallbackCards, expandMap);
+  return mergeDuplicateTitles ? mergeDuplicateCardsByTitle(cards) : cards;
 }
 
 async function getFallbackTravelCards(slug: string, eyebrow: string): Promise<BaseCard[]> {
@@ -147,5 +186,5 @@ export async function getTravelFoodSliderCardsBySlug(slug: string): Promise<Trav
     getFallbackTravelCards(slug, '美食'),
   ]);
 
-  return buildCards({ extractItems, expandMap, fallbackCards });
+  return buildCards({ extractItems, expandMap, fallbackCards, mergeDuplicateTitles: true });
 }

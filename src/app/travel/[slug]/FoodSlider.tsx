@@ -1,7 +1,7 @@
 'use client';
 
 import Image from 'next/image';
-import { useEffect, useRef, useState, type TouchEvent } from 'react';
+import { useEffect, useLayoutEffect, useRef, useState, type TouchEvent } from 'react';
 import { useIPadPortraitTouch } from '@/lib/hooks/useIPadPortraitTouch';
 import type { TravelSliderCard } from '@/lib/types/travel-slider';
 import { getTravelDetailImageClass } from '@/lib/utils/travelDetailImage';
@@ -10,7 +10,7 @@ const VISIBLE_CARDS = 3;
 const CARD_GAP_PX = 19.2;
 const SIDE_PEEK_PX = 56;
 const CARD_WIDTH_PX = 370.5;
-const MARGIN_PX = 260;
+const DESKTOP_MARGIN_FALLBACK_PX = 260;
 const SLIDE_FINE_TUNE_PX = 0;
 const CARD_HEIGHT_REM = 28;
 const CARD_HEIGHT_MULTIPLIER = 1.1;
@@ -20,8 +20,7 @@ const SWIPE_MIN_DISTANCE_PX = 44;
 export default function FoodSlider({ cards }: { cards: TravelSliderCard[] }) {
   const sliderRootRef = useRef<HTMLDivElement | null>(null);
   const [viewportWidth, setViewportWidth] = useState<number>(1200);
-  const [isCoarsePointer, setIsCoarsePointer] = useState(false);
-  const [measuredTabletMarginPx, setMeasuredTabletMarginPx] = useState<number | null>(null);
+  const [measuredContainerOffsetPx, setMeasuredContainerOffsetPx] = useState<number | null>(null);
   const [startIndex, setStartIndex] = useState(0);
   const [activeCard, setActiveCard] = useState<number | null>(null);
   const touchStartRef = useRef<{ x: number; y: number } | null>(null);
@@ -30,13 +29,11 @@ export default function FoodSlider({ cards }: { cards: TravelSliderCard[] }) {
   const swipeTriggeredRef = useRef(false);
 
   const isMobile = viewportWidth < MOBILE_BREAKPOINT_PX;
-  const useTabletAlignment = !isMobile && (isCoarsePointer || viewportWidth <= 1180);
   const visibleCards = isMobile ? 1 : VISIBLE_CARDS;
   const cardGapPx = isMobile ? 12 : CARD_GAP_PX;
   const sidePeekPx = isMobile ? 20 : SIDE_PEEK_PX;
   const cardWidthPx = isMobile ? Math.max(248, Math.min(360, viewportWidth - 52)) : CARD_WIDTH_PX;
-  const tabletSectionMarginPx = viewportWidth >= 1024 ? 12.56 * 16 : 9.4 * 16;
-  const marginPx = isMobile ? 16 : useTabletAlignment ? measuredTabletMarginPx ?? tabletSectionMarginPx : MARGIN_PX;
+  const marginPx = isMobile ? 16 : measuredContainerOffsetPx ?? DESKTOP_MARGIN_FALLBACK_PX;
   const maxStartIndex = Math.max(0, cards.length - visibleCards);
 
   const handlePrev = () => {
@@ -109,37 +106,36 @@ export default function FoodSlider({ cards }: { cards: TravelSliderCard[] }) {
   const firstStepCorrectionPx = startIndex > 0 ? sidePeekPx : 0;
   const translateX = marginPx + edgePeekOffsetPx - firstStepCorrectionPx - startIndex * stepPx;
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     const updateViewportWidth = () => {
       setViewportWidth(window.innerWidth);
     };
 
-    const updateMeasuredTabletMargin = () => {
+    const updateMeasuredContainerOffset = () => {
       const root = sliderRootRef.current;
       const viewport = root?.querySelector('[data-travel-slider-viewport]') as HTMLElement | null;
       const container = root?.parentElement as HTMLElement | null;
       if (!viewport || !container) return;
-      setMeasuredTabletMarginPx(container.getBoundingClientRect().left - viewport.getBoundingClientRect().left);
-    };
-
-    const coarsePointerQuery = window.matchMedia('(hover: none) and (pointer: coarse)');
-    const updatePointerMode = () => {
-      setIsCoarsePointer(coarsePointerQuery.matches || navigator.maxTouchPoints > 0);
+      setMeasuredContainerOffsetPx(container.getBoundingClientRect().left - viewport.getBoundingClientRect().left);
     };
 
     const updateLayout = () => {
       updateViewportWidth();
-      updateMeasuredTabletMargin();
+      updateMeasuredContainerOffset();
     };
 
     updateLayout();
-    updatePointerMode();
     window.addEventListener('resize', updateLayout, { passive: true });
-    coarsePointerQuery.addEventListener('change', updatePointerMode);
+
+    const root = sliderRootRef.current;
+    const container = root?.parentElement ?? null;
+    const resizeObserver = new ResizeObserver(updateLayout);
+    if (root) resizeObserver.observe(root);
+    if (container) resizeObserver.observe(container);
 
     return () => {
       window.removeEventListener('resize', updateLayout);
-      coarsePointerQuery.removeEventListener('change', updatePointerMode);
+      resizeObserver.disconnect();
     };
   }, []);
 

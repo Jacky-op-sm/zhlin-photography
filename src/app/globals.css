@@ -1563,6 +1563,71 @@ body {
   opacity: 0.82;
 }
 
+@media (min-width: 1200px) {
+  .home-photographer-section,
+  .home-traveller-section,
+  .home-hobbyist-section {
+    padding: clamp(6.4rem, 4.5vw, 7.2rem) 0 clamp(7.2rem, 5.0625vw, 8.1rem);
+  }
+
+  .home-photographer-marquee {
+    transform: translateX(clamp(5.8rem, 4.53125vw, 7.25rem));
+    padding-inline: clamp(2.4rem, 1.875vw, 3rem);
+    font-size: clamp(5.1rem, 3.984375vw, 6.375rem);
+  }
+
+  .home-photographer-grid {
+    margin-top: clamp(5.6rem, 3.9375vw, 6.3rem);
+    width: min(100%, clamp(1393px, 68.02vw, 1741px));
+    gap: clamp(9.4rem, 7.34375vw, 11.75rem);
+  }
+
+  .home-hobbyist-grid {
+    margin-top: clamp(4.7rem, 3.3046875vw, 5.2875rem);
+  }
+
+  .home-photographer-card h2,
+  .home-traveller-place,
+  .home-hobbyist-title {
+    font-size: clamp(2.35rem, 1.8359375vw, 2.9375rem);
+  }
+
+  .home-photographer-card h2 {
+    margin-bottom: clamp(4.7rem, 3.3046875vw, 5.2875rem);
+  }
+
+  .home-photographer-image {
+    border-radius: clamp(3rem, 2.34375vw, 3.75rem);
+  }
+
+  .home-photographer-copy,
+  .home-traveller-copy {
+    margin-top: clamp(4.7rem, 3.3046875vw, 5.2875rem);
+  }
+
+  .home-hobbyist-copy {
+    margin-bottom: clamp(3.15rem, 2.21484375vw, 3.54375rem);
+    min-height: clamp(9rem, 6.328125vw, 10.125rem);
+  }
+
+  .home-photographer-quote {
+    font-size: clamp(1.38rem, 1.078125vw, 1.725rem);
+  }
+
+  .home-photographer-body,
+  .home-traveller-body,
+  .home-hobbyist-body {
+    font-size: clamp(0.89rem, 0.6953125vw, 1.1125rem);
+  }
+
+  .home-photographer-see-more {
+    margin-top: clamp(2rem, 1.40625vw, 2.25rem);
+    font-size: clamp(0.95rem, 0.7421875vw, 1.1875rem);
+    padding: clamp(0.5rem, 0.390625vw, 0.625rem) clamp(1rem, 0.78125vw, 1.25rem)
+      clamp(0.48rem, 0.375vw, 0.6rem);
+  }
+}
+
 @media (max-width: 767px) {
   :root {
     --site-page-padding: 1rem;
