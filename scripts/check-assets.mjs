@@ -54,7 +54,7 @@ function stripTrailingPunctuation(value) {
 
 async function collectAssetReferences() {
   const refs = new Set();
-  const assetPattern = /\/assets\/[A-Za-z0-9_./\-]+/g;
+  const assetPattern = /\/assets\/[^\s`"'<>\\]+/g;
 
   for (const item of textSearchRoots) {
     const target = path.join(projectRoot, item);
