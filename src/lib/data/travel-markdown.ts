@@ -5,6 +5,7 @@ export type TravelExtractItem = {
   title: string;
   body: string;
   imageSrc: string;
+  category?: string;
 };
 
 export function parseExtractMarkdown(markdown: string): TravelExtractItem[] {
@@ -15,6 +16,7 @@ export function parseExtractMarkdown(markdown: string): TravelExtractItem[] {
   let title = '';
   let body = '';
   let imageSrc = '';
+  let category = '';
 
   const flush = () => {
     if (!title && !eyebrow) return;
@@ -23,11 +25,13 @@ export function parseExtractMarkdown(markdown: string): TravelExtractItem[] {
       title: title.trim(),
       body: body.trim(),
       imageSrc: normalizeImagePath(imageSrc.trim()),
+      category: category.trim() || undefined,
     });
     eyebrow = '';
     title = '';
     body = '';
     imageSrc = '';
+    category = '';
   };
 
   for (const rawLine of lines) {
@@ -47,6 +51,12 @@ export function parseExtractMarkdown(markdown: string): TravelExtractItem[] {
     const titleMatch = line.match(/^-\s*大标题：\s*(.+)$/);
     if (titleMatch) {
       title = titleMatch[1];
+      continue;
+    }
+
+    const categoryMatch = line.match(/^-\s*分类：\s*`?([^`]+?)`?\s*$/);
+    if (categoryMatch) {
+      category = categoryMatch[1];
       continue;
     }
 

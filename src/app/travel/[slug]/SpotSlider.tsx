@@ -17,7 +17,12 @@ const CARD_HEIGHT_MULTIPLIER = 1.1;
 const MOBILE_BREAKPOINT_PX = 768;
 const SWIPE_MIN_DISTANCE_PX = 44;
 
-export default function SpotSlider({ cards }: { cards: TravelSliderCard[] }) {
+type SpotSliderProps = {
+  cards: TravelSliderCard[];
+  cardBackgroundClassName?: string;
+};
+
+export default function SpotSlider({ cards, cardBackgroundClassName = 'bg-white' }: SpotSliderProps) {
   const sliderRootRef = useRef<HTMLDivElement | null>(null);
   const [viewportWidth, setViewportWidth] = useState<number>(1200);
   const [measuredContainerOffsetPx, setMeasuredContainerOffsetPx] = useState<number | null>(null);
@@ -211,7 +216,7 @@ export default function SpotSlider({ cards }: { cards: TravelSliderCard[] }) {
                 onClick={() => setActiveCard(cardId)}
                 aria-label={`Open card ${cardId}`}
               >
-                <article className="overflow-hidden rounded-[1.9rem] bg-white p-6" style={{ height: `${cardHeightRem}rem` }}>
+                <article className={`overflow-hidden rounded-[1.9rem] ${cardBackgroundClassName} p-6`} style={{ height: `${cardHeightRem}rem` }}>
                   <CardContent card={card} />
                 </article>
               </button>

@@ -10,5 +10,6 @@ export type TravelSliderCard = {
   body: string;
   imageSrc: string;
   imageAlt: string;
+  category?: string;
   detailBlocks: TravelSliderDetailBlock[];
 };

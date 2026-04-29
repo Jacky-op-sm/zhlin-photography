@@ -2,7 +2,7 @@ import type { Metadata } from 'next';
 import Image from 'next/image';
 import { notFound } from 'next/navigation';
 import { getTravelBySlug, getTravelSlugs } from '@/lib/data/travel';
-import { getTravelFoodSliderCardsBySlug, getTravelSpotSliderCardsBySlug } from '@/lib/data/travel-slider';
+import { getTravelBookstoreSliderCardsBySlug, getTravelFoodSliderCardsBySlug, getTravelSpotSliderCardsBySlug } from '@/lib/data/travel-slider';
 import SpotSlider from './SpotSlider';
 import FoodSlider from './FoodSlider';
 
@@ -34,8 +34,9 @@ export async function generateMetadata({ params }: { params: { slug: string } })
 
 export default async function TravelDetailPage({ params }: { params: { slug: string } }) {
   const travel = await getTravelBySlug(params.slug);
-  const [spotCards, foodCards] = await Promise.all([
+  const [spotCards, bookstoreCards, foodCards] = await Promise.all([
     getTravelSpotSliderCardsBySlug(params.slug),
+    getTravelBookstoreSliderCardsBySlug(params.slug),
     getTravelFoodSliderCardsBySlug(params.slug),
   ]);
 
@@ -92,6 +93,20 @@ export default async function TravelDetailPage({ params }: { params: { slug: str
           <SpotSlider cards={spotCards} />
         </div>
       </section>
+
+      {bookstoreCards.length > 0 ? (
+        <section className="bg-white px-6 py-16 sm:px-[9.4rem] sm:py-20 lg:px-[12.56rem] lg:py-24">
+          <div className="mx-auto w-full max-w-[1880px]">
+            <h2
+              className="text-4xl font-semibold tracking-tight text-neutral-900 sm:text-5xl"
+              style={{ marginLeft: `${SPOT_MARGIN_PX}px` }}
+            >
+              书店
+            </h2>
+            <SpotSlider cards={bookstoreCards} cardBackgroundClassName="bg-[rgba(245,245,247,1)]" />
+          </div>
+        </section>
+      ) : null}
 
       {['japan', 'nanjing', 'shanghai', 'beijing', 'dongbei'].includes(params.slug) ? (
         <section className="bg-white px-6 py-16 sm:px-[9.4rem] sm:py-20 lg:px-[12.56rem] lg:py-24">

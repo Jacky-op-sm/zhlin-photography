@@ -19,6 +19,7 @@
     "build:shanghai-card-expand": "node scripts/build-shanghai-card-expand.mjs",
     "build:beijing-card-expand": "node scripts/build-beijing-card-expand.mjs",
     "build:dongbei-card-expand": "node scripts/build-dongbei-card-expand.mjs",
+    "extract:travel-cards": "node scripts/extract-travel-cards-from-tex.mjs",
     "polish:card-expand": "node scripts/polish-card-expand.mjs"
   },
   "dependencies": {

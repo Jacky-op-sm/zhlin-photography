@@ -8,6 +8,7 @@ import type { TravelSliderCard, TravelSliderDetailBlock } from '@/lib/types/trav
 import type { TravelExpandMap } from '@/lib/types/travel-expand';
 
 const FOOD_SLUGS = new Set(['japan', 'nanjing', 'shanghai', 'beijing', 'dongbei']);
+const BOOKSTORE_CATEGORY = '书店';
 
 type BaseCard = Omit<TravelSliderCard, 'detailBlocks'>;
 
@@ -68,6 +69,7 @@ function buildBaseCardsFromExtract(items: ExtractLikeItem[]): BaseCard[] {
     body: item.body,
     imageSrc: item.imageSrc,
     imageAlt: item.title,
+    category: 'category' in item ? item.category : undefined,
   }));
 }
 
@@ -174,7 +176,25 @@ export async function getTravelSpotSliderCardsBySlug(slug: string): Promise<Trav
     getFallbackTravelCards(slug, '旅途'),
   ]);
 
+  if (extractItems && extractItems.length > 0) {
+    const spotExtractItems = extractItems.filter((item) => item.category !== BOOKSTORE_CATEGORY);
+    const spotCards = attachDetailBlocks(buildBaseCardsFromExtract(spotExtractItems), expandMap);
+    return spotCards;
+  }
+
   return buildCards({ extractItems, expandMap, fallbackCards });
+}
+
+export async function getTravelBookstoreSliderCardsBySlug(slug: string): Promise<TravelSliderCard[]> {
+  const [extractItems, expandMap] = await Promise.all([
+    getTravelCardExtractItemsBySlug(slug),
+    getTravelExpandMapBySlug(slug),
+  ]);
+
+  if (!extractItems || extractItems.length === 0) return [];
+
+  const bookstoreExtractItems = extractItems.filter((item) => item.category === BOOKSTORE_CATEGORY);
+  return attachDetailBlocks(buildBaseCardsFromExtract(bookstoreExtractItems), expandMap);
 }
 
 export async function getTravelFoodSliderCardsBySlug(slug: string): Promise<TravelSliderCard[]> {
