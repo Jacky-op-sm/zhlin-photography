@@ -5,7 +5,7 @@ import path from 'node:path';
 const projectRoot = process.cwd();
 const assetsRoot = path.join(projectRoot, 'public', 'assets');
 
-const maxTotalMb = Number(process.env.ASSET_TOTAL_MB ?? 80);
+const maxTotalMb = Number(process.env.ASSET_TOTAL_MB ?? 150);
 const maxFileMb = Number(process.env.ASSET_MAX_FILE_MB ?? 2);
 
 const textSearchRoots = [

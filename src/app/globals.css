@@ -449,18 +449,6 @@ body {
     backdrop-filter: blur(18px);
   }
 
-  .site-mobile-link {
-    border-radius: 1rem;
-    color: var(--portfolio-muted);
-    transition:
-      background-color var(--transition-fast),
-      color var(--transition-fast);
-  }
-
-  .site-mobile-link:hover {
-    color: var(--portfolio-text);
-    background: color-mix(in srgb, var(--portfolio-panel) 88%, white 12%);
-  }
 }
 
 /* ============================
