@@ -10,6 +10,7 @@ const maxFileMb = Number(process.env.ASSET_MAX_FILE_MB ?? 2);
 
 const textSearchRoots = [
   'src',
+  'content',
   'data',
   'scripts',
   'e2e',

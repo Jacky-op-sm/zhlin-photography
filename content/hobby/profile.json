@@ -1,0 +1,21 @@
+{
+  "intro": "阅读、电影、游戏，时间都花在了这里。",
+  "externalProfiles": {
+    "goodreads": "https://www.goodreads.com/user/show/92395148-jacky",
+    "letterboxd": "https://letterboxd.com/madscientist4/diary/"
+  },
+  "lolProfile": {
+    "server": "CN",
+    "rank": "超凡大师",
+    "mainRoles": [
+      "打野",
+      "中单"
+    ],
+    "championPool": [
+      "杰斯",
+      "卡牌",
+      "发条"
+    ],
+    "currentInsight": "我最喜欢的三名选手：Zeus, Chovy, Last丶炫神"
+  }
+}

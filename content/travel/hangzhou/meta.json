@@ -1,0 +1,47 @@
+{
+  "slug": "hangzhou",
+  "zhName": "杭州",
+  "enName": "Hangzhou",
+  "period": "2024 年 7 月 - 至今",
+  "location": "杭州，中国",
+  "cardTitle": "杭州游记",
+  "cover": "/assets/travel/hangzhou-front.jpeg",
+  "hero": "/assets/travel/hangzhou-front.jpeg",
+  "summary": "杭州的这一页很轻，主要围绕西湖、烟雨和慢节奏散步展开。",
+  "tags": [
+    "西湖",
+    "烟雨",
+    "日常"
+  ],
+  "itinerary": [
+    "西湖漫步",
+    "烟雨中的湖边观察",
+    "城市里慢速移动的一天",
+    "把杭州当作日常摄影的练习场"
+  ],
+  "spots": [
+    {
+      "name": "西湖",
+      "description": "杭州最容易和雨联系在一起的地方。"
+    },
+    {
+      "name": "湖边街道",
+      "description": "适合观察光线和行人的慢节奏空间。"
+    }
+  ],
+  "photoStory": "这页更像杭州的呼吸练习：有风、有雨、有湖面，也有不赶时间的散步。",
+  "reflection": "杭州离我太近，反而容易忽视。把它放进 Travel 里后，我更想保留的是那种慢下来的城市节奏，而不是某一个具体景点。",
+  "gallery": [
+    {
+      "title": "西湖与烟雨",
+      "layout": "single",
+      "images": [
+        {
+          "src": "/assets/travel/hangzhou-front.jpeg",
+          "alt": "杭州游记封面",
+          "caption": "杭州这一页的封面。"
+        }
+      ]
+    }
+  ]
+}

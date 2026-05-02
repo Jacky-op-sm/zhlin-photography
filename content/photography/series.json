@@ -1,0 +1,79 @@
+[
+  {
+    "slug": "street",
+    "title": "街拍摄影",
+    "overline": "街拍摄影",
+    "landingSummary": "街拍是对城市的观察，也是去展现平日被人忽略的美。",
+    "landingDescription": "我喜欢去观察光影，去捕捉人们生存的状态。",
+    "heroLead": "街拍是我观察城市、理解日常的一种方式。",
+    "statement": [
+      "我被那些不喧哗的瞬间吸引：玻璃中的倒影、台阶上的硬光、路口边短暂停顿的人。这些碎片比宏大的景观更真实地承载着城市节奏。",
+      "这组照片依赖耐心与接近。我希望画面是观察式的，而不是打扰式的，在秩序与偶然之间保留街头的呼吸感。"
+    ],
+    "cover": "/assets/photos/street/street-scene-1.jpg",
+    "href": "/photography/street",
+    "ctaLabel": "查看系列",
+    "featuredPublications": [
+      {
+        "title": "Nanjing Travel Story",
+        "description": "A long-form city walk with portraits, food notes, and narrative captions.",
+        "image": "/assets/travel/nanjing-hero-wutong-street.jpg",
+        "href": "/travel/nanjing",
+        "ctaLabel": "Read journey"
+      },
+      {
+        "title": "Shanghai Travel Story",
+        "description": "Dense street scenes and movement studies from one of my busiest routes.",
+        "image": "/assets/travel/shanghai-hero-cityscape.jpg",
+        "href": "/travel/shanghai",
+        "ctaLabel": "Read journey"
+      }
+    ]
+  },
+  {
+    "slug": "pets",
+    "title": "宠物摄影",
+    "overline": "宠物摄影",
+    "landingSummary": "动物给予我感情，热情的狗、高冷的猫，以及更多沉默的生命。",
+    "landingDescription": "我最喜欢拍狗狗们，它们来自故乡，各有个性。",
+    "heroLead": "宠物摄影对我来说是慢下来的肖像练习。",
+    "statement": [
+      "我拍动物的方式更像在安静房间里拍人：温和、不强迫。当好奇转为放松，最好的画面才会出现。",
+      "这些照片追求安静却不僵硬。一个眼神、耳朵的轻微转动、光线里的身体重心变化，都会让角色感自己浮现。"
+    ],
+    "cover": "/assets/photos/pets/Z52_6041.jpg",
+    "href": "/photography/pets",
+    "ctaLabel": "查看系列"
+  },
+  {
+    "slug": "project",
+    "title": "宿舍阳台下的十字路口",
+    "overline": "项目摄影",
+    "landingSummary": "我看着宿舍阳台下的十字路口，不同天气、不同季节，反复经过同一地点。",
+    "landingDescription": "这是我的第一个个人项目，我希望通过持续记录，看到时间如何改变日常。",
+    "heroLead": "这个项目来自对同一地点的长期返回与观察。",
+    "statement": [
+      "这组作品始于阳台下的那条路，并在反复返回中不断展开。同一个路口在不同天气、不同时间、不同心境里显现出新的层次。",
+      "我关心的是重复如何改变意义。固定机位可以容纳流动，日常的累积也能让一个地方变得亲近，而不陷入怀旧。"
+    ],
+    "cover": "/assets/photos/project/1.jpg",
+    "href": "/photography/project",
+    "ctaLabel": "查看系列",
+    "featuredPublications": [
+      {
+        "title": "Hangzhou City Notes",
+        "description": "A companion city archive that extends the same long-form attention.",
+        "image": "/assets/travel/hangzhou-front.jpeg",
+        "href": "/travel/hangzhou",
+        "ctaLabel": "Read journey"
+      },
+      {
+        "title": "Daily Notes / Hobby",
+        "description": "Reading, films, and game notes that shaped the rhythm of this project.",
+        "image": "/assets/home/three-colours-trilogy-cover.png",
+        "href": "/hobby",
+        "ctaLabel": "View notes"
+      }
+    ]
+  }
+]

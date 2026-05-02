@@ -1,0 +1,489 @@
+<article class="nanjing-rb-article">
+      <figure class="nanjing-rb-hero">
+        <img src="../../assets/travel/nanjing-hero-wutong-street.jpg" alt="南京街头的梧桐与建筑" loading="eager" decoding="async">
+      </figure>
+
+      <header class="nanjing-rb-header">
+        <p class="nanjing-rb-channel">旅行</p>
+        <h1>南京游记</h1>
+        <ul class="nanjing-rb-tags" aria-label="标签">
+          <li>南京</li>
+          <li>老门东</li>
+          <li>夫子庙</li>
+          <li>摄影</li>
+        </ul>
+      </header>
+
+      <section class="nanjing-rb-section">
+        <p class="nanjing-rb-section-index">前言</p>
+        <h2>当初是谁说要来南京的</h2>
+        <p>在一辆黄色的当地出租车里，我坐在后座的中间，左边是穿着白色羽绒服的lucky，右边是黑色薄外套的阿呆，前座是夹克衫的掏粪。这已是在南京的最后一天，我们在前往酒店的路上，离这次旅行的结束不过一个小时。</p>
+        <p>“当初是谁说要来南京的？” lucky嘟着嘴，收敛不住笑。</p>
+        <p>是的，我已经记不清当初是谁第一个提出要来南京的，只记得要按照往年的惯例，和lucky在春节聚一聚，既然他不能来找我们，那只能我们去找他。</p>
+        <div class="nanjing-rb-break" aria-hidden="true"></div>
+        <p>我想起出发前三天，当我把小红书的攻略整理到平板里，看着一旁崭新的、立在桌面上的相机，我明白南京于我是个练习摄影的地方；</p>
+        <p>当掏粪在群里零零散散地分享不知从何处找来的小吃店名时，南京于他是个吃美食的地方；</p>
+        <p>当老头和阿呆带着大包小包、等待火车的到来时，南京于他们是个中转的地方；</p>
+        <p>至于lucky，他向来是只出一个人，事后还要开玩笑，猛烈抨击，南京于他就不是个地方。</p>
+        <div class="nanjing-rb-break" aria-hidden="true"></div>
+        <p>我小时候去过南京，依稀记得和母亲站在老门东的门牌下，外面天色已黑，人群黑压压地一片前进着，走向灯火明亮的夜市。</p>
+        <p>老头也去过，在南京大牌档的底下，他说高二那年的暑假，和高中同学在这里吃了晚饭，掏粪也在；</p>
+        <p>lucky十年前可是南京的常客，久住在新街口附近的姑姑家里。</p>
+        <p>但要说现在的我们对南京是个什么看法，我们只能摇摇头。毕竟一个地方去过但都忘了，那就不算是去过。</p>
+        <p>所以才有了此次的出行。</p>
+      </section>
+
+      <section class="nanjing-rb-section">
+        <p class="nanjing-rb-section-index">旅行</p>
+        <h2>老门东：走吧，没必要一直往里硬挤</h2>
+        <p>我和阿呆走在斑马线上，下午四点的太阳投下柔和、温热的光。线后面的汽车整齐地排列在一起，长得望不到底。一旁身穿绿色警服的交通警察，手里拿着指挥棒，左手笔直地展开，右手抬到胸口的位置，时不时吹动口哨，警告司机此处不能左转。</p>
+        <p>“我想快点把这杯奶茶扔掉。” 阿呆摇了摇手里还剩四分之一的奶茶，这是在半个小时前跟着老头点的茶颜悦色。我猛吸了一口自己的那杯，也跟着摇了摇，</p>
+        <p>“南京的司机也太坑了，横冲直撞也就算了，还有两公里就停了，钱却算进去了。”</p>
+        <p>我看着地图，和阿呆往老门东的方向走，说好和掏粪他们在北门汇合，心里还有点愧疚。</p>
+        <div class="nanjing-rb-break" aria-hidden="true"></div>
+        <p>我们是在中午十二点下的火车，坐了半个小时的地铁，在正午的大太阳下步行了一公里后抵达的民宿。</p>
+        <p>民宿在徽商银行的后面，从外观看，是座经营状况不错的办公楼改建。</p>
+        <p>“现在我学聪明了，都是从实拍视频里民宿外的走廊来判断好坏，一般走廊装修好的，里面基本也不会太坏。” 我自信地分享自己挑选的经验，带着大家向门内走去。</p>
+        <p>门廊是块劣质、带着污点的木板，左侧墙壁旁放着一张小的透明桌，上面摆着塑料的装饰花，右侧是唯一的卫生间，排风机发出轰隆隆的声音，像是在下雷雨，房间弥漫着不知从哪发出来的、腐烂的气味；客厅光秃秃地放着沙发床，一张小木桌挤在窗户旁，过道狭小；二楼两张大床紧挨着，隔开的内间封闭得像座棺材。</p>
+        <p>毫无疑问，我被骗了，但却是大家一起买单。</p>
+      </section>
+
+      <figure class="nanjing-rb-media nanjing-rb-media--single">
+        <img src="../../assets/travel/nanjing/nj-laomendong-crowd.jpg" alt="老门东人潮" loading="lazy" decoding="async">
+      </figure>
+
+      <section class="nanjing-rb-section">
+        <p>当看到老门东底下的人潮时，我就知道短时间内不可能和掏粪他们相遇。从入口望去，不是记忆里黑压压一片的人海，而是穿着各色衣服、像蜗牛一般向前蠕动的男女老少；入口处还有将近二三十米的队伍。</p>
+        <p>手是不好伸开的，脚是需要等待，才能向前迈一小步的；眼睛除了去看前面人的后脑勺，就只有街道两边开的商铺；一不留神，就找不到刚才还在一旁的阿呆了。</p>
+        <blockquote>
+          <p>“走吧，没必要一直往里硬挤。”</p>
+        </blockquote>
+        <p>我跟着往回走的阿呆的背影，低着头，缩着肩膀，又回到了入口。</p>
+        <p>在去「大报恩塔」的小路上，阿呆时不时地停在原地，举起挂在胸前的相机，对着晴天、墙壁和居民楼拍照。我像开关一样打开寻找猎物的眼，开始打猎。</p>
+      </section>
+
+      <div class="nanjing-rb-media-grid">
+        <figure class="nanjing-rb-media">
+          <img src="../../assets/travel/nanjing/nj-mirror-window-framing.jpeg" alt="圆孔镜面中的景物" loading="lazy" decoding="async">
+          <figcaption>相比直接拍摄，圆孔的镜面让景物多了一个层次，且孔面本身是个很好的取景框。</figcaption>
+        </figure>
+        <figure class="nanjing-rb-media">
+          <img src="../../assets/travel/nanjing/nj-wall-fir-tree-composition.jpeg" alt="墙面与落叶松的构图" loading="lazy" decoding="async">
+          <figcaption>斜向上的墙壁作为引导，让人的视线落在碧绿的落叶松上，再配合落日的光影，组成一个干净的画面。</figcaption>
+        </figure>
+      </div>
+
+      <figure class="nanjing-rb-media nanjing-rb-media--single">
+        <img src="../../assets/travel/nanjing/nj-sunset-portrait-adai.jpeg" alt="落日前人物与光影" loading="lazy" decoding="async">
+        <figcaption>本意是想凸显光影的对比，可落日前的光线柔和，阿呆的表情有些呆滞。</figcaption>
+      </figure>
+
+      <section class="nanjing-rb-section">
+        <p class="nanjing-rb-section-index">旅行</p>
+        <h2>夫子庙：南京啊，我觉得不如…</h2>
+        <p>落日时分，红彤彤的太阳倒映在秦淮河上，几艘小型游船缓缓地开往岸边，船顶亮起橙黄的修饰灯，底下悬挂着红灯笼，湖面波光粼粼，像幅印象画一样染上颜色。河边有座桥，桥上车流不息，行人走在两侧的高地上，有拿着红旗、走在前头的导游领队，放大的声音从胸前的扩音器里传来；有倚靠在栏杆，高举手机自拍的情侣；有骑在父亲肩上、手指远方的小男孩…</p>
+        <p>“掏粪他们到底什么时候来？” 我站在桥上，眺望远方的城墙，墙上依稀可见人影。</p>
+        <p>阿呆摇摇头不说话，忽而他扬起头，脸朝向侧方，“这不来了嘛。”</p>
+        <p>我循着他指示的方向，看着他们三人穿过街边卖糖葫芦、玩具的小商贩们，lucky一边说，一边止不住笑，声音变得越来越清晰，</p>
+        <p>“南京啊，我觉得不如…”</p>
+        <p>时隔两个小时，这是我们第一次的相遇。</p>
+      </section>
+
+      <figure class="nanjing-rb-media nanjing-rb-media--single">
+        <img src="../../assets/travel/nanjing/nj-qinhuai-bridge-couple.jpeg" alt="桥上一对情侣的剪影" loading="lazy" decoding="async">
+        <figcaption>相遇后的分离来得很快。起因是掏粪想去厕所，厕所在街道的深处，等待时，我和阿呆走到了秦淮河的岸边，就此便走散了。幸运的是，我得此机会拍了桥上一对情侣的剪影。</figcaption>
+      </figure>
+
+      <section class="nanjing-rb-section">
+        <p>下次相遇时，lucky坐在钢铁博物馆一旁的椅子上休息，天空一片深蓝，已看不见太阳，月亮也未露面，椅子旁的水池倒映着博物馆的宣传画。</p>
+        <p>“我看啊，要说最无组织无纪律的，就是你和阿呆了。”</p>
+        <p>我挠挠头，笑着不说话，只是拿着相机，蹲坐在靠近水池的地上，寻找角度按下快门。</p>
+      </section>
+
+      <figure class="nanjing-rb-media nanjing-rb-media--single">
+        <img src="../../assets/travel/nanjing/nj-night-pool-reflection.jpeg" alt="水池边拍摄的夜色场景" loading="lazy" decoding="async">
+      </figure>
+
+      <section class="nanjing-rb-section">
+        <p>吃过晚饭，散步时阿呆和老头钻进了一家文创店，在这家店的门口，一个戴着深棕色棒球帽的老头坐在木凳上，手里捏着实木的模型；离老头不远处，一个穿着工作服、年纪在三十上下的女人在打哈欠。商店的中央挂着一条三米长的线，上面悬挂着女生会喜欢的小摆饰。</p>
+        <p>当其余三人等不下去，派我前去查看，只见悬挂物的后面，阿呆和老头拿起一个个小罐子，闻了闻后又放下，</p>
+        <p>“老板我要这个西瓜味的香水，请问多少钱一瓶啊。”</p>
+        <p>等在门外的掏粪，此时把脚移来移去，看着相邻的洗耳店，对着lucky说，“都够我们去一旁洗次耳朵了。”</p>
+        <p>十分钟后，拎着纸袋的阿呆和老头走出门外。阿呆把纸袋提到空中，左右摆了摆，</p>
+        <p>“卧槽，只要七十，真是赚大发了，网上这气味的都要好几百。”</p>
+        <p>掏粪、lucky和我都不说话，只是快要憋不住笑了。</p>
+      </section>
+
+      <figure class="nanjing-rb-media nanjing-rb-media--single">
+        <img src="../../assets/travel/nanjing/nj-portrait-perfume-shoppers.jpeg" alt="买香水的两个人" loading="lazy" decoding="async">
+        <figcaption>后来每天出发前，阿呆都会喷些西瓜味的香水到我们的衣服上。</figcaption>
+      </figure>
+
+      <section class="nanjing-rb-section">
+        <div class="nanjing-rb-break" aria-hidden="true"></div>
+        <p>后来我们上了次厕所，又走散了，在秦淮灯会下重聚。</p>
+        <p>“我刚在网上找到一个人，他能免费带我们进去，去不去？” 阿呆加快了脚步，小跑到走在前头的我的一旁。</p>
+        <p>我摇了摇头，只是往夫子庙的方向走去，“天下哪有这样的好事，能免我们每个人90块钱的门票钱。”</p>
+        <p>夫子庙的情形和下午的老门东相似，不同的是，晚上遮住了部分衣服的颜色，眼前是黑压压的一片。为了管控人流，每过三百米，就有一列穿着警服的警察，他们立着军姿，警告每个逆行的人。</p>
+        <p>途中遇到一个地方排起了长队，在队伍的前面人们纷纷举起手机，对着同一个方向，原来是条挂着灯笼的龙。</p>
+        <p>自此，我们便不抱有任何希望，朝出口的方向离去。</p>
+      </section>
+
+      <figure class="nanjing-rb-media nanjing-rb-media--single">
+        <img src="../../assets/travel/nanjing/nj-fuzimiao-night-crowd.jpg" alt="夫子庙夜晚的人潮" loading="lazy" decoding="async">
+      </figure>
+
+      <section class="nanjing-rb-section">
+        <h2>红山动物园：还好我结实，我直接给他顶回去了</h2>
+      </section>
+
+      <figure class="nanjing-rb-media nanjing-rb-media--single">
+        <img src="../../assets/travel/nanjing/nj-hongshan-zoo-entrance.jpg" alt="红山动物园入口人潮" loading="lazy" decoding="async">
+      </figure>
+
+      <section class="nanjing-rb-section">
+        <p>lucky双手紧握住挂在胸前的相机，向玻璃门的方向走去。</p>
+        <p>我站在原地，看着他怎样一步步穿过推搡的人群，外面有及腰高、见空就往里钻的小孩，中间有穿着大红棉袄，说话像喇叭的大妈，把小孩背在背上、侧着身往里挤的父亲，最前面是右手高举手机、左手和身体抵住墙的人们。</p>
+        <p>他不见了许久，像被吸收进了沼泽地里。</p>
+        <p>直到一身因挤压有些变形的白色羽绒服，从黑色丛中钻出，沼泽地才把他吐了出来。</p>
+        <p>“后面的小孩猛顶我的屁股。” 他理了理衣服，抬头笑着，右手单拎着还亮着屏幕的相机，上面是一只睡着的狗熊的屁股，</p>
+        <p>“还好我结实，我直接给他顶回去了。”</p>
+        <div class="nanjing-rb-break" aria-hidden="true"></div>
+        <p>我懒得往人群挤，和掏粪坐在休息区时，阳光透过顶上的布带，一束光打在半青半白的墙壁上。</p>
+        <p>“掏粪你快坐到光底下。” 我向右摆了摆手。</p>
+        <p>光像一把出鞘的长剑，照在掏粪的左半边脸上，其余笼罩在阴影中。</p>
+      </section>
+
+      <figure class="nanjing-rb-media nanjing-rb-media--single">
+        <img src="../../assets/travel/nanjing/nj-taofen-light-shadow.jpg" alt="光影中的掏粪" loading="lazy" decoding="async">
+      </figure>
+
+      <section class="nanjing-rb-section">
+        <div class="nanjing-rb-break" aria-hidden="true"></div>
+        <p>“还不走吗？” lucky说。</p>
+        <p>他的肩膀微微前倾，相机垂落在胸前，眼皮耷拉着，嘴唇表面被太阳晒得有些脱皮。他低着头看着地面，地面的尽头依旧是一片人群，一旁立着指示牌，上面写着老虎馆。</p>
+        <p>“看完这个我们就走。” 老头说。</p>
+        <p>老头戴着墨镜，嘴角斜向上笑着，眯着眼。他穿着一身橘红色的衣服，背着土黄色的双肩包，笔直地站着，眼镜竖着挂在胸前，双手握在肩带，抬头目视远方。</p>
+        <p>他们顺着人潮往里走去。</p>
+        <p>我站在指示牌的入口，一位姑娘紧挨在我的右侧。她年纪与我相当，背着亮丽的黄色书包，脚上一双白色的帆布鞋，下身是浅蓝色宽松的牛仔裤，上身搭配着米色毛衣和一件薄外套。</p>
+        <p>她朝入口里侧走去，那里游客们正排起长队，等着和卡通形象的老虎模型拍照。</p>
+        <p>她四处张望，最后停在墙壁边上，右手高举手机，左手比成剪刀，对着前镜微笑。待她放下手机，她走到队伍的末尾，拍了拍前方两个站在一起的女生的肩膀。</p>
+        <p>老虎在阳光底下闪闪发亮，一旁的她露出和刚才一样的微笑，这次更加自然。</p>
+        <p>在她忙着拍照时，我曾两次举起相机，眼睛贴着取景框，而后又放下。我刚要往她的方向前进一步，而后又退了一步。</p>
+        <p>人潮在我的右侧平稳地流动着。</p>
+        <p>她向两位女生点了点头后，朝我走来。我右脚又想着踏出一步，但收住了。她紧挨着从我面前走过，不一会儿，就被人潮吞没了。</p>
+      </section>
+
+      <section class="nanjing-rb-section">
+        <h2>南京博物院：看艺术作品是件私人的事</h2>
+        <p>“你们先走。” 我站在原地，lucky、阿呆和掏粪三个人往走廊深处走去，“我去上个洗手间。”</p>
+        <p>看艺术作品是件私人的事，你得一个人看才行，我一边洗着手，一边想着。</p>
+        <p>待再收到他们的消息时，我正在南京博物院的民国馆里走着，眼前有位穿着青绿色旗袍的女性倚靠在门旁，她年纪在四十上下，嘴唇红润，皮肤在白光照射下显得细滑。她右手抵着门框，左手叉腰，前倾着身体，旗袍在胸前那一段绷紧了。</p>
+        <p>“对，就是这样。”离她五米远的摄影师说着，“把下巴再抬高一点。”</p>
+        <p>咔擦一声，闪光灯下女子露出妩媚的微笑。</p>
+        <p>“我也要和妈妈拍。” 小女孩说。她从摄影师身边走过去，一身白色的旗袍，十岁上下。她站到门边，贴着女人的腿。</p>
+        <div class="nanjing-rb-break" aria-hidden="true"></div>
+        <p>我从她们身旁经过，在一家餐厅门口旁的椅子坐下。眼皮一旦合上，要花不少力气再打开。</p>
+        <p>我好像来过这个地方。橘黄色的砖瓦搭建的楼房，贴了彩色图案的圆拱形窗户，灰黑色的瓷砖地板，两层楼的车站，车站前停了辆民国时期的汽车，灯光在它黑色光滑的表面发亮。</p>
+        <p>是在什么时候呢。我彻底闭上了眼睛，听不见游客的脚步和说话声了。</p>
+        <div class="nanjing-rb-break" aria-hidden="true"></div>
+        <p>“你人呢？” 手机震了一下。</p>
+        <p>“我们蹭到了免费的讲解。” 又震了一下。</p>
+        <p>是lucky发在群里的消息。我站起来，伸了伸胳膊腿，往回走。</p>
+      </section>
+
+      <figure class="nanjing-rb-media nanjing-rb-media--single">
+        <img src="../../assets/travel/nanjing/nj-nanjing-museum-caravaggio.jpeg" alt="南京博物院中的卡拉瓦乔展" loading="lazy" decoding="async">
+      </figure>
+
+      <section class="nanjing-rb-section">
+        <p>我看着卡拉瓦乔的画。</p>
+        <p>人物在光里，背景是黑的，脑中闪过黑白的摄影作品。</p>
+        <p>他们的眼睛看向同一个地方。你也跟着看过去。</p>
+        <p>红、黄、蓝放在一起，饱和得亮丽。</p>
+        <p>馆里有三四十幅这样的画。我一幅一幅地看，走得很慢。</p>
+      </section>
+
+      <section class="nanjing-rb-section">
+        <h2>小吃街与机车男：随便骗骗咯</h2>
+      </section>
+
+      <figure class="nanjing-rb-media nanjing-rb-media--single">
+        <img src="../../assets/travel/nanjing/nj-portrait-biker-man.jpeg" alt="机车男" loading="lazy" decoding="async">
+      </figure>
+
+      <section class="nanjing-rb-section">
+        <p>掏粪站在队伍里，前面是戴着头盔、身穿骑车服的年轻男子，后面是穿着黑衣服的大妈。队伍尽头，一个女人穿着红色的围裙，正用锅铲摊平面饼，面饼上面铺了一层薄薄的鸡蛋，中心放着一片里脊，四周涂着棕红色的酱料。摊位旁，小女孩把做好的煎饼放进塑料袋，笑着递给顾客。</p>
+        <p>我站在离队伍不远的街边，一个老人骑着四轮电动椅经过，嘴上叼着烟。lucky站在我身旁。远处的阿呆再等两个人就能买到青团。</p>
+        <p>“来，掏粪，看我这边。” 我说着，把相机对准他。正当lucky也举起挂在胸前的相机，</p>
+        <p>“你们这相机买来多少钱？” 机车男说着，转过身，依旧戴着头盔，说话时头盔后面的眼睛变小了。</p>
+        <p>“我买来将近两万。” lucky说。</p>
+        <p>“我一万多。” 我说。</p>
+        <p>我们一齐看向机车男。</p>
+        <p>“几年前我买了佳能的旗舰款，” 他把目光落在lucky的相机上，“当时花了十万。”</p>
+        <p>阿姨卷起了两个煎饼，拿戴手套的手擦了擦脸上的汗，小女孩把煎饼包进塑料袋，队伍前进了几步。</p>
+        <p>“你这拍照怎么样？” 机车男跟着往前走，“你这相机能放什么卡？”</p>
+        <p>“一张sd卡，一张tf卡，” lucky说，把相机带绕了一圈，指着相机深灰色的皮革表面，“我放了一张2TB的sd卡在里面。”</p>
+        <p>我侧着看了lucky几眼。lucky和机车男继续说下去，我和掏粪偶尔插话。</p>
+        <p>“你的带鸡蛋、海带、肉片的煎饼做好了，共十元。” 阿姨说。</p>
+        <p>机车男从女孩的手里拎过塑料袋，热气从袋口冒了出来，他朝停在街边的机车走去。那是一辆外形很酷的摩托车，银色的金属器械闪闪发亮，座椅是黑色的皮革，崭新的，红白相机的机身搭配着骑行服，上面印着“Marlboro”。</p>
+        <p>“但现在我不玩相机了。” 他一边说着，一边戴上黑色的手套，轻拍了他身前的爱车。他跨坐到车上，身体前倾，双手握住车把，伴着引擎的呼呼声，他转了一大弯。</p>
+        <p>他穿过了小吃街的街牌，不一会儿就消失了。</p>
+        <p>那天晚上，我把lucky的sd卡插进电脑，在他一旁筛选照片。sd卡显示128GB，我又侧着看了lucky几眼，</p>
+        <p>“看他那样子就知道他肯定不懂相机，” lucky说着，手握着鼠标，盯着酒店的电脑屏幕，“随便骗骗咯。”</p>
+      </section>
+
+      <section class="nanjing-rb-section">
+        <h2>鸡鸣寺：虔诚的女人</h2>
+      </section>
+
+      <figure class="nanjing-rb-media nanjing-rb-media--single">
+        <img src="../../assets/travel/nanjing/nj-portrait-jiming-temple-prayer.jpeg" alt="鸡鸣寺虔诚的人" loading="lazy" decoding="async">
+      </figure>
+
+      <section class="nanjing-rb-section">
+        <p>“保佑弟弟今年能考上一个好的大学。保佑爸爸身体健康，不要喝太多的酒。”</p>
+        <p>她瞥了一眼手里的三炷香，确保它们笔直地朝向天上，在心里接着默念，</p>
+        <p>“保佑妈妈少打麻将，多出去旅游。保佑我今年工作顺利。”</p>
+        <p>她睁开眼，把高举至额头的双手放下，仍紧紧握着香，向一旁的香炉走去。离香炉五步远的地方，有座黄色的墙壁，中心写着“鸡鸣香海”，顶上棕黑色的屋檐向外翘着，边缘被烟熏黑了。她等在一位妇女的后面，看着她把手穿过香炉的开口，将香火立着地插在灰上。她跟着照做。</p>
+      </section>
+
+      <section class="nanjing-rb-section">
+        <h2>玄武湖：你能帮我拍张照片吗</h2>
+        <p>玄武湖上风很大，吹得阿呆把帽子戴得更紧了些，他只穿了件黑色毛衣。</p>
+        <p>“这玄武湖也不过如此。”我系上外套的纽扣，心想，“不如西湖。”</p>
+        <p>我们沿着湖岸往前走。对岸是南京的楼群，阴天下它们显得有些发闷，苍绿的树木中夹杂着棕黄，湖水和天空一样，都是浅蓝色的。</p>
+        <p>我落在队伍后头，想用湖边的树作前景拍照。可我刚对着成片摇了摇头，身后就传来一位女士的声音：</p>
+        <p>“不好意思，我相机落在家里了，你能帮我拍张照片吗？”</p>
+      </section>
+
+      <figure class="nanjing-rb-media nanjing-rb-media--single">
+        <img src="../../assets/travel/nanjing/nj-portrait-riverside-auntie.jpeg" alt="玄武湖边请求拍照的女士" loading="lazy" decoding="async">
+      </figure>
+
+      <section class="nanjing-rb-section">
+        <p>我转过头去，看见一位拎着黑色皮包的女士，她的两个朋友站在离她不远的地方。她穿着白色羊绒大衣，标准的圆脸，二十五六岁的样子，脸上的妆容遮住了细纹，耳垂下挂着一串珍珠项链。棕黄色的长发被风吹起，飘在脑后。</p>
+        <p>我握紧手中的相机，看了眼掏粪离开的方向，迟疑地点了点头。</p>
+        <p>我可没有专业拍过人像啊。我一边想着，一边转动相机。女士站在湖边，左手拎包，右手抬在额前。</p>
+        <p>“你看看这张怎么样？”我把相机屏幕凑近给她看，“方便留一个邮箱吗？我把照片发给你。”</p>
+        <p>她接过我递过去的手机，笑着点了点头：“你拍得真好。”随后，她朝朋友走去。</p>
+        <p>那天晚上回到酒店后，我把照片发给了她。她的回复是：</p>
+        <blockquote>
+          <p>“谢谢你，是我过年吃得太胖了，压不住你的镜头。”</p>
+        </blockquote>
+        <div class="nanjing-rb-break" aria-hidden="true"></div>
+        <p>拍完照后，我赶上了掏粪他们，接着沿着湖边走。</p>
+        <p>湖边有各式各样的人：站在桥上，吃着青团，不知因为什么事发笑的阿呆；吹着口琴，一发力时眼角皱纹像鱼尾一样散开的阿公；一个人拿着麦克风唱歌、眼睛盯着手机屏幕的男生；还有在湖边不断换着角度自拍、和掏粪对望过的女士。</p>
+        <p>旅行时我才明白，是人们让平平无奇的景色焕发出色彩。他们有着不同的生命底色：寻求拍照的女士的主动与热情，独自歌唱的男生的勇敢，自拍女士所展示出的妩媚……这也是旅行有趣的地方。</p>
+      </section>
+
+      <section class="nanjing-rb-section">
+        <h2>先锋书店：与老爹合照</h2>
+        <p>先锋书店是我提议要去的。因为我喜欢逛书店，每家书店都有属于自己的风格：北京的钟书阁以镜面反射著称，PAGE ONE 是现代书店的典范，以艺术画作装饰，咖啡店与书店共营；还有开遍大街小巷的西西弗斯。</p>
+        <p>除去这些大型连锁书店，小型书店的魅力，在于更能体现店主个人的品味。在杭州，有的店主很友善，塑封的新书借阅时也可以拆开；有的则在卖书的同时，专门设了一个卖唱片的柜台。</p>
+        <p>先锋书店开在地下。门口有好几个揣着明信片的大叔，见到你就会往你手里塞一张，说：</p>
+        <p>“帅哥，免费送你明信片，里面卖十块钱一张呢。”</p>
+        <p>我看了看四周，一旁的小伙子领了之后，已经在抖音的搜索栏里打起字来。我摆了摆手，说：“不用了。”</p>
+        <p>往书店里面走，一楼是收银台，收银台尽头写着“先锋书店”的招牌。招牌下方是一段斜向上约三十度的坡道，左右两面墙上挂着著名作家的肖像画，画前则摆着他们对应的作品。</p>
+        <p>这些作家里，我读过的只有三位。分别是乔伊斯，墙上挂着他和妻子在一家书店门口的合照，拍得相当漂亮；陀思妥耶夫斯基，靠墙处堆叠着好几本绿色书皮的《卡拉马佐夫兄弟》；还有海明威，我最近在读的老爹，眼神坚毅，蓄着白色鬓须。阿呆帮我和老爹照了张相。以前只读过他的《老人与海》，觉得也不过如此；如今读了他的短篇和回忆录后，我已成了他的门徒。他写的对话，以及对话里的留白，是我怎么也模仿不来的。</p>
+        <p>那道精心摆设的斜梯，是这家书店的网红打卡点。斜梯尽头，有个男生手举着翻开的书本，眼睛直盯着书页。他戴着黑框眼镜，刘海遮住眼睛，黑色外套下露出一截黑白相间的条纹衬衫。</p>
+      </section>
+
+      <figure class="nanjing-rb-media nanjing-rb-media--single">
+        <img src="../../assets/travel/nanjing/nj-portrait-korean-style-guy.jpeg" alt="先锋书店里的韩系帅哥" loading="lazy" decoding="async">
+      </figure>
+
+      <section class="nanjing-rb-section">
+        <p>“对，就这样，保持别动。”离他五步远的地方，有三个男生站在一起，其中一个蹲在地上，举着手机拍照。</p>
+        <p>他倒是个很好的练手素材，长得很有氛围感，只是看书的动作稍显刻意了些。我一边想着，一边向蹲在地上的男生靠近，然后对举着书的男生说：</p>
+        <p>“你好，请问可以帮你拍张照吗？”</p>
+        <p>他迟疑地用手指了指自己，随后点了点头。</p>
+        <p>“相机拍的就是不一样。”他们看完相机里的照片后，一致说道。</p>
+        <p>我想起 Reddit 上一个关于摄影的笑话：每次拍完照，人们总是夸你相机好，而不是技术好。就好像一道菜之所以美味，靠的是锅，而不是做菜的人。</p>
+        <p>我继续往书店深处走。书店变得像个大型工厂，天花板裸露着四通八达的管道，中央的桌子、两边的柜子上全都是书。光是走完一圈，就要花上二十分钟。掏粪倒是难得找了个地方坐下，在那里看起书来。我猜想，这应该是他这一年来少有的看实体书的时刻了吧。</p>
+      </section>
+
+      <section class="nanjing-rb-section">
+        <h2>中山陵：一座巨大的墓碑</h2>
+      </section>
+
+      <figure class="nanjing-rb-media nanjing-rb-media--single">
+        <img src="../../assets/travel/nanjing/nj-zhongshanling-rain-steps.jpg" alt="中山陵雨天与游客台阶" loading="lazy" decoding="async">
+      </figure>
+
+      <section class="nanjing-rb-section">
+        <p>早上八点，掏粪那边响起了闹钟铃声，我眯着眼，看到光着身子的掏粪站在洗手台前，手拿着牙刷，lucky和阿呆还在安详地躺着。床的右侧，光亮从窗帘的缝隙里射进房间，今天是阴天，窗户上挂着雨滴。</p>
+        <p>又是旅行中睡眠不足的一天，还好，今天是最后一天了。我换上白天的衣服，整理起行李来。</p>
+        <p>等我再转头，lucky已经背靠着墙，在床上刷手机了；阿呆在穿外套。我想起前几天不管吹怎样的大风，我们怎么劝，他都不穿。</p>
+        <p>我们一行人当中有三种类型的人，顺天气的，比如我；逆天气的，比如阿呆，玄武湖那天风吹着人直流鼻涕，他只问掏粪借了个帽子，嘴里说着，没事没事，我已经不冷了；不看天气的，比如lucky，二十度的午后，他仍穿着白色的羽绒服。</p>
+        <p>早餐是一碗馄饨搭配油条。吃完身体暖乎乎的，就打车去中山陵了。</p>
+        <p>中山陵下着小雨，人们打着五颜六色的伞，往山上迈过一级又一级的台阶。听说一共有392级，我们四人在100级的附近走散了。</p>
+        <p>“lucky我在这里给你拍一张吧，”我指着陵前的拱门，“你就站在树下面。”</p>
+      </section>
+
+      <figure class="nanjing-rb-media nanjing-rb-media--single">
+        <img src="../../assets/travel/nanjing/nj-portrait-republic-lucky.jpeg" alt="中山陵雨天里的民国lucky" loading="lazy" decoding="async">
+      </figure>
+
+      <section class="nanjing-rb-section">
+        <p>照片里的lucky像是从民国穿越过来一样，全白的裤子和羽绒服，领结翻折到两边，打着白色的透明伞。</p>
+        <p>“我理由都想好了，到时小亮要是在山顶找不到我们，”拍完照，我朝lucky走去，lucky一边转身，一边说，“就说你中途一直要拍照，害我们走得很慢。”</p>
+        <p>结果我们真慢了不少，在我们排队进陵顶的密室时，掏粪和阿呆已经看完站在出口。室内放着一尊孙中山的雕像，不许拍照。</p>
+        <p>临走前，在山顶往下眺望，天色灰濛濛的，白色透明的雨滴打在陵顶蓝色的屋顶上，人们仰着头，一致看向山顶，像是在瞻仰着什么。台阶两旁的树木葱绿，在早春的风下微微摇摆。身后的中山陵，像座巨大的墓碑稳稳地坐落在山顶。</p>
+      </section>
+
+      <section class="nanjing-rb-section">
+        <h2>明孝陵：一个打着明国招牌、来圈钱的景点</h2>
+      </section>
+
+      <figure class="nanjing-rb-media nanjing-rb-media--single">
+        <img src="../../assets/travel/nanjing/nj-mingxiaoling-rain-wall.jpg" alt="明孝陵的城墙与雨天行人" loading="lazy" decoding="async">
+      </figure>
+
+      <section class="nanjing-rb-section">
+        <p>南京双陵，是每个出租车司机推荐的景点。如果说中山陵是迈台阶去见蓝色宝盖的墓碑，明孝陵则是花钱去爬五层楼高的城墙。</p>
+        <p>爬上去要穿过一个隧道，里面又黑又滑。城墙上有关于民国历史的展览，我对此没有兴趣。勉强能看的，是墙外湿漉漉的树林，穿过红色拱门的人群，以及被人们围拥着拍照的一头野鹿。这些就是七十门票所带来的，又只是一个打着明国招牌、来圈钱的景点。可这毕竟不是我久居的城市，我也就不过多评价了。</p>
+      </section>
+    </article>
+
+    <section class="nanjing-section nanjing-section--appendix">
+      <div class="nanjing-section-heading">
+        <p class="nanjing-section-index">附录 A</p>
+        <h2>人物志</h2>
+      </div>
+      <div class="nanjing-card-grid nanjing-card-grid--people">
+        <article class="nanjing-card">
+          <img src="../../assets/travel/nanjing/nj-portrait-steel-man.jpeg" alt="钢铁男" loading="lazy" decoding="async">
+          <h3>钢铁男</h3>
+        </article>
+        <article class="nanjing-card">
+          <img src="../../assets/travel/nanjing/nj-portrait-biker-man.jpeg" alt="机车男" loading="lazy" decoding="async">
+          <h3>机车男</h3>
+        </article>
+        <article class="nanjing-card">
+          <img src="../../assets/travel/nanjing/nj-portrait-jiming-temple-prayer.jpeg" alt="虔诚的人" loading="lazy" decoding="async">
+          <h3>虔诚的人</h3>
+        </article>
+        <article class="nanjing-card">
+          <img src="../../assets/travel/nanjing/nj-portrait-adai-qingtuan.jpeg" alt="吃青团的阿呆" loading="lazy" decoding="async">
+          <h3>吃青团的阿呆</h3>
+        </article>
+        <article class="nanjing-card">
+          <img src="../../assets/travel/nanjing/nj-portrait-riverside-auntie.jpeg" alt="河边的老阿姨" loading="lazy" decoding="async">
+          <h3>河边的老阿姨</h3>
+        </article>
+        <article class="nanjing-card">
+          <img src="../../assets/travel/nanjing/nj-portrait-street-singer.jpeg" alt="唱歌的人" loading="lazy" decoding="async">
+          <h3>唱歌的人</h3>
+        </article>
+        <article class="nanjing-card">
+          <img src="../../assets/travel/nanjing/nj-portrait-korean-style-guy.jpeg" alt="韩系帅哥" loading="lazy" decoding="async">
+          <h3>韩系帅哥</h3>
+        </article>
+        <article class="nanjing-card">
+          <img src="../../assets/travel/nanjing/nj-portrait-chubby-boy.jpeg" alt="长得像努努的小胖男" loading="lazy" decoding="async">
+          <h3>长得像努努的小胖男</h3>
+        </article>
+        <article class="nanjing-card">
+          <img src="../../assets/travel/nanjing/nj-portrait-republic-lucky.jpeg" alt="民国 lucky" loading="lazy" decoding="async">
+          <h3>民国lucky</h3>
+        </article>
+        <article class="nanjing-card">
+          <img src="../../assets/travel/nanjing/nj-portrait-weather-types.jpeg" alt="不看天气和逆天气的人" loading="lazy" decoding="async">
+          <h3>不看天气和逆天气的人</h3>
+          <p>在我们一行人中，共存在三种人：顺天气、逆天气和不看天气的人。</p>
+        </article>
+        <article class="nanjing-card">
+          <img src="../../assets/travel/nanjing/nj-portrait-three-friends.jpeg" alt="三人合影" loading="lazy" decoding="async">
+          <h3>三人合影</h3>
+        </article>
+        <article class="nanjing-card">
+          <img src="../../assets/travel/nanjing/nj-portrait-posing-liang.jpeg" alt="装模作样的亮" loading="lazy" decoding="async">
+          <h3>装模作样的亮</h3>
+        </article>
+        <article class="nanjing-card">
+          <img src="../../assets/travel/nanjing/nj-portrait-perfume-shoppers.jpeg" alt="买香水的两个人" loading="lazy" decoding="async">
+          <h3>买香水的两个人</h3>
+        </article>
+      </div>
+    </section>
+
+    <section class="nanjing-section nanjing-section--appendix">
+      <div class="nanjing-section-heading">
+        <p class="nanjing-section-index">附录 B</p>
+        <h2>饮食清单</h2>
+      </div>
+      <div class="nanjing-card-grid nanjing-card-grid--food">
+        <article class="nanjing-card nanjing-card--food" data-food-key="xinfangyuan" role="button" tabindex="0" aria-haspopup="dialog">
+          <img src="../../assets/travel/nanjing/nj-food-xinfangyuan.jpeg" alt="馨方园 南京菜" loading="lazy" decoding="async">
+          <h3>馨方园 南京菜</h3>
+          <p class="nanjing-card-review">来到南京的第一个中午，吃的是老牌南京菜：甜口的桂花圆子汤，咸口的南京双臭，鲜味的鱼头豆腐，还有带着酱香的烤鸭。我最喜欢双臭里的肥肠，辣味掩盖了食材的腥味。</p>
+        </article>
+        <article class="nanjing-card nanjing-card--food" data-food-key="chouxiaoya" role="button" tabindex="0" aria-haspopup="dialog">
+          <img src="../../assets/travel/nanjing/nj-food-chouxiaoya-duck-vermicelli.jpeg" alt="丑小鸭 鸭血粉丝" loading="lazy" decoding="async">
+          <h3>丑小鸭 鸭血粉丝</h3>
+          <p class="nanjing-card-review">两笼蟹黄包，但蟹黄咬上去不新鲜，像是冷冻食品；三笼鲜肉包，汤汁随着咬破的皮流了出来，肉中规中矩；一人一碗的鸭血粉丝汤，南京的招牌，普通和清淡。</p>
+        </article>
+        <article class="nanjing-card nanjing-card--food" data-food-key="laoyu" role="button" tabindex="0" aria-haspopup="dialog">
+          <img src="../../assets/travel/nanjing/nj-food-laoyu-fish-hotpot.jpeg" alt="捞鱼 鱼火锅" loading="lazy" decoding="async">
+          <h3>捞鱼 鱼火锅</h3>
+          <p class="nanjing-card-review">这是我第一次吃捞鱼火锅。服务员会替我们涮好，时间控制在八秒钟，不多不少。鱼肉口感软糯中带着一点结实，很鲜。这是在南京吃得最满意的一次。</p>
+        </article>
+        <article class="nanjing-card nanjing-card--food" data-food-key="five-goats" role="button" tabindex="0" aria-haspopup="dialog">
+          <img src="../../assets/travel/nanjing/nj-food-five-goats-skewer.jpeg" alt="5只羊 烤串" loading="lazy" decoding="async">
+          <h3>5 只羊 烤串</h3>
+          <p class="nanjing-card-review">烧烤是便宜的，人均不到90；吃的东西和家里的差不多，就是这调味料太多了些，吃不出食物本来的味道。和阿呆共享了一瓶冰啤酒，烧烤配啤酒，无敌的组合。</p>
+        </article>
+        <article class="nanjing-card nanjing-card--food" data-food-key="snack-street-feichang" role="button" tabindex="0" aria-haspopup="dialog">
+          <img src="../../assets/travel/nanjing/nj-food-snack-street-feichang-noodle.jpeg" alt="小吃街 肥肠面" loading="lazy" decoding="async">
+          <h3>小吃街 肥肠面</h3>
+          <p class="nanjing-card-review">我的食物美学，是希望自己吃的东西有美好的外观。比如我点的这碗面：淡黄色的荷包蛋、深棕色的卤肥肠、一抹棕黄色的咸菜、几颗红色的萝卜作为点缀，以及从空隙里露出的白色细面。它有一种平衡的美感。</p>
+        </article>
+        <article class="nanjing-card nanjing-card--food" data-food-key="snack-street-darou" role="button" tabindex="0" aria-haspopup="dialog">
+          <img src="../../assets/travel/nanjing/nj-food-snack-street-braised-pork-noodle.jpeg" alt="小吃街 大肉面" loading="lazy" decoding="async">
+          <h3>小吃街 大肉面</h3>
+          <p class="nanjing-card-review">再看看掏粪吃的这碗“大肉面”：顶上是一块发黑的大肉，占了大半个碗；几粒榨菜胡乱地摆在一边，底下的荷包蛋向外摊着。难以想象会有人吃得下这碗面，而掏粪却吃得津津有味，嘴角带油。</p>
+        </article>
+        <article class="nanjing-card nanjing-card--food" data-food-key="xiaochuniang-main" role="button" tabindex="0" aria-haspopup="dialog">
+          <img src="../../assets/travel/nanjing/nj-food-xiaochuniang-huainan-cuisine.jpeg" alt="小厨娘 淮南菜" loading="lazy" decoding="async">
+          <h3>小厨娘 淮南菜</h3>
+          <p class="nanjing-card-review">餐厅很大，室内昏暗，餐桌上方打着聚光灯。等到我们的鲈鱼上了桌，我们每人夹了一口。味道像薯条，是那种不冷不热的薯条，里面甚至还有些冷。晚上在酒店回顾南京的食物时，lucky给了这家店差评。</p>
+        </article>
+        <article class="nanjing-card nanjing-card--food" data-food-key="xiaochuniang-detail" role="button" tabindex="0" aria-haspopup="dialog">
+          <img src="../../assets/travel/nanjing/nj-food-xiaochuniang-detail.jpeg" alt="小厨娘 淮南菜细节" loading="lazy" decoding="async">
+          <h3>小厨娘 淮南菜</h3>
+          <p class="nanjing-card-review">掏粪把服务员叫了过来，他撤走了旧的，十分钟后端来了新的。“这盘是我看着师傅炸的，你们吃吃看味道怎么样？” 味道还是像薯条，只是比之前热了一点。</p>
+        </article>
+        <article class="nanjing-card nanjing-card--food" data-food-key="breakfast-wonton" role="button" tabindex="0" aria-haspopup="dialog">
+          <img src="../../assets/travel/nanjing/nj-food-breakfast-wonton.jpeg" alt="早餐 馄饨" loading="lazy" decoding="async">
+          <h3>早餐 馄饨</h3>
+          <p class="nanjing-card-review">馄炖配面条，让我想起在广东吃的云吞面。前者是咸味，后者是鲜味的。鲜味大于咸味。店里的油条是好的，刚炸出锅，很脆，和lucky一起吃了一大根。</p>
+        </article>
+        <article class="nanjing-card nanjing-card--food" data-food-key="guangyingju-main" role="button" tabindex="0" aria-haspopup="dialog">
+          <img src="../../assets/travel/nanjing/nj-food-guangyingju-double-odor.jpeg" alt="广迎居 南京菜" loading="lazy" decoding="async">
+          <h3>广迎居 南京菜</h3>
+          <p class="nanjing-card-review">离开南京前的最后一顿，吃的是南京菜，像是旅途中的首尾呼应。这家餐厅由一个家庭经营，做妻子的负责做前台，点菜算账；做丈夫的在厨房烧菜，空闲时坐在大厅的板凳上。</p>
+        </article>
+        <article class="nanjing-card nanjing-card--food" data-food-key="guangyingju-detail" role="button" tabindex="0" aria-haspopup="dialog">
+          <img src="../../assets/travel/nanjing/nj-food-guangyingju-detail.jpeg" alt="广迎居 南京菜细节" loading="lazy" decoding="async">
+          <h3>广迎居 南京菜</h3>
+          <p class="nanjing-card-review">这家餐厅有个人的味道，烤鸭酥脆，糖醋排骨酱味充足，狮子头味道清淡，双臭很香。只是少了lucky后，我们剩了很多。</p>
+        </article>
+      </div>
+      <div class="nanjing-food-modal" id="nanjing-food-modal" hidden>
+        <div class="nanjing-food-modal__backdrop" data-close-food-modal="true"></div>
+        <section class="nanjing-food-modal__panel" role="dialog" aria-modal="true" aria-labelledby="nanjing-food-modal-title">
+          <button type="button" class="nanjing-food-modal__close" data-close-food-modal="true" aria-label="关闭评价">×</button>
+          <div class="nanjing-food-modal__layout">
+            <figure class="nanjing-food-modal__media">
+              <img id="nanjing-food-modal-image" alt="" loading="lazy" decoding="async">
+            </figure>
+            <div class="nanjing-food-modal__text">
+              <p class="nanjing-food-modal__score" id="nanjing-food-modal-score"></p>
+              <h3 id="nanjing-food-modal-title"></h3>
+              <div class="nanjing-food-modal__content" id="nanjing-food-modal-content"></div>
+            </div>
+          </div>
+        </section>
+      </div>
+    </section>

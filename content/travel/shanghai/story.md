@@ -1,0 +1,525 @@
+<article class="nanjing-rb-article">
+      <figure class="nanjing-rb-hero">
+        <img src="../../assets/travel/shanghai-hero-cityscape.jpg" alt="上海城市天际线" loading="eager" decoding="async">
+      </figure>
+
+      <header class="nanjing-rb-header">
+        <p class="nanjing-rb-channel">旅行</p>
+        <h1>上海行记</h1>
+        <ul class="nanjing-rb-tags" aria-label="标签">
+          <li>上海</li>
+          <li>夜骑</li>
+          <li>愚园路</li>
+          <li>迪士尼</li>
+        </ul>
+      </header>
+
+      <section class="nanjing-rb-section">
+        <p class="nanjing-rb-section-index">前言</p>
+        <h2>该怎么组织游记的文字呢？</h2>
+        <p>该怎么组织游记的文字呢？以往总是按照时间顺序，事无巨细地记录下来，希望让以后的自己重读时，能重新捡起当时的回忆。</p>
+        <p>可若每次都这般去写，记录的琐事太多，相应地花费的时间也会较多。</p>
+        <p>因此，这次改换一种形式，用主题分类的方法，将游记重新组合一下，不知完成时会有怎样的效果。</p>
+        <p>正式提笔已是归来后的一个星期了，写的都算是回忆，而非当天鲜活的记叙了。</p>
+        <p>不过这样也好，沉淀下来的会是旅行的核心，那些不重要的，忘记也就罢了。</p>
+      </section>
+
+      <section class="nanjing-rb-section">
+        <p class="nanjing-rb-section-index">初到上海</p>
+        <h2>精确到秒的上海地铁</h2>
+        <p>从虹桥火车站出来，走不远就是地铁站。</p>
+        <p>记得不远处也来过这里——那是新年期间，我和掏粪一起到虹桥站，换乘航站线搭飞机去东北旅行。</p>
+        <p>话说，最近的旅行确实有点密集。不久后又将前往珠海，再顺便去香港、澳门转转。不知道那边又会有怎样的体验。</p>
+        <p>走得多，看得多，也算是一件好事。就像旅途最后一天，打出租车回民宿时，司机特别爱引用的一句话："读万卷书，不如行万里路。"</p>
+        <p>从虹桥到预订的普陀区民宿，大约有 45 分钟的路程——30 分钟地铁，15 分钟骑行。</p>
+        <p>毕竟是火车站，地铁上等车的人大多带着行李，我也成了其中之一。这次，是以旅客的身份来见识上海。</p>
+        <p>地铁的环境和杭州类似，外部整体整洁，车厢内也一样。注意到一个有趣的不同点：这里的等候显示屏上的时间，以"秒"为最小单位。</p>
+        <p>这个细节若往深处想，反映的其实是城市发展规模和人们对时间感知的差异。杭州相较于上海，是个节奏更慢的城市，整体发达程度也略逊一筹，所以地铁的等候时间以"分钟"为单位；而上海，国际化程度更高，对时间的精准度要求自然也更高。</p>
+      </section>
+
+      <figure class="nanjing-rb-media nanjing-rb-media--single">
+        <img src="../../assets/travel/shanghai/story/metro-second-display.jpeg" alt="精确到秒的上海地铁" loading="lazy" decoding="async">
+        <figcaption>精确到秒的上海地铁</figcaption>
+      </figure>
+
+      <section class="nanjing-rb-section">
+        <h2>车厢里两小孩的国际象棋对局</h2>
+        <p>上海不愧，让我这个外乡人感到震惊的时刻，没想到来得如此之快。</p>
+        <p>当我坐在地铁座位上时，看到对面一位大人带着两个刚上完兴趣班的小孩回家。那两个年纪尚小、猜测刚上小学不久的孩子，居然手里拿着一副国际象棋棋盘。落座后，他们缓缓展开棋盘，把棋子一个个摆放到正确的位置上。</p>
+        <p>棋子能很好地吸附在棋盘上，因此不受地铁晃动的影响。我饶有兴致地观察起他们。毕竟，国际象棋在国内算是相对冷门的棋类游戏，相比之下，中国象棋要普及得多。</p>
+        <p>两个小孩装出一副认真思考的样子，每次吃掉对方棋子前，都会看一眼对方的脸色，试图判断对方是否有诈。可在我这个旁观者看来，很可惜——他们除了掌握基本规则，其他一概不知。</p>
+        <p>不过，享受棋局，本就是一件简单而快乐的事。如何高效地赢，终归是长大以后才需要考虑的事。</p>
+      </section>
+
+      <figure class="nanjing-rb-media nanjing-rb-media--single">
+        <img src="../../assets/travel/shanghai/story/metro-chess-kids.jpeg" alt="在地铁上玩国际象棋的两个小孩" loading="lazy" decoding="async">
+        <figcaption>在地铁上玩国际象棋的两个小孩</figcaption>
+      </figure>
+
+      <section class="nanjing-rb-section">
+        <h2>黄浦江夜骑 8 km</h2>
+        <p>不知是何时染上了骑行这个爱好，相比其他交通工具，有时骑行才是自己心目中认识一座城市的最好方式。</p>
+        <p>既是吃完自助餐后的消食，又是弥补上次前往外滩时所遇的遗憾，这次我跟着"孤独星球"上推荐的路线，准备沿黄浦江边骑行半圈。</p>
+        <p>过江时，需要乘渡船。</p>
+        <p>夜晚的九点半我就在二楼的甲板等待，看着身旁和我一样的游客越来越多，直等到十点，船才从码头出发，耗时十分钟便停靠于江边了。</p>
+        <p>自然，在船上所看到的夜上海，和此前与伙伴同游时没有很大的区别：放眼望去，江边的城市在夜晚显得金碧辉煌，那绚烂的灯光在江中产生了倒影。我不时想到了「拜金主义」，金就在我眼前。</p>
+        <p>可若眺望得远一些，也是能看到黯淡的城市建筑。那儿只有一两排打着白光，黑黢黢的江水，诉说着上海沉静的另一面。</p>
+        <p>下了船，在附近找了辆共享单车，骑行才正式宣告开始。</p>
+        <p>与外滩的打卡点不同，江的另一边游客稀少，偶尔能见到晚上出来跑步锻炼的本地居民。</p>
+        <p>吹着江边的夜风，一个人悠哉悠哉地瞪着脚踏板，耳机里放着适合此刻欢乐心情的音乐，好不自在。</p>
+        <p>目的地定在梅赛德斯奔驰场馆，一路上的骑行相当简易，只要跟着专门的骑行道便好。</p>
+        <p>随着骑行的深入，江边的夜景也慢慢地发生变化：夜晚的霓虹灯逐渐黯淡下来，城市的热闹也渐渐离我远去，待我张望四周，何时我已孤单成了一人。</p>
+        <p>心境也悄然发生了变化。夜晚的沉寂，让我想起了过去的许多事情。那次四人室友的聚餐，我们还未分崩离析，室友A分享了他刚上大学不久去上海的一次旅行，那时钱不多，凌晨徒步走在黄浦江边，累了就睡在公园的座椅上。</p>
+        <p>我惊叹那样自由不羁的旅行方式，想象着此刻见到的夜景，会不会和他当时所见的样子一样呢。</p>
+        <p>由远及近的卢浦大桥，桥身散发着金黄的光芒，底下的游船缓缓驶过。</p>
+        <p>本想赶着坐最后一班地铁回到江的另一边，可怎么也赶不上了。自此，心情变得更加放荡了。</p>
+        <p>忍不住拿出手机开始录影，希冀能够传达此刻的心情：哼着小曲，越骑越远，直到和夜上海融为一体为止。</p>
+      </section>
+
+      <div class="nanjing-rb-media-grid nanjing-rb-media-grid--three nanjing-rb-media-grid--portrait">
+        <figure class="nanjing-rb-media">
+          <img src="../../assets/travel/shanghai/story/huangpu-ferry-deck.jpeg" alt="前往复兴东路渡口" loading="lazy" decoding="async">
+          <figcaption>前往复兴东路渡口</figcaption>
+        </figure>
+        <figure class="nanjing-rb-media">
+          <img src="../../assets/travel/shanghai/story/huangpu-lupu-bridge.jpeg" alt="上海的卢浦大桥" loading="lazy" decoding="async">
+          <figcaption>上海的卢浦大桥</figcaption>
+        </figure>
+        <figure class="nanjing-rb-media">
+          <img src="../../assets/travel/shanghai/story/huangpu-riverside-track.jpeg" alt="江边的跑道" loading="lazy" decoding="async">
+          <figcaption>江边的跑道</figcaption>
+        </figure>
+      </div>
+      <section class="nanjing-rb-section">
+        <p class="nanjing-rb-section-index">漫步与偶遇</p>
+        <h2>独自漫步之愚园路</h2>
+        <p>独自漫步于陌生城市的魅力在于，这里没有一个人认识自己，自己便更容易穿梭在人群中，仿佛随时都能变成另一个人。</p>
+        <p>在朋友赶来之前，我有大约一小时的自由时光。在这短短的时间里，我带着最强的好奇心，拿起放大镜，观察着上海愚园路的热闹街道。</p>
+        <p>我看到琳琅满目的精致小店，它们并排坐落在人行道两旁，常常用艺术画作和绿色藤蔓作为装饰。那些画看上去可爱，画中的女孩和猫仿佛在热情地邀请我进店。而那绿色的藤蔓，则为店铺增添了一份自然的气息，让人不自觉地想要靠近。</p>
+        <p>虽然我没有独自进入女装店，但我参观了时髦的帽子店，店里有只大花猫坐镇，我还给它拍了张照片；还随便走进了一家咖啡店，看着当地人们在午后的闲聊中享受悠闲的时光。</p>
+        <p>当然，最令我印象深刻的，是在逛完礼品店后遇到的"画像的老人们"。他们看上去大约六七十岁，脸上带着温和的表情，眼神专注地盯着远方的景物，这让我立刻被吸引住了。</p>
+        <p>这样优雅且充满乐趣的兴趣爱好，让我不禁开始幻想自己晚年的样子。</p>
+        <p>情不自禁地，我上前和其中一位老爷爷搭话。他正在画不远处的咖啡店，画中的阳光灿烂，绿树成荫，房屋和景物被他用柔和的色彩定格在画布上。</p>
+        <p>"你好，我能拍下你的画吗？"</p>
+        <p>他抬头看了我一眼，点了点头，我立刻心中一喜。</p>
+        <p>除此之外，我还被一块宠物牌子吸引，上面提醒主人记得为狗牵上绳子。果然，经济越发达的地方，对待宠物的态度也越加公开和友好。至少在杭州，我从未见过类似的牌子。</p>
+      </section>
+
+      <div class="nanjing-rb-media-grid nanjing-rb-media-grid--three nanjing-rb-media-grid--portrait">
+        <figure class="nanjing-rb-media">
+          <img src="../../assets/travel/shanghai/story/yuyuan-shop-street.jpeg" alt="窄窄的人行道旁满是精致小店" loading="lazy" decoding="async">
+          <figcaption>窄窄的人行道旁满是精致小店</figcaption>
+        </figure>
+        <figure class="nanjing-rb-media">
+          <img src="../../assets/travel/shanghai/story/yuyuan-green-wall.jpeg" alt="藤蔓爬满的青墙" loading="lazy" decoding="async">
+          <figcaption>藤蔓爬满的青墙</figcaption>
+        </figure>
+        <figure class="nanjing-rb-media">
+          <img src="../../assets/travel/shanghai/story/yuyuan-elder-painting.jpeg" alt="画像的老人家" loading="lazy" decoding="async">
+          <figcaption>画像的老人家，其画色彩柔和</figcaption>
+        </figure>
+      </div>
+
+      <section class="nanjing-rb-section">
+        <h2>静安寺至 Apple Store的三人行</h2>
+        <p>在下午剩余的时光里，等待 Lucky 与我们汇合后，接下来的项目是三人行的 city walk。</p>
+        <p>当然，见面时的寒暄是必不可少的。</p>
+        <p>"哎呀，小智，好久不见了！" 穿着白衬衫的 Lucky 笑道。</p>
+        <p>"我们才刚在五一野营见过吧？" 我哈哈大笑回应。</p>
+        <p class="nanjing-rb-separator">***</p>
+        <p>我们从愚园路的告示牌出发，目的地是两公里外的静安寺。</p>
+        <p>与同伴们一同前行的好处是，可以分享所见所闻。虽然我感兴趣的，他们未必也有同样的兴趣，但归根结底，我们是同性，异性总能成为话题。</p>
+        <p>印象最深的是，看到一位穿着较为暴露、屁股的红裙上写着显眼的"FUCK"字的女士。</p>
+        <p>我们嘻嘻哈哈，跟随 Lucky 的"天眼导航"，有意无意地跟着她走了一段路。</p>
+        <p>最后来到我们的终点 --- 一块坐落在城市中心的草坪上，在那位女士和同来的同伴坐下后，跟随就不了了之了。</p>
+        <p>不过我们也是没有白来，受到草坪上悠闲氛围的感染，我们席地而坐，让暴走的双脚闲置一会儿，同时观察起周遭的环境。</p>
+        <p>一对毫不在意、对着手机嘻嘻哈哈跳舞的两姐妹；一位扮演狗熊，和三位孩子玩耍的外国父亲；奔跑的男孩女孩。</p>
+        <p>最让我关注的，是那位玩的很开的父亲。他体型庞大，可自身也像个孩子一样，和孩子们打成一片，四脚朝天，做出搞怪的动作。似乎，在他们眼中，小孩子们的开心笑容，远比身为父亲的自尊心重要得许多。也因此，他们才会丝毫地不介意，偶尔露出内衣的颜色又如何，偶尔出点公众的丑又怎样。</p>
+        <p>我总是对这样的精神感到敬佩。同时羡慕这样健康长大的孩子们，他们会赞叹父亲的高大的同时，也会像朋友一样接纳他吧。</p>
+        <p class="nanjing-rb-separator">***</p>
+        <p>沿路的其他风景，也大致交代一下。</p>
+        <p>我们进了上海最大的苹果店——Apple 静安寺，依旧是苹果一贯的设计感。在这里，我体验了 AirPods Max，惊叹它的降噪效果，仿佛隔绝了整个现实世界。</p>
+        <p>我拍了一张理发店外面的 barber 画像。画画是上海特别喜欢与商业结合的形式。</p>
+        <p>路过静安寺，但因为时间关系，没能进寺庙，只是在外面简单欣赏了建筑外观。顺手拍了附近的高楼大厦。</p>
+        <p>去草坪的路上，我们遇到了上海大爷大妈的本地路演。这里有用锯子奏乐的大爷，也有在街道中央配乐跳舞的老年夫妻。最让人惊叹的，是一个富有节奏感的老年队伍，他们放着洋歌，敲着锣鼓，动作和节奏感十足，跟着动次打次的节拍，我不自觉地也开始随着他们的节奏摇晃。正是这些最有特色、演得最好的老年人，吸引了最多的观众，周围聚集了很多人。</p>
+      </section>
+
+      <div class="nanjing-rb-media-grid nanjing-rb-media-grid--three nanjing-rb-media-grid--portrait">
+        <figure class="nanjing-rb-media">
+          <img src="../../assets/travel/shanghai/story/jingan-apple-store.jpeg" alt="静安 Apple 店" loading="lazy" decoding="async">
+          <figcaption>静安 Apple 店</figcaption>
+        </figure>
+        <figure class="nanjing-rb-media">
+          <img src="../../assets/travel/shanghai/story/jingan-temple-passby.jpeg" alt="路过静安寺" loading="lazy" decoding="async">
+          <figcaption>路过静安寺</figcaption>
+        </figure>
+        <figure class="nanjing-rb-media">
+          <img src="../../assets/travel/shanghai/story/jingan-city-lawn.jpeg" alt="舒适的城市草坪" loading="lazy" decoding="async">
+          <figcaption>舒适的城市草坪，一点悠闲时光</figcaption>
+        </figure>
+      </div>
+
+      <section class="nanjing-rb-section">
+        <h2>偶遇法国人天主教洗礼</h2>
+        <p>慵懒的早晨，是从上午睡到自然醒开始的。</p>
+        <p>手表显示此刻是十点，洗漱、整理背包，一个独自旅行的男生，不到十五分钟就能整装待发。</p>
+        <p>早餐的内容是昨晚点的水果夜宵，嘴里塞两根大香蕉抵腹，积攒的饥饿就由中饭解决。</p>
+        <p>今天上海的天气很好，外面是一片晴朗的天，太阳被云层遮挡。简直再适合出行不过，旅游的心情即刻也就准备好了。</p>
+        <p>"去哪里好呢？" 一边骑着共享单车，一边看着手机上的旅行指南，"还是去徐家汇吧"。</p>
+        <p>决定好了，就向地铁站出发！</p>
+        <p>可刚骑了不到几百米，我的目光被一座教堂所吸引。教堂外形呈尖塔状，规格不大。</p>
+        <p>在我的印象里，周日的教堂是给教徒做礼拜的日子，往往不对外开放。可我见到的这座，此刻却大门敞开，依稀能见到里面华丽的吊灯装饰。</p>
+        <p>一位光头、穿着西服的男士拎着袋子，跨着台阶，向它的内部走去。</p>
+        <p>我的好奇心一下就被调动了起来，心里有预感，这将又会是旅行上不可多得的偶遇。</p>
+        <p>我跟着进到内部，沿路没有受到阻拦，看来今天的确是对外开放的。</p>
+        <p>教堂内部的风格和我见过的其他教堂并没有很大的区别：五彩的玻璃窗，上面画着圣经里的故事场景；左右两边垂放着画像，常见的有圣母像、受难的耶稣等等；教堂的正中央，放着一座城堡外形、散发金光的祭坛。</p>
+        <p>台上有位穿着豹纹裙饰的女士，在步道的讲台边，对着麦克风轻声歌唱。</p>
+        <p>左侧有一对模样看上去是父子的人，父亲吹着乐器大号，孩子吹着小号。</p>
+        <p>此刻的来宾不多，只稀稀拉拉地坐了前三排。每位男士都是西装笔挺，女士则优雅端庄，说着我听不懂的法国话。</p>
+        <p>我茫然四顾，首先想到的是想找个中国人问问，这里是在举行什么仪式，能否旁观。</p>
+        <p>我走向一位显然是主持人的中国男士，他此刻正在用流利的法语和宾客们问好。</p>
+        <p>"你好，请问这里是在举办什么仪式？"</p>
+        <p>"一会儿在这举行法式的洗礼。"</p>
+        <p>我还没问完，他便从我身旁略过，招待新来的宾客去了，留我一人。</p>
+        <p>不过既然没有赶我走的意思，我就当洗礼的见证人了。此前只在小说里听过洗礼的概念，可现实中从没看过完整的洗礼呢。</p>
+        <p>拿起放在椅子上的过程手册，除了用数字标记的日期外，其余的法语一概不懂。翻开后的内容也是，但能看出是几首歌词，等会儿合唱时会用到。</p>
+        <p>洗礼的基本礼仪也应该学一点，当下就全靠GPT临时抱个佛脚，没想到它立马纠正了我犯下的错误：当我正想在空余的第四排入座，才知道前排都是关系紧密的亲朋好友的位置。</p>
+        <p>不过入座时，一旁坐着一位中国姑娘，她穿着白色的衬裙，背对着我，背后的长发用发箍绑在一起。</p>
+        <p>些许犹豫后，我向她搭话。</p>
+        <p>"请问你也是来参观这次洗礼的吗？"</p>
+        <p>听到声音，她向我转过身来，我这才看清了她的正脸。她带着黑边眼镜，眼睛张的很大，额头上的刘海乱糟糟的，脸上挂着诡异的微笑，一句不语。</p>
+        <p>那副模样，让我莫名联想到《闪灵》里那位拿着斧头要砍人的疯人兄弟，吓得我立马离开了座位，在过道后面一排坐了下来。</p>
+        <p>在后续的观察中，发现她也不认识在场的所有人，只是在前排坐着，保持着一个姿势笑着，好一个怪人。</p>
+        <p>宾客陆续赶到，当我下一次回头，看到不大的教堂里，连最后一排都已有人坐下。坐在我后面一排、一位将近七旬的老头向我询问，</p>
+        <p>"你知道这里在做什么吗？"</p>
+        <p>"一会儿要举行洗礼。"</p>
+        <p>这次是我重复已知的信息。</p>
+        <p>"那什么时候开始呢？"</p>
+        <p>我摇了摇头。搭话完，他移到位置的角落，和过道旁与他年纪相邻的老太太闲聊起来。</p>
+        <p>人多了之后，交谈声变得热闹了起来。坐在我正后方的，是两位模样看上去关系母子的女士。</p>
+        <p>女儿年纪与我相仿，在轻轻地和母亲交流。</p>
+        <p>"要是我也会法语就好了，" 我心想，"说不定这样我就能和两位女士搭话了。"</p>
+        <p>不过这样的心情并没持续太久。在音乐奏响之后，我的注意力就完全被台上的女士吸引了。</p>
+        <p>洗礼正式开始。</p>
+        <p>高亢的嗓音，洋溢着幸福的微笑，光是听这位女士歌唱，我已觉得不虚此行了。</p>
+        <p>更何况，除了宗教的歌声之外，还有一旁吹着大小号的父子，他们配合着声乐演奏，认真和默契的模样闪闪发光。</p>
+        <p>还有一位躲在钢琴后的孩子，年纪个头很小，完全被钢琴遮挡了视野。</p>
+        <p>钢琴、管弦、人声，这三重的音乐演奏，虽没有专业表演团来得隆重与恢弘，但它更像是一场亲密的家庭聚会，此时聚会上亲朋好友正在献曲歌唱。</p>
+        <p>情到深处时，台下的观众们也会轻轻地和声跟唱，打着节拍，在结束时热情地鼓掌。</p>
+        <p>我虽然不懂他们交流的语言，可她们洋溢着幸福的神情、周围和谐友好的气氛，我总觉得我能体会到跨越语言的感情。</p>
+        <p>只有经历过才知道，宗教音乐在这样场合的魔力为何。是祝福、欢乐和感恩，这三个最淳朴和美好的感情，融进干净和纯洁的乐曲当中。</p>
+        <p>为此，我特别感激那些不曾相识的表演者，即使在仪式结束后，也不肯离去。</p>
+        <p>音乐的篇章一页又一页地翻过，它们大多来自圣经的某一章节，我只能勉强分辨里面"Jesus"的含义。</p>
+        <p>在唱了两三个曲目后，一旁化妆间的门被打开，身着纯白衣服的孩子们走了出来，他们看上去六七岁的光景，笑着看着各自的爸爸妈妈。</p>
+        <p>在绕教堂一圈后，他们走到了祭坛边，和完影后，剩余的时间就坐在祭坛上。</p>
+        <p>更多的音乐，偶尔伴随着起立宣誓，这过程长达两个小时。在教徒领取圣水后，仪式才正式宣告结束。</p>
+        <p>我的目光被其中一位法国女士吸引。她穿着咖啡色衬衫和短裙，外搭一层点缀黑色蝴蝶的薄纱，茶色长发垂在肩头，脸上始终带着愉悦的神情。</p>
+        <p>漂亮的还有一位姑娘，她跟着父母和妹妹一同前来，坐在我的正前方。她的模样像位公主，身着长裙，有着精致的五官。</p>
+        <p>包里的两根香蕉一直没机会吃。当我走出教堂，正午的太阳崭露头角，我一边吃，一边向地铁站走去。</p>
+      </section>
+
+      <div class="nanjing-rb-media-grid nanjing-rb-media-grid--three nanjing-rb-media-grid--portrait">
+        <figure class="nanjing-rb-media">
+          <img src="../../assets/travel/shanghai/story/church-entrance.jpeg" alt="教堂门口" loading="lazy" decoding="async">
+          <figcaption>教堂的门口</figcaption>
+        </figure>
+        <figure class="nanjing-rb-media">
+          <img src="../../assets/travel/shanghai/story/church-ritual-booklet.jpeg" alt="法语洗礼过程手册" loading="lazy" decoding="async">
+          <figcaption>法语洗礼的过程手册</figcaption>
+        </figure>
+        <figure class="nanjing-rb-media">
+          <img src="../../assets/travel/shanghai/story/church-father-son-trumpet.jpeg" alt="吹小号的父子与法国来宾" loading="lazy" decoding="async">
+          <figcaption>吹小号的父子以及美丽端庄的法国女士</figcaption>
+        </figure>
+      </div>
+
+      <section class="nanjing-rb-section">
+        <h2>被打断的上海电影博物馆</h2>
+        <p>向外宣称"自己是个爱电影的人"，那么这家离徐家汇站不到 1 公里的上海电影博物馆，理应是必须打卡的项目之一。</p>
+        <p>然而，实际上我并不是特别喜欢逛博物馆的类型：那些充满历史感的作品，我很难欣赏它们的艺术底蕴。</p>
+        <p>门票 68 元/人，稍微有点贵。</p>
+        <p>从顶层的四楼开始游览，走过模拟颁奖的红地毯，进入展厅，就能看到一面墙，上面挂着老一辈中国演员们的画像。</p>
+        <p>七八十年代的中国电影，我并未涉猎过多少，那些经典也没来得及看，墙上看到的自然都是些陌生的面孔。</p>
+        <p>展厅介绍的导演，因为不了解，快速略过。唯一读过的作品《雷雨》，还是一个月前看的。</p>
+        <p>下到三楼，展示了五十到七十年代的更多影视作品。那段时光如此遥远，如果不是对刚成立的中国充满浓厚兴趣，怕是我不会专门去看。</p>
+        <p>那里有上世纪的《电影时代》杂志封面，上海女性丰满且肉感十足，吸引观众的眼球。对影视作品里的裸女感兴趣，似乎是亘古不变的道理。</p>
+        <p>昨晚睡前，我被老师拉进了一个不知名的群聊。虽然一夜过去，群里没有发出任何消息，但它就像漂浮在头上的乌云，不知何时会下起骤雨。</p>
+        <p>我到二楼看了介绍上海电影发展历史的影片，感觉有些粗制滥造。</p>
+        <p>转悠了一圈，熟悉的名字也就张爱玲和《色戒》。这两者也只是听过，却没有看过。前者听王小波点评过，记得给它留下了不太好的印象，太忧郁；后者想看却一直未看，只略过其中闻名的性爱镜头。</p>
+        <p>乌云的正式降临，是在下午两点四十五分。来势汹汹，老师希望全员三点在线集合，布置申请项目上的分工作业。</p>
+        <p>我躲在卫生间隔间里，望着外面周日的大好天气，不禁感叹：该来的总会来。</p>
+        <p>听会的过程中，又新生了一重烦恼：明天是迪士尼的重头戏，我还没向老师请假呢。看这项目，似乎不像一两天能结束。</p>
+        <p>找理由当然不太靠谱，但又不想撒谎，硬着头皮用了家里人生病的理由，表示明天不会在杭州。奶奶最近确实生病了，父母希望我回家一趟。</p>
+        <p>这样才总算搪塞过去。</p>
+        <p>接下来的时间里，本就不多的游览兴趣，也被赶回酒店干活的心情彻底榨干。</p>
+        <p>不过，心情并没有想象中的那么坏，为了明天的欢乐，我愿意做出牺牲。</p>
+      </section>
+
+      <div class="nanjing-rb-media-grid nanjing-rb-media-grid--three nanjing-rb-media-grid--portrait">
+        <figure class="nanjing-rb-media">
+          <img src="../../assets/travel/shanghai/story/movie-museum-gate.jpeg" alt="上海电影博物馆大门" loading="lazy" decoding="async">
+          <figcaption>博物馆大门</figcaption>
+        </figure>
+        <figure class="nanjing-rb-media">
+          <img src="../../assets/travel/shanghai/story/movie-museum-cafe.jpeg" alt="老上海咖啡店展示" loading="lazy" decoding="async">
+          <figcaption>张爱玲儿时常去的老上海咖啡店</figcaption>
+        </figure>
+        <figure class="nanjing-rb-media">
+          <img src="../../assets/travel/shanghai/story/movie-museum-leiyu.jpeg" alt="雷雨剧本展陈" loading="lazy" decoding="async">
+          <figcaption>读过《雷雨》的剧本</figcaption>
+        </figure>
+      </div>
+
+      <section class="nanjing-rb-section">
+        <h2>外滩打卡的失落</h2>
+        <p>吃完烤肉，在伦堡徒步的建议下，我们向外滩走去。</p>
+        <p>其实，下午的漫步后，我和 Lucky 都有些疲惫了，走了快 1.5 万步，然而前程漫漫，外滩距离我们还有将近 3 公里，真是有苦说不出。</p>
+        <p>伦堡带头走的很快，几乎没有停留，因此我们也没时间细看沿路的商店。</p>
+        <p>记得有一次我本想驻足看看一家商店外面的展示柜，里面放了张风景画还是精致的蝴蝶什么的，现在有些记不清楚了。只记得有个外国的老头拿着古老的手机，被深深吸引，停留在柜前拍照。</p>
+        <p>我要是多看两眼，怕是连伦堡他们人都见不到了吧。</p>
+        <p>终于走到外滩，上了台阶。lucky指了指江对面:"喏，那就是外滩。" 让人不禁想到巨人里的名场面。</p>
+        <p>只见以上海东方明珠为中心，灯火辉煌的建筑群熠熠生辉，缤纷的霓虹灯在黑暗的江水中投下了倒影。</p>
+        <p>游客几乎占满了整个通道，都挤在围栏旁拿着相机或手机拍照。</p>
+        <p>我们一行人也懒得加入拥挤的行列，只是看了两眼，就离开了。又是lucky的锐评，</p>
+        <p>"外滩就是给外地人来的打卡点，本地人从来不去的。"</p>
+        <p>下了台阶，情况也没有乐观到哪里去：哪哪都是人，除了闪耀着金黄色光芒的建筑外，也没有别的观赏项目，何况脚底越来越疼了。</p>
+        <p>宝贵的休息只有一次，那是坐在路边的台阶上。我看大伙精神都挺涣散的，tf看起了lol比赛，lucky和伦堡看起了炉石。</p>
+        <p>十分钟眨眼就过去，我们又往和平饭店出发。</p>
+        <p>就看了饭店的门面，拍了照，算是来过了。街道两旁的景象，现在已经遗忘得差不多了，只记得人山人海，让人想起周末的湖滨银泰。</p>
+        <p>本想去逛lucky提议的二次元手办商场，可耐不住心累和脚累，就早早地打道回府了。</p>
+        <p>总体来看，逛个外滩好像只留下了失落这一个感觉：毕竟是充当一个外地打卡者，和周围的游客们没有任何区别，只是被建筑的外观吸引，却对其中一无所知。</p>
+      </section>
+
+      <div class="nanjing-rb-media-grid nanjing-rb-media-grid--three nanjing-rb-media-grid--portrait">
+        <figure class="nanjing-rb-media">
+          <img src="../../assets/travel/shanghai/story/bund-crowd-view.jpeg" alt="外滩人群与天际线" loading="lazy" decoding="async">
+          <figcaption>必游项目，但更像打卡点的外滩</figcaption>
+        </figure>
+        <figure class="nanjing-rb-media">
+          <img src="../../assets/travel/shanghai/story/bund-golden-buildings.jpeg" alt="外滩金色建筑群" loading="lazy" decoding="async">
+          <figcaption>金碧辉煌的建筑和络绎不绝的人群</figcaption>
+        </figure>
+        <figure class="nanjing-rb-media">
+          <img src="../../assets/travel/shanghai/story/bund-clocktower-night.jpeg" alt="钟楼与夜色人群" loading="lazy" decoding="async">
+          <figcaption>伦敦的大本钟和底下的人们</figcaption>
+        </figure>
+      </div>
+
+      <section class="nanjing-rb-section">
+        <h2>与上海出租车司机的闲聊</h2>
+        <p>嘿嘿嘿，这次和司机的闲聊，我还用手机录了音呢。</p>
+        <p>每次到一个地方旅行，最容易搭上话的，就是当地的出租车司机师傅了。</p>
+        <p>绝大部分情况下，面对游客时，他们相对活跃；而作为游客的我，也能从他们口中了解当地的生活。</p>
+        <p>整个旅行，我只打过这一次出租车。这次也是迫不得已，在黄浦江的另一边刚骑完车，地铁和船运在深夜的十一点都停掉了。</p>
+        <p>我们的对话，是从手机里开始的。我接到电话，电话那头传来的是一个中老年男性的声音，</p>
+        <p>"你好，请问你的定位准吗？我怎么没看到你。"</p>
+        <p>"啊，我就在你的前面一百米的地方。"</p>
+        <p>"你确定吗？要不你走过来吧。"</p>
+        <p>定位明明显示车就在后头一百米，可这司机不想开过来，一定让我走过去。</p>
+        <p>上了车，我从原因问起，开始了闲聊。</p>
+        <p>"师傅你咋不开过来呢？"</p>
+        <p>"哎呀，你们打车的基本对位置不怎么专业，很多话信不得。我要再往前开，方向错了掉头就很麻烦。"</p>
+        <p>说得似乎不无道理。</p>
+        <p>搭话时，表明游客的身份很重要，这是开启话题的第一步。</p>
+        <p>"哎呀，我这次来上海玩。江这边好安静啊，跟外滩那边完全不一样。"</p>
+        <p>"你这都走到哪里了。" 他看着车里的反光镜，打量了我一眼，"什么，一个人来上海旅行啊，看你这模样，还在上学吧？"</p>
+        <p>学生的身份往往也很便利，会让人觉得是身处象牙塔，对社会不谙世事的形象。这次是师傅主动问起了，</p>
+        <p>"你什么专业的？今年大几了？"</p>
+        <p>"计算机，最近刚读博士呢。"</p>
+        <p>似乎是戳中了他哪个兴趣点，听到"读博"他很来劲。</p>
+        <p>"我女儿十年前上海硕士毕业，读的化学专业，现在都当上企业的高管了。"</p>
+        <p>原来是一番炫耀啊，有个读书好、事业有成的女儿。他继续输出他的观点，</p>
+        <p>"现在的博士啊，根本不上以前的，你现在读出来，能混上高管吗？位置早就被占掉了。"</p>
+        <p>这我也不是不明白，随着内卷，学位的价值也越来越低，评判标准逐渐向个人能力靠近。</p>
+        <p>"等你二十七八岁读出来，出去工作两三年，又要开始着落成家立业的事情。"</p>
+        <p>"这我就得跟你说了，人嘛，三十而立，古时候的话肯定有它的道理。三十岁，要有稳定的事业，建立家庭，这样才能说一个男人能立于社会上。"</p>
+        <p>没想到，这位师傅话还挺多的，竟这么喜欢好为人师。看他的年纪，想必也读过一点书。</p>
+        <p>"结婚是必须的，男人缺不了女人，那方面的事情是一定要干的。"</p>
+        <p>那方面，哪方面，我可以天真地追问吗。不过看他如此直言，也就作罢了。</p>
+        <p>在整个搭车的二十分钟里，师傅一刻不停地分享他的见闻和观点，我负责随身附和，鼓励他说下去就好。</p>
+        <p>车开到了此前骑车望见的卢浦大桥。夜深了，江边的城市迎来沉睡。可此前看桥的兴致，此刻却离我有些遥远，我无暇顾及桥上的风景，而是饶有兴致地继续听下去。</p>
+        <p>"这我就得跟你说了，看你读的专业是计算机，我有个喜欢自学计算机的侄子，我给你讲讲他的故事吧？"</p>
+        <p>明知故问，我自然地点头，用"嗯"回答。</p>
+        <p>"我这侄子本科毕业，先在一家互联网小厂企业工作，但觉得工作强度太高，他跳槽到了一家外企。"</p>
+        <p>"外企虽然工资也就那样，但工作时间少了很多，我这侄子平时就喜欢自学计算机，工作之余会钻研技术。"</p>
+        <p>"有一天，他去面试了美国的一家企业，线上面试的。总共15道题目，解答时间为10天。"</p>
+        <p>"你知道如果拿到这个工作，年薪是多少吗？"</p>
+        <p>我摇了摇头，甩给他"五十万"的答复。</p>
+        <p>"年薪至少百万起步。每道题目都很难，但他最后答对了12道，排在前10%，顺利录取了。"</p>
+        <p>"现在他已经移民香港了，工资肯定又翻了好几倍吧。"</p>
+        <p>除了上述的故事以外，司机还涉猎了"礼仪"的方方面面，职场的 — 怎么倒酒，生活的 — 怎么走路，怎么打理等等。</p>
+        <p>照这般讲下去，一个小时都不够他说的。生活是一本书，按照他的年纪，短时间内我是读不完的。下车时，他有些意犹未尽地说了慢走。</p>
+        <p>至于我，当我睡前回顾今天的行程时，脑子里不时会冒出这位司机的话。至于其可信度如何，还是交给每个人自行判断吧。</p>
+      </section>
+
+      <div class="nanjing-rb-media-grid nanjing-rb-media-grid--three nanjing-rb-media-grid--portrait">
+        <figure class="nanjing-rb-media">
+          <img src="../../assets/travel/shanghai/story/taxi-lupu-underbridge.jpeg" alt="卢浦大桥底下" loading="lazy" decoding="async">
+          <figcaption>卢浦大桥底下</figcaption>
+        </figure>
+        <figure class="nanjing-rb-media">
+          <img src="../../assets/travel/shanghai/story/taxi-night-fisherman.jpeg" alt="深夜的钓鱼佬" loading="lazy" decoding="async">
+          <figcaption>深夜11点的钓鱼佬</figcaption>
+        </figure>
+        <figure class="nanjing-rb-media">
+          <img src="../../assets/travel/shanghai/story/taxi-riverside-midnight.jpeg" alt="即将宣告黑夜的江边城市" loading="lazy" decoding="async">
+          <figcaption>即将宣告黑夜的江边城市</figcaption>
+        </figure>
+      </div>
+
+      <section class="nanjing-rb-section">
+        <p class="nanjing-rb-section-index">重头戏</p>
+        <h2>白天的迪士尼</h2>
+        <p>和兄弟们一起去迪士尼的那天，天气出奇地好。前一晚我还担心大家约得太随意，会不会有人睡过头，结果一切顺利，我们九点准时排队入园。</p>
+        <p>迪士尼对很多人来说，是“浪漫”的同义词：城堡、游行、情侣合照和精心准备的穿搭。但对我们这群大老爷们而言，它更像一场高密度的体力赛，一整天都在排队、暴走、看演出，再继续排队。</p>
+        <div class="nanjing-rb-break" aria-hidden="true"></div>
+        <p>“好热啊，这上海怎么会这么晒。” 话里浓厚的台湾腔让我回过头，后面是同样排队的几位姑娘。我一边抱着《失乐园》，一边偷偷判断她们是不是从台湾来的，最后当然也没敢搭话。</p>
+        <p>“这我之前也来过。” 掏粪指着舞台上咧嘴大笑的海盗说。上午的大部分时间，就这样在演出和等待中过去了。</p>
+        <p>最喜欢的是「加勒比海盗戏剧团」：真人演员撑起节奏，整体轻松幽默，偶尔还会抛出特效惊喜，比如空中的滑翔锁链和突然拔高的喷气。简单说，不赖。</p>
+        <div class="nanjing-rb-break" aria-hidden="true"></div>
+        <p>烈日正盛时，主干道两侧站满了人，大家都在等游行开场。五位舞者打头阵，后面跟着一辆又一辆花车：米奇、白雪公主、托马斯小火车，伴随着高密度的音乐和欢呼缓缓经过。</p>
+        <p>我们饿着肚子也坚持看完。对面的游客举着手机不停录影，身边有人跟着节奏拍手。那一刻我突然明白，迪士尼最厉害的地方，不是某个项目有多刺激，而是它能让一大群人同时相信“今天值得开心”。</p>
+      </section>
+
+      <div class="nanjing-rb-media-grid nanjing-rb-media-grid--three nanjing-rb-media-grid--portrait">
+        <figure class="nanjing-rb-media">
+          <img src="../../assets/travel/shanghai/story/disney-clocktower.jpeg" alt="初进门口时的钟塔" loading="lazy" decoding="async">
+          <figcaption>初进门口时的钟塔</figcaption>
+        </figure>
+        <figure class="nanjing-rb-media">
+          <img src="../../assets/travel/shanghai/story/disney-parade-crowd.jpeg" alt="太阳下撑伞看游行表演的群众" loading="lazy" decoding="async">
+          <figcaption>太阳下撑伞看游行表演的群众</figcaption>
+        </figure>
+        <figure class="nanjing-rb-media">
+          <img src="../../assets/travel/shanghai/story/disney-castle-day.jpeg" alt="迪士尼的主堡" loading="lazy" decoding="async">
+          <figcaption>迪士尼的主堡</figcaption>
+        </figure>
+      </div>
+
+      <section class="nanjing-rb-section">
+        <h2>朋友篇</h2>
+        <p>当 yd 领到别人赠送的雨衣时，他笑开了花，“连谢谢都没说，世上竟有这样的好人。”</p>
+        <p>这件雨衣后来被用来保护lucky的包包，里面放满了相机，是整个漂流中最有价值的物品。</p>
+        <p>那坐在橡皮艇开口的我就没那么好运了，在激荡的水流中，它浸湿了我的后背。</p>
+        <p>同坐在艇上的还有一对父女，小女儿披着雨衣，闭着眼不敢看。yd 坐在她身旁。</p>
+        <p>和父亲闲聊后，yd 提议让她身体前倾一点，他来帮忙稳住摇晃的艇身。父亲认真地向他道了谢。</p>
+        <p>下艇后，雨衣又被 yd 传给了下一位陌生人，他又一次笑得很开心。</p>
+        <p class="nanjing-rb-separator">***</p>
+        <p>什么时候能再次见到lucky坐在摩托车上的帅气模样呢？</p>
+        <p>只见lucky双手紧握把手，盯着前方妖冶的红蓝光赛道，身体前倾，像是要骑马打仗一样。</p>
+        <p>不过，第一排的飞车体验和打仗无异，速度快得睁不开双眼，在高速运动中天旋地转。</p>
+        <p>"就这还算有点刺激性吧。" lucky嘴角微微上扬，跳动身体，这是他的经典姿势。</p>
+        <p class="nanjing-rb-separator">***</p>
+        <p>“哎呀，这个很快就过去，这你真的不玩啊？” 我们一群人站在海盗船门口，努力劝说 apate。</p>
+        <p>apate 站得远远的，像早就料到会有这出，提前拉开距离，只留个背影，甩甩手表示拒绝。</p>
+        <p>"不知道这一个小时他又会去哪里鬼混。"</p>
+        <p>船荡到了最高处，向下的俯冲带来强烈的失重感，身体正要兴奋时，船却不一会儿就蔫了，失望。</p>
+        <p>apate坐在椅子上，重又加入了我们的队伍。</p>
+        <p class="nanjing-rb-separator">***</p>
+        <p>左手拿着的是一只躲在萝卜里的兔子玩偶，蓝白配色的身体，搭配橙黄色的外壳，除了眼神有些空洞外，其余都挺好的。</p>
+        <p>拿在右手的是一只米色栏框里的小松鼠，棕红和毛茸茸的身体，外型像卷福饰演的福尔摩斯，全身散发着智慧的味道。</p>
+        <p>"有钱你就都买了。" 掏粪看着我犹豫不决的样子，随口建议道。</p>
+        <p>我喜欢米色的松鼠，但收礼物的她显然会更中意蓝白的兔子。</p>
+        <p>"还有啊，我建议你也别拍照询问她喜欢哪个，她多半不会接受的，你要当作惊喜送给她。" 掏粪好似看透了我内心的想法，我总会在这时显得犹豫。</p>
+        <p>果然现实如她所说，她婉拒了礼物。不过，在后来的见面中，我把礼物送给了她，那只兔子玩偶就永远地挂在了她寝室的墙上。</p>
+      </section>
+
+      <div class="nanjing-rb-media-grid nanjing-rb-media-grid--three nanjing-rb-media-grid--portrait">
+        <figure class="nanjing-rb-media">
+          <img src="../../assets/travel/shanghai/story/disney-snack-pink.jpeg" alt="可爱少女风的零食点心" loading="lazy" decoding="async">
+          <figcaption>可爱少女风的零食点心</figcaption>
+        </figure>
+        <figure class="nanjing-rb-media">
+          <img src="../../assets/travel/shanghai/story/disney-thomas-train.jpeg" alt="托马斯小火车" loading="lazy" decoding="async">
+          <figcaption>托马斯小火车</figcaption>
+        </figure>
+        <figure class="nanjing-rb-media">
+          <img src="../../assets/travel/shanghai/story/disney-rabbit-toy.jpeg" alt="疯狂动物城兔子警官的玩偶" loading="lazy" decoding="async">
+          <figcaption>疯狂动物城兔子警官的玩偶</figcaption>
+        </figure>
+      </div>
+
+      <section class="nanjing-rb-section">
+        <h2>烟花的尾声</h2>
+        <p>当烟花在夜幕中的城堡上方绽放时，lucky、掏粪、老头、yd、apate和我，我们六人站成前后两排，一齐看向夜空。</p>
+        <p>那里一束束的烟花在空中炸裂，像星星一样散发着耀眼的光芒，随后从天而降，消失在了看不见的地底下。</p>
+        <p>我们今天的迪士尼之旅，也像烟花一样绚丽多彩 — 总功臣、发出邀请的lucky，翘班请假而来的掏粪，有着摄影特长的老头，暖心负责任的yd、胆小如鼠的apate，以及负责记录一切的我。</p>
+        <p>但看着烟花消逝，不免生出伤感——不久后的我们将各奔东西，工作后再聚更难，且行且珍惜吧。</p>
+      </section>
+
+      <figure class="nanjing-rb-media nanjing-rb-media--single">
+        <img src="../../assets/travel/shanghai/story/disney-fireworks-castle.jpeg" alt="九点烟花下的主堡夜景" loading="lazy" decoding="async">
+        <figcaption>九点烟花下的主堡夜景</figcaption>
+      </figure>
+
+      <section class="nanjing-rb-section">
+        <p class="nanjing-rb-section-index">附录 A</p>
+        <h2>花费记录</h2>
+        <p>3天花了2k，还不包括迪士尼门票，还是挺高的；这就是上海的物价</p>
+      </section>
+
+      <section class="nanjing-rb-section">
+        <h2>行程安排</h2>
+        <p>请参考pdf文件</p>
+      </section>
+    </article>
+
+    <section class="nanjing-section nanjing-section--appendix">
+      <div class="nanjing-section-heading">
+        <p class="nanjing-section-index">附录 B</p>
+        <h2>饮食清单</h2>
+      </div>
+      <div class="nanjing-card-grid nanjing-card-grid--food travel-rule-food-portrait">
+        <article class="nanjing-card nanjing-card--food" data-food-key="noodle" role="button" tabindex="0" aria-haspopup="dialog">
+          <img src="../../assets/travel/shanghai/food/noodle-c1.jpeg" alt="穷鬼套餐的红烧牛肉面" loading="lazy" decoding="async">
+          <h3>穷鬼套餐的红烧牛肉面</h3>
+          <p>第一天落地后的救命午餐。18.8 元，预制牛肉配现煮面，味道普通但很顶饱。至少没让我饿到在陌生街头发晕。</p>
+        </article>
+        <article class="nanjing-card nanjing-card--food" data-food-key="croissant" role="button" tabindex="0" aria-haspopup="dialog">
+          <img src="../../assets/travel/shanghai/food/croissant-c4.jpeg" alt="BASDBAN 原味可颂" loading="lazy" decoding="async">
+          <h3>BASDBAN 原味可颂</h3>
+          <p>网红店人满为患，但可颂确实争气。刚出炉时外皮酥、黄油香明显。本想留一半当夜宵，结果被伦堡直接吃掉。</p>
+        </article>
+        <article class="nanjing-card nanjing-card--food" data-food-key="yakiniku" role="button" tabindex="0" aria-haspopup="dialog">
+          <img src="../../assets/travel/shanghai/food/yakiniku-c2.jpeg" alt="四人围坐的日式烤肉" loading="lazy" decoding="async">
+          <h3>四人围坐的日式烤肉</h3>
+          <p>本地推荐店，位置隐蔽但食材新鲜。四人慢烤慢吃，氛围不错。可惜压轴牛排口感像烂泥，成了全桌槽点。</p>
+        </article>
+        <article class="nanjing-card nanjing-card--food" data-food-key="pork-cutlet" role="button" tabindex="0" aria-haspopup="dialog">
+          <img src="../../assets/travel/shanghai/food/pork-cutlet-c1.jpeg" alt="厚切猪排饭" loading="lazy" decoding="async">
+          <h3>厚切猪排饭</h3>
+          <p>洗礼结束后直奔徐家汇，饿到见饭就眼亮。猪排边角最香，油脂和脆壳口感很顶。平时一碗饭的我也硬是加了半碗。</p>
+        </article>
+        <article class="nanjing-card nanjing-card--food" data-food-key="buffet" role="button" tabindex="0" aria-haspopup="dialog">
+          <img src="../../assets/travel/shanghai/food/buffet-c2.jpeg" alt="自助餐" loading="lazy" decoding="async">
+          <h3>自助餐</h3>
+          <p>四人战斗力完全不在一个档位。我越吃越腻，他们越战越勇。唯一最美时刻是刚开锅前，汤底干净、万物未乱。</p>
+        </article>
+        <article class="nanjing-card nanjing-card--food" data-food-key="disney-town" role="button" tabindex="0" aria-haspopup="dialog">
+          <img src="../../assets/travel/shanghai/food/disney-town-c3.jpeg" alt="迪士尼小镇用餐" loading="lazy" decoding="async">
+          <h3>迪士尼小镇用餐</h3>
+          <p>中午泰餐、晚上必吃榜西餐，主打一个体力补给。价格和商场接近值得好评，但整体口味都在“能吃”而非“惊艳”。</p>
+        </article>
+        <article class="nanjing-card nanjing-card--food" data-food-key="fruit-snack" role="button" tabindex="0" aria-haspopup="dialog">
+          <img src="../../assets/travel/shanghai/food/fruit-snack-n2.jpeg" alt="深夜水果夜宵" loading="lazy" decoding="async">
+          <h3>深夜水果夜宵</h3>
+          <p>步数冲到 2w8 后，最治愈的是一杯水果酸奶。草莓、芒果、哈密瓜把身体从油腻里拽回来。再加一斤香蕉给次日续航。</p>
+        </article>
+      </div>
+      <div class="nanjing-food-modal" id="nanjing-food-modal" hidden>
+        <div class="nanjing-food-modal__backdrop" data-close-food-modal="true"></div>
+        <section class="nanjing-food-modal__panel" role="dialog" aria-modal="true" aria-labelledby="nanjing-food-modal-title">
+          <button type="button" class="nanjing-food-modal__close" data-close-food-modal="true" aria-label="关闭评价">×</button>
+          <div class="nanjing-food-modal__layout">
+            <figure class="nanjing-food-modal__media">
+              <img id="nanjing-food-modal-image" alt="" loading="lazy" decoding="async">
+            </figure>
+            <div class="nanjing-food-modal__text">
+              <p class="nanjing-food-modal__score" id="nanjing-food-modal-score"></p>
+              <h3 id="nanjing-food-modal-title"></h3>
+              <div class="nanjing-food-modal__content" id="nanjing-food-modal-content"></div>
+            </div>
+          </div>
+        </section>
+      </div>
+    </section>

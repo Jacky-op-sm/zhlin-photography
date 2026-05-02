@@ -9,6 +9,7 @@
     "start": "next start",
     "lint": "next lint",
     "typecheck": "tsc --noEmit",
+    "check:content": "node scripts/check-content.mjs",
     "check:assets": "node scripts/check-assets.mjs",
     "check:build-budget": "node scripts/check-build-budget.mjs",
     "check:all-budgets": "npm run check:assets && npm run check:build-budget",

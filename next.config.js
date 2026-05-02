@@ -2,6 +2,11 @@
 const isDeployBuild = process.env.SKIP_TYPECHECK === '1';
 
 const nextConfig = {
+  experimental: {
+    outputFileTracingIncludes: {
+      '/*': ['./content/**/*'],
+    },
+  },
   eslint: {
     ignoreDuringBuilds: isDeployBuild,
   },

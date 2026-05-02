@@ -1,0 +1,138 @@
+[
+  {
+    "id": "street-scene-1",
+    "title": "Sunlit Cafe Table",
+    "description": "Sunlight and window text spill across a quiet cafe table",
+    "filename": "/assets/photos/street/street-scene-1.jpg",
+    "thumbnail": "/assets/photos/street/street-scene-1.jpg",
+    "width": 1531,
+    "height": 2000,
+    "takenAt": "March 2026",
+    "location": "Hangzhou, China",
+    "tags": [
+      "street",
+      "cafe",
+      "sunlight",
+      "table"
+    ]
+  },
+  {
+    "id": "street-scene-2",
+    "title": "Stair Geometry",
+    "description": "Layered staircases cut into sharp geometry and late-day shadow",
+    "filename": "/assets/photos/street/street-scene-2.jpg",
+    "thumbnail": "/assets/photos/street/street-scene-2.jpg",
+    "width": 1428,
+    "height": 2000,
+    "takenAt": "March 2026",
+    "location": "Hangzhou, China",
+    "tags": [
+      "street",
+      "stairs",
+      "geometry",
+      "shadow"
+    ]
+  },
+  {
+    "id": "street-scene-3",
+    "title": "Crossing Together",
+    "description": "A family crossing together in silhouette under hard afternoon light",
+    "filename": "/assets/photos/street/street-scene-3.jpg",
+    "thumbnail": "/assets/photos/street/street-scene-3.jpg",
+    "width": 1525,
+    "height": 2000,
+    "takenAt": "March 2026",
+    "location": "Hangzhou, China",
+    "tags": [
+      "street",
+      "crossing",
+      "silhouette",
+      "family"
+    ]
+  },
+  {
+    "id": "street-scene-4",
+    "title": "Lakeside Rider",
+    "description": "A cyclist glides along the lakeside at dusk beneath a dark canopy",
+    "filename": "/assets/photos/street/street-scene-4.jpg",
+    "thumbnail": "/assets/photos/street/street-scene-4.jpg",
+    "width": 1333,
+    "height": 2000,
+    "takenAt": "March 2026",
+    "location": "Hangzhou, China",
+    "tags": [
+      "street",
+      "bike",
+      "lake",
+      "dusk"
+    ]
+  },
+  {
+    "id": "refrigerator",
+    "title": "Refrigerator Study",
+    "description": "An everyday object turned into graphic composition",
+    "filename": "/assets/photos/street/refrigerator.jpg",
+    "thumbnail": "/assets/photos/street/refrigerator.jpg",
+    "width": 1333,
+    "height": 2000,
+    "takenAt": "2026",
+    "location": "China",
+    "tags": [
+      "object",
+      "still-life",
+      "domestic",
+      "abstract"
+    ]
+  },
+  {
+    "id": "school-light",
+    "title": "School Light and Shadows",
+    "description": "Warm afternoon light moving through classrooms",
+    "filename": "/assets/photos/street/school-light.jpg",
+    "thumbnail": "/assets/photos/street/school-light.jpg",
+    "width": 1275,
+    "height": 2000,
+    "takenAt": "March 2026",
+    "location": "Hangzhou, China",
+    "tags": [
+      "school",
+      "light",
+      "classroom",
+      "warm"
+    ]
+  },
+  {
+    "id": "abstract-building",
+    "title": "Abstract Architecture",
+    "description": "Lines and shadows in a passing urban frame",
+    "filename": "/assets/photos/street/abstract-building.jpg",
+    "thumbnail": "/assets/photos/street/abstract-building.jpg",
+    "width": 2000,
+    "height": 1333,
+    "takenAt": "2026",
+    "location": "China",
+    "tags": [
+      "architecture",
+      "abstract",
+      "urban",
+      "lines"
+    ]
+  },
+  {
+    "id": "west-lake-rain",
+    "title": "Rain Over West Lake",
+    "description": "Rain and mist over water in early spring",
+    "filename": "/assets/photos/street/west-lake-rain.jpg",
+    "thumbnail": "/assets/photos/street/west-lake-rain.jpg",
+    "width": 1333,
+    "height": 2000,
+    "takenAt": "March 2026",
+    "location": "Hangzhou, China",
+    "tags": [
+      "lake",
+      "rain",
+      "spring",
+      "mist"
+    ]
+  }
+]

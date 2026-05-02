@@ -22,7 +22,7 @@
       "@/data/*": ["./data/*"]
     }
   },
-  "include": ["next-env.d.ts", "src/**/*.ts", "src/**/*.tsx", ".next/types/**/*.ts", "data/**/*.json"],
+  "include": ["next-env.d.ts", "src/**/*.ts", "src/**/*.tsx", ".next/types/**/*.ts", "data/**/*.json", "content/**/*.json"],
   "exclude": [
     "node_modules",
     "**/*.backup.tsx",
