@@ -1,138 +1,77 @@
 [
   {
-    "id": "street-scene-1",
-    "title": "Sunlit Cafe Table",
-    "description": "Sunlight and window text spill across a quiet cafe table",
-    "filename": "/assets/photos/street/street-scene-1.jpg",
-    "thumbnail": "/assets/photos/street/street-scene-1.jpg",
-    "width": 1531,
-    "height": 2000,
-    "takenAt": "March 2026",
+    "id": "z52-8055",
+    "title": "黑白街头 8055",
+    "description": "从高分选片中保留下来的黑白街头画面，层次和现场感都更完整。",
+    "filename": "/assets/photos/street/Z52_8055.jpg",
+    "thumbnail": "/assets/photos/street/Z52_8055.jpg",
+    "width": 2000,
+    "height": 1266,
+    "takenAt": "May 2026",
     "location": "Hangzhou, China",
     "tags": [
       "street",
-      "cafe",
-      "sunlight",
-      "table"
+      "black-white"
     ]
   },
   {
-    "id": "street-scene-2",
-    "title": "Stair Geometry",
-    "description": "Layered staircases cut into sharp geometry and late-day shadow",
-    "filename": "/assets/photos/street/street-scene-2.jpg",
-    "thumbnail": "/assets/photos/street/street-scene-2.jpg",
-    "width": 1428,
-    "height": 2000,
-    "takenAt": "March 2026",
-    "location": "Hangzhou, China",
-    "tags": [
-      "street",
-      "stairs",
-      "geometry",
-      "shadow"
-    ]
-  },
-  {
-    "id": "street-scene-3",
-    "title": "Crossing Together",
-    "description": "A family crossing together in silhouette under hard afternoon light",
-    "filename": "/assets/photos/street/street-scene-3.jpg",
-    "thumbnail": "/assets/photos/street/street-scene-3.jpg",
-    "width": 1525,
-    "height": 2000,
-    "takenAt": "March 2026",
-    "location": "Hangzhou, China",
-    "tags": [
-      "street",
-      "crossing",
-      "silhouette",
-      "family"
-    ]
-  },
-  {
-    "id": "street-scene-4",
-    "title": "Lakeside Rider",
-    "description": "A cyclist glides along the lakeside at dusk beneath a dark canopy",
-    "filename": "/assets/photos/street/street-scene-4.jpg",
-    "thumbnail": "/assets/photos/street/street-scene-4.jpg",
-    "width": 1333,
-    "height": 2000,
-    "takenAt": "March 2026",
-    "location": "Hangzhou, China",
-    "tags": [
-      "street",
-      "bike",
-      "lake",
-      "dusk"
-    ]
-  },
-  {
-    "id": "refrigerator",
-    "title": "Refrigerator Study",
-    "description": "An everyday object turned into graphic composition",
-    "filename": "/assets/photos/street/refrigerator.jpg",
-    "thumbnail": "/assets/photos/street/refrigerator.jpg",
-    "width": 1333,
-    "height": 2000,
-    "takenAt": "2026",
-    "location": "China",
-    "tags": [
-      "object",
-      "still-life",
-      "domestic",
-      "abstract"
-    ]
-  },
-  {
-    "id": "school-light",
-    "title": "School Light and Shadows",
-    "description": "Warm afternoon light moving through classrooms",
-    "filename": "/assets/photos/street/school-light.jpg",
-    "thumbnail": "/assets/photos/street/school-light.jpg",
-    "width": 1275,
-    "height": 2000,
-    "takenAt": "March 2026",
-    "location": "Hangzhou, China",
-    "tags": [
-      "school",
-      "light",
-      "classroom",
-      "warm"
-    ]
-  },
-  {
-    "id": "abstract-building",
-    "title": "Abstract Architecture",
-    "description": "Lines and shadows in a passing urban frame",
-    "filename": "/assets/photos/street/abstract-building.jpg",
-    "thumbnail": "/assets/photos/street/abstract-building.jpg",
+    "id": "z52-3020",
+    "title": "黑白街头 3020",
+    "description": "一个安静的城市瞬间，由反差、姿态和街头光线共同构成。",
+    "filename": "/assets/photos/street/Z52_3020.jpg",
+    "thumbnail": "/assets/photos/street/Z52_3020.jpg",
     "width": 2000,
     "height": 1333,
-    "takenAt": "2026",
-    "location": "China",
+    "takenAt": "May 2026",
+    "location": "Hangzhou, China",
     "tags": [
-      "architecture",
-      "abstract",
-      "urban",
-      "lines"
+      "street",
+      "black-white"
     ]
   },
   {
-    "id": "west-lake-rain",
-    "title": "Rain Over West Lake",
-    "description": "Rain and mist over water in early spring",
-    "filename": "/assets/photos/street/west-lake-rain.jpg",
-    "thumbnail": "/assets/photos/street/west-lake-rain.jpg",
-    "width": 1333,
-    "height": 2000,
-    "takenAt": "March 2026",
+    "id": "z52-7293",
+    "title": "黑白街头 7293",
+    "description": "保留下来的黑白街头观察，画面节奏和气氛更接近这一组的方向。",
+    "filename": "/assets/photos/street/Z52_7293.jpg",
+    "thumbnail": "/assets/photos/street/Z52_7293.jpg",
+    "width": 2000,
+    "height": 1333,
+    "takenAt": "May 2026",
     "location": "Hangzhou, China",
     "tags": [
-      "lake",
-      "rain",
-      "spring",
-      "mist"
+      "street",
+      "black-white"
+    ]
+  },
+  {
+    "id": "z52-7408",
+    "title": "黑白街头 7408",
+    "description": "一张高分街头照片，在日常移动和克制构图之间取得平衡。",
+    "filename": "/assets/photos/street/Z52_7408.jpg",
+    "thumbnail": "/assets/photos/street/Z52_7408.jpg",
+    "width": 2000,
+    "height": 1333,
+    "takenAt": "May 2026",
+    "location": "Hangzhou, China",
+    "tags": [
+      "street",
+      "black-white"
+    ]
+  },
+  {
+    "id": "z52-8044",
+    "title": "黑白街头 8044",
+    "description": "当前街拍选片中入选的黑白画面，保留了直接而清晰的现场观察。",
+    "filename": "/assets/photos/street/Z52_8044.jpg",
+    "thumbnail": "/assets/photos/street/Z52_8044.jpg",
+    "width": 2000,
+    "height": 1333,
+    "takenAt": "May 2026",
+    "location": "Hangzhou, China",
+    "tags": [
+      "street",
+      "black-white"
     ]
   }
 ]

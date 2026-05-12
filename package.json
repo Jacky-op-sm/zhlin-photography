@@ -13,6 +13,7 @@
     "check:assets": "node scripts/check-assets.mjs",
     "check:build-budget": "node scripts/check-build-budget.mjs",
     "check:all-budgets": "npm run check:assets && npm run check:build-budget",
+    "photos:sync:street": "node scripts/sync-photography-selection.mjs --catalog conversation/黑白/catalog.json",
     "assets:optimize": "node scripts/optimize-images.mjs",
     "build:japan-card-expand": "node scripts/build-japan-card-expand.mjs",
     "test:e2e": "playwright test",

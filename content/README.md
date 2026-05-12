@@ -7,6 +7,7 @@ This directory is the canonical local content source for the site.
 - `travel/<slug>/cards.json`: spot, bookstore, and food slider cards.
 - `photography/series.json`: photography series copy and featured links.
 - `photography/photos/<series>.json`: photo records for each series.
+- `conversation/黑白/catalog.json`: local black-and-white street edit source. Run `npm run photos:sync:street` to regenerate `photography/photos/street.json` and sync selected assets.
 - `hobby/profile.json`: hobby intro, external profiles, and game profile.
 - `hobby/featured.json`: featured reading, film, and game entries.
 - `hobby/monthly/YYYY-MM.json`: monthly reading and film digest entries.

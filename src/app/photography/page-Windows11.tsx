@@ -10,7 +10,7 @@ const categories: CategoryInfo[] = [
     id: PhotoCategory.Street,
     name: 'Street',
     description: '街头摄影 - 捕捉城市中的瞬间与情绪',
-    coverImage: '/assets/photos/street/fridge.jpeg',
+    coverImage: '/assets/photos/street/Z52_8055.jpg',
   },
   {
     id: PhotoCategory.Pets,
