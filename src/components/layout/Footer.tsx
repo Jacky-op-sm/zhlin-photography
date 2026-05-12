@@ -213,6 +213,9 @@ export default function Footer() {
                   <Link href="/travel/nanjing">南京</Link>
                 </li>
                 <li>
+                  <Link href="/travel/wuhan">武汉</Link>
+                </li>
+                <li>
                   <Link href="/travel/hangzhou">杭州</Link>
                 </li>
               </ul>

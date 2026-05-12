@@ -185,8 +185,12 @@ export default function TravelCardSlider({
         ? [
             {
               text: activeCardData.body,
-              imageSrc: activeCardData.imageSrc,
-              imageAlt: activeCardData.imageAlt,
+              ...(activeCardData.imageSrc
+                ? {
+                    imageSrc: activeCardData.imageSrc,
+                    imageAlt: activeCardData.imageAlt,
+                  }
+                : {}),
             },
           ]
         : [];
@@ -283,9 +287,11 @@ export default function TravelCardSlider({
                         <p className="w-full whitespace-pre-line text-[1rem] leading-[1.8] tracking-[0.01em] text-[rgba(29,29,31,1)] sm:text-[1.15rem] lg:text-[1.25rem]">
                           {block.text}
                         </p>
-                        <div className="mx-0 overflow-hidden rounded-[1rem] sm:mx-3 sm:rounded-[1.35rem] lg:mx-5">
-                          <DetailImage src={block.imageSrc} alt={block.imageAlt} />
-                        </div>
+                        {block.imageSrc ? (
+                          <div className="mx-0 overflow-hidden rounded-[1rem] sm:mx-3 sm:rounded-[1.35rem] lg:mx-5">
+                            <DetailImage src={block.imageSrc} alt={block.imageAlt ?? ''} />
+                          </div>
+                        ) : null}
                       </div>
                     </div>
                   ))}
@@ -359,9 +365,11 @@ function CardContent({ card, variant }: { card: TravelSliderCard; variant: Trave
       </h3>
       <p className={bodyClassName}>{card.body}</p>
 
-      <div className="relative mt-auto overflow-hidden rounded-[1.35rem] bg-[rgba(245,245,247,1)]">
-        <Image src={card.imageSrc} alt={card.imageAlt} width={1400} height={900} className={`${imageHeightClass} w-full object-cover`} />
-      </div>
+      {card.imageSrc ? (
+        <div className="relative mt-auto overflow-hidden rounded-[1.35rem] bg-[rgba(245,245,247,1)]">
+          <Image src={card.imageSrc} alt={card.imageAlt ?? ''} width={1400} height={900} className={`${imageHeightClass} w-full object-cover`} />
+        </div>
+      ) : null}
     </div>
   );
 }

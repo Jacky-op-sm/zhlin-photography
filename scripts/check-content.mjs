@@ -30,6 +30,15 @@ function assertString(value, label) {
   }
 }
 
+function assertOptionalImage(value, label) {
+  if (value?.imageSrc === undefined && value?.imageAlt === undefined) {
+    return;
+  }
+
+  assertString(value?.imageSrc, `${label}.imageSrc`);
+  assertString(value?.imageAlt, `${label}.imageAlt`);
+}
+
 function assertStringArray(value, label) {
   if (!Array.isArray(value) || value.some((item) => typeof item !== 'string')) {
     fail(`${label} must be an array of strings`);
@@ -62,8 +71,7 @@ function validateTravelCard(card, label) {
   assertString(card?.eyebrow, `${label}.eyebrow`);
   assertString(card?.title, `${label}.title`);
   assertString(card?.body, `${label}.body`);
-  assertString(card?.imageSrc, `${label}.imageSrc`);
-  assertString(card?.imageAlt, `${label}.imageAlt`);
+  assertOptionalImage(card, label);
 
   if (!Array.isArray(card?.detailBlocks) || card.detailBlocks.length === 0) {
     fail(`${label}.detailBlocks must contain at least one block`);
@@ -72,8 +80,7 @@ function validateTravelCard(card, label) {
 
   for (const [index, block] of card.detailBlocks.entries()) {
     assertString(block?.text, `${label}.detailBlocks[${index}].text`);
-    assertString(block?.imageSrc, `${label}.detailBlocks[${index}].imageSrc`);
-    assertString(block?.imageAlt, `${label}.detailBlocks[${index}].imageAlt`);
+    assertOptionalImage(block, `${label}.detailBlocks[${index}]`);
   }
 }
 

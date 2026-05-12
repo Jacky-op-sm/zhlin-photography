@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1400" height="900" viewBox="0 0 1400 900" role="img" aria-labelledby="title desc">
+  <title id="title">武汉旅行照片待补充</title>
+  <desc id="desc">武汉旅行内容的临时图片占位。</desc>
+  <rect width="1400" height="900" fill="#f1f2f4"/>
+  <rect x="64" y="64" width="1272" height="772" rx="36" fill="#ffffff" stroke="#d9dce2" stroke-width="3"/>
+  <path d="M210 584 L476 354 L645 508 L774 390 L1190 584" fill="none" stroke="#a8b0bd" stroke-width="28" stroke-linecap="round" stroke-linejoin="round"/>
+  <circle cx="1062" cy="278" r="66" fill="#d8dde5"/>
+  <text x="700" y="718" text-anchor="middle" fill="#707783" font-family="Arial, 'Microsoft YaHei', sans-serif" font-size="44" font-weight="700">武汉旅行照片待补充</text>
+</svg>

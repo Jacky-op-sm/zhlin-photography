@@ -38,6 +38,7 @@ const navigationItems: NavItem[] = [
       { label: 'All', title: '探索全部', href: '/travel' },
       { label: 'Hangzhou', title: '杭州', href: '/travel/hangzhou' },
       { label: 'Nanjing', title: '南京', href: '/travel/nanjing' },
+      { label: 'Wuhan', title: '武汉', href: '/travel/wuhan' },
       { label: 'Japan', title: '日本', href: '/travel/japan' },
       { label: 'Shanghai', title: '上海', href: '/travel/shanghai' },
       { label: 'Dongbei', title: '东北', href: '/travel/dongbei' },

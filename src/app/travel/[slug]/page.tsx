@@ -44,6 +44,7 @@ export default async function TravelDetailPage({ params }: { params: { slug: str
     notFound();
   }
   const displayTitle = travel.cardTitle.replace(/游记/g, '').trim();
+  const foodSectionTitle = params.slug === 'wuhan' ? '故事' : '美食';
 
   return (
     <main className="min-h-screen bg-[rgba(245, 245, 247, 1)] text-neutral-950">
@@ -108,14 +109,14 @@ export default async function TravelDetailPage({ params }: { params: { slug: str
         </section>
       ) : null}
 
-      {['japan', 'nanjing', 'shanghai', 'beijing', 'dongbei'].includes(params.slug) ? (
+      {foodCards.length > 0 ? (
         <section className="bg-white px-6 py-16 sm:px-[9.4rem] sm:py-20 lg:px-[12.56rem] lg:py-24">
           <div className="mx-auto w-full max-w-[1880px]">
             <h2
               className="text-4xl font-semibold tracking-tight text-neutral-900 sm:text-5xl"
               style={{ marginLeft: `${SPOT_MARGIN_PX}px` }}
             >
-              美食
+              {foodSectionTitle}
             </h2>
             <FoodSlider cards={foodCards} />
           </div>

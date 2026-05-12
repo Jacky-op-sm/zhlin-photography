@@ -5,7 +5,7 @@ import type { Travel } from '@/lib/types';
 
 export const metadata = {
   title: 'Travel · Zhlin Photography',
-  description: '旅行摄影与城市游记，按南京、杭州、上海、北京、东北、日本整理成 6 城路书。',
+  description: '旅行摄影与城市游记，按不同目的地整理成路书。',
 };
 
 export default async function TravelPage() {
@@ -64,6 +64,7 @@ export default async function TravelPage() {
 
 const pinyinBySlug: Record<string, string> = {
   nanjing: 'NANJING',
+  wuhan: 'WUHAN',
   hangzhou: 'HANGZHOU',
   huzhou: 'HUZHOU',
   shanghai: 'SHANGHAI',
