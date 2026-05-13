@@ -35,7 +35,7 @@ const photographerShowcaseCards: PhotographerShowcaseCard[] = [
   {
     title: '街拍',
     href: '/photography/street',
-    image: '/assets/photos/street/Z52_8055.jpg',
+    image: '/assets/photos/street/Z52_8539.jpg',
     alt: 'Street photography cover',
     quote: `什么是街拍？
 街拍是对城市的观察，

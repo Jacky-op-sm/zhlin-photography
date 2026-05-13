@@ -14,7 +14,7 @@ const seriesZhLabel: Record<SeriesCategory, string> = {
 }
 
 const seriesCardCoverOverride: Partial<Record<SeriesCategory, string>> = {
-  [PhotoCategory.Street]: '/assets/photos/street/Z52_8055.jpg',
+  [PhotoCategory.Street]: '/assets/photos/street/Z52_8539.jpg',
   [PhotoCategory.Pets]: '/assets/photos/pets/Z52_3679.jpg',
 }
 
@@ -25,9 +25,9 @@ const projectCardCovers = [
 ]
 
 const streetCardCovers = [
-  '/assets/photos/street/Z52_8055.jpg',
-  '/assets/photos/street/Z52_3020.jpg',
-  '/assets/photos/street/Z52_7293.jpg',
+  '/assets/photos/street/Z52_8539.jpg',
+  '/assets/photos/street/Z52_8331.jpg',
+  '/assets/photos/street/Z52_7693.jpg',
 ]
 
 const petsCardCovers = [
