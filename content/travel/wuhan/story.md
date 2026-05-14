@@ -16,6 +16,10 @@
     <p>Valse 回酒店时，被坑了摆渡车。司机是无业游民，一公里收费十五。他一开始什么都没说，我以为是官方的车，想都没想就坐了上去。就当资助失业者一顿饭钱，中午的面正好也是十五。</p>
   </section>
 
+  <figure class="nanjing-rb-media nanjing-rb-media--single">
+    <img src="../../assets/travel/wuhan/武汉大学车.jpg" alt="武汉大学摆渡车" loading="lazy" decoding="async">
+  </figure>
+
   <section class="nanjing-rb-section">
     <h2>我想起家里的大白</h2>
     <p>昙华街出口有家宠物店，一只大狗挂在窗边，仰着头。我想起家里的大白。半小时收费三十。我很想进屋，但没有时间。</p>
@@ -30,11 +34,19 @@
     <p>“昔人已乘黄鹤去，此地空余黄鹤楼。”</p>
   </section>
 
+  <figure class="nanjing-rb-media nanjing-rb-media--single">
+    <img src="../../assets/travel/wuhan/长江大桥.jpg" alt="长江大桥" loading="lazy" decoding="async">
+  </figure>
+
   <section class="nanjing-rb-section">
     <h2>越是有魅力的事物，它越充满着危险性</h2>
     <p>去码头的天桥上，有位穿着怪异服饰的男子，整身是黑黄的条纹，脸上戴着类似《V字仇杀队》的面具。我很想拍张肖像，可他的行为吓退了我：他会主动靠近每个人，把手伸出去，像是要做什么交易似的，人们纷纷避让。</p>
     <p>“越是有魅力的事物，它越充满着危险性。”</p>
   </section>
+
+  <figure class="nanjing-rb-media nanjing-rb-media--single">
+    <img src="../../assets/travel/wuhan/气球艺人.jpg" alt="气球艺人" loading="lazy" decoding="async">
+  </figure>
 
   <section class="nanjing-rb-section">
     <h2>在武汉走一天，我一共有三次对话</h2>
@@ -74,6 +86,10 @@
     <p>一天的身体劳累，消融在了精神性的活动里。后者的沉浸，让我忘记了前者的疲惫。</p>
   </section>
 
+  <figure class="nanjing-rb-media nanjing-rb-media--single">
+    <img src="../../assets/travel/wuhan/江汉路.jpg" alt="江汉路步行街" loading="lazy" decoding="async">
+  </figure>
+
   <section class="nanjing-rb-section">
     <p class="nanjing-rb-section-index">May 9</p>
     <h2>画家看世界的方式一定与我不同</h2>
@@ -92,6 +108,10 @@
     <p>“要闭园了。请大家有序离开。”</p>
     <p>我换了个地方休息。在一处撒满阳光的草坪上，不远处的野餐垫上，奶奶带着外孙唱着儿歌，她们的声音融在了一起，悠扬地传到了我这。我回忆起在日本奈良的山顶也是类似的光景。只是那儿身旁多了鹿群的相伴。</p>
   </section>
+
+  <figure class="nanjing-rb-media nanjing-rb-media--single">
+    <img src="../../assets/travel/wuhan/睡觉阿姨.jpg" alt="睡觉的阿姨" loading="lazy" decoding="async">
+  </figure>
 
   <section class="nanjing-rb-section">
     <h2>仿佛从一名农民工，变身成了一位都市丽人</h2>
@@ -206,6 +226,10 @@
     <p>“旅行是日常的延续。”</p>
   </section>
 
+  <figure class="nanjing-rb-media nanjing-rb-media--single">
+    <img src="../../assets/travel/wuhan/酒馆.jpg" alt="路灯咖啡" loading="lazy" decoding="async">
+  </figure>
+
   <section class="nanjing-rb-section">
     <h2>注意力的黑洞</h2>
     <p>室内待久了容易闷，何况书也看了近一个小时。下午六点，我站在咖啡店的街角，观察起这条街道上的人们。</p>
@@ -215,6 +239,10 @@
     <p>除了她们三人，咖啡店的老板和员工也坐到了门口的高脚凳上。他们在空闲的时间，一起玩类似《糖豆人》的游戏，有说有笑的。在我的想象里，他们变成了一对梦想开自己的一间咖啡店的情侣。</p>
     <p>起先我站着看，伸展身体，而后搬了张椅子，坐着看，直到三名女生离开，落日被高大的居民楼遮挡。我重新走进店，想起前不久看的波拉尼奥短篇，里面的主人公们也是这般无所事事，游荡在城市的角落。可正是他们，比起普通人有着更多对世界的感受力。</p>
   </section>
+
+  <figure class="nanjing-rb-media nanjing-rb-media--single">
+    <img src="../../assets/travel/wuhan/红色拱门.jpg" alt="红色拱门街角" loading="lazy" decoding="async">
+  </figure>
 
   <section class="nanjing-rb-section">
     <h2>这里就真成了欧洲一样</h2>
