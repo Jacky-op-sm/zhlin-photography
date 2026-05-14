@@ -272,7 +272,7 @@ export default function TravelCardSlider({
               >
                 <div className="mx-0 max-w-[72rem] sm:mx-[1.57rem] lg:mx-[2.09rem]">
                   <p className="text-sm font-semibold text-[rgba(29,29,31,1)] sm:text-base">{activeCardData?.eyebrow}</p>
-                  <h3 className="mt-2 text-[2rem] font-semibold leading-[1.18] tracking-tight text-[rgba(29,29,31,1)] sm:mt-3 sm:text-[3.125rem]">
+                  <h3 className="mt-2 whitespace-pre-line text-[2rem] font-semibold leading-[1.18] tracking-tight text-[rgba(29,29,31,1)] sm:mt-3 sm:text-[3.125rem]">
                     {activeCardData?.title}
                   </h3>
                 </div>
@@ -346,10 +346,10 @@ function CardContent({ card, variant }: { card: TravelSliderCard; variant: Trave
   const imageHeightClass = shouldAnchorImageBottom ? 'h-[11.3rem] sm:h-[12.3rem]' : 'h-[12.9rem] sm:h-[14.1rem]';
   const titleClassName =
     variant === 'spot'
-      ? `mt-4 text-[1.3rem] font-semibold tracking-tight text-neutral-900 sm:mt-[0.95rem] sm:text-[1.5rem] ${
+      ? `mt-4 whitespace-pre-line text-[1.3rem] font-semibold tracking-tight text-neutral-900 sm:mt-[0.95rem] sm:text-[1.5rem] ${
           isMultiLineTitle ? 'leading-[1.38]' : 'leading-[1.1]'
         }`
-      : `mt-3 text-[1.3rem] font-semibold tracking-tight text-neutral-900 sm:text-[1.5rem] ${
+      : `mt-3 whitespace-pre-line text-[1.3rem] font-semibold tracking-tight text-neutral-900 sm:text-[1.5rem] ${
           isMultiLineTitle ? 'leading-[1.38]' : 'leading-[1.1]'
         }`;
   const bodyClassName =
