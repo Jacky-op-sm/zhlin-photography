@@ -24,7 +24,7 @@
   --writing-text: #474747;
   --writing-muted: #6e6e73;
   --writing-link: #474747;
-  --writing-sans: "SF Pro SC", "SF Pro Text", "SF Pro Icons", "PingFang SC", "Helvetica Neue", Helvetica, "Microsoft YaHei", Arial, sans-serif;
+  --writing-sans: "SF Pro SC", "SF Pro Text", "SF Pro Icons", "PingFang SC", "Helvetica Neue", Helvetica, "Microsoft YaHei", "Noto Sans CJK SC", Arial, sans-serif;
   /* Reference fluid geometry, calibrated to the supplied 2504 × 1309 capture.
      At that size: 929 px column, 26.8 px text, 49.6 px archive rows. */
   --writing-rhythm: clamp(2.03125rem, .72vw + 1.77734375rem, 3.75rem);
