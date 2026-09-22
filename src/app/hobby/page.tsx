@@ -140,19 +140,19 @@ function LolProfileModule({
 }
 
 function DigestCard({ monthData }: { monthData: MonthlyDigest }) {
-  const readingVisible = monthData.reading.slice(0, 2)
+  const booksVisible = monthData.books.slice(0, 2)
   const filmVisible = monthData.films.slice(0, 2)
-  const readingHidden = monthData.reading.slice(2)
+  const booksHidden = monthData.books.slice(2)
   const filmHidden = monthData.films.slice(2)
-  const visibleRowCount = Math.max(readingVisible.length, filmVisible.length)
-  const hiddenRowCount = Math.max(readingHidden.length, filmHidden.length)
+  const visibleRowCount = Math.max(booksVisible.length, filmVisible.length)
+  const hiddenRowCount = Math.max(booksHidden.length, filmHidden.length)
 
   return (
     <article className="p-0">
       <div className="grid gap-4 lg:grid-cols-2">
         <div className="flex items-center justify-between gap-3">
           <h4 className="text-base font-semibold tracking-[0.18em] text-[color:var(--portfolio-muted)]">阅读</h4>
-          <span className="text-xs text-[color:var(--portfolio-soft)]">{monthData.reading.length} 条</span>
+          <span className="text-xs text-[color:var(--portfolio-soft)]">{monthData.books.length} 条</span>
         </div>
         <div className="flex items-center justify-between gap-3">
           <h4 className="text-base font-semibold tracking-[0.18em] text-[color:var(--portfolio-muted)]">电影</h4>
@@ -163,7 +163,7 @@ function DigestCard({ monthData }: { monthData: MonthlyDigest }) {
       <div className="mt-4 grid gap-3 lg:grid-cols-2 lg:items-stretch">
         {Array.from({ length: visibleRowCount }).map((_, index) => (
           <Fragment key={`digest-visible-${index}`}>
-            {renderDigestRowPair(readingVisible[index], filmVisible[index])}
+            {renderDigestRowPair(booksVisible[index], filmVisible[index])}
           </Fragment>
         ))}
       </div>
@@ -177,7 +177,7 @@ function DigestCard({ monthData }: { monthData: MonthlyDigest }) {
           <div className="mt-4 grid gap-3 lg:grid-cols-2 lg:items-stretch">
             {Array.from({ length: hiddenRowCount }).map((_, index) => (
               <Fragment key={`digest-hidden-${index}`}>
-                {renderDigestRowPair(readingHidden[index], filmHidden[index])}
+                {renderDigestRowPair(booksHidden[index], filmHidden[index])}
               </Fragment>
             ))}
           </div>

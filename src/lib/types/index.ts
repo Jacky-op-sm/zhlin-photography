@@ -160,7 +160,7 @@ export interface HobbyCategory {
  */
 export interface MonthlyDigest {
   month: string;
-  reading: HobbyItem[];
+  books: HobbyItem[];
   films: HobbyItem[];
 }
 

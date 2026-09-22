@@ -255,7 +255,7 @@ function validateHobby() {
       fail(`content/hobby/monthly/${filename}.month must match filename`);
     }
 
-    for (const section of ['reading', 'films']) {
+    for (const section of ['books', 'films']) {
       if (!Array.isArray(monthData?.[section])) {
         fail(`content/hobby/monthly/${filename}.${section} must be an array`);
         continue;
