@@ -18,9 +18,10 @@ test('year and month archive, chronological filters, history and article return'
   await expect(page.locator('.writing-entry[href="/writing/camera-models"] time')).toHaveCount(0)
   await expect(page.locator('.writing-entry[href="/writing/camera-models"] .writing-undated')).toHaveText('—')
   await expect(page.locator('.writing-entry[href="/writing/books-in-the-old-classroom"] time')).toHaveAttribute('datetime', '2024-06-20')
+  await expect(page.locator('.writing-entry[href="/writing/the-little-lies-i-dont-need"] time')).toHaveAttribute('datetime', '2024-04-25')
   await page.getByText('筛选文字', { exact: true }).click()
   await page.getByLabel('年份', { exact: true }).selectOption('2024')
-  await expect(page.locator('.writing-entry')).toHaveCount(13)
+  await expect(page.locator('.writing-entry')).toHaveCount(17)
   await page.getByLabel('月份', { exact: true }).selectOption('07')
   await expect(page.locator('.writing-entry')).toHaveCount(4)
   await page.getByLabel('排序', { exact: true }).selectOption('oldest')
@@ -140,6 +141,12 @@ test('responsive layout, actual Chinese font, accessibility and other modules', 
     await expect(page.locator('.writing-entry[aria-current="page"] .writing-entry-title')).toHaveAttribute('lang', 'en')
     expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth)).toBe(true)
     if ([390, 2504].includes(width)) await page.screenshot({ path: `${screenshotDir}/english-article-${width}.png`, fullPage: true })
+    if ([390, 1440].includes(width)) {
+      await page.goto('/writing/let-him-show-me-his-toy')
+      await expect(page.locator('.writing-prose p')).toHaveCount(3)
+      await expect(page.locator('.writing-prose')).not.toContainText('Sophie')
+      await page.screenshot({ path: `${screenshotDir}/new-article-${width}.png` })
+    }
   }
   await page.goto('/writing')
   expect((await new AxeBuilder({ page }).include('.writing').withTags(['wcag2a', 'wcag2aa']).analyze()).violations).toEqual([])
