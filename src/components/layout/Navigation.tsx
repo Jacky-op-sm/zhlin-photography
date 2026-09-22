@@ -46,7 +46,6 @@ const navigationItems: NavItem[] = [
     ],
   },
   { label: 'Hobby', href: '/hobby' },
-  { label: 'Contact', href: '/contact' },
 ]
 
 export default function Navigation({

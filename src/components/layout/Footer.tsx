@@ -235,14 +235,6 @@ export default function Footer() {
                 </li>
               </ul>
             </section>
-
-            <section className="site-footer-simple-column" aria-label="联系">
-              <h3>联系</h3>
-              <ul>
-                <li>微信: Aluck714</li>
-                <li className="site-footer-contact-email">邮箱: Jackylin714@gmail.com</li>
-              </ul>
-            </section>
           </div>
         </div>
       </section>
