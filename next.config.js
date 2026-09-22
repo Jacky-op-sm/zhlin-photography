@@ -2,7 +2,10 @@
 const nextConfig = {
   allowedDevOrigins: ['127.0.0.1', 'localhost'],
   outputFileTracingIncludes: {
-    '/*': ['./content/**/*'],
+    '/*': ['./content/site/**/*', './content/photography/**/*', './content/travel/**/*', './content/hobby/**/*'],
+  },
+  outputFileTracingExcludes: {
+    '/*': ['./content/writing/**/*', './workspace/writing/**/*'],
   },
   images: {
     remotePatterns: [

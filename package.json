@@ -13,7 +13,7 @@
     "lint": "eslint src e2e tests scripts eslint.config.mjs next.config.js playwright.config.ts playwright.production.config.ts tailwind.config.js --max-warnings=0",
     "lint:fix": "npm run lint -- --fix",
     "typecheck": "tsc --noEmit",
-    "check:content": "node scripts/check-content.mjs",
+    "check:content": "node scripts/check-content.mjs && npm run check:writing",
     "check:assets": "node scripts/check-assets.mjs && npm run assets:check",
     "check:build-routes": "node scripts/check-build-routes.mjs",
     "check:deployment": "node scripts/check-deployment.mjs",
@@ -29,14 +29,20 @@
     "test:e2e": "playwright test",
     "test:unit": "node --disable-warning=MODULE_TYPELESS_PACKAGE_JSON --test tests/*.test.ts",
     "test:e2e:production": "playwright test --config playwright.production.config.ts",
-    "test:e2e:update": "playwright test --update-snapshots"
+    "test:e2e:update": "playwright test --update-snapshots",
+    "predev": "node scripts/prepare-writing.mjs --dev",
+    "prebuild": "node scripts/prepare-writing.mjs",
+    "check:writing": "node scripts/prepare-writing.mjs",
+    "pretypecheck": "node scripts/prepare-writing.mjs"
   },
   "dependencies": {
     "@upstash/ratelimit": "2.0.8",
     "@upstash/redis": "1.38.0",
+    "js-yaml": "4.3.2",
     "next": "16.3.5",
     "react": "19.2.8",
     "react-dom": "19.2.8",
+    "react-markdown": "^10.1.0",
     "sharp": "0.35.4",
     "zod": "4.4.3"
   },

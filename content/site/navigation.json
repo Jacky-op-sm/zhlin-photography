@@ -210,5 +210,14 @@
     "showInHeader": false,
     "showInFooter": false,
     "order": 50
+  },
+  {
+    "id": "writing",
+    "label": "Writing",
+    "footerLabel": "文字",
+    "href": "/writing",
+    "showInHeader": true,
+    "showInFooter": false,
+    "order": 45
   }
 ]

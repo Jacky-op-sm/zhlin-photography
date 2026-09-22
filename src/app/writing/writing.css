@@ -1,0 +1,205 @@
+/* Apple China's SF Pro SC is PingFang SC, including on Windows.
+   Keep the upstream URLs instead of redistributing copies of the font files. */
+@font-face {
+  font-family: "SF Pro SC";
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: local("PingFangSC-Regular"), url("https://www.apple.com.cn/wss/fonts/SF-Pro-SC/v1/PingFangSC-Regular.woff2") format("woff2");
+}
+@font-face {
+  font-family: "SF Pro SC";
+  font-style: normal;
+  font-weight: 600;
+  font-display: swap;
+  src: local("PingFangSC-Semibold"), url("https://www.apple.com.cn/wss/fonts/SF-Pro-SC/v1/PingFangSC-Semibold.woff2") format("woff2");
+}
+
+/* Writing keeps its standalone archive and reading layout. */
+#site-root:has(.writing) > .site-header,
+#site-root:has(.writing) > .site-footer { display: none; }
+#site-root:has(.writing) > .site-main { padding-top: 0; }
+
+.writing {
+  --writing-text: #474747;
+  --writing-muted: #6e6e73;
+  --writing-link: #474747;
+  --writing-sans: "SF Pro SC", "SF Pro Text", "SF Pro Icons", "PingFang SC", "Helvetica Neue", Helvetica, "Microsoft YaHei", Arial, sans-serif;
+  /* Reference fluid geometry, calibrated to the supplied 2504 × 1309 capture.
+     At that size: 929 px column, 26.8 px text, 49.6 px archive rows. */
+  --writing-rhythm: clamp(2.03125rem, .72vw + 1.77734375rem, 3.75rem);
+  color: var(--writing-text);
+  background: #fff;
+  min-height: 100vh;
+  padding: calc(5 * var(--writing-rhythm)) var(--writing-rhythm) calc(2 * var(--writing-rhythm));
+  font-size: clamp(1.125rem, .45vw + .9703125rem, 2.03125rem);
+  font-weight: 400;
+  line-height: 1.85;
+  -webkit-font-smoothing: antialiased;
+}
+/* Global :lang rules set a font on every descendant; override them here too. */
+.writing, .writing * { font-family: var(--writing-sans); }
+.writing-column { max-width: calc(20 * var(--writing-rhythm)); margin-inline: auto; }
+.writing h1, .writing h2, .writing h3 { color: inherit; letter-spacing: normal; }
+.writing a { color: inherit; text-decoration: none; }
+.writing :is(a, button, select, summary):focus-visible {
+  outline: 3px solid var(--writing-link);
+  outline-offset: 4px;
+  border-radius: 3px;
+}
+
+.writing-archive-title {
+  font-size: 1.15em;
+  font-weight: 600;
+  line-height: 1.7;
+  text-align: center;
+  margin: 0 0 1em;
+}
+.writing-month + .writing-month { margin-top: 2em; }
+.writing-month-heading {
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+  margin: 0;
+  font-size: 1em;
+  line-height: 1.85;
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+}
+.writing-month ul { list-style: none; margin: 0; padding: 0; }
+.writing-entry {
+  display: flex;
+  align-items: baseline;
+  gap: calc(.25 * var(--writing-rhythm));
+  min-width: 0;
+  padding: 0;
+  line-height: 1.85;
+}
+.writing-entry-title { min-width: 0; overflow-wrap: anywhere; }
+.writing-leader {
+  flex: 1 1 1rem;
+  min-width: 1em;
+  border-bottom: 1px dotted #dadada;
+}
+.writing-entry time, .writing-undated, .writing-entry-number {
+  flex-shrink: 0;
+  white-space: nowrap;
+  color: inherit;
+  font-size: 1em;
+  font-variant-numeric: lining-nums tabular-nums;
+}
+.writing-entry:hover .writing-entry-title {
+  color: var(--writing-muted);
+}
+.writing-entry[aria-current="page"] .writing-entry-title {
+  font-style: italic;
+}
+
+.writing-article-heading { margin: 0 0 2em; }
+.writing-article-heading h1 {
+  font-size: 1.6em;
+  line-height: 1.5;
+  font-weight: 600;
+  margin: 0;
+  overflow-wrap: anywhere;
+  text-wrap: balance;
+}
+.writing-prose { font-size: 1em; line-height: 1.85; overflow-wrap: anywhere; }
+.writing-prose p { margin: 0 0 1.25em; line-height: inherit; white-space: pre-line; }
+.writing-prose :is(h2, h3, h4, h5, h6) {
+  margin: 2em 0 1em;
+  font-size: 1.3em;
+  font-weight: 600;
+  line-height: 1.5;
+}
+.writing-prose :is(ul, ol) { margin: 1.25em 0; padding-left: 1.5em; }
+.writing-prose ul { list-style: disc; }
+.writing-prose ol { list-style: decimal; }
+.writing-prose li + li { margin-top: .4em; }
+.writing-prose blockquote {
+  margin: 1.5em 0;
+  padding-left: 1em;
+  border-left: 3px solid #d2d2d7;
+  color: var(--writing-muted);
+  font-style: normal;
+}
+.writing-prose hr { margin: 2.5em auto; width: 4em; border-color: #d2d2d7; }
+.writing-prose img { display: block; max-width: 100%; height: auto; margin-block: 1.5em; }
+/* The reference uses a 28-rhythm media frame around a 20-rhythm text column. */
+.writing-figure { margin: calc(2 * var(--writing-rhythm)) 0; }
+.writing-prose > .writing-figure {
+  width: min(calc(28 * var(--writing-rhythm)), calc(100vw - 2 * var(--writing-rhythm)));
+  margin-inline: calc((100% - min(28 * var(--writing-rhythm), 100vw - 2 * var(--writing-rhythm))) / 2);
+}
+.writing-figure-mat {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: var(--writing-rhythm);
+  border-radius: 3px;
+  background: #f9f9f9;
+}
+.writing-prose .writing-figure-mat img {
+  width: auto;
+  height: auto;
+  max-width: 100%;
+  max-height: max(12rem, calc(100svh - 4 * var(--writing-rhythm)));
+  margin: 0;
+  border-radius: 3px;
+  box-shadow: 0 12px 28px rgba(0, 0, 0, .18);
+}
+.writing-prose .writing-figure-mat a {
+  display: flex;
+  justify-content: center;
+  min-width: 0;
+  background: none;
+}
+.writing-figure figcaption {
+  margin: 1em auto 0;
+  max-width: calc(20 * var(--writing-rhythm));
+  color: var(--writing-muted);
+  font-size: .86em;
+  line-height: 1.85;
+  text-align: center;
+}
+.writing-prose pre { overflow-x: auto; white-space: pre; padding: 1em; border-radius: .5rem; background: #f5f5f7; }
+.writing-prose code { font-family: ui-monospace, "Cascadia Code", Consolas, monospace; font-size: .85em; }
+.writing-prose a, .writing a.writing-back, .writing-footer a { color: var(--writing-link); background: linear-gradient(transparent 60%, #fff7b1 60%, #fff7b1 93%, transparent 93%); }
+.writing-prose a, .writing a.writing-back { text-decoration: underline; text-underline-offset: .2em; }
+.writing-back:hover, .writing-footer a:hover { text-decoration: underline; text-underline-offset: .2em; }
+.writing-postscript { margin: calc(3 * var(--writing-rhythm)) 0; text-align: center; font-size: .86em; line-height: 1.85; }
+.writing-postscript h2 { color: var(--writing-text); font-size: 1.1628em; font-weight: 600; margin-bottom: 1em; letter-spacing: .08em; }
+.writing-postscript p { margin: 0; }
+.writing-footer { display: flex; justify-content: center; gap: .5rem 1.5rem; flex-wrap: wrap; margin-top: 4rem; font-size: 1rem; }
+.writing-footer a { display: inline-flex; align-items: center; min-height: 2.75rem; }
+
+.writing-filter-disclosure { margin-top: 3rem; color: var(--writing-muted); font-size: 1rem; }
+.writing-filter-disclosure summary { width: fit-content; margin-inline: auto; padding-block: .75rem; cursor: pointer; }
+.writing-filter-disclosure summary:hover { color: var(--writing-text); }
+.writing-toolbar { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: .75rem; margin-top: 1rem; }
+.writing-filter-pair { display: flex; flex-wrap: wrap; gap: .75rem; }
+.writing-toolbar > *, .writing-filter-pair > div { min-width: 0; max-width: 100%; }
+.writing select {
+  max-width: 100%;
+  min-height: 2.75rem;
+  background: #fff;
+  border: 1px solid #86868b;
+  border-radius: .5rem;
+  color: var(--writing-text);
+  font-size: 1rem;
+  padding: .5rem .75rem;
+}
+.writing-result { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: .5rem 1rem; margin-top: 1rem; }
+.writing-result button, .writing-reset { color: var(--writing-link); text-decoration: underline; text-underline-offset: .2em; min-height: 2.75rem; }
+.writing-result p { margin: 0; }
+.writing-empty { text-align: center; margin: 2em 0; }
+.writing-reset { display: block; margin-inline: auto; }
+.writing-notice { margin-bottom: 1em; font-size: 1rem; }
+
+@media (max-width: 48rem) {
+  .writing { font-size: 1.125rem; padding: 3rem 1.5rem; }
+  .writing-entry { gap: .5rem; min-height: 2.75rem; align-items: baseline; padding-block: .333rem; }
+  .writing-leader { min-width: .5rem; }
+  .writing-prose > .writing-figure { width: 100%; margin-inline: 0; }
+  .writing-figure-mat { padding: 1rem; }
+}

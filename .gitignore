@@ -40,3 +40,8 @@ next-env.d.ts
 
 # local raw photo source (not deployed)
 assets-src/
+
+# Local content preparation and package cache
+/.npm-cache/
+/.generated/
+/workspace/writing/

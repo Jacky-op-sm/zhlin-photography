@@ -1,9 +1,10 @@
 import type { MetadataRoute } from 'next'
 import { SITE_URL } from '@/lib/site/metadata'
 import { publicPaths } from '@/lib/site/routes'
+import { getWritingMetadata } from '@/lib/content/writing'
 
 export default function sitemap(): MetadataRoute.Sitemap {
-  return publicPaths.map((path) => ({
+  return [...publicPaths, ...getWritingMetadata().map(entry => `/writing/${entry.slug}`)].map((path) => ({
     url: new URL(path, SITE_URL).href,
     changeFrequency: path === '/' ? 'monthly' : 'yearly',
     priority: path === '/' ? 1 : path.split('/').length === 2 ? 0.8 : 0.7,
