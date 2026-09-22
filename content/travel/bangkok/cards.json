@@ -1,0 +1,90 @@
+{
+  "spots": [
+    {
+      "eyebrow": "片段 01",
+      "title": "标题待补充",
+      "body": "这里预留曼谷旅行的文字。",
+      "imageSrc": "/assets/travel/bangkok/fountain.webp",
+      "imageAlt": "曼谷喷泉与雕像",
+      "detailBlocks": [
+        {
+          "text": "这里预留曼谷旅行的详细文字。",
+          "imageSrc": "/assets/travel/bangkok/fountain.webp",
+          "imageAlt": "曼谷喷泉与雕像"
+        }
+      ]
+    },
+    {
+      "eyebrow": "片段 02",
+      "title": "标题待补充",
+      "body": "这里预留曼谷旅行的文字。",
+      "imageSrc": "/assets/travel/bangkok/temple-detail.webp",
+      "imageAlt": "曼谷寺庙的金色建筑细节",
+      "detailBlocks": [
+        {
+          "text": "这里预留曼谷旅行的详细文字。",
+          "imageSrc": "/assets/travel/bangkok/temple-detail.webp",
+          "imageAlt": "曼谷寺庙的金色建筑细节"
+        }
+      ]
+    },
+    {
+      "eyebrow": "片段 03",
+      "title": "标题待补充",
+      "body": "这里预留曼谷旅行的文字。",
+      "imageSrc": "/assets/travel/bangkok/children-rain.webp",
+      "imageAlt": "雨后积水里玩耍的孩子",
+      "detailBlocks": [
+        {
+          "text": "这里预留曼谷旅行的详细文字。",
+          "imageSrc": "/assets/travel/bangkok/children-rain.webp",
+          "imageAlt": "雨后积水里玩耍的孩子"
+        }
+      ]
+    },
+    {
+      "eyebrow": "片段 04",
+      "title": "标题待补充",
+      "body": "这里预留曼谷旅行的文字。",
+      "imageSrc": "/assets/travel/bangkok/monk-street.webp",
+      "imageAlt": "走在曼谷街巷中的僧人",
+      "detailBlocks": [
+        {
+          "text": "这里预留曼谷旅行的详细文字。",
+          "imageSrc": "/assets/travel/bangkok/monk-street.webp",
+          "imageAlt": "走在曼谷街巷中的僧人"
+        }
+      ]
+    },
+    {
+      "eyebrow": "片段 05",
+      "title": "标题待补充",
+      "body": "这里预留曼谷旅行的文字。",
+      "imageSrc": "/assets/travel/bangkok/tuk-tuk-cat.webp",
+      "imageAlt": "坐在嘟嘟车上的猫",
+      "detailBlocks": [
+        {
+          "text": "这里预留曼谷旅行的详细文字。",
+          "imageSrc": "/assets/travel/bangkok/tuk-tuk-cat.webp",
+          "imageAlt": "坐在嘟嘟车上的猫"
+        }
+      ]
+    },
+    {
+      "eyebrow": "片段 06",
+      "title": "标题待补充",
+      "body": "这里预留曼谷旅行的文字。",
+      "imageSrc": "/assets/travel/bangkok/pigeons.webp",
+      "imageAlt": "坐在屋檐下与鸽群相伴的女人",
+      "detailBlocks": [
+        {
+          "text": "这里预留曼谷旅行的详细文字。",
+          "imageSrc": "/assets/travel/bangkok/pigeons.webp",
+          "imageAlt": "坐在屋檐下与鸽群相伴的女人"
+        }
+      ]
+    }
+  ],
+  "bookstores": [],
+  "food": []
+}
