@@ -3,8 +3,8 @@
     "id": "z52-8539",
     "title": "黑白街头 8539",
     "description": "当前街拍选片中的黑白画面，保留了直接而清晰的现场观察。",
-    "filename": "/assets/photos/street/Z52_8539.jpg",
-    "thumbnail": "/assets/photos/street/Z52_8539.jpg",
+    "filename": "/assets/generated/photos/street/Z52_8539-large.webp",
+    "thumbnail": "/assets/generated/photos/street/Z52_8539-thumb.webp",
     "width": 1333,
     "height": 2000,
     "takenAt": "May 2026",
@@ -12,14 +12,15 @@
     "tags": [
       "street",
       "black-white"
-    ]
+    ],
+    "source": "/assets/photos/street/Z52_8539.jpg"
   },
   {
     "id": "z52-8331",
     "title": "黑白街头 8331",
     "description": "当前街拍选片中的黑白画面，保留了直接而清晰的现场观察。",
-    "filename": "/assets/photos/street/Z52_8331.jpg",
-    "thumbnail": "/assets/photos/street/Z52_8331.jpg",
+    "filename": "/assets/generated/photos/street/Z52_8331-large.webp",
+    "thumbnail": "/assets/generated/photos/street/Z52_8331-thumb.webp",
     "width": 1231,
     "height": 2000,
     "takenAt": "May 2026",
@@ -27,14 +28,15 @@
     "tags": [
       "street",
       "black-white"
-    ]
+    ],
+    "source": "/assets/photos/street/Z52_8331.jpg"
   },
   {
     "id": "z52-7693",
     "title": "黑白街头 7693",
     "description": "当前街拍选片中的黑白画面，保留了直接而清晰的现场观察。",
-    "filename": "/assets/photos/street/Z52_7693.jpg",
-    "thumbnail": "/assets/photos/street/Z52_7693.jpg",
+    "filename": "/assets/generated/photos/street/Z52_7693-large.webp",
+    "thumbnail": "/assets/generated/photos/street/Z52_7693-thumb.webp",
     "width": 1333,
     "height": 2000,
     "takenAt": "May 2026",
@@ -42,14 +44,15 @@
     "tags": [
       "street",
       "black-white"
-    ]
+    ],
+    "source": "/assets/photos/street/Z52_7693.jpg"
   },
   {
     "id": "z52-8337",
     "title": "黑白街头 8337",
     "description": "当前街拍选片中的黑白画面，保留了直接而清晰的现场观察。",
-    "filename": "/assets/photos/street/Z52_8337.jpg",
-    "thumbnail": "/assets/photos/street/Z52_8337.jpg",
+    "filename": "/assets/generated/photos/street/Z52_8337-large.webp",
+    "thumbnail": "/assets/generated/photos/street/Z52_8337-thumb.webp",
     "width": 1333,
     "height": 2000,
     "takenAt": "May 2026",
@@ -57,14 +60,15 @@
     "tags": [
       "street",
       "black-white"
-    ]
+    ],
+    "source": "/assets/photos/street/Z52_8337.jpg"
   },
   {
     "id": "z52-8055",
     "title": "黑白街头 8055",
     "description": "从高分选片中保留下来的黑白街头画面，层次和现场感都更完整。",
-    "filename": "/assets/photos/street/Z52_8055.jpg",
-    "thumbnail": "/assets/photos/street/Z52_8055.jpg",
+    "filename": "/assets/generated/photos/street/Z52_8055-large.webp",
+    "thumbnail": "/assets/generated/photos/street/Z52_8055-thumb.webp",
     "width": 2000,
     "height": 1266,
     "takenAt": "May 2026",
@@ -72,14 +76,15 @@
     "tags": [
       "street",
       "black-white"
-    ]
+    ],
+    "source": "/assets/photos/street/Z52_8055.jpg"
   },
   {
     "id": "z52-7408",
     "title": "黑白街头 7408",
     "description": "一张高分街头照片，在日常移动和克制构图之间取得平衡。",
-    "filename": "/assets/photos/street/Z52_7408.jpg",
-    "thumbnail": "/assets/photos/street/Z52_7408.jpg",
+    "filename": "/assets/generated/photos/street/Z52_7408-large.webp",
+    "thumbnail": "/assets/generated/photos/street/Z52_7408-thumb.webp",
     "width": 2000,
     "height": 1333,
     "takenAt": "May 2026",
@@ -87,14 +92,15 @@
     "tags": [
       "street",
       "black-white"
-    ]
+    ],
+    "source": "/assets/photos/street/Z52_7408.jpg"
   },
   {
     "id": "z52-3020",
     "title": "黑白街头 3020",
     "description": "一个安静的城市瞬间，由反差、姿态和街头光线共同构成。",
-    "filename": "/assets/photos/street/Z52_3020.jpg",
-    "thumbnail": "/assets/photos/street/Z52_3020.jpg",
+    "filename": "/assets/generated/photos/street/Z52_3020-large.webp",
+    "thumbnail": "/assets/generated/photos/street/Z52_3020-thumb.webp",
     "width": 2000,
     "height": 1333,
     "takenAt": "May 2026",
@@ -102,6 +108,7 @@
     "tags": [
       "street",
       "black-white"
-    ]
+    ],
+    "source": "/assets/photos/street/Z52_3020.jpg"
   }
 ]

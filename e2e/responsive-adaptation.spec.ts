@@ -157,7 +157,9 @@ test.describe('responsive adaptation regressions', () => {
     await expect(page.locator('.site-nav-dropdown-shell')).toHaveAttribute('data-open', 'true')
 
     const urlBefore = page.url()
-    await page.getByRole('button', { name: 'Close navigation menu' }).click()
+    const viewport = page.viewportSize()
+    expect(viewport).not.toBeNull()
+    await page.touchscreen.tap(8, (viewport?.height ?? 768) - 8)
     await expect(page.locator('.site-nav-dropdown-shell')).toHaveAttribute('data-open', 'false')
     expect(page.url()).toBe(urlBefore)
   })
@@ -169,7 +171,7 @@ test.describe('responsive adaptation regressions', () => {
     await page.waitForLoadState('networkidle')
 
     await page.getByRole('button', { name: 'Open card 1', exact: true }).click()
-    await expect(page.getByRole('button', { name: 'Close detail' })).toBeVisible()
+    await expect(page.getByRole('button', { name: '关闭详情' })).toBeVisible()
 
     const imageRatio = await page.evaluate(() => {
       const overlay = document.querySelector('div.fixed.inset-0') as HTMLElement | null
@@ -211,7 +213,7 @@ test.describe('responsive adaptation regressions', () => {
     expect(placement).not.toBeNull()
     expect(placement!.controlsTop).toBeGreaterThanOrEqual(placement!.imageBottom - 1)
 
-    await page.getByRole('button', { name: 'Next image' }).click()
+    await page.getByRole('button', { name: '下一张照片' }).click()
     await page.waitForTimeout(180)
 
     const controlsTopAfter = await page.evaluate(() => {

@@ -1,190 +1,125 @@
-# Zhlin Photography | 个人摄影作品集
+# Zhlin Photography
 
-一个基于 Next.js 14 + TypeScript + Tailwind CSS 构建的现代摄影作品集网站，采用全屏沉浸式照片展示风格。
+Zhlin 的个人摄影、旅行与兴趣网站。项目使用 Next.js App Router、TypeScript、Tailwind CSS，并部署于 [www.zhlin.space](https://www.zhlin.space/)。
 
-## 功能特点
+## 环境要求
 
-- **Next.js 14 App Router** - 使用最新的 App Router 架构
-- **TypeScript** - 类型安全的开发体验
-- **Tailwind CSS** - 响应式设计，自定义颜色主题，支持深色/浅色模式
-- **Framer Motion** - 流畅的页面动画效果
-- **图片优化** - 支持外部图片域名（Vercel 部署优化）
-- **全屏照片查看器** - 沉浸式照片浏览体验，支持键盘导航和手势操作
-- **响应式网格布局** - 移动端 2 列，平板 3 列，桌面 4-5 列
-
-## 快速开始
-
-### 方法一：使用启动脚本（推荐）
-
-双击运行 `start.bat` 即可自动安装依赖并启动开发服务器。
-
-### 方法二：命令行启动
+- Node.js 24.x（见 `.nvmrc` 和 `package.json#engines`）
+- npm
 
 ```bash
-# 进入项目目录
-cd zhlin-photography
-
-# 安装依赖
-npm install
-
-# 启动开发服务器
+npm ci
 npm run dev
 ```
 
-打开 [http://localhost:3000](http://localhost:3000) 查看网站。
+开发站点默认位于 [http://localhost:3000](http://localhost:3000)。
 
-## 照片分类
+## 常用命令
 
-网站包含以下三个摄影分类：
-
-| 分类 | 路径 | 说明 |
-|------|------|------|
-| Street（街拍） | `/photography/street` | 街头摄影作品 |
-| Pets（宠物） | `/photography/pets` | 宠物摄影作品 |
-| Project（项目） | `/photography/project` | 专题摄影项目 |
-
-## 添加照片
-
-### 1. 准备照片文件
-
-将照片文件放入 `public/assets/photos/` 目录下对应的分类文件夹：
-
-```
-public/assets/photos/
-├── street/      # 街头摄影
-├── pets/        # 宠物摄影
-└── project/     # 项目作品
-```
-
-建议同时准备缩略图（文件名以 `-thumb` 结尾），以提升页面加载速度。
-
-### 2. 更新照片数据
-
-编辑 `data/photos.json` 文件，添加照片元数据：
-
-```json
-{
-  "street": [
-    {
-      "id": "my-photo-1",
-      "title": "照片标题",
-      "description": "照片描述",
-      "filename": "/assets/photos/street/my-photo-1.jpg",
-      "thumbnail": "/assets/photos/street/my-photo-1-thumb.jpg",
-      "width": 1920,
-      "height": 1280,
-      "takenAt": "2024-03",
-      "location": "杭州",
-      "tags": ["tag1", "tag2"]
-    }
-  ]
-}
-```
-
-### 3. 更新页面中的 Mock 数据
-
-编辑分类页面（如 `src/app/photography/street/page.tsx`），将 mock 数据替换为实际的照片数据。
-
-## 项目结构
-
-```
-zhlin-photography/
-├── public/
-│   └── assets/
-│       ├── photos/
-│       │   ├── street/      # 街头摄影
-│       │   ├── pets/        # 宠物摄影
-│       │   └── project/     # 项目作品
-│       └── profile/          # 个人资料图片
-├── data/
-│   ├── photos.json           # 照片数据
-│   └── site-content.json     # 网站内容数据
-├── src/
-│   ├── app/
-│   │   ├── photography/      # 摄影模块
-│   │   │   ├── page.tsx      # 摄影主页
-│   │   │   ├── street/       # 街拍分类
-│   │   │   ├── pets/         # 宠物分类
-│   │   │   └── project/      # 项目分类
-│   │   ├── globals.css       # 全局样式
-│   │   ├── layout.tsx        # 根布局
-│   │   └── page.tsx          # 首页
-│   ├── components/
-│   │   ├── layout/           # 布局组件
-│   │   ├── photography/      # 摄影组件
-│   │   └── ui/               # UI 组件
-│   └── lib/
-│       ├── types/            # 类型定义
-│       └── data/             # 数据层
-├── next.config.js            # Next.js 配置
-├── tailwind.config.ts        # Tailwind 配置
-└── package.json
-```
-
-## 自定义配置
-
-### 添加外部图片域名
-
-编辑 `next.config.js` 中的 `remotePatterns`：
-
-```javascript
-images: {
-  remotePatterns: [
-    {
-      protocol: 'https',
-      hostname: 'your-domain.com',
-    },
-  ],
-},
-```
-
-### 自定义颜色主题
-
-编辑 `tailwind.config.ts` 中的 `theme.extend.colors`：
-
-```typescript
-colors: {
-  primary: {
-    50: "#fdf4ff",
-    // ... 自定义颜色
-  },
-},
-```
-
-### 深色模式
-
-网站支持深色/浅色模式切换，主题配置位于：
-
-- `tailwind.config.ts` - `darkMode: 'class'`
-- `src/components/ui/ThemeToggle.tsx` - 切换逻辑
-- `src/app/globals.css` - CSS 变量定义
-
-## 可用脚本
-
-| 命令 | 描述 |
-|------|------|
+| 命令 | 用途 |
+|---|---|
 | `npm run dev` | 启动开发服务器 |
-| `npm run build` | 构建生产版本 |
+| `npm run build` | 创建生产构建 |
 | `npm run start` | 启动生产服务器 |
-| `npm run lint` | 运行 ESLint 检查 |
+| `npm run lint` | 运行 ESLint，warning 也视为失败 |
+| `npm run typecheck` | 运行 TypeScript 严格检查 |
+| `npm run check:content` | 校验内容、导航和路由引用 |
+| `npm run check:assets` | 校验资源预算、图片 manifest 与元数据 |
+| `npm run verify` | 运行静态门禁和生产构建 |
+| `npm run test:unit` | 运行联系接口相关单元测试 |
+| `npm run test:e2e` | 运行开发态 Playwright 测试 |
+| `npm run test:e2e:production` | 运行生产态交互、无障碍和运行时预算测试 |
+| `npm run check:build-routes` | 验证公开路由的构建方式并记录构建时间 |
 
-## 部署到 Vercel
+提交前至少运行：
 
-项目已配置好 Vercel 部署所需的图片域名：
+```bash
+npm run verify
+npm run test:unit
+npm run test:e2e
+npm run test:e2e:production
+```
 
-- `images.unsplash.com`
-- `**.vercel.app`
-- `picsum.photos`
+## 内容结构
 
-如需添加其他域名，请修改 `next.config.js`。
+```text
+content/
+├── photography/
+│   ├── photos/              # 街拍、宠物和项目照片数据
+│   ├── series.json          # 摄影系列元数据
+│   └── image-manifest.json  # 自动生成的图片清单
+├── hobby/                  # 爱好页内容
+├── site/
+│   ├── navigation.json      # Header、Footer 和 sitemap 的共享来源
+│   ├── homepage.json        # 首页内容
+│   ├── profile.json         # 个人信息
+│   └── contact.json         # 联系页文案
+└── travel/                  # 旅行内容
+```
 
-## 技术栈
+页面路由、文案和图片引用由内容检查脚本共同校验。不要在 Header、Footer 或 sitemap 中重复维护导航数组。
+历史迁移输入与已停用长文保存在 `workspace/archive/`，不参与运行或校验。
 
-- **框架**: Next.js 14.2.3
-- **语言**: TypeScript 5.4
-- **样式**: Tailwind CSS 3.4
-- **动画**: Framer Motion 11
-- **字体**: Inter (Google Fonts)
+## 添加摄影照片
+
+1. 将原图放入 `public/assets/photos/<series>/`。
+2. 在 `content/photography/photos/<series>.json` 中增加照片数据，并将 `source` 指向原图。
+3. 先预览生成报告，再写入衍生图片：
+
+```bash
+npm run assets:report
+npm run assets:write
+npm run check:assets
+```
+
+Sharp 流水线会跨平台生成：
+
+- 长边 640 px 的 WebP 缩略图；
+- 长边不超过 2400 px 的 WebP 大图；
+- 包含尺寸、哈希和引用关系的 manifest。
+
+生成文件位于 `public/assets/generated/photos/`。流水线不会覆盖原图，并会移除生成图片中的 EXIF/GPS 元数据。不要直接编辑生成文件。
+
+## 联系表单配置
+
+复制 `.env.example` 到本地环境文件，并按需设置：
+
+```text
+NEXT_PUBLIC_SITE_URL
+CONTACT_WEBHOOK_URL
+RESEND_API_KEY
+CONTACT_FROM_EMAIL
+CONTACT_TO_EMAIL
+UPSTASH_REDIS_REST_URL
+UPSTASH_REDIS_REST_TOKEN
+CONTACT_RATE_LIMIT_SECRET
+CONTACT_ALLOWED_ORIGINS
+```
+
+投递顺序为 webhook 优先、Resend 备用；主渠道成功后不会重复投递。生产环境必须配置 Upstash REST 凭据和足够强的 `CONTACT_RATE_LIMIT_SECRET`，否则公开表单会安全地拒绝提交。不要把这些服务端变量暴露为 `NEXT_PUBLIC_*`。
+
+## 部署与版本核对
+
+CI 使用 Node.js 24，依次执行 lint、类型检查、内容/资源校验、单元测试、生产构建和生产态 E2E。
+
+构建会从 `VERCEL_GIT_COMMIT_SHA`、`GITHUB_SHA` 或 `NEXT_PUBLIC_BUILD_SHA` 读取版本标识。部署后可以通过 `/api/version` 或以下命令核对实际 revision：
+
+```bash
+DEPLOYMENT_URL=https://www.zhlin.space EXPECTED_GIT_SHA=<commit> npm run check:deployment
+```
+
+正式环境的 `NEXT_PUBLIC_SITE_URL` 必须是合法的 HTTPS URL。
+
+## 主要技术栈
+
+- Next.js 16.2.11
+- React 19
+- TypeScript 5.9
+- Tailwind CSS 3.4
+- Sharp
+- Playwright + axe-core
+- Zod
+- Upstash Redis / Resend（联系表单）
 
 ## 许可证
 

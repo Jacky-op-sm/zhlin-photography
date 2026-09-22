@@ -1,45 +1,19 @@
 import Image from 'next/image'
 import Link from 'next/link'
 import { getSeriesCoverPhoto, photographySeries } from '@/components/photography/series'
-import { getAllPhotos } from '@/lib/data/photos'
+import { photographyPhotos } from '@/lib/content/photography'
 import { PhotoCategory } from '@/lib/types'
-import type { PhotoCategory as PhotoCategoryType } from '@/lib/types'
+import { buildPageMetadata } from '@/lib/site/metadata'
 
-type SeriesCategory = Exclude<PhotoCategoryType, typeof PhotoCategory.All>
+export const metadata = buildPageMetadata({
+  title: '摄影',
+  description: '街拍、动物与长期摄影项目作品集。',
+  path: '/photography',
+})
 
-const seriesZhLabel: Record<SeriesCategory, string> = {
-  [PhotoCategory.Street]: '街拍',
-  [PhotoCategory.Pets]: '宠物',
-  [PhotoCategory.Project]: '项目',
-}
-
-const seriesCardCoverOverride: Partial<Record<SeriesCategory, string>> = {
-  [PhotoCategory.Street]: '/assets/photos/street/Z52_8539.jpg',
-  [PhotoCategory.Pets]: '/assets/photos/pets/Z52_3679.jpg',
-}
-
-const projectCardCovers = [
-  '/assets/photos/project/5.jpg',
-  '/assets/photos/project/2.jpg',
-  '/assets/photos/project/6.jpg',
-]
-
-const streetCardCovers = [
-  '/assets/photos/street/Z52_8539.jpg',
-  '/assets/photos/street/Z52_8331.jpg',
-  '/assets/photos/street/Z52_7693.jpg',
-]
-
-const petsCardCovers = [
-  '/assets/photos/pets/Z52_2359.jpg',
-  '/assets/photos/pets/Z52_3679.jpg',
-]
-
-export default async function PhotographyPage() {
-  const photos = await getAllPhotos()
-
+export default function PhotographyPage() {
   return (
-    <main className="photo-index-page">
+    <main className="photo-index-page" data-footer-tone="white">
       <section className="bg-white">
         <div className="mx-auto max-w-7xl px-4 sm:px-6">
           <ul
@@ -47,8 +21,8 @@ export default async function PhotographyPage() {
             aria-label="摄影系列快捷导航"
           >
             {photographySeries.map((series) => {
-              const previewPhoto = getSeriesCoverPhoto(photos, series.slug)
-              const zhLabel = seriesZhLabel[series.slug]
+              const previewPhoto = getSeriesCoverPhoto(photographyPhotos, series.slug)
+              const zhLabel = series.navLabel
 
               return (
                 <li key={series.slug} className="w-[6.5rem] text-center sm:w-[8.25rem]">
@@ -81,17 +55,7 @@ export default async function PhotographyPage() {
       <section className="photo-index-series">
         <div className="site-shell photo-index-series-grid">
           {photographySeries.map((series) => {
-            const previewPhoto = getSeriesCoverPhoto(photos, series.slug)
-            const zhLabel = seriesZhLabel[series.slug]
-            const cardCover = seriesCardCoverOverride[series.slug] ?? previewPhoto?.thumbnail ?? series.cover
-            const multiCovers =
-              series.slug === PhotoCategory.Project
-                ? projectCardCovers
-                : series.slug === PhotoCategory.Street
-                  ? streetCardCovers
-                  : series.slug === PhotoCategory.Pets
-                    ? petsCardCovers
-                  : null
+            const zhLabel = series.navLabel
 
             return (
               <article key={series.slug} className="photo-index-card">
@@ -101,35 +65,25 @@ export default async function PhotographyPage() {
                       series.slug === PhotoCategory.Pets ? 'photo-index-card-media--pets' : ''
                     }`}
                   >
-                    {multiCovers ? (
-                      <div
-                        className={`photo-index-card-media-multi ${
-                          series.slug === PhotoCategory.Pets
-                            ? 'photo-index-card-media-multi--two'
-                            : 'photo-index-card-media-multi--three'
-                        }`}
-                      >
-                        {multiCovers.map((src, index) => (
-                          <div key={src} className="photo-index-card-media-triple-item">
-                            <Image
-                              src={src}
-                              alt={`${series.title}-${index + 1}`}
-                              fill
-                              sizes="(min-width: 1280px) 27vw, (min-width: 768px) 30vw, 95vw"
-                              className="object-contain photo-index-card-media-triple-image"
-                            />
-                          </div>
-                        ))}
-                      </div>
-                    ) : (
-                      <Image
-                        src={cardCover}
-                        alt={series.title}
-                        fill
-                        sizes="(min-width: 1280px) 80vw, (min-width: 768px) 80vw, 95vw"
-                        className="object-contain"
-                      />
-                    )}
+                    <div
+                      className={`photo-index-card-media-multi ${
+                        series.cardCovers.length === 2
+                          ? 'photo-index-card-media-multi--two'
+                          : 'photo-index-card-media-multi--three'
+                      }`}
+                    >
+                      {series.cardCovers.map((src, index) => (
+                        <div key={src} className="photo-index-card-media-triple-item">
+                          <Image
+                            src={src}
+                            alt={`${series.title}-${index + 1}`}
+                            fill
+                            sizes="(min-width: 1280px) 27vw, (min-width: 768px) 30vw, 95vw"
+                            className="object-contain photo-index-card-media-triple-image"
+                          />
+                        </div>
+                      ))}
+                    </div>
                     <div className="photo-index-card-overlay">
                       <span className="photo-index-card-overlay-title">{zhLabel}</span>
                       <span className="photo-index-card-overlay-pill">进一步了解</span>

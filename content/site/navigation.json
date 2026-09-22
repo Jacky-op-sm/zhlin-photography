@@ -1,0 +1,214 @@
+[
+  {
+    "id": "home",
+    "label": "Home",
+    "href": "/",
+    "showInHeader": true,
+    "showInFooter": false,
+    "order": 10
+  },
+  {
+    "id": "photography",
+    "label": "Photography",
+    "footerLabel": "摄影",
+    "href": "/photography",
+    "showInHeader": true,
+    "showInFooter": true,
+    "order": 20,
+    "children": [
+      {
+        "id": "photography-all",
+        "label": "All",
+        "title": "探索全部",
+        "footerLabel": "总览",
+        "href": "/photography",
+        "showInHeader": true,
+        "showInFooter": true,
+        "order": 10
+      },
+      {
+        "id": "photography-pets",
+        "label": "Pets",
+        "title": "宠物摄影",
+        "footerLabel": "动物",
+        "href": "/photography/pets",
+        "showInHeader": true,
+        "showInFooter": true,
+        "order": 20,
+        "footerOrder": 30
+      },
+      {
+        "id": "photography-street",
+        "label": "Street",
+        "title": "街头摄影",
+        "footerLabel": "街拍",
+        "href": "/photography/street",
+        "showInHeader": true,
+        "showInFooter": true,
+        "order": 30,
+        "footerOrder": 20
+      },
+      {
+        "id": "photography-project",
+        "label": "Project",
+        "title": "项目摄影",
+        "footerLabel": "项目",
+        "href": "/photography/project",
+        "showInHeader": true,
+        "showInFooter": true,
+        "order": 40,
+        "footerOrder": 40
+      }
+    ]
+  },
+  {
+    "id": "travel",
+    "label": "Travel",
+    "footerLabel": "旅行",
+    "href": "/travel",
+    "showInHeader": true,
+    "showInFooter": true,
+    "order": 30,
+    "children": [
+      {
+        "id": "travel-all",
+        "label": "All",
+        "title": "探索全部",
+        "footerLabel": "总览",
+        "href": "/travel",
+        "showInHeader": true,
+        "showInFooter": true,
+        "order": 10
+      },
+      {
+        "id": "travel-hangzhou",
+        "label": "Hangzhou",
+        "title": "杭州",
+        "footerLabel": "杭州",
+        "href": "/travel/hangzhou",
+        "showInHeader": true,
+        "showInFooter": true,
+        "order": 20,
+        "footerOrder": 50
+      },
+      {
+        "id": "travel-nanjing",
+        "label": "Nanjing",
+        "title": "南京",
+        "footerLabel": "南京",
+        "href": "/travel/nanjing",
+        "showInHeader": true,
+        "showInFooter": true,
+        "order": 30
+      },
+      {
+        "id": "travel-wuhan",
+        "label": "Wuhan",
+        "title": "武汉",
+        "footerLabel": "武汉",
+        "href": "/travel/wuhan",
+        "showInHeader": true,
+        "showInFooter": true,
+        "order": 40
+      },
+      {
+        "id": "travel-japan",
+        "label": "Japan",
+        "title": "日本",
+        "footerLabel": "日本",
+        "href": "/travel/japan",
+        "showInHeader": true,
+        "showInFooter": true,
+        "order": 50,
+        "footerOrder": 20
+      },
+      {
+        "id": "travel-shanghai",
+        "label": "Shanghai",
+        "title": "上海",
+        "footerLabel": "上海",
+        "href": "/travel/shanghai",
+        "showInHeader": true,
+        "showInFooter": false,
+        "order": 60
+      },
+      {
+        "id": "travel-dongbei",
+        "label": "Dongbei",
+        "title": "东北",
+        "footerLabel": "东北",
+        "href": "/travel/dongbei",
+        "showInHeader": true,
+        "showInFooter": false,
+        "order": 70
+      },
+      {
+        "id": "travel-beijing",
+        "label": "Beijing",
+        "title": "北京",
+        "footerLabel": "北京",
+        "href": "/travel/beijing",
+        "showInHeader": true,
+        "showInFooter": false,
+        "order": 80
+      },
+      {
+        "id": "travel-huzhou",
+        "label": "Huzhou",
+        "title": "湖州",
+        "footerLabel": "湖州",
+        "href": "/travel/huzhou",
+        "showInHeader": false,
+        "showInFooter": false,
+        "order": 90
+      }
+    ]
+  },
+  {
+    "id": "hobby",
+    "label": "Hobby",
+    "footerLabel": "爱好",
+    "href": "/hobby",
+    "showInHeader": true,
+    "showInFooter": true,
+    "order": 40,
+    "children": [
+      {
+        "id": "hobby-reading",
+        "label": "Reading",
+        "footerLabel": "阅读",
+        "href": "/hobby#reading",
+        "showInHeader": false,
+        "showInFooter": true,
+        "order": 10
+      },
+      {
+        "id": "hobby-film",
+        "label": "Film",
+        "footerLabel": "电影",
+        "href": "/hobby#film",
+        "showInHeader": false,
+        "showInFooter": true,
+        "order": 20
+      },
+      {
+        "id": "hobby-game",
+        "label": "Game",
+        "footerLabel": "游戏",
+        "href": "/hobby#game",
+        "showInHeader": false,
+        "showInFooter": true,
+        "order": 30
+      }
+    ]
+  },
+  {
+    "id": "contact",
+    "label": "Contact",
+    "footerLabel": "联系",
+    "href": "/contact",
+    "showInHeader": false,
+    "showInFooter": false,
+    "order": 50
+  }
+]

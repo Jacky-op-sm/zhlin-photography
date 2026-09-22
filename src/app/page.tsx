@@ -1,164 +1,35 @@
 import Image from 'next/image'
 import Link from 'next/link'
-import { getProfile } from '@/lib/data/profile'
+import { getHomepageContent, getProfileContent } from '@/lib/site/content'
+import type {
+  HobbyistShowcaseCard,
+  PhotographerShowcaseCard,
+  TravellerShowcaseCard,
+} from '@/lib/site/types'
 
-type PhotographerShowcaseCard = {
-  title: string
-  href: string
-  image: string
-  alt: string
-  quote: string
-  body: string
-  imageClassName?: string
-}
-
-type TravellerShowcaseCard = {
-  place: string
-  href: string
-  image: string
-  alt: string
-  body: string
-  imageClassName?: string
-  bodyClassName?: string
-}
-
-type HobbyistShowcaseCard = {
-  title: string
-  href: string
-  image: string
-  alt: string
-  body: string
-  imageClassName?: string
-}
-
-const photographerShowcaseCards: PhotographerShowcaseCard[] = [
-  {
-    title: '街拍',
-    href: '/photography/street',
-    image: '/assets/photos/street/Z52_8539.jpg',
-    alt: 'Street photography cover',
-    quote: `什么是街拍？
-街拍是对城市的观察，
-街拍是去展现平日被人忽略的美。`,
-    body: `我喜欢去观察光影，
-去捕捉人们生存的状态。`,
-  },
-  {
-    title: '动物',
-    href: '/photography/pets',
-    image: '/assets/photos/pets/Z52_6039.jpg',
-    alt: 'Pet photography cover',
-    quote: `动物给予我感情，
-热情的狗，高冷的猫，
-关在动物园的老虎。`,
-    body: `我最喜欢拍狗狗们，
-它们来自故乡，各有个性。`,
-    imageClassName: 'object-[52%_center]',
-  },
-  {
-    title: '项目',
-    href: '/photography/project',
-    image: '/assets/photos/project/1.jpg',
-    alt: 'Project photography cover',
-    quote: `我看着宿舍阳台下的十字路口，
-不同的天气，晴天、阴天、下雨，
-不同的四季，春夏秋冬。`,
-    body: `这是我第一个个人项目，
-真期待它会演变成什么样呢？`,
-    imageClassName: 'object-[50%_center]',
-  },
-]
-
-const travellerShowcaseCards: TravellerShowcaseCard[] = [
-  {
-    place: '日本',
-    href: '/travel/japan',
-    image: '/assets/travel/japan-front.jpeg',
-    alt: '日本旅行封面',
-    body: `我记住日本，
-不仅因为高松的悠闲、京都的红，
-鸭川的夜和奈良的鹿，也因为朋友同行的时光，
-以及初识相机时那份欣喜。`,
-    imageClassName: 'object-[56%_center]',
-    bodyClassName: 'home-traveller-body--japan',
-  },
-  {
-    place: '南京',
-    href: '/travel/nanjing',
-    image: '/assets/travel/nanjing-hero-wutong-street.jpg',
-    alt: '南京旅行封面',
-    body: `春节的南京大概不是最好的旅行时机，
-可旅行本就不只有轻松和快乐，
-也有拥挤、劳累和意外。`,
-  },
-  {
-    place: '北京',
-    href: '/travel/beijing',
-    image: '/assets/travel/beijing-front.jpeg',
-    alt: '北京旅行封面',
-    body: `北京给了我太多第一次：
-第一次独自旅行，第一次走进音乐酒吧，
-第一次在艺术展里结识朋友。`,
-    imageClassName: 'object-[56%_center]',
-  },
-]
-
-const hobbyistShowcaseCards: HobbyistShowcaseCard[] = [
-  {
-    title: '阅读',
-    href: '/hobby#reading',
-    image: '/assets/home/ward-no-6-cover.jpg',
-    alt: 'Book cover',
-    body: `阅读教会我耐心，
-契诃夫的温柔、海明威的力量，
-和陀思妥耶夫斯基笔下的人心。`,
-  },
-  {
-    title: '电影',
-    href: '/hobby#film',
-    image: '/assets/home/three-colours-trilogy-cover.png',
-    alt: 'Film cover',
-    body: `看哪，红白蓝三部曲的美学，
-小津安二郎讲述的家庭，今敏的时空跳跃。`,
-    imageClassName: 'object-cover object-center scale-[1.05]',
-  },
-  {
-    title: '游戏',
-    href: '/hobby#game',
-    image: '/assets/home/league-of-legends-cover.jpg',
-    alt: 'Video game cover',
-    body: `游戏对我到底意味着什么？
-是考验反应、团队协作的激情，
-还是结束后的疲惫与空虚。`,
-  },
-]
-
-export default async function Home() {
-  const profile = await getProfile()
+export default function Home() {
+  const profile = getProfileContent()
+  const homepage = getHomepageContent()
 
   return (
-    <div className="home-page">
+    <main className="home-page" data-footer-tone="gray">
       <section className="home-band home-band--light home-hero-band">
         <div className="site-shell home-hero-grid">
           <div className="home-hero-copy">
             <h1>
-              摄影，
+              {homepage.hero.titleLines[0]}
               <br />
-              旅行，
+              {homepage.hero.titleLines[1]}
               <br />
-              读书。
+              {homepage.hero.titleLines[2]}
             </h1>
-            <p className="home-hero-summary">
-              常驻杭州，穷学生一枚。现有三大爱好，摄影 - 已拥有相机三个月，常在散步时拍照，现快门数6897；旅行
-              - 走在陌生的地方，看着沿路风景的同时，也看着自己；读书和写作 - 读书培养语感，日记让我自省，游记让我定格回忆。
-            </p>
+            <p className="home-hero-summary">{homepage.hero.summary}</p>
             <div className="home-hero-links">
-              <Link href="/photography" className="home-inline-link">
-                <span>查看摄影作品</span>
-              </Link>
-              <Link href="/travel" className="home-inline-link">
-                <span>查看旅行记录</span>
-              </Link>
+              {homepage.hero.links.map((link) => (
+                <Link key={link.href} href={link.href} className="home-inline-link">
+                  <span>{link.label}</span>
+                </Link>
+              ))}
             </div>
           </div>
 
@@ -175,23 +46,23 @@ export default async function Home() {
             </div>
             <figcaption>
               <p className="home-overline">个人简介</p>
-              <p className="home-hero-name">林志濠</p>
+              <p className="home-hero-name">{profile.displayName}</p>
               <p className="home-hero-meta">
-                在读博士
+                {profile.displayTitle}
                 <br />
-                杭州，中国
+                {profile.displayCity}
               </p>
             </figcaption>
           </figure>
         </div>
       </section>
 
-      <PhotographerShowcase cards={photographerShowcaseCards} />
+      <PhotographerShowcase cards={homepage.photography} />
 
-      <TravellerShowcase cards={travellerShowcaseCards} />
+      <TravellerShowcase cards={homepage.travel} />
 
-      <HobbyistShowcase cards={hobbyistShowcaseCards} />
-    </div>
+      <HobbyistShowcase cards={homepage.hobby} />
+    </main>
   )
 }
 

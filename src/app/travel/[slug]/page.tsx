@@ -1,10 +1,11 @@
 import type { Metadata } from 'next';
 import Image from 'next/image';
 import { notFound } from 'next/navigation';
-import { getTravelBySlug, getTravelSlugs } from '@/lib/data/travel';
-import { getTravelBookstoreSliderCardsBySlug, getTravelFoodSliderCardsBySlug, getTravelSpotSliderCardsBySlug } from '@/lib/data/travel-slider';
+import { getTravelBySlug, getTravelSlugs } from '@/lib/content/travel';
+import { getTravelBookstoreCards, getTravelFoodCards, getTravelSpotCards } from '@/lib/content/travel-cards';
 import SpotSlider from './SpotSlider';
 import FoodSlider from './FoodSlider';
+import { buildPageMetadata } from '@/lib/site/metadata';
 
 const SPOT_MARGIN_PX = 0;
 
@@ -12,42 +13,52 @@ export async function generateStaticParams() {
   return getTravelSlugs().map((slug) => ({ slug }));
 }
 
-export async function generateMetadata({ params }: { params: { slug: string } }): Promise<Metadata> {
-  const travel = await getTravelBySlug(params.slug);
+type TravelDetailPageProps = {
+  params: Promise<{ slug: string }>;
+};
+
+export async function generateMetadata({ params }: TravelDetailPageProps): Promise<Metadata> {
+  const { slug } = await params;
+  const travel = await getTravelBySlug(slug);
 
   if (!travel) {
-    return {
-      title: 'Travel · Zhlin Photography',
-    };
+    return buildPageMetadata({
+      title: '旅行',
+      description: '旅行摄影与城市游记。',
+      path: '/travel',
+    });
   }
 
-  return {
-    title: `${travel.cardTitle} · Travel · Zhlin Photography`,
+  return buildPageMetadata({
+    title: travel.cardTitle,
     description: travel.summary,
-    openGraph: {
-      title: `${travel.cardTitle} · Travel · Zhlin Photography`,
-      description: travel.summary,
-      images: [travel.hero],
-    },
-  };
+    path: `/travel/${slug}`,
+    image: travel.hero,
+  });
 }
 
-export default async function TravelDetailPage({ params }: { params: { slug: string } }) {
-  const travel = await getTravelBySlug(params.slug);
+export default async function TravelDetailPage({ params }: TravelDetailPageProps) {
+  const { slug } = await params;
+  const travel = await getTravelBySlug(slug);
   const [spotCards, bookstoreCards, foodCards] = await Promise.all([
-    getTravelSpotSliderCardsBySlug(params.slug),
-    getTravelBookstoreSliderCardsBySlug(params.slug),
-    getTravelFoodSliderCardsBySlug(params.slug),
+    getTravelSpotCards(slug),
+    getTravelBookstoreCards(slug),
+    getTravelFoodCards(slug),
   ]);
 
   if (!travel) {
     notFound();
   }
   const displayTitle = travel.cardTitle.replace(/游记/g, '').trim();
-  const foodSectionTitle = params.slug === 'wuhan' ? '故事' : '美食';
+  const foodSectionTitle = slug === 'wuhan' ? '故事' : '美食';
+  const footerTone =
+    bookstoreCards.length > 0 || foodCards.length > 0 ? 'gray' : 'white';
 
   return (
-    <main className="min-h-screen bg-[rgba(245, 245, 247, 1)] text-neutral-950">
+    <main
+      className="min-h-screen bg-[rgba(245, 245, 247, 1)] text-neutral-950"
+      data-footer-tone={footerTone}
+    >
       <section className="relative isolate min-h-[78vh] overflow-hidden bg-neutral-950 text-white sm:min-h-[82vh] lg:min-h-[88vh]">
         <div className="absolute inset-0">
           <Image

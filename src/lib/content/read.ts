@@ -8,16 +8,8 @@ export function getContentPath(...segments: string[]) {
   return path.join(contentRoot, ...segments);
 }
 
-export function readContentJson<T>(...segments: string[]): T {
-  return JSON.parse(fs.readFileSync(getContentPath(...segments), 'utf8')) as T;
-}
-
-export function readContentText(...segments: string[]) {
-  try {
-    return fs.readFileSync(getContentPath(...segments), 'utf8');
-  } catch {
-    return '';
-  }
+export function readContentJson(...segments: string[]): unknown {
+  return JSON.parse(fs.readFileSync(getContentPath(...segments), 'utf8'));
 }
 
 export function readContentDirNames(...segments: string[]) {
@@ -28,7 +20,7 @@ export function readContentDirNames(...segments: string[]) {
     .sort((a, b) => a.localeCompare(b));
 }
 
-export function readContentJsonFiles<T>(...segments: string[]): T[] {
+export function readContentJsonFiles(...segments: string[]): unknown[] {
   const dir = getContentPath(...segments);
 
   return fs
@@ -36,5 +28,5 @@ export function readContentJsonFiles<T>(...segments: string[]): T[] {
     .filter((entry) => entry.isFile() && entry.name.endsWith('.json'))
     .map((entry) => entry.name)
     .sort((a, b) => a.localeCompare(b))
-    .map((filename) => JSON.parse(fs.readFileSync(path.join(dir, filename), 'utf8')) as T);
+    .map((filename) => JSON.parse(fs.readFileSync(path.join(dir, filename), 'utf8')));
 }

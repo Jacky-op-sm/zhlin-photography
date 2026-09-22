@@ -1,256 +1,295 @@
+import { randomUUID } from 'node:crypto'
 import { NextResponse } from 'next/server'
-import { contactEmail } from '@/lib/data/contact'
-import type { ContactPayload } from '@/lib/types'
+import { CONTACT_REQUEST_MAX_BYTES } from '@/lib/contact/constants'
+import type {
+  ContactApiResponse,
+  ContactMessage,
+} from '@/lib/contact/types'
+import { parseContactFormInput } from '@/lib/contact/validation'
+import { deliverContactMessage } from '@/lib/server/contact/delivery'
+import { checkContactRateLimit } from '@/lib/server/contact/rate-limit'
 
-type DeliveryResult =
-  | { delivered: true; channel: 'webhook' | 'resend'; messageId?: string }
-  | { delivered: false; skipped: true; channel: 'webhook' | 'resend' }
-
-function sanitize(value: unknown) {
-  return String(value ?? '').trim()
-}
-
-function isValidEmail(email: string) {
-  return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)
-}
-
-function parseName(payload: ContactPayload) {
-  const name = sanitize(payload.name)
-  const firstName = sanitize(payload.firstName)
-  const lastName = sanitize(payload.lastName)
-
-  if (firstName || lastName) {
-    return {
-      name: name || [firstName, lastName].filter(Boolean).join(' ').trim(),
-      firstName: firstName || (name.split(/\s+/)[0] ?? ''),
-      lastName: lastName || name.split(/\s+/).slice(1).join(' '),
+type BodyReadResult =
+  | { success: true; value: Record<string, unknown> }
+  | {
+      success: false
+      status: 400 | 413 | 415
+      code: 'invalid_body' | 'payload_too_large' | 'unsupported_media_type'
+      error: string
     }
-  }
 
-  const parts = name.split(/\s+/).filter(Boolean)
-  return {
-    name,
-    firstName: parts[0] || name,
-    lastName: parts.slice(1).join(' '),
-  }
-}
-
-function serializeError(error: unknown) {
-  if (!error) return 'unknown error'
-  if (error instanceof Error) return error.message
-  return String(error)
-}
-
-function buildTextPayload(payload: ReturnType<typeof parseName> & { email: string; type: string; message: string; trackingId: string; receivedAt: string }) {
-  return [
-    `Tracking ID: ${payload.trackingId}`,
-    `Time: ${payload.receivedAt}`,
-    `Name: ${payload.name}`,
-    `Email: ${payload.email}`,
-    `Type: ${payload.type}`,
-    '',
-    payload.message,
-  ].join('\n')
-}
-
-function buildHtmlPayload(payload: ReturnType<typeof parseName> & { email: string; type: string; message: string; trackingId: string; receivedAt: string }) {
-  return [
-    `<p><strong>Tracking ID:</strong> ${payload.trackingId}</p>`,
-    `<p><strong>Time:</strong> ${payload.receivedAt}</p>`,
-    `<p><strong>Name:</strong> ${payload.name}</p>`,
-    `<p><strong>Email:</strong> ${payload.email}</p>`,
-    `<p><strong>Type:</strong> ${payload.type}</p>`,
-    `<p><strong>Message:</strong></p>`,
-    `<p>${payload.message.replace(/\n/g, '<br>')}</p>`,
-  ].join('')
-}
-
-async function deliverToWebhook(payload: ReturnType<typeof parseName> & { email: string; type: string; message: string; trackingId: string; receivedAt: string }): Promise<DeliveryResult> {
-  if (!process.env.CONTACT_WEBHOOK_URL) {
-    return { delivered: false, skipped: true, channel: 'webhook' }
-  }
-
-  const response = await fetch(process.env.CONTACT_WEBHOOK_URL, {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-    },
-    body: JSON.stringify(payload),
+function json(
+  body: ContactApiResponse,
+  status: number,
+  headers?: HeadersInit,
+) {
+  return NextResponse.json(body, {
+    status,
+    headers,
   })
-
-  if (!response.ok) {
-    throw new Error(`webhook returned ${response.status}`)
-  }
-
-  return { delivered: true, channel: 'webhook' }
 }
 
-async function deliverToResend(payload: ReturnType<typeof parseName> & { email: string; type: string; message: string; trackingId: string; receivedAt: string }): Promise<DeliveryResult> {
-  const apiKey = sanitize(process.env.RESEND_API_KEY)
-  const fromEmail = sanitize(process.env.CONTACT_FROM_EMAIL)
-  const toEmail = sanitize(process.env.CONTACT_TO_EMAIL || contactEmail)
-
-  if (!apiKey || !fromEmail || !toEmail) {
-    return { delivered: false, skipped: true, channel: 'resend' }
-  }
-
-  const response = await fetch('https://api.resend.com/emails', {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-      Authorization: `Bearer ${apiKey}`,
-    },
-    body: JSON.stringify({
-      from: fromEmail,
-      to: [toEmail],
-      reply_to: payload.email,
-      subject: `[Website Contact] ${payload.type}${payload.name ? ` · ${payload.name}` : ''}`,
-      html: buildHtmlPayload(payload),
-      text: buildTextPayload(payload),
-    }),
-  })
-
-  const raw = await response.text()
-  let parsed: { id?: string } | null = null
-
-  if (raw) {
-    try {
-      parsed = JSON.parse(raw) as { id?: string }
-    } catch {
-      parsed = null
-    }
-  }
-
-  if (!response.ok) {
-    throw new Error(`resend returned ${response.status}${raw ? ` ${raw.slice(0, 200)}` : ''}`)
-  }
-
-  return {
-    delivered: true,
-    channel: 'resend',
-    messageId: parsed?.id ? String(parsed.id) : undefined,
+function addAllowedOrigin(
+  allowed: Set<string>,
+  value: string | undefined,
+) {
+  if (!value) return
+  try {
+    allowed.add(new URL(value).origin)
+  } catch {
+    // Invalid optional environment values are ignored here and fail separately
+    // in production metadata validation.
   }
 }
 
-async function readRequestBody(request: Request) {
-  const contentType = request.headers.get('content-type') || ''
+function isAllowedOrigin(request: Request) {
+  const origin = request.headers.get('origin')
+  if (!origin) return true
 
-  if (contentType.includes('application/json')) {
-    return (await request.json().catch(() => null)) as Record<string, unknown> | null
+  const allowed = new Set<string>()
+  addAllowedOrigin(
+    allowed,
+    process.env.NEXT_PUBLIC_SITE_URL || 'https://www.zhlin.space',
+  )
+  addAllowedOrigin(
+    allowed,
+    process.env.VERCEL_URL ? `https://${process.env.VERCEL_URL}` : undefined,
+  )
+  addAllowedOrigin(
+    allowed,
+    process.env.VERCEL_BRANCH_URL
+      ? `https://${process.env.VERCEL_BRANCH_URL}`
+      : undefined,
+  )
+
+  for (const value of (
+    process.env.CONTACT_ALLOWED_ORIGINS || ''
+  ).split(',')) {
+    addAllowedOrigin(allowed, value.trim() || undefined)
   }
 
-  if (contentType.includes('multipart/form-data') || contentType.includes('application/x-www-form-urlencoded')) {
-    const formData = await request.formData()
-    return Object.fromEntries(Array.from(formData.entries()).map(([key, value]) => [key, typeof value === 'string' ? value : '']))
+  if (process.env.NODE_ENV !== 'production') {
+    allowed.add('http://localhost:3000')
+    allowed.add('http://127.0.0.1:3000')
+    allowed.add('http://localhost:3100')
+    allowed.add('http://127.0.0.1:3100')
   }
-
-  const text = await request.text()
-  if (!text) return {}
 
   try {
-    return JSON.parse(text) as Record<string, unknown>
+    return allowed.has(new URL(origin).origin)
   } catch {
-    const search = new URLSearchParams(text)
-    return Object.fromEntries(search.entries())
+    return false
   }
+}
+
+async function readRequestBody(request: Request): Promise<BodyReadResult> {
+  const contentLength = Number(request.headers.get('content-length'))
+  if (
+    Number.isFinite(contentLength)
+    && contentLength > CONTACT_REQUEST_MAX_BYTES
+  ) {
+    return {
+      success: false,
+      status: 413,
+      code: 'payload_too_large',
+      error: '提交内容过长，请缩短后重试。',
+    }
+  }
+
+  const bytes = await request.arrayBuffer()
+  if (bytes.byteLength > CONTACT_REQUEST_MAX_BYTES) {
+    return {
+      success: false,
+      status: 413,
+      code: 'payload_too_large',
+      error: '提交内容过长，请缩短后重试。',
+    }
+  }
+
+  const text = new TextDecoder().decode(bytes)
+  const contentType = request.headers.get('content-type') || ''
+
+  if (!text.trim()) {
+    return {
+      success: false,
+      status: 400,
+      code: 'invalid_body',
+      error: '请求内容无法解析。',
+    }
+  }
+
+  if (
+    contentType.includes('application/json')
+    || (!contentType && text.trim().startsWith('{'))
+  ) {
+    try {
+      const value = JSON.parse(text) as unknown
+      if (!value || typeof value !== 'object' || Array.isArray(value)) {
+        throw new Error('Expected an object')
+      }
+      return {
+        success: true,
+        value: value as Record<string, unknown>,
+      }
+    } catch {
+      return {
+        success: false,
+        status: 400,
+        code: 'invalid_body',
+        error: '请求内容无法解析。',
+      }
+    }
+  }
+
+  if (contentType.includes('application/x-www-form-urlencoded')) {
+    return {
+      success: true,
+      value: Object.fromEntries(new URLSearchParams(text).entries()),
+    }
+  }
+
+  return {
+    success: false,
+    status: 415,
+    code: 'unsupported_media_type',
+    error: '不支持的提交格式。',
+  }
+}
+
+function getRequestIp(request: Request) {
+  const forwarded = request.headers.get('x-forwarded-for')
+  if (forwarded) {
+    return forwarded.split(',')[0]?.trim() || 'unknown'
+  }
+  return request.headers.get('x-real-ip')?.trim() || 'unknown'
 }
 
 export async function POST(request: Request) {
-  const body = await readRequestBody(request)
-  if (!body) {
-    return NextResponse.json({ ok: false, error: 'Invalid request body' }, { status: 400 })
-  }
-
-  const payloadInput: ContactPayload = {
-    name: sanitize(body.name),
-    firstName: sanitize(body.firstName || body.first_name),
-    lastName: sanitize(body.lastName || body.last_name),
-    email: sanitize(body.email),
-    type: sanitize(body.type),
-    message: sanitize(body.message),
-    website: sanitize(body.website),
-  }
-
-  if (payloadInput.website) {
-    return NextResponse.json({ ok: false, error: 'Spam check failed' }, { status: 400 })
-  }
-
-  const { name, firstName, lastName } = parseName(payloadInput)
-
-  if (!name || !payloadInput.email || !payloadInput.type || !payloadInput.message) {
-    return NextResponse.json({ ok: false, error: 'Missing required fields' }, { status: 400 })
-  }
-
-  if (!isValidEmail(payloadInput.email)) {
-    return NextResponse.json({ ok: false, error: 'Invalid email' }, { status: 400 })
-  }
-
-  const trackingId = `msg_${Date.now()}_${Math.random().toString(36).slice(2, 8)}`
-  const hasWebhook = Boolean(sanitize(process.env.CONTACT_WEBHOOK_URL))
-  const hasResend = Boolean(sanitize(process.env.RESEND_API_KEY)) && Boolean(sanitize(process.env.CONTACT_FROM_EMAIL)) && Boolean(sanitize(process.env.CONTACT_TO_EMAIL || contactEmail))
-
-  if (!hasWebhook && !hasResend) {
-    return NextResponse.json(
+  if (!isAllowedOrigin(request)) {
+    return json(
       {
         ok: false,
-        error: '联系通道未配置，请联系站长设置发送服务后重试。',
-        trackingId,
+        code: 'invalid_origin',
+        error: '无法验证提交来源。',
       },
-      { status: 500 }
+      403,
     )
   }
 
-  const payload = {
+  const body = await readRequestBody(request)
+  if (!body.success) {
+    return json(
+      {
+        ok: false,
+        code: body.code,
+        error: body.error,
+      },
+      body.status,
+    )
+  }
+
+  if (
+    typeof body.value.website === 'string'
+    && body.value.website.trim()
+  ) {
+    return json({ ok: true }, 200)
+  }
+
+  const parsed = parseContactFormInput(body.value)
+  if (!parsed.success) {
+    return json(
+      {
+        ok: false,
+        code: 'invalid_input',
+        error: '请检查必填项、邮箱格式和内容长度。',
+      },
+      422,
+    )
+  }
+
+  const trackingId = `msg_${randomUUID()}`
+  const rateLimit = await checkContactRateLimit({
+    ip: getRequestIp(request),
+    email: parsed.data.email,
+  })
+
+  if (!rateLimit.allowed) {
+    if (rateLimit.unavailable) {
+      return json(
+        {
+          ok: false,
+          code: 'service_unavailable',
+          error: '留言服务暂不可用，请通过邮箱联系。',
+          trackingId,
+        },
+        503,
+      )
+    }
+
+    return json(
+      {
+        ok: false,
+        code: 'rate_limited',
+        error: '提交过于频繁，请稍后再试。',
+        trackingId,
+      },
+      429,
+      rateLimit.retryAfterSeconds
+        ? { 'Retry-After': String(rateLimit.retryAfterSeconds) }
+        : undefined,
+    )
+  }
+
+  const payload: ContactMessage = {
+    firstName: parsed.data.firstName,
+    lastName: parsed.data.lastName,
+    email: parsed.data.email,
+    type: parsed.data.type,
+    message: parsed.data.message,
+    name: `${parsed.data.firstName} ${parsed.data.lastName}`.trim(),
     trackingId,
-    name,
-    firstName,
-    lastName,
-    email: payloadInput.email,
-    type: payloadInput.type,
-    message: payloadInput.message,
     receivedAt: new Date().toISOString(),
   }
 
-  const deliveredVia: string[] = []
-  const errors: string[] = []
-
-  try {
-    const webhookResult = await deliverToWebhook(payload)
-    if (webhookResult.delivered) {
-      deliveredVia.push(webhookResult.channel)
-    }
-  } catch (error) {
-    errors.push(`webhook: ${serializeError(error)}`)
-  }
-
-  try {
-    const resendResult = await deliverToResend(payload)
-    if (resendResult.delivered) {
-      deliveredVia.push(resendResult.channel + (resendResult.messageId ? `:${resendResult.messageId}` : ''))
-    }
-  } catch (error) {
-    errors.push(`resend: ${serializeError(error)}`)
-  }
-
-  if (!deliveredVia.length) {
-    return NextResponse.json(
+  const delivery = await deliverContactMessage(payload)
+  if (delivery.status === 'unconfigured') {
+    return json(
       {
         ok: false,
-        error: '消息未送达，请稍后重试或直接邮件联系站长。',
+        code: 'service_unavailable',
+        error: '留言服务暂不可用，请通过邮箱联系。',
         trackingId,
       },
-      { status: 502 }
+      503,
     )
   }
 
-  return NextResponse.json({
-    ok: true,
-    trackingId,
-    deliveredVia,
-    warnings: errors.length ? errors : undefined,
-  })
+  if (delivery.status === 'failed') {
+    return json(
+      {
+        ok: false,
+        code: 'delivery_failed',
+        error: '消息未送达，请稍后重试或通过邮箱联系。',
+        trackingId,
+      },
+      502,
+    )
+  }
+
+  return json(
+    {
+      ok: true,
+      trackingId,
+    },
+    200,
+  )
 }
 
 export async function OPTIONS() {
-  return new NextResponse(null, { status: 204 })
+  return new NextResponse(null, {
+    status: 204,
+    headers: {
+      Allow: 'POST, OPTIONS',
+    },
+  })
 }

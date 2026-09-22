@@ -1,4 +1,4 @@
-import type { TravelSliderCard } from '@/lib/types/travel-slider';
+import type { TravelSliderCard } from '@/lib/content/schemas';
 import TravelCardSlider from './TravelCardSlider';
 
 export default function FoodSlider({ cards }: { cards: TravelSliderCard[] }) {

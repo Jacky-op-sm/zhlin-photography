@@ -1,8 +1,16 @@
-﻿import { getHobby } from '@/lib/data/hobby'
+﻿import { getHobbyContent } from '@/lib/content/hobby'
 import Link from 'next/link'
 import type { Hobby, HobbyCategory, HobbyItem, MonthlyDigest } from '@/lib/types'
 import { Fragment, type CSSProperties } from 'react'
 import { extractDigestExcerpt } from '@/lib/utils/hobbyExcerpt'
+import { buildPageMetadata } from '@/lib/site/metadata'
+
+export const metadata = buildPageMetadata({
+  title: '兴趣',
+  description: '阅读、电影与游戏的长期记录。',
+  path: '/hobby',
+  image: '/assets/home/three-colours-trilogy-cover.png',
+})
 
 function monthScore(month: string) {
   const match = month.match(/^(\d{4})-(\d{1,2})$/)
@@ -46,19 +54,9 @@ type EntryTone = {
   item: string
 }
 
-const entryTones: Record<'reading' | 'film' | 'game', EntryTone> = {
-  reading: {
-    panel: 'bg-transparent',
-    item: 'bg-[rgba(245,245,247,1)]',
-  },
-  film: {
-    panel: 'bg-transparent',
-    item: 'bg-[rgba(245,245,247,1)]',
-  },
-  game: {
-    panel: 'bg-transparent',
-    item: 'bg-[rgba(245,245,247,1)]',
-  },
+const entryTone: EntryTone = {
+  panel: 'bg-transparent',
+  item: 'bg-[rgba(245,245,247,1)]',
 }
 
 function ItemCard({ item, tone }: { item: HobbyItem; tone: EntryTone }) {
@@ -140,19 +138,19 @@ function LolProfileModule({
 }
 
 function DigestCard({ monthData }: { monthData: MonthlyDigest }) {
-  const readingVisible = monthData.reading.slice(0, 2)
+  const booksVisible = monthData.books.slice(0, 2)
   const filmVisible = monthData.films.slice(0, 2)
-  const readingHidden = monthData.reading.slice(2)
+  const booksHidden = monthData.books.slice(2)
   const filmHidden = monthData.films.slice(2)
-  const visibleRowCount = Math.max(readingVisible.length, filmVisible.length)
-  const hiddenRowCount = Math.max(readingHidden.length, filmHidden.length)
+  const visibleRowCount = Math.max(booksVisible.length, filmVisible.length)
+  const hiddenRowCount = Math.max(booksHidden.length, filmHidden.length)
 
   return (
     <article className="p-0">
       <div className="grid gap-4 lg:grid-cols-2">
         <div className="flex items-center justify-between gap-3">
           <h4 className="text-base font-semibold tracking-[0.18em] text-[color:var(--portfolio-muted)]">阅读</h4>
-          <span className="text-xs text-[color:var(--portfolio-soft)]">{monthData.reading.length} 条</span>
+          <span className="text-xs text-[color:var(--portfolio-soft)]">{monthData.books.length} 条</span>
         </div>
         <div className="flex items-center justify-between gap-3">
           <h4 className="text-base font-semibold tracking-[0.18em] text-[color:var(--portfolio-muted)]">电影</h4>
@@ -163,7 +161,7 @@ function DigestCard({ monthData }: { monthData: MonthlyDigest }) {
       <div className="mt-4 grid gap-3 lg:grid-cols-2 lg:items-stretch">
         {Array.from({ length: visibleRowCount }).map((_, index) => (
           <Fragment key={`digest-visible-${index}`}>
-            {renderDigestRowPair(readingVisible[index], filmVisible[index])}
+            {renderDigestRowPair(booksVisible[index], filmVisible[index])}
           </Fragment>
         ))}
       </div>
@@ -177,7 +175,7 @@ function DigestCard({ monthData }: { monthData: MonthlyDigest }) {
           <div className="mt-4 grid gap-3 lg:grid-cols-2 lg:items-stretch">
             {Array.from({ length: hiddenRowCount }).map((_, index) => (
               <Fragment key={`digest-hidden-${index}`}>
-                {renderDigestRowPair(readingHidden[index], filmHidden[index])}
+                {renderDigestRowPair(booksHidden[index], filmHidden[index])}
               </Fragment>
             ))}
           </div>
@@ -210,17 +208,18 @@ function renderDigestRowPair(left?: HobbyItem, right?: HobbyItem) {
 export default async function HobbyPage({
   searchParams,
 }: {
-  searchParams?: { month?: string | string[] }
+  searchParams?: Promise<{ month?: string | string[] }>
 }) {
-  const hobby = await getHobby()
-  const categories = hobby.featured?.length ? hobby.featured : hobby.cards
+  const resolvedSearchParams = await searchParams
+  const hobby = getHobbyContent()
+  const categories = hobby.featured
   const digest = sortDigest(hobby.monthlyDigest || [])
   const latestYear = digest[0]?.month.split('-')[0]
   const monthTabs = digest.filter((entry) => {
     const [year] = entry.month.split('-')
     return year === latestYear
   }).sort((a, b) => monthScore(a.month) - monthScore(b.month))
-  const requestedMonth = typeof searchParams?.month === 'string' ? searchParams.month : undefined
+  const requestedMonth = typeof resolvedSearchParams?.month === 'string' ? resolvedSearchParams.month : undefined
   const latestMonth = monthTabs[monthTabs.length - 1]?.month
   const selectedMonth = monthTabs.some((entry) => entry.month === requestedMonth)
     ? requestedMonth
@@ -232,7 +231,6 @@ export default async function HobbyPage({
     { label: 'Letterboxd', href: hobby.externalProfiles.letterboxd, description: '完整观影记录与评分' },
   ].filter((entry) => entry.href)
 
-  const toneOrder: Array<'reading' | 'film' | 'game'> = ['reading', 'film', 'game']
   const categoryAnchorMap: Record<string, string> = {
     阅读: 'reading',
     电影: 'film',
@@ -252,6 +250,7 @@ export default async function HobbyPage({
     <main
       className="relative isolate min-h-screen overflow-hidden bg-[var(--portfolio-bg)] text-[var(--portfolio-text)]"
       style={hobbyThemeVars}
+      data-footer-tone="gray"
     >
       <div className="portfolio-shell relative">
         <section className="relative pb-[clamp(1.8rem,3.6vw,3rem)] pt-[clamp(3.5rem,8vw,6.25rem)]">
@@ -279,11 +278,11 @@ export default async function HobbyPage({
               description="如果一生只能读三本书，看三部电影的话，我会选..."
             />
             <div className="grid gap-5 lg:grid-cols-3">
-              {categories.map((category, index) => (
+              {categories.map((category) => (
                 <CategoryCard
                   key={category.title}
                   category={category}
-                  tone={entryTones[toneOrder[index] ?? 'reading']}
+                  tone={entryTone}
                   lolProfile={isGameCategoryTitle(category.title) ? hobby.lolProfile : undefined}
                   anchorId={categoryAnchorMap[category.title]}
                 />
@@ -373,4 +372,3 @@ function InfoTile({ label, value }: { label: string; value: string }) {
     </div>
   )
 }
-

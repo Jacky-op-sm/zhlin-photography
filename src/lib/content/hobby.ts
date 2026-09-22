@@ -3,21 +3,25 @@ import {
   readContentJson,
   readContentJsonFiles,
 } from '@/lib/content/read';
-import type {
-  HobbyContentFile,
-  HobbyProfileContent,
-} from '@/lib/content/types';
-import type { HobbyCategory, MonthlyDigest } from '@/lib/types';
+import {
+  hobbyCategorySchema,
+  hobbyProfileSchema,
+  monthlyDigestSchema,
+  type HobbyContent,
+} from '@/lib/content/schemas';
 
-let hobbyCache: HobbyContentFile | null = null;
+let hobbyCache: HobbyContent | null = null;
 
 export function getHobbyContent() {
   if (!hobbyCache) {
     hobbyCache = {
-      ...readContentJson<HobbyProfileContent>('hobby', 'profile.json'),
-      featured: readContentJson<HobbyCategory[]>('hobby', 'featured.json'),
-      cards: readContentJson<HobbyCategory[]>('hobby', 'cards.json'),
-      monthlyDigest: readContentJsonFiles<MonthlyDigest>('hobby', 'monthly'),
+      ...hobbyProfileSchema.parse(readContentJson('hobby', 'profile.json')),
+      featured: hobbyCategorySchema
+        .array()
+        .parse(readContentJson('hobby', 'featured.json')),
+      monthlyDigest: monthlyDigestSchema
+        .array()
+        .parse(readContentJsonFiles('hobby', 'monthly')),
     };
   }
 

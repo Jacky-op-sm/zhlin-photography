@@ -1,16 +1,26 @@
 import streetPhotos from '../../../content/photography/photos/street.json';
 import petsPhotos from '../../../content/photography/photos/pets.json';
 import projectPhotos from '../../../content/photography/photos/project.json';
-import projectMeta from '../../../content/photography/project-meta.json';
 import series from '../../../content/photography/series.json';
-import type { PhotographyPhotoContent, PhotographySeriesContent } from '@/lib/content/types';
+import {
+  photoRecordsSchema,
+  photographySeriesListSchema,
+  type PhotographySeriesContent,
+} from '@/lib/content/schemas';
+import { PhotoCategory, type Photo } from '@/lib/types';
 
-export const photographyPhotosContent = {
-  street: streetPhotos as PhotographyPhotoContent[],
-  pets: petsPhotos as PhotographyPhotoContent[],
-  project: projectPhotos as PhotographyPhotoContent[],
-};
+const photoContent = {
+  street: photoRecordsSchema.parse(streetPhotos),
+  pets: photoRecordsSchema.parse(petsPhotos),
+  project: photoRecordsSchema.parse(projectPhotos),
+} satisfies Record<PhotographySeriesContent['slug'], unknown>
 
-export const photographyProjectMetaContent = projectMeta;
+export const photographyPhotos: Photo[] = Object.entries(photoContent).flatMap(
+  ([category, photos]) =>
+    photos.map((photo) => ({
+      ...photo,
+      category: category as PhotoCategory,
+    })),
+)
 
-export const photographySeriesContent = series as PhotographySeriesContent[];
+export const photographySeriesContent = photographySeriesListSchema.parse(series);

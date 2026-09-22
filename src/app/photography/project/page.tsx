@@ -1,13 +1,18 @@
 import PhotographySeriesTemplate from '@/components/photography/PhotographySeriesTemplate'
-import { getPhotographySeries } from '@/components/photography/series'
-import { getAllPhotos } from '@/lib/data/photos'
-import { PhotoCategory } from '@/lib/types'
+import { getPhotographySeries, getSeriesPhotos } from '@/components/photography/series'
+import { photographyPhotos } from '@/lib/content/photography'
+import { buildPageMetadata } from '@/lib/site/metadata'
 
-export default async function ProjectPage() {
-  const photos = await getAllPhotos()
-  const series = getPhotographySeries('project')
-  const seriesPhotos = photos.filter((photo) => photo.category === PhotoCategory.Project)
+const series = getPhotographySeries('project')
 
+export const metadata = buildPageMetadata({
+  title: series?.title ?? '摄影项目',
+  description: series?.landingSummary ?? '长期摄影项目。',
+  path: '/photography/project',
+  image: series?.cover,
+})
+
+export default function ProjectPage() {
   if (!series) {
     return null
   }
@@ -18,7 +23,7 @@ export default async function ProjectPage() {
       title={series.title}
       intro={series.landingSummary}
       description={series.landingDescription}
-      photos={seriesPhotos}
+      photos={getSeriesPhotos(photographyPhotos, 'project')}
     />
   )
 }

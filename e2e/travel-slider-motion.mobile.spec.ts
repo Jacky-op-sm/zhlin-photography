@@ -4,61 +4,13 @@ function isMobileProject(projectName: string) {
   return projectName.startsWith('mobile-')
 }
 
-async function swipeLeftOnSlider(
+async function scrollSliderForward(
   page: import('@playwright/test').Page,
   sliderIndex: number,
 ) {
   await page.locator('[data-travel-slider-viewport]').nth(sliderIndex).evaluate((element) => {
     const target = element as HTMLElement
-    const rect = target.getBoundingClientRect()
-    const startX = rect.left + rect.width * 0.72
-    const endX = rect.left + rect.width * 0.24
-    const y = rect.top + rect.height * 0.5
-
-    const supportsTouch = typeof window.Touch === 'function'
-    if (!supportsTouch) return
-
-    const mkTouch = (x: number) =>
-      new Touch({
-        identifier: 1,
-        target,
-        clientX: x,
-        clientY: y,
-        pageX: x,
-        pageY: y,
-        screenX: x,
-        screenY: y,
-      })
-
-    target.dispatchEvent(
-      new TouchEvent('touchstart', {
-        bubbles: true,
-        cancelable: true,
-        touches: [mkTouch(startX)],
-        targetTouches: [mkTouch(startX)],
-        changedTouches: [mkTouch(startX)],
-      }),
-    )
-
-    target.dispatchEvent(
-      new TouchEvent('touchmove', {
-        bubbles: true,
-        cancelable: true,
-        touches: [mkTouch(endX)],
-        targetTouches: [mkTouch(endX)],
-        changedTouches: [mkTouch(endX)],
-      }),
-    )
-
-    target.dispatchEvent(
-      new TouchEvent('touchend', {
-        bubbles: true,
-        cancelable: true,
-        touches: [],
-        targetTouches: [],
-        changedTouches: [mkTouch(endX)],
-      }),
-    )
+    target.scrollBy({ left: target.clientWidth * 0.8, behavior: 'auto' })
   })
 }
 
@@ -75,7 +27,7 @@ test.describe('travel slider motion on mobile', () => {
     const before = await firstCard.boundingBox()
     expect(before).not.toBeNull()
 
-    await page.getByRole('button', { name: 'Next' }).first().click()
+    await page.getByRole('button', { name: '下一张卡片' }).first().click()
     await page.waitForTimeout(550)
 
     const after = await firstCard.boundingBox()
@@ -94,7 +46,7 @@ test.describe('travel slider motion on mobile', () => {
     expect(overflow).toBeLessThanOrEqual(0)
   })
 
-  test('spot and food sliders respond to left swipe by moving cards', async ({ page }, testInfo) => {
+  test('spot and food sliders respond to native horizontal scrolling', async ({ page }, testInfo) => {
     test.skip(!isMobileProject(testInfo.project.name), 'mobile-only test')
 
     await page.goto('/travel/nanjing')
@@ -106,7 +58,7 @@ test.describe('travel slider motion on mobile', () => {
     const spotScrollBefore = await page.evaluate(() => window.scrollY)
     expect(spotBefore).not.toBeNull()
 
-    await swipeLeftOnSlider(page, 0)
+    await scrollSliderForward(page, 0)
     await page.waitForTimeout(320)
 
     const spotAfter = await spotFirstCard.boundingBox()
@@ -123,7 +75,7 @@ test.describe('travel slider motion on mobile', () => {
     const foodScrollBefore = await page.evaluate(() => window.scrollY)
     expect(foodBefore).not.toBeNull()
 
-    await swipeLeftOnSlider(page, 1)
+    await scrollSliderForward(page, 1)
     await page.waitForTimeout(320)
 
     const foodAfter = await foodFirstCard.boundingBox()

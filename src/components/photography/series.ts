@@ -1,31 +1,10 @@
 import { photographySeriesContent } from '@/lib/content/photography';
-import { PhotoCategory, type Photo } from '@/lib/types';
+import type { PhotographySeriesContent } from '@/lib/content/schemas';
+import type { Photo } from '@/lib/types';
 
-export type PhotographySeriesSlug = Exclude<PhotoCategory, 'all'>;
+export type PhotographySeriesSlug = PhotographySeriesContent['slug'];
 
-export interface PhotographyFeaturedPublication {
-  title: string;
-  description: string;
-  image: string;
-  href: string;
-  ctaLabel: string;
-}
-
-export interface PhotographySeriesCopy {
-  slug: PhotographySeriesSlug;
-  title: string;
-  overline: string;
-  landingSummary: string;
-  landingDescription: string;
-  heroLead: string;
-  statement: string[];
-  cover: string;
-  href: string;
-  ctaLabel: string;
-  featuredPublications?: PhotographyFeaturedPublication[];
-}
-
-export const photographySeries = photographySeriesContent as PhotographySeriesCopy[];
+export const photographySeries = photographySeriesContent;
 
 export function getPhotographySeries(slug: PhotographySeriesSlug) {
   return photographySeries.find((series) => series.slug === slug);

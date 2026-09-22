@@ -1,15 +1,18 @@
 import Image from 'next/image';
 import Link from 'next/link';
-import { getAllTravel } from '@/lib/data/travel';
+import { getAllTravel } from '@/lib/content/travel';
 import type { Travel } from '@/lib/types';
+import { buildPageMetadata } from '@/lib/site/metadata';
 
-export const metadata = {
-  title: 'Travel · Zhlin Photography',
+export const metadata = buildPageMetadata({
+  title: '旅行',
   description: '旅行摄影与城市游记，按不同目的地整理成路书。',
-};
+  path: '/travel',
+  image: '/assets/travel/japan-front.jpeg',
+});
 
-export default async function TravelPage() {
-  const travelEntries = await getAllTravel();
+export default function TravelPage() {
+  const travelEntries = getAllTravel();
   const sortedTravelEntries = [...travelEntries].sort((a, b) => {
     const byPeriod = getTravelSortValue(b.period) - getTravelSortValue(a.period);
     if (byPeriod !== 0) return byPeriod;
@@ -17,7 +20,10 @@ export default async function TravelPage() {
   });
 
   return (
-    <main className="min-h-screen bg-[rgba(245,245,247,1)] text-neutral-950">
+    <main
+      className="min-h-screen bg-[rgba(245,245,247,1)] text-neutral-950"
+      data-footer-tone="white"
+    >
       <section className="bg-white">
         <div className="mx-auto max-w-7xl px-4 sm:px-6">
           <ul

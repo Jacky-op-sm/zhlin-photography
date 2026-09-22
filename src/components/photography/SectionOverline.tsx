@@ -1,6 +1,6 @@
 import type { HTMLAttributes } from 'react'
 
-interface SectionOverlineProps extends HTMLAttributes<HTMLParagraphElement> {}
+type SectionOverlineProps = HTMLAttributes<HTMLParagraphElement>
 
 export default function SectionOverline({
   className = '',
@@ -13,4 +13,3 @@ export default function SectionOverline({
     </p>
   )
 }
-

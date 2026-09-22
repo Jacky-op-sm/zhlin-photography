@@ -1,13 +1,18 @@
 import PhotographySeriesTemplate from '@/components/photography/PhotographySeriesTemplate'
-import { getPhotographySeries } from '@/components/photography/series'
-import { getAllPhotos } from '@/lib/data/photos'
-import { PhotoCategory } from '@/lib/types'
+import { getPhotographySeries, getSeriesPhotos } from '@/components/photography/series'
+import { photographyPhotos } from '@/lib/content/photography'
+import { buildPageMetadata } from '@/lib/site/metadata'
 
-export default async function StreetPage() {
-  const photos = await getAllPhotos()
-  const series = getPhotographySeries('street')
-  const seriesPhotos = photos.filter((photo) => photo.category === PhotoCategory.Street)
+const series = getPhotographySeries('street')
 
+export const metadata = buildPageMetadata({
+  title: series?.title ?? '街拍摄影',
+  description: series?.landingSummary ?? '城市街头摄影作品。',
+  path: '/photography/street',
+  image: series?.cover,
+})
+
+export default function StreetPage() {
   if (!series) {
     return null
   }
@@ -18,7 +23,7 @@ export default async function StreetPage() {
       title={series.title}
       intro={series.landingSummary}
       description={series.landingDescription}
-      photos={seriesPhotos}
+      photos={getSeriesPhotos(photographyPhotos, 'street')}
     />
   )
 }

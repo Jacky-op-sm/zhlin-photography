@@ -12,11 +12,10 @@ test.describe('travel detail modal mobile layout', () => {
     await page.waitForLoadState('networkidle')
 
     await page.getByRole('button', { name: 'Open card 1', exact: true }).click()
-    await expect(page.getByRole('button', { name: 'Close detail' })).toBeVisible()
+    await expect(page.getByRole('button', { name: '关闭详情' })).toBeVisible()
 
     const metrics = await page.evaluate(() => {
-      const closeButton = document.querySelector('button[aria-label="Close detail"]') as HTMLElement | null
-      const overlay = document.querySelector('div.fixed.inset-0.overflow-y-auto') as HTMLElement | null
+      const overlay = document.querySelector('.travel-detail-modal-scroll') as HTMLElement | null
       if (!overlay) return null
 
       const textNode = overlay.querySelector('p.whitespace-pre-line') as HTMLElement | null
@@ -45,10 +44,10 @@ test.describe('travel detail modal mobile layout', () => {
     await page.waitForLoadState('networkidle')
 
     await page.getByRole('button', { name: 'Open card 1', exact: true }).click()
-    const closeButton = page.getByRole('button', { name: 'Close detail' })
+    const closeButton = page.getByRole('button', { name: '关闭详情' })
     await expect(closeButton).toBeVisible()
 
-    const overlay = page.locator('div.fixed.inset-0').first()
+    const overlay = page.locator('.travel-detail-modal-scroll')
     await overlay.evaluate((node) => {
       ;(node as HTMLElement).scrollTo({ top: 1200, behavior: 'auto' })
     })
@@ -66,10 +65,10 @@ test.describe('travel detail modal mobile layout', () => {
     const foodTitle = page.locator('h2').filter({ hasText: /^美食$/ })
     await foodTitle.scrollIntoViewIfNeeded()
     await page.getByRole('button', { name: 'Open food card 1', exact: true }).click()
-    const foodCloseButton = page.getByRole('button', { name: 'Close detail' })
+    const foodCloseButton = page.getByRole('button', { name: '关闭详情' })
     await expect(foodCloseButton).toBeVisible()
 
-    const foodOverlay = page.locator('div.fixed.inset-0').first()
+    const foodOverlay = page.locator('.travel-detail-modal-scroll')
     await foodOverlay.evaluate((node) => {
       ;(node as HTMLElement).scrollTo({ top: 1200, behavior: 'auto' })
     })

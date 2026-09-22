@@ -3,8 +3,8 @@
     "id": "pets-1",
     "title": "Cat Portrait 1",
     "description": "A cat in natural light",
-    "filename": "/assets/photos/pets/Z52_2306.jpg",
-    "thumbnail": "/assets/photos/pets/Z52_2306.jpg",
+    "filename": "/assets/generated/photos/pets/Z52_2306-large.webp",
+    "thumbnail": "/assets/generated/photos/pets/Z52_2306-thumb.webp",
     "width": 2000,
     "height": 1333,
     "takenAt": "2026",
@@ -13,14 +13,15 @@
       "cat",
       "portrait",
       "pet"
-    ]
+    ],
+    "source": "/assets/photos/pets/Z52_2306.jpg"
   },
   {
     "id": "pets-2",
     "title": "Cat Portrait 2",
     "description": "A cat in natural light",
-    "filename": "/assets/photos/pets/Z52_2309.jpg",
-    "thumbnail": "/assets/photos/pets/Z52_2309.jpg",
+    "filename": "/assets/generated/photos/pets/Z52_2309-large.webp",
+    "thumbnail": "/assets/generated/photos/pets/Z52_2309-thumb.webp",
     "width": 2000,
     "height": 1344,
     "takenAt": "2026",
@@ -29,14 +30,15 @@
       "cat",
       "portrait",
       "pet"
-    ]
+    ],
+    "source": "/assets/photos/pets/Z52_2309.jpg"
   },
   {
     "id": "pets-3",
     "title": "Cat Portrait 3",
     "description": "A cat in natural light",
-    "filename": "/assets/photos/pets/Z52_2324.jpg",
-    "thumbnail": "/assets/photos/pets/Z52_2324.jpg",
+    "filename": "/assets/generated/photos/pets/Z52_2324-large.webp",
+    "thumbnail": "/assets/generated/photos/pets/Z52_2324-thumb.webp",
     "width": 2000,
     "height": 1333,
     "takenAt": "2026",
@@ -45,14 +47,15 @@
       "cat",
       "portrait",
       "pet"
-    ]
+    ],
+    "source": "/assets/photos/pets/Z52_2324.jpg"
   },
   {
     "id": "pets-4",
     "title": "Cat Portrait 4",
     "description": "A cat in natural light",
-    "filename": "/assets/photos/pets/Z52_2359.jpg",
-    "thumbnail": "/assets/photos/pets/Z52_2359.jpg",
+    "filename": "/assets/generated/photos/pets/Z52_2359-large.webp",
+    "thumbnail": "/assets/generated/photos/pets/Z52_2359-thumb.webp",
     "width": 2000,
     "height": 1333,
     "takenAt": "2026",
@@ -61,14 +64,15 @@
       "cat",
       "portrait",
       "pet"
-    ]
+    ],
+    "source": "/assets/photos/pets/Z52_2359.jpg"
   },
   {
     "id": "pets-5",
     "title": "Cat Portrait 5",
     "description": "A cat in natural light",
-    "filename": "/assets/photos/pets/Z52_2376.jpg",
-    "thumbnail": "/assets/photos/pets/Z52_2376.jpg",
+    "filename": "/assets/generated/photos/pets/Z52_2376-large.webp",
+    "thumbnail": "/assets/generated/photos/pets/Z52_2376-thumb.webp",
     "width": 2000,
     "height": 1333,
     "takenAt": "2026",
@@ -77,14 +81,15 @@
       "cat",
       "portrait",
       "pet"
-    ]
+    ],
+    "source": "/assets/photos/pets/Z52_2376.jpg"
   },
   {
     "id": "pets-6",
     "title": "Cat Portrait 6",
     "description": "A cat in natural light",
-    "filename": "/assets/photos/pets/Z52_2732.jpg",
-    "thumbnail": "/assets/photos/pets/Z52_2732.jpg",
+    "filename": "/assets/generated/photos/pets/Z52_2732-large.webp",
+    "thumbnail": "/assets/generated/photos/pets/Z52_2732-thumb.webp",
     "width": 2000,
     "height": 1333,
     "takenAt": "2026",
@@ -93,14 +98,15 @@
       "cat",
       "portrait",
       "pet"
-    ]
+    ],
+    "source": "/assets/photos/pets/Z52_2732.jpg"
   },
   {
     "id": "pets-7",
     "title": "Cat Portrait 7",
     "description": "A cat in natural light",
-    "filename": "/assets/photos/pets/Z52_2742.jpg",
-    "thumbnail": "/assets/photos/pets/Z52_2742.jpg",
+    "filename": "/assets/generated/photos/pets/Z52_2742-large.webp",
+    "thumbnail": "/assets/generated/photos/pets/Z52_2742-thumb.webp",
     "width": 2000,
     "height": 1333,
     "takenAt": "2026",
@@ -109,14 +115,15 @@
       "cat",
       "portrait",
       "pet"
-    ]
+    ],
+    "source": "/assets/photos/pets/Z52_2742.jpg"
   },
   {
     "id": "pets-8",
     "title": "Cat Portrait 8",
     "description": "A cat in natural light",
-    "filename": "/assets/photos/pets/Z52_2745.jpg",
-    "thumbnail": "/assets/photos/pets/Z52_2745.jpg",
+    "filename": "/assets/generated/photos/pets/Z52_2745-large.webp",
+    "thumbnail": "/assets/generated/photos/pets/Z52_2745-thumb.webp",
     "width": 2000,
     "height": 1333,
     "takenAt": "2026",
@@ -125,14 +132,15 @@
       "cat",
       "portrait",
       "pet"
-    ]
+    ],
+    "source": "/assets/photos/pets/Z52_2745.jpg"
   },
   {
     "id": "pets-9",
     "title": "Cat Portrait 9",
     "description": "A cat in natural light",
-    "filename": "/assets/photos/pets/Z52_2760.jpg",
-    "thumbnail": "/assets/photos/pets/Z52_2760.jpg",
+    "filename": "/assets/generated/photos/pets/Z52_2760-large.webp",
+    "thumbnail": "/assets/generated/photos/pets/Z52_2760-thumb.webp",
     "width": 2000,
     "height": 1333,
     "takenAt": "2026",
@@ -141,62 +149,15 @@
       "cat",
       "portrait",
       "pet"
-    ]
+    ],
+    "source": "/assets/photos/pets/Z52_2760.jpg"
   },
   {
     "id": "pets-11",
     "title": "Cat Portrait 11",
     "description": "A cat in natural light",
-    "filename": "/assets/photos/pets/Z52_3679.jpg",
-    "thumbnail": "/assets/photos/pets/Z52_3679.jpg",
-    "width": 2100,
-    "height": 1400,
-    "takenAt": "2026",
-    "location": "Hangzhou, China",
-    "tags": [
-      "cat",
-      "portrait",
-      "pet"
-    ]
-  },
-  {
-    "id": "pets-12",
-    "title": "Cat Portrait 12",
-    "description": "A cat in natural light",
-    "filename": "/assets/photos/pets/Z52_6037.jpg",
-    "thumbnail": "/assets/photos/pets/Z52_6037.jpg",
-    "width": 1333,
-    "height": 2000,
-    "takenAt": "2026",
-    "location": "Hangzhou, China",
-    "tags": [
-      "cat",
-      "portrait",
-      "pet"
-    ]
-  },
-  {
-    "id": "pets-13",
-    "title": "Cat Portrait 13",
-    "description": "A cat in natural light",
-    "filename": "/assets/photos/pets/Z52_6039.jpg",
-    "thumbnail": "/assets/photos/pets/Z52_6039.jpg",
-    "width": 1333,
-    "height": 2000,
-    "takenAt": "2026",
-    "location": "Hangzhou, China",
-    "tags": [
-      "cat",
-      "portrait",
-      "pet"
-    ]
-  },
-  {
-    "id": "pets-14",
-    "title": "Cat Portrait 14",
-    "description": "A cat in natural light",
-    "filename": "/assets/photos/pets/Z52_6041.jpg",
-    "thumbnail": "/assets/photos/pets/Z52_6041.jpg",
+    "filename": "/assets/generated/photos/pets/Z52_3679-large.webp",
+    "thumbnail": "/assets/generated/photos/pets/Z52_3679-thumb.webp",
     "width": 2000,
     "height": 1333,
     "takenAt": "2026",
@@ -205,14 +166,66 @@
       "cat",
       "portrait",
       "pet"
-    ]
+    ],
+    "source": "/assets/photos/pets/Z52_3679.jpg"
+  },
+  {
+    "id": "pets-12",
+    "title": "Cat Portrait 12",
+    "description": "A cat in natural light",
+    "filename": "/assets/generated/photos/pets/Z52_6037-large.webp",
+    "thumbnail": "/assets/generated/photos/pets/Z52_6037-thumb.webp",
+    "width": 1333,
+    "height": 2000,
+    "takenAt": "2026",
+    "location": "Hangzhou, China",
+    "tags": [
+      "cat",
+      "portrait",
+      "pet"
+    ],
+    "source": "/assets/photos/pets/Z52_6037.jpg"
+  },
+  {
+    "id": "pets-13",
+    "title": "Cat Portrait 13",
+    "description": "A cat in natural light",
+    "filename": "/assets/generated/photos/pets/Z52_6039-large.webp",
+    "thumbnail": "/assets/generated/photos/pets/Z52_6039-thumb.webp",
+    "width": 1333,
+    "height": 2000,
+    "takenAt": "2026",
+    "location": "Hangzhou, China",
+    "tags": [
+      "cat",
+      "portrait",
+      "pet"
+    ],
+    "source": "/assets/photos/pets/Z52_6039.jpg"
+  },
+  {
+    "id": "pets-14",
+    "title": "Cat Portrait 14",
+    "description": "A cat in natural light",
+    "filename": "/assets/generated/photos/pets/Z52_6041-large.webp",
+    "thumbnail": "/assets/generated/photos/pets/Z52_6041-thumb.webp",
+    "width": 2000,
+    "height": 1333,
+    "takenAt": "2026",
+    "location": "Hangzhou, China",
+    "tags": [
+      "cat",
+      "portrait",
+      "pet"
+    ],
+    "source": "/assets/photos/pets/Z52_6041.jpg"
   },
   {
     "id": "pets-15",
     "title": "Cat Portrait 15",
     "description": "A cat in natural light",
-    "filename": "/assets/photos/pets/Z52_6168.jpg",
-    "thumbnail": "/assets/photos/pets/Z52_6168.jpg",
+    "filename": "/assets/generated/photos/pets/Z52_6168-large.webp",
+    "thumbnail": "/assets/generated/photos/pets/Z52_6168-thumb.webp",
     "width": 2000,
     "height": 1318,
     "takenAt": "2026",
@@ -221,14 +234,15 @@
       "cat",
       "portrait",
       "pet"
-    ]
+    ],
+    "source": "/assets/photos/pets/Z52_6168.jpg"
   },
   {
     "id": "pets-16",
     "title": "Cat Portrait 16",
     "description": "A cat in natural light",
-    "filename": "/assets/photos/pets/Z52_6215.jpg",
-    "thumbnail": "/assets/photos/pets/Z52_6215.jpg",
+    "filename": "/assets/generated/photos/pets/Z52_6215-large.webp",
+    "thumbnail": "/assets/generated/photos/pets/Z52_6215-thumb.webp",
     "width": 1333,
     "height": 2000,
     "takenAt": "2026",
@@ -237,6 +251,7 @@
       "cat",
       "portrait",
       "pet"
-    ]
+    ],
+    "source": "/assets/photos/pets/Z52_6215.jpg"
   }
 ]

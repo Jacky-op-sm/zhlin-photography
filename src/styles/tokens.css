@@ -1,0 +1,8 @@
+:root {
+  --color-canvas: rgba(245, 245, 247, 1);
+  --color-text: #141311;
+  --color-text-muted: rgba(20, 19, 17, 0.72);
+  --color-text-soft: rgba(20, 19, 17, 0.66);
+  --color-border: rgba(20, 19, 17, 0.14);
+  --font-display: var(--font-latin);
+}

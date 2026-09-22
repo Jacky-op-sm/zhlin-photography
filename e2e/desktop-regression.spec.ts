@@ -1,19 +1,14 @@
 import { test, expect } from '@playwright/test'
-
-const pagesUnderTest = [
-  { path: '/', name: 'home' },
-  { path: '/photography', name: 'photography-index' },
-  { path: '/travel', name: 'travel-index' },
-  { path: '/hobby', name: 'hobby' },
-]
+import { desktopVisualPaths } from '@/lib/site/routes'
 
 function isDesktopProject(projectName: string) {
   return projectName === 'desktop-1280'
 }
 
 test.describe('desktop visual regression guard', () => {
-  for (const target of pagesUnderTest) {
+  for (const target of desktopVisualPaths) {
     test(`${target.path} matches desktop baseline`, async ({ page }, testInfo) => {
+      test.skip(process.platform !== 'darwin', 'baseline is captured on macOS')
       test.skip(!isDesktopProject(testInfo.project.name), 'desktop-only test')
 
       await page.goto(target.path)

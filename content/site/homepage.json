@@ -1,0 +1,88 @@
+{
+  "hero": {
+    "titleLines": ["摄影，", "旅行，", "读书。"],
+    "summary": "常驻杭州，穷学生一枚。现有三大爱好，摄影 - 已拥有相机三个月，常在散步时拍照，现快门数6897；旅行 - 走在陌生的地方，看着沿路风景的同时，也看着自己；读书和写作 - 读书培养语感，日记让我自省，游记让我定格回忆。",
+    "links": [
+      { "label": "查看摄影作品", "href": "/photography" },
+      { "label": "查看旅行记录", "href": "/travel" }
+    ]
+  },
+  "photography": [
+    {
+      "title": "街拍",
+      "href": "/photography/street",
+      "image": "/assets/generated/photos/street/Z52_8539-large.webp",
+      "alt": "Street photography cover",
+      "quote": "什么是街拍？\n街拍是对城市的观察，\n街拍是去展现平日被人忽略的美。",
+      "body": "我喜欢去观察光影，\n去捕捉人们生存的状态。"
+    },
+    {
+      "title": "动物",
+      "href": "/photography/pets",
+      "image": "/assets/generated/photos/pets/Z52_6039-large.webp",
+      "alt": "Pet photography cover",
+      "quote": "动物给予我感情，\n热情的狗，高冷的猫，\n关在动物园的老虎。",
+      "body": "我最喜欢拍狗狗们，\n它们来自故乡，各有个性。",
+      "imageClassName": "object-[52%_center]"
+    },
+    {
+      "title": "项目",
+      "href": "/photography/project",
+      "image": "/assets/generated/photos/project/1-large.webp",
+      "alt": "Project photography cover",
+      "quote": "我看着宿舍阳台下的十字路口，\n不同的天气，晴天、阴天、下雨，\n不同的四季，春夏秋冬。",
+      "body": "这是我第一个个人项目，\n真期待它会演变成什么样呢？",
+      "imageClassName": "object-[50%_center]"
+    }
+  ],
+  "travel": [
+    {
+      "place": "日本",
+      "href": "/travel/japan",
+      "image": "/assets/travel/japan-front.jpeg",
+      "alt": "日本旅行封面",
+      "body": "我记住日本，\n不仅因为高松的悠闲、京都的红，\n鸭川的夜和奈良的鹿，也因为朋友同行的时光，\n以及初识相机时那份欣喜。",
+      "imageClassName": "object-[56%_center]",
+      "bodyClassName": "home-traveller-body--japan"
+    },
+    {
+      "place": "南京",
+      "href": "/travel/nanjing",
+      "image": "/assets/travel/nanjing-hero-wutong-street.jpg",
+      "alt": "南京旅行封面",
+      "body": "春节的南京大概不是最好的旅行时机，\n可旅行本就不只有轻松和快乐，\n也有拥挤、劳累和意外。"
+    },
+    {
+      "place": "北京",
+      "href": "/travel/beijing",
+      "image": "/assets/travel/beijing-front.jpeg",
+      "alt": "北京旅行封面",
+      "body": "北京给了我太多第一次：\n第一次独自旅行，第一次走进音乐酒吧，\n第一次在艺术展里结识朋友。",
+      "imageClassName": "object-[56%_center]"
+    }
+  ],
+  "hobby": [
+    {
+      "title": "阅读",
+      "href": "/hobby#reading",
+      "image": "/assets/home/ward-no-6-cover.jpg",
+      "alt": "Book cover",
+      "body": "阅读教会我耐心，\n契诃夫的温柔、海明威的力量，\n和陀思妥耶夫斯基笔下的人心。"
+    },
+    {
+      "title": "电影",
+      "href": "/hobby#film",
+      "image": "/assets/home/three-colours-trilogy-cover.png",
+      "alt": "Film cover",
+      "body": "看哪，红白蓝三部曲的美学，\n小津安二郎讲述的家庭，今敏的时空跳跃。",
+      "imageClassName": "object-cover object-center scale-[1.05]"
+    },
+    {
+      "title": "游戏",
+      "href": "/hobby#game",
+      "image": "/assets/home/league-of-legends-cover.jpg",
+      "alt": "Video game cover",
+      "body": "游戏对我到底意味着什么？\n是考验反应、团队协作的激情，\n还是结束后的疲惫与空虚。"
+    }
+  ]
+}

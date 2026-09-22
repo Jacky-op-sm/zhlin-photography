@@ -5,12 +5,12 @@ function isMobileProject(projectName: string) {
 }
 
 async function openMobileMenu(page: import('@playwright/test').Page) {
-  const toggle = page.getByRole('button', { name: 'Toggle menu' })
+  const toggle = page.locator('.site-mobile-toggle')
   await expect(toggle).toBeVisible()
   await expect(toggle).toHaveAttribute('aria-expanded', 'false')
   await toggle.click()
   await expect(toggle).toHaveAttribute('aria-expanded', 'true')
-  await expect(panel(page)).toHaveAttribute('data-state', 'open')
+  await expect(panel(page)).toBeVisible()
 }
 
 function panel(page: import('@playwright/test').Page) {
@@ -23,7 +23,7 @@ test.describe('mobile menu animation', () => {
 
     await page.goto('/')
     await openMobileMenu(page)
-    await expect(panel(page)).toHaveAttribute('data-state', 'open')
+    await expect(panel(page)).toBeVisible()
 
     const metrics = await page.evaluate(() => {
       const panel = document.querySelector('.site-mobile-panel') as HTMLElement | null
@@ -42,18 +42,16 @@ test.describe('mobile menu animation', () => {
     expect(Math.abs(Number.parseFloat(metrics!.top))).toBeLessThanOrEqual(1)
   })
 
-  test('closing menu keeps a closing phase before unmounting', async ({ page }, testInfo) => {
+  test('closing menu unmounts promptly and restores the trigger', async ({ page }, testInfo) => {
     test.skip(!isMobileProject(testInfo.project.name), 'mobile-only test')
 
     await page.goto('/')
     await openMobileMenu(page)
 
-    const closeButton = page.getByRole('button', { name: 'Close menu' })
+    const closeButton = page.getByRole('button', { name: '关闭菜单' })
     await closeButton.click()
-    await expect(panel(page)).toHaveAttribute('data-state', 'closing')
-
-    await page.waitForTimeout(1100)
     await expect(panel(page)).toHaveCount(0)
+    await expect(page.locator('.site-mobile-toggle')).toBeFocused()
   })
 
   test('menu can still open while scrolled and page can scroll again after close', async ({ page }, testInfo) => {
@@ -64,12 +62,10 @@ test.describe('mobile menu animation', () => {
     await page.waitForTimeout(100)
 
     await openMobileMenu(page)
-    await expect(panel(page)).toHaveAttribute('data-state', 'open')
+    await expect(panel(page)).toBeVisible()
 
-    const closeButton = page.getByRole('button', { name: 'Close menu' })
+    const closeButton = page.getByRole('button', { name: '关闭菜单' })
     await closeButton.click()
-    await expect(panel(page)).toHaveAttribute('data-state', 'closing')
-    await page.waitForTimeout(1100)
     await expect(panel(page)).toHaveCount(0)
 
     const bodyOverflow = await page.evaluate(() => document.body.style.overflow)

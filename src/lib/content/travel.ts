@@ -1,55 +1,50 @@
-import 'server-only';
+import 'server-only'
+
+import { readContentDirNames, readContentJson } from '@/lib/content/read'
 import {
-  readContentDirNames,
-  readContentJson,
-  readContentText,
-} from '@/lib/content/read';
-import type {
-  TravelCardsContentFile,
-  TravelContentFile,
-  TravelContentRecord,
-} from '@/lib/content/types';
+  travelCardsSchema,
+  travelSchema,
+  type Travel,
+  type TravelCards,
+} from '@/lib/content/schemas'
 
-let travelRecordsCache: TravelContentRecord[] | null = null;
-const travelCardsCache = new Map<string, TravelCardsContentFile | null>();
+let travelSlugsCache: string[] | null = null
+const travelMetaCache = new Map<string, Travel>()
+const travelCardsCache = new Map<string, TravelCards>()
 
-function loadTravelRecord(slug: string): TravelContentRecord {
-  const meta = readContentJson<TravelContentFile>('travel', slug, 'meta.json');
-  const bodyHtml = readContentText('travel', slug, 'story.md');
-
-  return {
-    ...meta,
-    bodyHtml,
-  };
+export function getTravelSlugs() {
+  travelSlugsCache ??= readContentDirNames('travel')
+  return travelSlugsCache
 }
 
-export function getTravelContentSlugs() {
-  return readContentDirNames('travel');
+export function getAllTravel() {
+  return getTravelSlugs()
+    .map(getTravelBySlug)
+    .filter((travel): travel is Travel => travel !== null)
 }
 
-export function getAllTravelContent() {
-  if (!travelRecordsCache) {
-    travelRecordsCache = getTravelContentSlugs().map(loadTravelRecord);
+export function getTravelBySlug(slug: string) {
+  if (!getTravelSlugs().includes(slug)) return null
+
+  if (!travelMetaCache.has(slug)) {
+    travelMetaCache.set(
+      slug,
+      travelSchema.parse(readContentJson('travel', slug, 'meta.json')),
+    )
   }
-
-  return travelRecordsCache;
+  return travelMetaCache.get(slug) ?? null
 }
 
-export function getTravelContentBySlug(slug: string) {
-  return getAllTravelContent().find((travel) => travel.slug === slug) ?? null;
-}
+export function getTravelCardsBySlug(slug: string) {
+  if (!getTravelSlugs().includes(slug)) return null
 
-export function getTravelCardsContentBySlug(slug: string) {
-  if (travelCardsCache.has(slug)) {
-    return travelCardsCache.get(slug) ?? null;
+  if (!travelCardsCache.has(slug)) {
+    travelCardsCache.set(
+      slug,
+      travelCardsSchema.parse(
+        readContentJson('travel', slug, 'cards.json'),
+      ),
+    )
   }
-
-  try {
-    const cards = readContentJson<TravelCardsContentFile>('travel', slug, 'cards.json');
-    travelCardsCache.set(slug, cards);
-    return cards;
-  } catch {
-    travelCardsCache.set(slug, null);
-    return null;
-  }
+  return travelCardsCache.get(slug) ?? null
 }

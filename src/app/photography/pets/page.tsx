@@ -1,13 +1,18 @@
 import PhotographySeriesTemplate from '@/components/photography/PhotographySeriesTemplate'
-import { getPhotographySeries } from '@/components/photography/series'
-import { getAllPhotos } from '@/lib/data/photos'
-import { PhotoCategory } from '@/lib/types'
+import { getPhotographySeries, getSeriesPhotos } from '@/components/photography/series'
+import { photographyPhotos } from '@/lib/content/photography'
+import { buildPageMetadata } from '@/lib/site/metadata'
 
-export default async function PetsPage() {
-  const photos = await getAllPhotos()
-  const series = getPhotographySeries('pets')
-  const seriesPhotos = photos.filter((photo) => photo.category === PhotoCategory.Pets)
+const series = getPhotographySeries('pets')
 
+export const metadata = buildPageMetadata({
+  title: series?.title ?? '动物摄影',
+  description: series?.landingSummary ?? '动物与宠物摄影作品。',
+  path: '/photography/pets',
+  image: series?.cover,
+})
+
+export default function PetsPage() {
   if (!series) {
     return null
   }
@@ -18,7 +23,7 @@ export default async function PetsPage() {
       title={series.title}
       intro={series.landingSummary}
       description={series.landingDescription}
-      photos={seriesPhotos}
+      photos={getSeriesPhotos(photographyPhotos, 'pets')}
     />
   )
 }

@@ -1,17 +1,8 @@
 /** @type {import('next').NextConfig} */
-const isDeployBuild = process.env.SKIP_TYPECHECK === '1';
-
 const nextConfig = {
-  experimental: {
-    outputFileTracingIncludes: {
-      '/*': ['./content/**/*'],
-    },
-  },
-  eslint: {
-    ignoreDuringBuilds: isDeployBuild,
-  },
-  typescript: {
-    ignoreBuildErrors: isDeployBuild,
+  allowedDevOrigins: ['127.0.0.1', 'localhost'],
+  outputFileTracingIncludes: {
+    '/*': ['./content/**/*'],
   },
   images: {
     remotePatterns: [

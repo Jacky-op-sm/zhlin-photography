@@ -33,7 +33,7 @@ test.describe('photo viewer controls on mobile', () => {
     expect(before).not.toBeNull()
     expect(before!.controlsTop).toBeGreaterThanOrEqual(before!.imageBottom - 1)
 
-    await page.getByRole('button', { name: 'Next image' }).click()
+    await page.getByRole('button', { name: '下一张照片' }).click()
     await page.waitForTimeout(160)
 
     const after = await page.evaluate(() => {

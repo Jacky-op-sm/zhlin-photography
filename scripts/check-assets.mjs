@@ -5,20 +5,18 @@ import path from 'node:path';
 const projectRoot = process.cwd();
 const assetsRoot = path.join(projectRoot, 'public', 'assets');
 
-const maxTotalMb = Number(process.env.ASSET_TOTAL_MB ?? 300);
-const maxFileMb = Number(process.env.ASSET_MAX_FILE_MB ?? 2);
+import { publicAssetBudget } from './images/config.mjs';
+
+const maxTotalMb = Number(
+  process.env.ASSET_TOTAL_MB ?? publicAssetBudget.totalMb,
+);
+const maxFileMb = Number(
+  process.env.ASSET_MAX_FILE_MB ?? publicAssetBudget.fileMb,
+);
 
 const textSearchRoots = [
   'src',
   'content',
-  'data',
-  'scripts',
-  'e2e',
-  'README.md',
-  'next.config.js',
-  'package.json',
-  'tailwind.config.ts',
-  'tailwind.config.js',
 ];
 
 async function pathExists(target) {

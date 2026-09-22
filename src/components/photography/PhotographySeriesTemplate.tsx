@@ -18,7 +18,7 @@ export default function PhotographySeriesTemplate({
   photos,
 }: PhotographySeriesTemplateProps) {
   return (
-    <main className="photo-series-page">
+    <main className="photo-series-page" data-footer-tone="white">
       <section className="photo-series-intro">
         <div className="site-shell">
           <div className="photo-series-intro-copy">

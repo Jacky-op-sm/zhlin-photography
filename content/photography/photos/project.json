@@ -3,8 +3,8 @@
     "id": "project-intersection-1",
     "title": "晨曦中的路口",
     "description": "清晨六点，城市刚刚苏醒",
-    "filename": "/assets/photos/project/1.jpg",
-    "thumbnail": "/assets/photos/project/1.jpg",
+    "filename": "/assets/generated/photos/project/1-large.webp",
+    "thumbnail": "/assets/generated/photos/project/1-thumb.webp",
     "width": 1333,
     "height": 2000,
     "takenAt": "2024",
@@ -13,14 +13,15 @@
       "project",
       "morning",
       "intersection"
-    ]
+    ],
+    "source": "/assets/photos/project/1.jpg"
   },
   {
     "id": "project-intersection-2",
     "title": "午后的车流",
     "description": "车流在路口汇聚又散去",
-    "filename": "/assets/photos/project/2.jpg",
-    "thumbnail": "/assets/photos/project/2.jpg",
+    "filename": "/assets/generated/photos/project/2-large.webp",
+    "thumbnail": "/assets/generated/photos/project/2-thumb.webp",
     "width": 1333,
     "height": 2000,
     "takenAt": "2024",
@@ -29,14 +30,15 @@
       "project",
       "afternoon",
       "traffic"
-    ]
+    ],
+    "source": "/assets/photos/project/2.jpg"
   },
   {
     "id": "project-intersection-3",
     "title": "黄昏时分",
     "description": "夕阳下的十字路口",
-    "filename": "/assets/photos/project/3.jpg",
-    "thumbnail": "/assets/photos/project/3.jpg",
+    "filename": "/assets/generated/photos/project/3-large.webp",
+    "thumbnail": "/assets/generated/photos/project/3-thumb.webp",
     "width": 1333,
     "height": 2000,
     "takenAt": "2024",
@@ -45,14 +47,15 @@
       "project",
       "evening",
       "sunset"
-    ]
+    ],
+    "source": "/assets/photos/project/3.jpg"
   },
   {
     "id": "project-intersection-4",
     "title": "夜幕降临",
     "description": "华灯初上，路灯点亮归途",
-    "filename": "/assets/photos/project/4.jpg",
-    "thumbnail": "/assets/photos/project/4.jpg",
+    "filename": "/assets/generated/photos/project/4-large.webp",
+    "thumbnail": "/assets/generated/photos/project/4-thumb.webp",
     "width": 1333,
     "height": 2000,
     "takenAt": "2024",
@@ -61,14 +64,15 @@
       "project",
       "evening",
       "lights"
-    ]
+    ],
+    "source": "/assets/photos/project/4.jpg"
   },
   {
     "id": "project-intersection-5",
     "title": "深夜路口",
     "description": "只剩路灯和偶尔的车灯",
-    "filename": "/assets/photos/project/5.jpg",
-    "thumbnail": "/assets/photos/project/5.jpg",
+    "filename": "/assets/generated/photos/project/5-large.webp",
+    "thumbnail": "/assets/generated/photos/project/5-thumb.webp",
     "width": 1333,
     "height": 2000,
     "takenAt": "2024",
@@ -77,14 +81,15 @@
       "project",
       "night",
       "lonely"
-    ]
+    ],
+    "source": "/assets/photos/project/5.jpg"
   },
   {
     "id": "project-intersection-6",
     "title": "雨中的十字路口",
     "description": "雨水倒映着城市的灯光",
-    "filename": "/assets/photos/project/6.jpg",
-    "thumbnail": "/assets/photos/project/6.jpg",
+    "filename": "/assets/generated/photos/project/6-large.webp",
+    "thumbnail": "/assets/generated/photos/project/6-thumb.webp",
     "width": 1333,
     "height": 2000,
     "takenAt": "2024",
@@ -93,6 +98,7 @@
       "project",
       "rain",
       "reflection"
-    ]
+    ],
+    "source": "/assets/photos/project/6.jpg"
   }
 ]

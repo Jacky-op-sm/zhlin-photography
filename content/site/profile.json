@@ -1,0 +1,20 @@
+{
+  "name": "Zhlin",
+  "displayName": "林志濠",
+  "title": "PhD Student · Photographer",
+  "displayTitle": "在读博士",
+  "city": "Hangzhou, China",
+  "displayCity": "杭州，中国",
+  "email": "Jackylin714@gmail.com",
+  "avatar": "/assets/profile/avatar.jpeg",
+  "aboutParagraphs": [
+    "研究方向聚焦 VLA（Vision-Language-Action），关注视觉理解、语言建模与行动决策之间的连接。",
+    "摄影以街拍为主，偏爱在日常场景中捕捉真实情绪与城市节奏，记录那些转瞬即逝的细微时刻。",
+    "目前常驻浙江杭州，在学习与创作之间持续积累，也希望通过这个网站分享阶段性的观察与作品。"
+  ],
+  "socials": {
+    "instagram": "",
+    "linkedin": "",
+    "wechat": "Aluck714"
+  }
+}

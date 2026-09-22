@@ -1,7 +1,8 @@
 'use client'
 
-import { useCallback, useEffect, useState } from 'react'
+import { useCallback, useEffect, useRef, useState } from 'react'
 import Image from 'next/image'
+import Modal from '@/components/ui/Modal'
 import type { Photo } from '@/lib/types'
 
 interface PhotoViewerProps {
@@ -24,6 +25,7 @@ export default function PhotoViewer({
   const [touchStart, setTouchStart] = useState<number | null>(null)
   const [touchEnd, setTouchEnd] = useState<number | null>(null)
   const [isTouchLike, setIsTouchLike] = useState(false)
+  const closeButtonRef = useRef<HTMLButtonElement | null>(null)
 
   const currentPhoto = photos[initialIndex]
   const hasPrevious = initialIndex > 0
@@ -51,140 +53,115 @@ export default function PhotoViewer({
     return () => coarsePointerQuery.removeEventListener('change', updatePointerMode)
   }, [])
 
-  useEffect(() => {
-    const handleKeyDown = (event: KeyboardEvent) => {
-      if (event.key === 'Escape') {
-        onClose()
-      } else if (event.key === 'ArrowLeft' && hasPrevious) {
-        handlePrevious()
-      } else if (event.key === 'ArrowRight' && hasNext) {
-        handleNext()
-      }
-    }
-
-    if (isOpen) {
-      document.addEventListener('keydown', handleKeyDown)
-      document.body.style.overflow = 'hidden'
-    }
-
-    return () => {
-      document.removeEventListener('keydown', handleKeyDown)
-      document.body.style.overflow = ''
-    }
-  }, [handleNext, handlePrevious, hasNext, hasPrevious, isOpen, onClose])
-
-  useEffect(() => {
-    if (!isOpen || typeof window === 'undefined' || photos.length === 0) return
-    const preloadIndexes = [
-      initialIndex - 2,
-      initialIndex - 1,
-      initialIndex + 1,
-      initialIndex + 2,
-    ].filter((index) => index >= 0 && index < photos.length)
-
-    const deduped = Array.from(new Set(preloadIndexes))
-    deduped.forEach((index) => {
-      const photo = photos[index]
-      if (!photo) return
-      const preloadImage = new window.Image()
-      preloadImage.src = photo.filename
-      if (typeof preloadImage.decode === 'function') {
-        void preloadImage.decode().catch(() => undefined)
-      }
-    })
-  }, [initialIndex, isOpen, photos])
-
   if (!isOpen || !currentPhoto) {
     return null
   }
 
   return (
-    <div
+    <Modal
+      isOpen={isOpen}
+      onClose={onClose}
       className="photo-viewer"
-      data-touch={isTouchLike ? 'true' : 'false'}
-      onClick={onClose}
-      onTouchStart={(event) => {
-        setTouchEnd(null)
-        setTouchStart(event.targetTouches[0].clientX)
-      }}
-      onTouchMove={(event) => {
-        setTouchEnd(event.targetTouches[0].clientX)
-      }}
-      onTouchEnd={() => {
-        if (!touchStart || !touchEnd) return
-        const distance = touchStart - touchEnd
-
-        if (distance > minSwipeDistance && hasNext) {
-          handleNext()
-        } else if (distance < -minSwipeDistance && hasPrevious) {
+      ariaLabel={`照片查看器：${currentPhoto.title}`}
+      initialFocusRef={closeButtonRef}
+      onKeyDown={(event) => {
+        if (event.key === 'ArrowLeft' && hasPrevious) {
+          event.preventDefault()
           handlePrevious()
+        } else if (event.key === 'ArrowRight' && hasNext) {
+          event.preventDefault()
+          handleNext()
         }
       }}
     >
-      <button
-        className="photo-viewer-close"
-        onClick={(event) => {
-          event.stopPropagation()
-          onClose()
+      <div
+        className="photo-viewer-interaction-layer"
+        data-touch={isTouchLike ? 'true' : 'false'}
+        onTouchStart={(event) => {
+          setTouchEnd(null)
+          setTouchStart(event.targetTouches[0].clientX)
         }}
-        aria-label="Close fullsize viewer"
+        onTouchMove={(event) => {
+          setTouchEnd(event.targetTouches[0].clientX)
+        }}
+        onTouchEnd={() => {
+          if (touchStart === null || touchEnd === null) return
+          const distance = touchStart - touchEnd
+
+          if (distance > minSwipeDistance && hasNext) {
+            handleNext()
+          } else if (distance < -minSwipeDistance && hasPrevious) {
+            handlePrevious()
+          }
+        }}
       >
-        <span className="photo-viewer-close-icon" aria-hidden="true" />
-      </button>
+        <button
+          ref={closeButtonRef}
+          className="photo-viewer-close"
+          onClick={onClose}
+          aria-label="关闭照片查看器"
+        >
+          <span className="photo-viewer-close-icon" aria-hidden="true" />
+        </button>
 
-      <p className="photo-viewer-counter" aria-live="polite">
-        {initialIndex + 1} / {photos.length}
-      </p>
+        <p className="photo-viewer-counter" aria-live="polite">
+          {initialIndex + 1} / {photos.length}
+        </p>
 
-      <div className="photo-viewer-image-wrap" onClick={(event) => event.stopPropagation()}>
-        <Image
-          key={currentPhoto.id}
-          src={currentPhoto.filename}
-          alt={currentPhoto.title}
-          width={currentPhoto.width}
-          height={currentPhoto.height}
-          className="photo-viewer-image"
-          priority
-          loading="eager"
-          sizes="92vw"
-        />
-      </div>
-
-      {(hasPrevious || hasNext) ? (
-        <div className="photo-viewer-controls" onClick={(event) => event.stopPropagation()}>
-          {hasPrevious ? (
-            <button
-              className="photo-viewer-nav photo-viewer-nav-prev"
-              onClick={(event) => {
-                event.stopPropagation()
-                handlePrevious()
-              }}
-              aria-label="Previous image"
-            >
-              <span
-                className="photo-viewer-chevron photo-viewer-chevron--left scale-x-110 -translate-x-[1px]"
-                aria-hidden="true"
-              />
-            </button>
-          ) : <span className="photo-viewer-nav-placeholder" aria-hidden="true" />}
-
-          {hasNext ? (
-            <button
-              className="photo-viewer-nav photo-viewer-nav-next"
-              onClick={(event) => {
-                event.stopPropagation()
-                handleNext()
-              }}
-              aria-label="Next image"
-            >
-              <span
-                className="photo-viewer-chevron photo-viewer-chevron--right scale-x-110 translate-x-[1px]"
-                aria-hidden="true"
-              />
-            </button>
-          ) : <span className="photo-viewer-nav-placeholder" aria-hidden="true" />}
+        <div className="photo-viewer-image-wrap">
+          <Image
+            key={currentPhoto.id}
+            src={currentPhoto.filename}
+            alt={currentPhoto.title}
+            width={currentPhoto.width}
+            height={currentPhoto.height}
+            className="photo-viewer-image"
+            priority
+            loading="eager"
+            sizes="92vw"
+          />
         </div>
-      ) : null}
-    </div>
+
+        {(hasPrevious || hasNext) ? (
+          <div className="photo-viewer-controls">
+            {hasPrevious ? (
+              <button
+                className="photo-viewer-nav photo-viewer-nav-prev"
+                onClick={handlePrevious}
+                aria-label="上一张照片"
+              >
+                <span
+                  className="photo-viewer-chevron photo-viewer-chevron--left scale-x-110 -translate-x-[1px]"
+                  aria-hidden="true"
+                />
+              </button>
+            ) : (
+              <span
+                className="photo-viewer-nav-placeholder"
+                aria-hidden="true"
+              />
+            )}
+
+            {hasNext ? (
+              <button
+                className="photo-viewer-nav photo-viewer-nav-next"
+                onClick={handleNext}
+                aria-label="下一张照片"
+              >
+                <span
+                  className="photo-viewer-chevron photo-viewer-chevron--right scale-x-110 translate-x-[1px]"
+                  aria-hidden="true"
+                />
+              </button>
+            ) : (
+              <span
+                className="photo-viewer-nav-placeholder"
+                aria-hidden="true"
+              />
+            )}
+          </div>
+        ) : null}
+      </div>
+    </Modal>
   )
 }
