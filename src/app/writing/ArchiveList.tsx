@@ -51,6 +51,7 @@ export default function ArchiveList({ entries, currentSlug, onOpen }: {
         <ul>{items.map(entry => <li key={entry.slug}>
           <Link prefetch={false} href={`/writing/${entry.slug}`} onClick={onOpen ? () => onOpen(entry.slug) : undefined} aria-current={entry.slug === currentSlug ? 'page' : undefined} className="writing-entry">
             <span className="writing-entry-title" lang={entry.lang}>{entry.title}</span>
+            {entry.type === 'sketch' && <span className="writing-entry-tag">写作练习</span>}
             <span className="writing-leader" aria-hidden="true" />
             {rowDate(entry)}
           </Link>

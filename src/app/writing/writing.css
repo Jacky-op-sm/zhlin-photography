@@ -76,6 +76,18 @@
   line-height: 1.85;
 }
 .writing-entry-title { min-width: 0; overflow-wrap: anywhere; }
+.writing-entry-tag {
+  flex-shrink: 0;
+  padding: .12em .42em;
+  border-radius: .16em;
+  background: #e5f5fd;
+  color: #276b8e;
+  font-size: .62em;
+  font-weight: 600;
+  line-height: 1.5;
+  letter-spacing: .08em;
+  white-space: nowrap;
+}
 .writing-leader {
   flex: 1 1 1rem;
   min-width: 1em;
