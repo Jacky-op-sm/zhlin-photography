@@ -37,7 +37,7 @@ lang: "zh-Hans"
 - `title`：网页显示的标题。正文不需要再写一遍同名一级标题。
 - `date`：原稿归档日期，可以是 `YYYY-MM-DD`、`YYYY-MM`，无法确定时为 `null`。日期不能填不存在的日子。
 - `order`：日期相同时的顺序，较小的数字在前；不会覆盖不同日期的先后关系。
-- `type`：`essay`（随笔）或 `diary`（日记）。
+- `type`：`essay`（随笔）、`diary`（日记）、`travel`（游记）、`review`（书评或影评）或 `sketch`（写作练习）。
 - `status`：`published` 显示在网站上；`draft` 隐藏。不填写此属性时默认隐藏。
 - `lang`：中文通常保留 `zh-Hans`；英文正文使用 `en`。
 

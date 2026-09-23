@@ -4,6 +4,15 @@ import type { writingSchema } from './writing-schema'
 export type WritingEntry = z.infer<typeof writingSchema>
 export type WritingMetadata = Omit<WritingEntry, 'body' | 'status'>
 export type WritingFilters = { year: string; month: string; sort: 'newest' | 'oldest' }
+
+export const writingTypeLabels: Record<WritingEntry['type'], string> = {
+  diary: '日记',
+  essay: '随笔',
+  travel: '游记',
+  review: '书评/影评',
+  sketch: '写作练习',
+}
+
 export const defaultFilters: WritingFilters = { year: 'all', month: 'all', sort: 'newest' }
 
 export function writingPeriods(entries: WritingMetadata[]) {

@@ -12,7 +12,7 @@ export const writingSchema = z.object({
   // Month precision is deliberate: a source month is not an invented first day.
   date: archiveDate.nullable(),
   order: z.number().int().positive().optional(),
-  type: z.enum(['diary', 'essay']),
+  type: z.enum(['diary', 'essay', 'travel', 'review', 'sketch']),
   status: z.enum(['draft', 'published']).default('draft'),
   lang: z.string().regex(/^[a-zA-Z]{2,8}(?:-[a-zA-Z0-9]{1,8})*$/),
   body: z.string().trim().min(1),
