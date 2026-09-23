@@ -1,9 +1,19 @@
 import { buildPageMetadata } from '@/lib/site/metadata'
 import { getWritingMetadata } from '@/lib/content/writing'
-import WritingArchive from './WritingArchive'
+import { featuredWritingSlugs } from '@/lib/content/writing-featured'
+import { defaultFilters, filterWriting } from '@/lib/content/writing-model'
+import ArchiveList from './ArchiveList'
 
 export const metadata = buildPageMetadata({ title: '文字', description: '按原稿年份与月份整理的生活、旅行与阅读随笔。', path: '/writing' })
 
 export default function WritingPage() {
-  return <><noscript><p className="writing-notice">以下为全部文字；启用 JavaScript 后可按年份、月份和顺序筛选。</p></noscript><WritingArchive entries={getWritingMetadata()} /></>
+  const entries = getWritingMetadata()
+  const featured = featuredWritingSlugs.map(slug => {
+    const entry = entries.find(item => item.slug === slug)
+    if (!entry) throw new Error(`Missing featured writing: ${slug}`)
+    return entry
+  })
+  const featuredSlugs = new Set<string>(featuredWritingSlugs)
+  const archive = filterWriting(entries.filter(entry => !featuredSlugs.has(entry.slug)), defaultFilters)
+  return <ArchiveList entries={archive} featured={featured} />
 }

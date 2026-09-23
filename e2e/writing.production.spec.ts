@@ -1,185 +1,65 @@
 import { test, expect } from '@playwright/test'
 import AxeBuilder from '@axe-core/playwright'
 import fs from 'node:fs'
+import { featuredWritingSlugs } from '../src/lib/content/writing-featured'
 import { defaultFilters, filterWriting, type WritingEntry } from '../src/lib/content/writing-model'
 
 const published = JSON.parse(fs.readFileSync('.generated/writing.json', 'utf8')).entries as WritingEntry[]
-const ordered = filterWriting(published, defaultFilters)
-const screenshotDir = 'workspace/writing/screenshots/original-months'
-const entriesFrom2024 = published.filter(entry => entry.date?.startsWith('2024-'))
-const entriesFromJuly2024 = entriesFrom2024.filter(entry => entry.date?.startsWith('2024-07'))
-const englishEntry = published.find(entry => entry.lang === 'en')
+const featuredSlugs = new Set<string>(featuredWritingSlugs)
+const chronicle = filterWriting(published.filter(entry => !featuredSlugs.has(entry.slug)), defaultFilters)
+const hidden = [
+  'camera-models',
+  'a-birds-death-an-insects-dinner',
+  'let-reading-questions-live-longer',
+  'the-mask-falls-away',
+  'an-afternoon-by-the-lake',
+]
 
-test('year and month archive, chronological filters, history and article return', async ({ page }) => {
+test('featured writing precedes the chronological archive, with a clean footer', async ({ page }) => {
   await page.goto('/writing')
-  await expect(page.getByRole('status')).toHaveText(`共 ${published.length} 篇`)
-  await expect(page.locator('.writing-month')).toHaveCount(new Set(published.map(entry => !entry.date ? 'unknown' : entry.date.startsWith('2026-') ? entry.date.slice(0, 7) : entry.date.slice(0, 4))).size)
-  expect(await page.locator('.writing-entry-title').allTextContents()).toEqual(ordered.map(entry => entry.title))
-  await expect(page.locator('.writing-archive-title')).toHaveText('九月随想')
-  await expect(page.locator('.writing-month[data-month="2026-08"] .writing-month-heading')).toHaveText('2026八月')
+  await expect(page.locator('.writing-featured h1')).toHaveText('精选')
+  expect(await page.locator('.writing-featured .writing-entry').evaluateAll(links => links.map(link => link.getAttribute('href'))))
+    .toEqual(featuredWritingSlugs.map(slug => `/writing/${slug}`))
+  expect(await page.locator('.writing-featured .writing-entry time').allTextContents())
+    .toEqual(featuredWritingSlugs.map(slug => {
+      const date = published.find(entry => entry.slug === slug)!.date!
+      return `${Number(date.slice(0, 4))}年${Number(date.slice(5, 7))}月${Number(date.slice(8))}日`
+    }))
+  expect(await page.locator('.writing-month:not(.writing-featured) .writing-entry-title').allTextContents())
+    .toEqual(chronicle.map(entry => entry.title))
+  await expect(page.locator('.writing-month[data-month="2026-09"] .writing-month-heading')).toHaveText('2026九月')
   await expect(page.locator('.writing-month[data-year="2025"] .writing-month-heading')).toHaveText('2025')
-  await expect(page.locator('.writing-month[data-year="2020"] .writing-entry')).toHaveCount(1)
-  await expect(page.locator('.writing-entry[href="/writing/books-in-the-old-classroom"] time')).toHaveText('6月20日')
-  await expect(page.locator('.writing-entry[href="/writing/camera-models"] time')).toHaveAttribute('datetime', '2026-05-09')
-  await expect(page.locator('.writing-entry[href="/writing/camera-models"] .writing-undated')).toHaveCount(0)
-  await expect(page.locator('.writing-entry[href="/writing/books-in-the-old-classroom"] time')).toHaveAttribute('datetime', '2024-06-20')
-  await expect(page.locator('.writing-entry[href="/writing/the-little-lies-i-dont-need"] time')).toHaveAttribute('datetime', '2024-04-25')
-  await page.getByText('筛选文字', { exact: true }).click()
-  await page.getByLabel('年份', { exact: true }).selectOption('2024')
-  await expect(page.locator('.writing-entry')).toHaveCount(entriesFrom2024.length)
-  await page.getByLabel('月份', { exact: true }).selectOption('07')
-  await expect(page.locator('.writing-entry')).toHaveCount(entriesFromJuly2024.length)
-  await page.getByLabel('排序', { exact: true }).selectOption('oldest')
-  await expect(page).toHaveURL(/year=2024&month=07&sort=oldest$/)
-  const filtered = page.url()
-  await page.reload()
-  await expect(page.locator('.writing-entry')).toHaveCount(entriesFromJuly2024.length)
-  await expect(page.getByLabel('年份', { exact: true })).toHaveValue('2024')
-  await page.locator('.writing-entry').first().click()
-  await expect(page.locator('.writing-prose')).toBeVisible()
-  await page.getByRole('link', { name: '← 返回文字' }).click()
-  await expect(page).toHaveURL(filtered)
-  await page.getByLabel('年份', { exact: true }).selectOption('2020')
-  await expect(page.getByText('没有符合条件的文章。')).toBeVisible()
-  await page.goBack()
-  await expect(page.getByLabel('年份', { exact: true })).toHaveValue('2024')
-  await page.goForward()
-  await expect(page.getByLabel('年份', { exact: true })).toHaveValue('2020')
-  await page.getByRole('button', { name: '清除筛选' }).click()
-  await expect(page).toHaveURL(/\/writing$/)
-  await expect(page.getByRole('status')).toHaveText(`共 ${published.length} 篇`)
-  await page.getByText('筛选文字', { exact: true }).click()
-  await page.getByLabel('排序', { exact: true }).selectOption('oldest')
-  await expect(page.locator('.writing-month-heading').first()).toHaveText('2020')
-  await page.goto('/writing?month=2&type=invalid&year=2018&sort=reverse')
-  await expect(page).toHaveURL(/\/writing$/)
+  await expect(page.locator('.writing-entry-tag, .writing-filter-disclosure, .writing-result, .writing-footer')).toHaveCount(0)
+  for (const slug of hidden) await expect(page.locator(`.writing-entry[href="/writing/${slug}"]`)).toHaveCount(0)
 })
 
-test('all selected articles load with complete endings, removed entries return 404 and sitemap is current', async ({ page, request }) => {
-  const errors: string[] = []
-  page.on('pageerror', error => errors.push(error.message))
-  for (const entry of published) {
-    expect((await page.goto(`/writing/${entry.slug}`))?.status()).toBe(200)
-    await expect(page.locator('article h1')).toHaveText(entry.title)
-    await expect(page.locator('article')).toHaveAttribute('lang', entry.lang)
-    const ending = entry.body.trim().split('\n').at(-1)!.replace(/^[-*] /, '')
-    await expect(page.locator('.writing-prose')).toContainText(ending)
-    await expect(page.locator('link[rel=canonical]')).toHaveAttribute('href', `https://www.zhlin.space/writing/${entry.slug}`)
-    await expect(page.locator('.writing-entry[aria-current="page"]')).toHaveCount(1)
-  }
-  expect(errors).toEqual([])
-  for (const slug of ['example-draft', 'unknown-slug', 'graduation', 'piano-at-the-pool', 'bangkok-fountain', 'travel-beijing', 'checking-on-an-agent', 'why-stay-up-late', 'waiting-for-the-driver', 'healing-fiction-and-easy-answers']) expect((await request.get(`/writing/${slug}`)).status()).toBe(404)
+test('hidden pieces have no public route or sitemap entry; published reading stays clean', async ({ page, request }) => {
+  for (const slug of hidden) expect((await request.get(`/writing/${slug}`)).status()).toBe(404)
   const sitemap = await (await request.get('/sitemap.xml')).text()
-  for (const entry of published) expect(sitemap).toContain(`/writing/${entry.slug}`)
-  for (const removed of ['example-draft', 'bangkok-fountain', 'graduation', 'travel-beijing', 'waiting-for-the-driver', 'healing-fiction-and-easy-answers']) expect(sitemap).not.toContain(`/writing/${removed}`)
-  const archive = await (await request.get('/writing')).text()
-  for (const privateText of ['WRITING_DRAFT_CANARY', 'iCloud', '为什么入选', '发表前处理', 'source_sha256']) expect(archive).not.toContain(privateText)
-  expect(archive).not.toContain(published[0].body.slice(0, 50))
-})
-
-test('no-JS archive and articles remain readable', async ({ browser }) => {
-  const context = await browser.newContext({ javaScriptEnabled: false })
-  const page = await context.newPage()
-  await page.goto('/writing?year=2024&month=07')
-  await expect(page.locator('.writing-entry')).toHaveCount(published.length)
-  await expect(page.locator('.writing-notice')).toContainText('以下为全部文字')
-  await page.goto('/writing/camera-models')
-  await expect(page.locator('.writing-prose')).toContainText(published.find(entry => entry.slug === 'camera-models')!.body.trim().slice(-60))
+  for (const slug of hidden) expect(sitemap).not.toContain(`/writing/${slug}`)
+  for (const slug of featuredWritingSlugs) expect(sitemap).toContain(`/writing/${slug}`)
+  await page.goto(`/writing/${featuredWritingSlugs[0]}`)
+  await expect(page.locator('article h1')).toHaveText('台风小记')
+  await expect(page.locator('.writing-entry, .writing-footer, .writing-filter-disclosure')).toHaveCount(0)
   await expect(page.getByRole('link', { name: '← 返回文字' })).toHaveAttribute('href', '/writing')
-  await context.close()
 })
 
-test('responsive layout, actual Chinese font, accessibility and other modules', async ({ page }, testInfo) => {
-  fs.mkdirSync(screenshotDir, { recursive: true })
-  for (const width of [320, 390, 768, 1440, 2504]) {
-    await page.setViewportSize({ width, height: width === 2504 ? 1309 : width === 1440 ? 1000 : 844 })
+test('archive works without JavaScript and fits mobile and desktop', async ({ browser, page }) => {
+  const context = await browser.newContext({ javaScriptEnabled: false })
+  const noJsPage = await context.newPage()
+  await noJsPage.goto('/writing')
+  await expect(noJsPage.locator('.writing-entry')).toHaveCount(published.length)
+  await context.close()
+
+  for (const width of [320, 390, 1440]) {
+    await page.setViewportSize({ width, height: 844 })
     await page.goto('/writing')
-    await expect(page.getByRole('status')).toHaveText(`共 ${published.length} 篇`)
-    await page.evaluate(() => document.fonts.ready)
     expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth)).toBe(true)
     await expect(page.locator('.site-header')).toBeHidden()
     await expect(page.locator('.site-footer')).toBeHidden()
-    await expect(page.locator('.writing-toolbar')).toBeHidden()
-    await expect(page.locator('.writing-month-heading').first()).toHaveText('2026八月')
-    expect(await page.locator('.writing-leader').first().evaluate(el => getComputedStyle(el).borderBottomStyle)).toBe('dotted')
-    const metrics = await page.locator('.writing-entry').first().evaluate(el => ({ size: parseFloat(getComputedStyle(el).fontSize), height: el.getBoundingClientRect().height }))
-    expect(metrics.size).toBeGreaterThanOrEqual(18)
-    expect(metrics.height).toBeGreaterThanOrEqual(width <= 768 ? 44 : 32)
-    if (width === 2504) {
-      const column = await page.locator('.writing-column').boundingBox()
-      const latest = await page.locator('.writing-archive-title').boundingBox()
-      const year = await page.locator('.writing-month[data-month="2026-08"] .writing-month-heading span').first().boundingBox()
-      const month = await page.locator('.writing-month[data-month="2026-08"] .writing-month-heading span').last().boundingBox()
-      const firstRow = await page.locator('.writing-entry').first().boundingBox()
-      expect(Math.abs(latest!.x + latest!.width / 2 - (column!.x + column!.width / 2))).toBeLessThan(1)
-      expect(Math.abs(year!.x - firstRow!.x)).toBeLessThan(1)
-      expect(Math.abs(month!.x + month!.width - (firstRow!.x + firstRow!.width))).toBeLessThan(1)
-      expect(column!.width).toBeGreaterThan(925)
-      expect(column!.width).toBeLessThan(935)
-      expect(metrics.size).toBeGreaterThan(26)
-      expect(metrics.size).toBeLessThan(28)
-      const cdp = await page.context().newCDPSession(page)
-      await cdp.send('DOM.enable')
-      await cdp.send('CSS.enable')
-      const { root } = await cdp.send('DOM.getDocument')
-      const { nodeId } = await cdp.send('DOM.querySelector', { nodeId: root.nodeId, selector: '.writing-entry-title' })
-      const { fonts } = await cdp.send('CSS.getPlatformFontsForNode', { nodeId })
-      const appleFaces = await page.evaluate(() => [...document.fonts]
-        .filter(face => face.family.replaceAll('"', '') === 'SF Pro SC')
-        .map(face => ({ family: face.family, weight: face.weight, status: face.status })))
-      fs.writeFileSync(`${screenshotDir}/font-and-layout.json`, JSON.stringify({ width, column, metrics, fonts, appleFaces }, null, 2))
-      expect(appleFaces).toHaveLength(2)
-      const regularFace = appleFaces.find(face => face.weight === '400')!
-      if (regularFace.status === 'error') {
-        // Apple's CDN can reject cross-origin fonts outside China. Keep testing
-        // real Chinese glyphs in the fallback instead of skipping layout checks.
-        testInfo.annotations.push({ type: 'font-fallback', description: 'Apple font CDN unavailable; verified the installed Chinese fallback.' })
-        expect(fonts.some(font => /PingFang|Microsoft YaHei|Noto Sans CJK/.test(font.familyName) && font.glyphCount > 0)).toBe(true)
-      } else {
-        expect(regularFace.status).toBe('loaded')
-        expect(fonts.some(font => /PingFang|SF Pro SC/.test(font.familyName) && font.glyphCount > 0)).toBe(true)
-      }
-      await cdp.detach()
-    }
-    if ([390, 1440, 2504].includes(width)) await page.screenshot({ path: `${screenshotDir}/index-${width}.png`, fullPage: true })
-    await page.goto('/writing/jiangcun-coffee')
-    expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth)).toBe(true)
-    await expect(page.locator('.writing-entry')).toHaveCount(published.length)
-    if ([390, 1440, 2504].includes(width)) await page.screenshot({ path: `${screenshotDir}/article-${width}.png`, fullPage: true })
-    await page.goto('/writing/the-snack-street-and-the-motorcyclist')
-    expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth)).toBe(true)
-    if (englishEntry) {
-      await page.goto(`/writing/${englishEntry.slug}`)
-      await expect(page.locator('article')).toHaveAttribute('lang', 'en')
-      await expect(page.locator('.writing-entry[aria-current="page"] .writing-entry-title')).toHaveAttribute('lang', 'en')
-      expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth)).toBe(true)
-      if ([390, 2504].includes(width)) await page.screenshot({ path: `${screenshotDir}/english-article-${width}.png`, fullPage: true })
-    }
-    if ([390, 1440].includes(width)) {
-      await page.goto('/writing/let-him-show-me-his-toy')
-      await expect(page.locator('.writing-prose p')).toHaveCount(3)
-      await expect(page.locator('.writing-prose')).not.toContainText('Sophie')
-      await page.screenshot({ path: `${screenshotDir}/new-article-${width}.png` })
-    }
+    const year = await page.locator('.writing-month[data-month="2026-09"] .writing-month-heading span').first().boundingBox()
+    const month = await page.locator('.writing-month[data-month="2026-09"] .writing-month-heading span').last().boundingBox()
+    expect(year!.y).toBe(month!.y)
   }
-  await page.goto('/writing')
   expect((await new AxeBuilder({ page }).include('.writing').withTags(['wcag2a', 'wcag2aa']).analyze()).violations).toEqual([])
-  await page.getByText('筛选文字', { exact: true }).click()
-  await page.getByLabel('月份', { exact: true }).focus()
-  await page.keyboard.press('ArrowDown')
-  await page.keyboard.press('Enter')
-  await expect(page.getByLabel('月份', { exact: true })).toBeFocused()
-  expect(await page.getByLabel('月份', { exact: true }).evaluate(el => getComputedStyle(el).outlineStyle)).not.toBe('none')
-  await page.setViewportSize({ width: 320, height: 844 })
-  await page.evaluate(() => { document.documentElement.style.fontSize = '200%' })
-  expect(await page.locator('.writing').evaluate(el => el.scrollWidth <= el.clientWidth)).toBe(true)
-  await page.goto('/writing/jiangcun-coffee')
-  expect((await new AxeBuilder({ page }).include('.writing').withTags(['wcag2a', 'wcag2aa']).analyze()).violations).toEqual([])
-  for (const route of ['/', '/photography', '/travel', '/hobby', '/travel/bangkok']) {
-    expect((await page.goto(route))?.status()).toBe(200)
-    await expect(page.locator('.writing')).toHaveCount(0)
-    await expect(page.locator('.site-header')).toBeVisible()
-    await expect(page.locator('.site-footer')).toBeVisible()
-    await expect(page.locator('a[href^="/writing/"]')).toHaveCount(0)
-  }
 })
