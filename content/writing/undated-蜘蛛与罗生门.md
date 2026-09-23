@@ -1,7 +1,7 @@
 ---
 slug: "the-spider-and-rashomon"
 title: "蜘蛛与罗生门"
-date: null
+date: 2026-07-23
 order: 100
 type: "essay"
 status: "published"
