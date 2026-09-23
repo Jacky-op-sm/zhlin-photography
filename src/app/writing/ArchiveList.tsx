@@ -43,7 +43,7 @@ export default function ArchiveList({ entries, featured, currentSlug }: {
   const FeaturedHeading = currentSlug ? 'h2' : 'h1'
   const MonthHeading = currentSlug ? 'h3' : 'h2'
 
-  return <div className="writing-archive">
+  return <div className="writing-archive" id="writing-archive">
     {featured && <section className="writing-month writing-featured" aria-label="精选">
       <FeaturedHeading className="writing-archive-title">精选</FeaturedHeading>
       <WritingRows entries={featured} numbered currentSlug={currentSlug} />

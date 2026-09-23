@@ -20,7 +20,7 @@ const hidden = [
 
 test('featured writing precedes the chronological archive, with a clean footer', async ({ page }) => {
   await page.goto('/writing')
-  await expect(page.locator('.writing-featured h1')).toHaveText('精选')
+  await expect(page.locator('.writing-featured h2')).toHaveText('精选')
   expect(await page.locator('.writing-featured .writing-entry').evaluateAll(links => links.map(link => link.getAttribute('href'))))
     .toEqual(featuredByTitleLength.map(entry => `/writing/${entry.slug}`))
   await expect(page.locator('.writing-featured .writing-entry-number')).toHaveText(['1', '2', '3', '4', '5', '6'])
@@ -43,14 +43,20 @@ test('hidden pieces have no public route or sitemap entry; articles repeat the d
   await expect(page.locator('.writing-entry')).toHaveCount(published.length)
   await expect(page.locator('.writing-entry[aria-current="page"]')).toHaveCount(1)
   await expect(page.locator('.writing-footer, .writing-filter-disclosure')).toHaveCount(0)
-  await expect(page.getByRole('link', { name: '← 返回文字' })).toHaveAttribute('href', '/writing')
+  await expect(page.getByRole('link', { name: '↓ 文章目录' })).toHaveAttribute('href', '#writing-archive')
 })
 
-test('the homepage Writing link opens the latest public article', async ({ page }) => {
+test('the writing URL and homepage link open the latest public article above its archive', async ({ page }) => {
   const latest = filterWriting(published, defaultFilters)[0]
+  await page.goto('/writing')
+  await expect(page).toHaveURL(new RegExp(`/writing/${latest.slug}$`))
+  await expect(page.locator('article h1')).toHaveText(latest.title)
+  await expect(page.locator('.writing-prose')).toContainText(latest.body.trim().slice(0, 30))
+  await expect(page.locator('#writing-archive .writing-entry')).toHaveCount(published.length)
+  expect(await page.locator('article').evaluate(article => Boolean(article.compareDocumentPosition(document.querySelector('#writing-archive')) & Node.DOCUMENT_POSITION_FOLLOWING))).toBe(true)
   await page.goto('/')
   const writingLink = page.locator('.site-nav-desktop a', { hasText: 'Writing' })
-  await expect(writingLink).toHaveAttribute('href', `/writing/${latest.slug}`)
+  await expect(writingLink).toHaveAttribute('href', '/writing')
   await writingLink.click()
   await expect(page).toHaveURL(new RegExp(`/writing/${latest.slug}$`))
   await expect(page.locator('article h1')).toHaveText(latest.title)
