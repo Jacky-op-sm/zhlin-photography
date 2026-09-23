@@ -6,6 +6,9 @@ import { defaultFilters, filterWriting, type WritingEntry } from '../src/lib/con
 const published = JSON.parse(fs.readFileSync('.generated/writing.json', 'utf8')).entries as WritingEntry[]
 const ordered = filterWriting(published, defaultFilters)
 const screenshotDir = 'workspace/writing/screenshots/original-months'
+const entriesFrom2024 = published.filter(entry => entry.date?.startsWith('2024-'))
+const entriesFromJuly2024 = entriesFrom2024.filter(entry => entry.date?.startsWith('2024-07'))
+const englishEntry = published.find(entry => entry.lang === 'en')
 
 test('year and month archive, chronological filters, history and article return', async ({ page }) => {
   await page.goto('/writing')
@@ -23,14 +26,14 @@ test('year and month archive, chronological filters, history and article return'
   await expect(page.locator('.writing-entry[href="/writing/the-little-lies-i-dont-need"] time')).toHaveAttribute('datetime', '2024-04-25')
   await page.getByText('筛选文字', { exact: true }).click()
   await page.getByLabel('年份', { exact: true }).selectOption('2024')
-  await expect(page.locator('.writing-entry')).toHaveCount(17)
+  await expect(page.locator('.writing-entry')).toHaveCount(entriesFrom2024.length)
   await page.getByLabel('月份', { exact: true }).selectOption('07')
-  await expect(page.locator('.writing-entry')).toHaveCount(4)
+  await expect(page.locator('.writing-entry')).toHaveCount(entriesFromJuly2024.length)
   await page.getByLabel('排序', { exact: true }).selectOption('oldest')
   await expect(page).toHaveURL(/year=2024&month=07&sort=oldest$/)
   const filtered = page.url()
   await page.reload()
-  await expect(page.locator('.writing-entry')).toHaveCount(4)
+  await expect(page.locator('.writing-entry')).toHaveCount(entriesFromJuly2024.length)
   await expect(page.getByLabel('年份', { exact: true })).toHaveValue('2024')
   await page.locator('.writing-entry').first().click()
   await expect(page.locator('.writing-prose')).toBeVisible()
@@ -65,10 +68,10 @@ test('all selected articles load with complete endings, removed entries return 4
     await expect(page.locator('.writing-entry[aria-current="page"]')).toHaveCount(1)
   }
   expect(errors).toEqual([])
-  for (const slug of ['example-draft', 'unknown-slug', 'graduation', 'piano-at-the-pool', 'bangkok-fountain', 'travel-beijing', 'checking-on-an-agent', 'why-stay-up-late']) expect((await request.get(`/writing/${slug}`)).status()).toBe(404)
+  for (const slug of ['example-draft', 'unknown-slug', 'graduation', 'piano-at-the-pool', 'bangkok-fountain', 'travel-beijing', 'checking-on-an-agent', 'why-stay-up-late', 'waiting-for-the-driver', 'healing-fiction-and-easy-answers']) expect((await request.get(`/writing/${slug}`)).status()).toBe(404)
   const sitemap = await (await request.get('/sitemap.xml')).text()
   for (const entry of published) expect(sitemap).toContain(`/writing/${entry.slug}`)
-  for (const removed of ['example-draft', 'bangkok-fountain', 'graduation', 'travel-beijing']) expect(sitemap).not.toContain(`/writing/${removed}`)
+  for (const removed of ['example-draft', 'bangkok-fountain', 'graduation', 'travel-beijing', 'waiting-for-the-driver', 'healing-fiction-and-easy-answers']) expect(sitemap).not.toContain(`/writing/${removed}`)
   const archive = await (await request.get('/writing')).text()
   for (const privateText of ['WRITING_DRAFT_CANARY', 'iCloud', '为什么入选', '发表前处理', 'source_sha256']) expect(archive).not.toContain(privateText)
   expect(archive).not.toContain(published[0].body.slice(0, 50))
@@ -145,11 +148,13 @@ test('responsive layout, actual Chinese font, accessibility and other modules', 
     if ([390, 1440, 2504].includes(width)) await page.screenshot({ path: `${screenshotDir}/article-${width}.png`, fullPage: true })
     await page.goto('/writing/the-snack-street-and-the-motorcyclist')
     expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth)).toBe(true)
-    await page.goto('/writing/healing-fiction-and-easy-answers')
-    await expect(page.locator('article')).toHaveAttribute('lang', 'en')
-    await expect(page.locator('.writing-entry[aria-current="page"] .writing-entry-title')).toHaveAttribute('lang', 'en')
-    expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth)).toBe(true)
-    if ([390, 2504].includes(width)) await page.screenshot({ path: `${screenshotDir}/english-article-${width}.png`, fullPage: true })
+    if (englishEntry) {
+      await page.goto(`/writing/${englishEntry.slug}`)
+      await expect(page.locator('article')).toHaveAttribute('lang', 'en')
+      await expect(page.locator('.writing-entry[aria-current="page"] .writing-entry-title')).toHaveAttribute('lang', 'en')
+      expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth)).toBe(true)
+      if ([390, 2504].includes(width)) await page.screenshot({ path: `${screenshotDir}/english-article-${width}.png`, fullPage: true })
+    }
     if ([390, 1440].includes(width)) {
       await page.goto('/writing/let-him-show-me-his-toy')
       await expect(page.locator('.writing-prose p')).toHaveCount(3)
