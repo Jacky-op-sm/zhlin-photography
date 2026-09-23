@@ -1,4 +1,4 @@
-// Editorial display order for the writing landing page.
+// Featured selection; this order breaks ties when titles have equal length.
 export const featuredWritingSlugs = [
   'typhoon-notes',
   'jiangcun-coffee',

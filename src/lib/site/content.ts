@@ -4,6 +4,7 @@ import navigationData from '../../../content/site/navigation.json'
 import homepageData from '../../../content/site/homepage.json'
 import profileData from '../../../content/site/profile.json'
 import contactData from '../../../content/site/contact.json'
+import { getLatestWritingMetadata } from '@/lib/content/writing'
 import {
   contactSchema,
   homepageSchema,
@@ -36,10 +37,12 @@ const profile = profileSchema.parse(profileData)
 const contact = contactSchema.parse(contactData)
 
 export function getHeaderNavigation(): NavigationItem[] {
+  const latestWriting = getLatestWritingMetadata()
   return navigation
     .filter((item) => item.showInHeader)
     .map((item) => ({
       ...item,
+      href: item.id === 'writing' && latestWriting ? `/writing/${latestWriting.slug}` : item.href,
       children: item.children?.filter((child) => child.showInHeader),
     }))
 }

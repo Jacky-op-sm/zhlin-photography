@@ -6,6 +6,9 @@ import { defaultFilters, filterWriting, type WritingEntry } from '../src/lib/con
 
 const published = JSON.parse(fs.readFileSync('.generated/writing.json', 'utf8')).entries as WritingEntry[]
 const featuredSlugs = new Set<string>(featuredWritingSlugs)
+const featuredByTitleLength = featuredWritingSlugs
+  .map(slug => published.find(entry => entry.slug === slug)!)
+  .sort((a, b) => [...a.title].length - [...b.title].length)
 const chronicle = filterWriting(published.filter(entry => !featuredSlugs.has(entry.slug)), defaultFilters)
 const hidden = [
   'camera-models',
@@ -19,12 +22,9 @@ test('featured writing precedes the chronological archive, with a clean footer',
   await page.goto('/writing')
   await expect(page.locator('.writing-featured h1')).toHaveText('精选')
   expect(await page.locator('.writing-featured .writing-entry').evaluateAll(links => links.map(link => link.getAttribute('href'))))
-    .toEqual(featuredWritingSlugs.map(slug => `/writing/${slug}`))
-  expect(await page.locator('.writing-featured .writing-entry time').allTextContents())
-    .toEqual(featuredWritingSlugs.map(slug => {
-      const date = published.find(entry => entry.slug === slug)!.date!
-      return `${Number(date.slice(0, 4))}年${Number(date.slice(5, 7))}月${Number(date.slice(8))}日`
-    }))
+    .toEqual(featuredByTitleLength.map(entry => `/writing/${entry.slug}`))
+  await expect(page.locator('.writing-featured .writing-entry-number')).toHaveText(['1', '2', '3', '4', '5', '6'])
+  await expect(page.locator('.writing-featured time')).toHaveCount(0)
   expect(await page.locator('.writing-month:not(.writing-featured) .writing-entry-title').allTextContents())
     .toEqual(chronicle.map(entry => entry.title))
   await expect(page.locator('.writing-month[data-month="2026-09"] .writing-month-heading')).toHaveText('2026九月')
@@ -33,15 +33,27 @@ test('featured writing precedes the chronological archive, with a clean footer',
   for (const slug of hidden) await expect(page.locator(`.writing-entry[href="/writing/${slug}"]`)).toHaveCount(0)
 })
 
-test('hidden pieces have no public route or sitemap entry; published reading stays clean', async ({ page, request }) => {
+test('hidden pieces have no public route or sitemap entry; articles repeat the directory', async ({ page, request }) => {
   for (const slug of hidden) expect((await request.get(`/writing/${slug}`)).status()).toBe(404)
   const sitemap = await (await request.get('/sitemap.xml')).text()
   for (const slug of hidden) expect(sitemap).not.toContain(`/writing/${slug}`)
   for (const slug of featuredWritingSlugs) expect(sitemap).toContain(`/writing/${slug}`)
   await page.goto(`/writing/${featuredWritingSlugs[0]}`)
   await expect(page.locator('article h1')).toHaveText('台风小记')
-  await expect(page.locator('.writing-entry, .writing-footer, .writing-filter-disclosure')).toHaveCount(0)
+  await expect(page.locator('.writing-entry')).toHaveCount(published.length)
+  await expect(page.locator('.writing-entry[aria-current="page"]')).toHaveCount(1)
+  await expect(page.locator('.writing-footer, .writing-filter-disclosure')).toHaveCount(0)
   await expect(page.getByRole('link', { name: '← 返回文字' })).toHaveAttribute('href', '/writing')
+})
+
+test('the homepage Writing link opens the latest public article', async ({ page }) => {
+  const latest = filterWriting(published, defaultFilters)[0]
+  await page.goto('/')
+  const writingLink = page.locator('.site-nav-desktop a', { hasText: 'Writing' })
+  await expect(writingLink).toHaveAttribute('href', `/writing/${latest.slug}`)
+  await writingLink.click()
+  await expect(page).toHaveURL(new RegExp(`/writing/${latest.slug}$`))
+  await expect(page.locator('article h1')).toHaveText(latest.title)
 })
 
 test('archive works without JavaScript and fits mobile and desktop', async ({ browser, page }) => {
