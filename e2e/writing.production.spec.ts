@@ -27,7 +27,9 @@ test('featured writing precedes the chronological archive, with a clean footer',
   await expect(page.locator('.writing-featured time')).toHaveCount(0)
   expect(await page.locator('.writing-month:not(.writing-featured) .writing-entry-title').allTextContents())
     .toEqual(chronicle.map(entry => entry.title))
-  await expect(page.locator('.writing-month[data-month="2026-09"] .writing-month-heading')).toHaveText('2026九月')
+  const first2026Month = chronicle.find(entry => entry.date?.startsWith('2026-'))!.date!.slice(0, 7)
+  await expect(page.locator(`.writing-month[data-month="${first2026Month}"] .writing-month-heading span`).first()).toHaveText('2026')
+  await expect(page.locator('.writing-month[data-month="2026-09"] .writing-month-heading span').last()).toHaveText('九月')
   await expect(page.locator('.writing-month[data-year="2025"] .writing-month-heading')).toHaveText('2025')
   await expect(page.locator('.writing-entry-tag, .writing-filter-disclosure, .writing-result, .writing-footer')).toHaveCount(0)
   for (const slug of hidden) await expect(page.locator(`.writing-entry[href="/writing/${slug}"]`)).toHaveCount(0)
@@ -51,7 +53,15 @@ test('the writing URL and homepage link open the latest public article above its
   await page.goto('/writing')
   await expect(page).toHaveURL(new RegExp(`/writing/${latest.slug}$`))
   await expect(page.locator('article h1')).toHaveText(latest.title)
-  await expect(page.locator('.writing-prose')).toContainText(latest.body.trim().slice(0, 30))
+  const images = [...latest.body.matchAll(/!\[[^\]]*\]\(([^\s)]+)(?:\s+"[^"]*")?\)/g)]
+  if (images.length) {
+    await expect(page.locator('.writing-prose img')).toHaveCount(images.length)
+    for (const [index, image] of images.entries()) {
+      await expect(page.locator('.writing-prose img').nth(index)).toHaveAttribute('src', image[1])
+    }
+  } else {
+    await expect(page.locator('.writing-prose')).toContainText(latest.body.trim().slice(0, 30))
+  }
   await expect(page.locator('#writing-archive .writing-entry')).toHaveCount(published.length)
   expect(await page.locator('article').evaluate(article => Boolean(article.compareDocumentPosition(document.querySelector('#writing-archive')) & Node.DOCUMENT_POSITION_FOLLOWING))).toBe(true)
   await page.goto('/')
@@ -75,8 +85,9 @@ test('archive works without JavaScript and fits mobile and desktop', async ({ br
     expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth)).toBe(true)
     await expect(page.locator('.site-header')).toBeHidden()
     await expect(page.locator('.site-footer')).toBeHidden()
-    const year = await page.locator('.writing-month[data-month="2026-09"] .writing-month-heading span').first().boundingBox()
-    const month = await page.locator('.writing-month[data-month="2026-09"] .writing-month-heading span').last().boundingBox()
+    const heading = page.locator('.writing-month[data-month]').first().locator('.writing-month-heading span')
+    const year = await heading.first().boundingBox()
+    const month = await heading.last().boundingBox()
     expect(year!.y).toBe(month!.y)
   }
   expect((await new AxeBuilder({ page }).include('.writing').withTags(['wcag2a', 'wcag2aa']).analyze()).violations).toEqual([])
