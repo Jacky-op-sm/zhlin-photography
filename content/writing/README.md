@@ -123,6 +123,17 @@ npm run check:writing
 
 本地图片保存在 `public/assets/`，正文使用 `/assets/` 开头的网址。原始 HTML 不会执行。文章不会作为 MDX 执行代码。
 
+多张图片连续写在同一段落中（图片行之间不留空行），会组成一叠可以翻页的照片：
+
+```markdown
+![三月的路口](/assets/writing/seasons/march.webp "三月")
+![四月的路口](/assets/writing/seasons/april.webp "四月")
+![七月的路口](/assets/writing/seasons/july.webp "七月")
+![十月的路口](/assets/writing/seasons/october.webp "十月")
+```
+
+左右按钮、在照片区域聚焦后使用方向键，或横向滑动切换照片；下方显示序号和当前照片的图注。堆叠沿用单张图片的外框、展示尺寸和自然比例，点击照片不会放大。图片行之间留空行时，仍各自显示为独立图片。关闭 JavaScript 时会按顺序展示全部照片。
+
 ## 自动生成文件与来源
 
 Markdown 是唯一的文章编辑源。`.generated/writing.json` 是准备与构建期间生成的内部数据，不能手工编辑。原 Obsidian 笔记和 handoff 文件不会自动同步到这里。

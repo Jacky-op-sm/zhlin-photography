@@ -1,0 +1,153 @@
+/* Reuse writing-figure and writing-figure-mat for the published frame, padding,
+   background, and native image dimensions. The stack adds no image-size limit. */
+.writing-stack-mat { position: relative; }
+
+.writing-stack-stage {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  max-width: 100%;
+  min-width: 0;
+  isolation: isolate;
+  touch-action: pan-y pinch-zoom;
+}
+
+.writing-stack-stage:focus-visible {
+  outline: 2px solid var(--writing-text);
+  outline-offset: 5px;
+  border-radius: 3px;
+}
+
+.writing-stack-slide {
+  position: relative;
+  grid-area: 1 / 1;
+  justify-self: center;
+  min-width: 0;
+  max-width: 100%;
+  transform-origin: 50% 70%;
+  transition: transform 420ms cubic-bezier(.22, .7, .2, 1), opacity 420ms cubic-bezier(.22, .7, .2, 1);
+}
+
+.writing-stack-slide[data-position="active"] {
+  z-index: 3;
+  opacity: 1;
+  transform: translate(0, 0) rotate(0) scale(1);
+}
+
+.writing-stack-slide[data-position="behind-1"] {
+  z-index: 2;
+  opacity: .24;
+  transform: translate(8px, 5px) rotate(1deg) scale(.985);
+  pointer-events: none;
+}
+
+.writing-stack-slide[data-position="behind-2"] {
+  z-index: 1;
+  opacity: .11;
+  transform: translate(14px, 9px) rotate(2deg) scale(.97);
+  pointer-events: none;
+}
+
+.writing-stack-slide[data-position="hidden"] {
+  z-index: 0;
+  opacity: 0;
+  transform: translate(-14px, 5px) rotate(-2deg) scale(.985);
+  pointer-events: none;
+}
+
+.writing-stack-slide[data-outgoing="forward"] {
+  pointer-events: none;
+  animation: writing-stack-turn-forward 420ms cubic-bezier(.22, .7, .2, 1) both;
+}
+
+.writing-stack-slide[data-outgoing="backward"] {
+  pointer-events: none;
+  animation: writing-stack-turn-backward 420ms cubic-bezier(.22, .7, .2, 1) both;
+}
+
+.writing-stack-slide img {
+  user-select: none;
+  -webkit-user-select: none;
+}
+
+.writing-stack-caption-fallback {
+  display: none;
+  margin-top: 1em;
+  color: var(--writing-muted);
+  font-size: .86em;
+  line-height: 1.85;
+  text-align: center;
+}
+
+.writing-stack-nav {
+  position: absolute;
+  top: calc(50% - 23px);
+  z-index: 5;
+  display: grid;
+  width: 46px;
+  height: 46px;
+  place-items: center;
+  border: 1px solid rgb(71 71 71 / .13);
+  border-radius: 50%;
+  background: rgb(255 255 255 / .94);
+  color: var(--writing-text);
+  cursor: pointer;
+  box-shadow: 0 8px 28px rgb(0 0 0 / .04);
+  transition: background-color 180ms ease, border-color 180ms ease, opacity 180ms ease, transform 180ms ease;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.writing-stack-nav--previous { left: calc(var(--writing-rhythm) / 2); }
+.writing-stack-nav--next { right: calc(var(--writing-rhythm) / 2); }
+.writing-stack-nav:disabled { opacity: .27; cursor: default; box-shadow: none; }
+.writing-stack-nav svg { width: 20px; height: 20px; fill: none; stroke: currentColor; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; }
+
+@media (hover: hover) and (pointer: fine) {
+  .writing-stack-nav:not(:disabled):hover {
+    background: #f5f5f7;
+    border-color: rgb(71 71 71 / .22);
+    transform: scale(1.055);
+  }
+}
+
+.writing-stack-nav:not(:disabled):active { transform: scale(.96); }
+
+.writing-stack-counter {
+  display: block;
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+  letter-spacing: .025em;
+}
+
+.writing-stack-month { display: block; margin-top: .12em; }
+
+@keyframes writing-stack-turn-forward {
+  0% { z-index: 4; opacity: 1; transform: translate(0, 0) rotate(0) scale(1); }
+  62% { opacity: .45; }
+  100% { z-index: 4; opacity: 0; transform: translate(-4%, 2%) rotate(-2deg) scale(.98); }
+}
+
+@keyframes writing-stack-turn-backward {
+  0% { z-index: 4; opacity: 1; transform: translate(0, 0) rotate(0) scale(1); }
+  62% { opacity: .45; }
+  100% { z-index: 4; opacity: 0; transform: translate(4%, 2%) rotate(2deg) scale(.98); }
+}
+
+@media (max-width: 48rem), (orientation: portrait) {
+  /* Keep the original full-width image on narrow/portrait screens; controls
+     occupy their own row instead of covering the photograph's side edges. */
+  .writing-stack-mat {
+    display: grid;
+    grid-template-columns: 46px minmax(0, 1fr) 46px;
+    row-gap: 1.5rem;
+  }
+  .writing-stack-stage { grid-column: 1 / -1; grid-row: 1; }
+  .writing-stack-nav { position: static; grid-row: 2; }
+  .writing-stack-nav--previous { grid-column: 1; justify-self: start; }
+  .writing-stack-nav--next { grid-column: 3; justify-self: end; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .writing-stack-slide,
+  .writing-stack-nav { transition: none !important; }
+  .writing-stack-slide[data-outgoing] { animation: none !important; }
+}
