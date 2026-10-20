@@ -165,6 +165,9 @@ export default function DesktopNavigation({
       <ul className="site-nav-list">
         {items.map((item) => {
           const hasChildren = !!item.children?.length
+          // Resolve the latest-article redirect with a fresh document, even from
+          // a tab that was opened before the most recent publication.
+          const ItemLink = item.href === '/writing' ? 'a' : Link
           return (
             <li
               key={item.href}
@@ -193,14 +196,14 @@ export default function DesktopNavigation({
                   <span>{item.label}</span>
                 </Link>
               ) : (
-                <Link
+                <ItemLink
                   href={item.href}
                   onClick={onNavigate}
                   className="site-nav-link"
                   data-active={isActive(item.href)}
                 >
                   {item.label}
-                </Link>
+                </ItemLink>
               )}
             </li>
           )

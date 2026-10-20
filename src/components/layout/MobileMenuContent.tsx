@@ -62,6 +62,8 @@ export default function MobileMenuContent({
             <ul className="site-nav-list">
               {items.map((item, index) => {
                 const hasChildren = !!item.children?.length
+                // Match desktop: the latest-article redirect needs a fresh document.
+                const ItemLink = item.href === '/writing' ? 'a' : Link
                 return hasChildren ? (
                   <li
                     key={item.href}
@@ -80,14 +82,14 @@ export default function MobileMenuContent({
                   </li>
                 ) : (
                   <li key={item.href} className="site-nav-item ">
-                    <Link
+                    <ItemLink
                       href={item.href}
                       onClick={onNavigate}
                       className="site-nav-link"
                       data-active={isActive(item.href)}
                     >
                       {item.label}
-                    </Link>
+                    </ItemLink>
                   </li>
                 )
               })}

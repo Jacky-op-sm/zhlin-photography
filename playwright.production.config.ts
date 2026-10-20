@@ -31,7 +31,7 @@ export default defineConfig({
     },
     {
       name: 'production-mobile',
-      testMatch: [/(^|\/)production\.spec\.ts$/, /writing-stack\.production\.spec\.ts$/],
+      testMatch: [/(^|\/)production\.spec\.ts$/, /writing-(?:stack|navigation)\.production\.spec\.ts$/],
       use: {
         ...devices['iPhone 12'],
         viewport: { width: 390, height: 844 },
@@ -39,7 +39,7 @@ export default defineConfig({
     },
     {
       name: 'production-webkit',
-      testMatch: /writing-stack\.production\.spec\.ts$/,
+      testMatch: /writing-(?:stack|navigation)\.production\.spec\.ts$/,
       use: {
         ...devices['Desktop Safari'],
         browserName: 'webkit',
@@ -48,7 +48,7 @@ export default defineConfig({
     },
     {
       name: 'production-iphone-webkit',
-      testMatch: /writing-stack\.production\.spec\.ts$/,
+      testMatch: /writing-(?:stack|navigation)\.production\.spec\.ts$/,
       use: {
         ...devices['iPhone 12'],
         browserName: 'webkit',
@@ -56,7 +56,7 @@ export default defineConfig({
     },
     {
       name: 'production-ipad-webkit',
-      testMatch: /writing-stack\.production\.spec\.ts$/,
+      testMatch: /writing-(?:stack|navigation)\.production\.spec\.ts$/,
       use: {
         ...devices['iPad Pro 11'],
         browserName: 'webkit',
