@@ -46,6 +46,22 @@ export default defineConfig({
         viewport: { width: 1280, height: 800 },
       },
     },
+    {
+      name: 'production-iphone-webkit',
+      testMatch: /writing-stack\.production\.spec\.ts$/,
+      use: {
+        ...devices['iPhone 12'],
+        browserName: 'webkit',
+      },
+    },
+    {
+      name: 'production-ipad-webkit',
+      testMatch: /writing-stack\.production\.spec\.ts$/,
+      use: {
+        ...devices['iPad Pro 11'],
+        browserName: 'webkit',
+      },
+    },
   ],
   webServer: {
     command: 'node node_modules/next/dist/bin/next start --port 3100',

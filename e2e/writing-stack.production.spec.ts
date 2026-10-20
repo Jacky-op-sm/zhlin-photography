@@ -96,7 +96,7 @@ async function swipe(target: Locator, dx: number, dy: number, options: { fingers
   }, { dx, dy, fingers: options.fingers ?? 1, cancel: options.cancel ?? false, followupClick: options.followupClick ?? false })
 }
 
-test('four original photographs preserve the article order and stop at both ends', async ({ page }) => {
+test('four original photographs preserve the article order and loop in both directions', async ({ page }) => {
   await openSeasons(page)
   const gallery = stack(page)
   await expect(gallery.locator('.writing-stack-slide')).toHaveCount(4)
@@ -106,18 +106,30 @@ test('four original photographs preserve the article order and stop at both ends
     .toEqual(sources)
   const previous = gallery.getByRole('button', { name: '上一张照片', exact: true })
   const next = gallery.getByRole('button', { name: '下一张照片', exact: true })
-  await expect(previous).toBeDisabled()
+  await expect(previous).toBeEnabled()
+  await expect(next).toBeEnabled()
+  await previous.click()
+  await expectPhoto(gallery, 3)
+  await expect(previous).toBeEnabled()
+  await expect(next).toBeEnabled()
+  await next.click()
+  await expectPhoto(gallery, 0)
   for (let index = 1; index < months.length; index++) {
     await next.click()
     await expectPhoto(gallery, index)
     await expect(previous).toBeEnabled()
   }
-  await expect(next).toBeDisabled()
+  await expect(next).toBeEnabled()
+  await next.click()
+  await expectPhoto(gallery, 0)
+  await previous.click()
+  await expectPhoto(gallery, 3)
   for (let index = months.length - 2; index >= 0; index--) {
     await previous.click()
     await expectPhoto(gallery, index)
   }
-  await expect(previous).toBeDisabled()
+  await expect(previous).toBeEnabled()
+  await expect(next).toBeEnabled()
 })
 
 test('clicking a photograph neither opens a viewer nor navigates away', async ({ page }) => {
@@ -147,6 +159,9 @@ test('arrow keys are scoped to the stack and focus remains on its visible stage'
   await expect(stage).toHaveAttribute('tabindex', '0')
   await stage.focus()
   await page.keyboard.press('ArrowLeft')
+  await expectPhoto(stack(page), 3)
+  await expect(stage).toBeFocused()
+  await page.keyboard.press('ArrowRight')
   await expectPhoto(stack(page), 0)
   for (let index = 1; index < months.length; index++) {
     await page.keyboard.press('ArrowRight')
@@ -154,9 +169,9 @@ test('arrow keys are scoped to the stack and focus remains on its visible stage'
     await expect(stage).toBeFocused()
   }
   await page.keyboard.press('ArrowRight')
-  await expectPhoto(stack(page), 3)
+  await expectPhoto(stack(page), 0)
   await page.keyboard.press('ArrowLeft')
-  await expectPhoto(stack(page), 2)
+  await expectPhoto(stack(page), 3)
   await expect(stage).toBeFocused()
   expect(await page.evaluate(() => document.activeElement?.closest('[aria-hidden="true"]') === null)).toBe(true)
   await page.keyboard.press('Tab')
@@ -179,24 +194,167 @@ test('horizontal swipes navigate while vertical, multi-touch, and cancelled gest
   await swipe(currentPhoto(), 100, 5)
   await expectPhoto(stack(page), 0)
   await swipe(currentPhoto(), 100, 5)
+  await expectPhoto(stack(page), 3)
+  await swipe(currentPhoto(), -100, 5)
   await expectPhoto(stack(page), 0)
   await expect(page).toHaveURL(/\/writing\/seasons$/)
 })
 
-test('reduced motion permits rapid navigation without an animation lock', async ({ page }) => {
-  await page.emulateMedia({ reducedMotion: 'reduce' })
-  await openSeasons(page)
-  const next = stack(page).getByRole('button', { name: '下一张照片', exact: true })
-  for (let index = 0; index < 3; index++) await next.click()
-  await expectPhoto(stack(page), 3)
-  await expect(next).toBeDisabled()
-  const stage = stack(page).locator('.writing-stack-stage')
-  await stage.focus()
-  for (let index = 0; index < 3; index++) await page.keyboard.press('ArrowLeft')
-  await expectPhoto(stack(page), 0)
-  await expect(stage).toBeFocused()
-  await expect(stack(page).getByRole('button', { name: '上一张照片', exact: true })).toBeDisabled()
-})
+for (const reducedMotion of ['no-preference', 'reduce'] as const) {
+  test(`only the incoming photograph animates and settles without a reset with reduced motion ${reducedMotion}`, async ({ page }, testInfo) => {
+    await page.emulateMedia({ reducedMotion })
+    await openSeasons(page)
+    const gallery = stack(page)
+    await decodePhotographs(gallery)
+    const sample = await gallery.evaluate(async (root, nextSource) => {
+      const stage = root.querySelector<HTMLElement>('.writing-stack-stage')!
+      const next = root.querySelector<HTMLButtonElement>('[aria-label="下一张照片"]')!
+      await Promise.all(stage.getAnimations({ subtree: true }).map(animation => animation.finished.catch(() => {})))
+
+      // Observe React's committed selection before sampling in the same browser
+      // evaluation. This avoids missing a short animation between tool calls.
+      await new Promise<void>(resolve => {
+        const observer = new MutationObserver(() => {
+          if (stage.querySelector('[data-active="true"]')?.getAttribute('data-full-src') === nextSource) {
+            observer.disconnect()
+            resolve()
+          }
+        })
+        observer.observe(stage, { attributes: true, subtree: true, attributeFilter: ['data-active'] })
+        next.click()
+      })
+
+      const measureCard = (card: Element) => {
+        const style = getComputedStyle(card)
+        const rect = card.getBoundingClientRect()
+        const stageRect = stage.getBoundingClientRect()
+        return {
+          source: card.getAttribute('data-full-src'),
+          opacity: style.opacity,
+          transform: style.transform,
+          geometry: [rect.x - stageRect.x, rect.y - stageRect.y, rect.width, rect.height],
+        }
+      }
+      const describeAnimation = (animation: Animation) => {
+        const target = (animation.effect as KeyframeEffect).target
+        return {
+          type: animation.constructor.name,
+          targetTag: target instanceof Element ? target.tagName : null,
+          targetClass: target instanceof Element ? target.getAttribute('class') : null,
+          transitionProperty: animation instanceof CSSTransition ? animation.transitionProperty : null,
+          animationName: animation instanceof CSSAnimation ? animation.animationName : null,
+          playState: animation.playState,
+        }
+      }
+      const measure = () => {
+        const animations = stage.getAnimations({ subtree: true })
+        return {
+          active: measureCard(stage.querySelector('[data-active="true"]')!),
+          backCards: Array.from(stage.querySelectorAll('[data-active="false"]'), measureCard),
+          animationCount: animations.length,
+          animations: animations.map(describeAnimation),
+        }
+      }
+      // Figure/caption text can acquire a tab-size transition from the global
+      // reduced-motion reset. Keep that evidence separate from photo motion.
+      const externalAnimations = () => root.getAnimations({ subtree: true }).filter(animation => {
+        const target = (animation.effect as KeyframeEffect).target
+        return !(target instanceof Element && stage.contains(target))
+      }).map(describeAnimation)
+      const animations = stage.getAnimations({ subtree: true })
+      const observedAnimations = animations.map(animation => {
+        const effect = animation.effect as KeyframeEffect
+        const target = effect.target
+        return {
+          isCssAnimation: animation instanceof CSSAnimation,
+          isCssTransition: animation instanceof CSSTransition,
+          onActiveCard: target instanceof Element && target.closest('.writing-stack-slide')?.getAttribute('data-active') === 'true',
+          properties: effect.getKeyframes().map(frame =>
+            Object.keys(frame).filter(key => !['offset', 'computedOffset', 'easing', 'composite'].includes(key)),
+          ),
+        }
+      })
+      const during = measure()
+      const externalDuring = externalAnimations()
+      await Promise.all(animations.map(animation => animation.finished.catch(() => {})))
+      await new Promise<void>(resolve => requestAnimationFrame(() => resolve()))
+      const settled = measure()
+      const externalSettled = externalAnimations()
+      await new Promise<void>(resolve => requestAnimationFrame(() => resolve()))
+      const afterAnotherFrame = measure()
+      return {
+        touchAnimation: matchMedia('(any-pointer: coarse), (max-width: 48rem)').matches,
+        observedAnimations,
+        during,
+        settled,
+        afterAnotherFrame,
+        externalAnimations: {
+          during: externalDuring,
+          settled: externalSettled,
+          afterAnotherFrame: externalAnimations(),
+        },
+      }
+    }, sources[1])
+    await testInfo.attach('animation-sample.json', {
+      body: JSON.stringify(sample, null, 2),
+      contentType: 'application/json',
+    })
+
+    const cssAnimations = sample.observedAnimations.filter(animation => animation.isCssAnimation)
+    expect(cssAnimations.length).toBeLessThanOrEqual(1)
+    expect(sample.observedAnimations.some(animation => animation.isCssTransition)).toBe(false)
+    expect(sample.observedAnimations.every(animation => animation.onActiveCard)).toBe(true)
+    if (reducedMotion === 'reduce') {
+      expect(sample.observedAnimations).toEqual([])
+    } else {
+      expect(cssAnimations).toHaveLength(1)
+      if (sample.touchAnimation) {
+        for (const properties of cssAnimations[0].properties) {
+          expect(properties).toEqual(['opacity'])
+        }
+        expect(sample.during.active.geometry).toEqual(sample.settled.active.geometry)
+      }
+    }
+    expect(sample.during.backCards).toEqual(sample.settled.backCards)
+    expect(sample.settled.animationCount, JSON.stringify(sample.settled.animations)).toBe(0)
+    expect(sample.afterAnotherFrame.animationCount, JSON.stringify(sample.afterAnotherFrame.animations)).toBe(0)
+    expect(sample.settled.active.source).toBe(sources[1])
+    expect(sample.settled.active.opacity).toBe('1')
+    expect(sample.afterAnotherFrame).toEqual(sample.settled)
+    await expectPhoto(gallery, 1)
+  })
+
+  test(`rapid buttons, keys, and swipes keep the correct photograph with reduced motion ${reducedMotion}`, async ({ page }) => {
+    await page.emulateMedia({ reducedMotion })
+    await openSeasons(page)
+    const gallery = stack(page)
+    const next = gallery.getByRole('button', { name: '下一张照片', exact: true })
+    const previous = gallery.getByRole('button', { name: '上一张照片', exact: true })
+    for (let index = 0; index < 9; index++) await next.click()
+    await expectPhoto(gallery, 1)
+    for (let index = 0; index < 7; index++) await previous.click()
+    await expectPhoto(gallery, 2)
+    const stage = gallery.locator('.writing-stack-stage')
+    await stage.focus()
+    for (let index = 0; index < 9; index++) await page.keyboard.press('ArrowRight')
+    await expectPhoto(gallery, 3)
+    for (let index = 0; index < 7; index++) await page.keyboard.press('ArrowLeft')
+    await expectPhoto(gallery, 0)
+    await expect(stage).toBeFocused()
+    for (let index = 0; index < 5; index++) await swipe(stage, -100, 5)
+    await expectPhoto(gallery, 1)
+    for (let index = 0; index < 6; index++) await swipe(stage, 100, 5)
+    await expectPhoto(gallery, 3)
+    await gallery.evaluate(async root => {
+      await Promise.all(root.getAnimations({ subtree: true }).map(animation => animation.finished.catch(() => {})))
+    })
+    await expectPhoto(gallery, 3)
+    await expect(previous).toBeEnabled()
+    await expect(next).toBeEnabled()
+    await expect(page.getByRole('dialog')).toHaveCount(0)
+    await expect(page).toHaveURL(/\/writing\/seasons$/)
+  })
+}
 
 test('without JavaScript all four photographs and their captions remain readable', async ({ browser, baseURL }) => {
   const context = await browser.newContext({ baseURL, javaScriptEnabled: false, viewport: { width: 390, height: 844 } })
@@ -229,9 +387,13 @@ test('without JavaScript all four photographs and their captions remain readable
   }
 })
 
-test('the original large-photo size is preserved at 320, 390, and 1440 pixel widths', async ({ page }, testInfo) => {
-  for (const width of [320, 390, 1440]) {
-    await page.setViewportSize({ width, height: 844 })
+test('the original large-photo size is preserved across phone, tablet, and desktop widths', async ({ page }, testInfo) => {
+  const viewports = testInfo.project.name === 'production-ipad-webkit'
+    ? [{ width: 834, height: 1194 }, { width: 1194, height: 834 }]
+    : [320, 390, 1440].map(width => ({ width, height: 844 }))
+  for (const viewport of viewports) {
+    const { width } = viewport
+    await page.setViewportSize(viewport)
     await openSeasons(page)
     const gallery = stack(page)
     await decodePhotographs(gallery)
@@ -257,8 +419,10 @@ test('the original large-photo size is preserved at 320, 390, and 1440 pixel wid
       expect(buttonBounds!.x + buttonBounds!.width).toBeLessThanOrEqual(width + 1)
     }
     if ((width === 1440 && testInfo.project.name === 'production-desktop')
-      || (width === 390 && testInfo.project.name === 'production-mobile')) {
-      await gallery.screenshot({ path: testInfo.outputPath(`seasons-stack-${width === 390 ? 'mobile' : 'desktop'}.png`) })
+      || (width === 390 && testInfo.project.name === 'production-mobile')
+      || (width === 834 && testInfo.project.name === 'production-ipad-webkit')) {
+      const screen = width === 390 ? 'mobile' : width === 834 ? 'ipad' : 'desktop'
+      await gallery.screenshot({ path: testInfo.outputPath(`seasons-stack-${screen}.png`) })
     }
   }
 })

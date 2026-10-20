@@ -24,7 +24,6 @@
   min-width: 0;
   max-width: 100%;
   transform-origin: 50% 70%;
-  transition: transform 420ms cubic-bezier(.22, .7, .2, 1), opacity 420ms cubic-bezier(.22, .7, .2, 1);
 }
 
 .writing-stack-slide[data-position="active"] {
@@ -54,14 +53,13 @@
   pointer-events: none;
 }
 
-.writing-stack-slide[data-outgoing="forward"] {
-  pointer-events: none;
-  animation: writing-stack-turn-forward 420ms cubic-bezier(.22, .7, .2, 1) both;
+/* Only the incoming photograph animates. Static back cards avoid moving and
+   blending four large textures at once, and there is no timed exit/reset. */
+.writing-image-stack[data-enhanced="true"] .writing-stack-slide[data-active="true"] {
+  animation: writing-stack-enter-forward 220ms ease-out;
 }
-
-.writing-stack-slide[data-outgoing="backward"] {
-  pointer-events: none;
-  animation: writing-stack-turn-backward 420ms cubic-bezier(.22, .7, .2, 1) both;
+.writing-image-stack[data-direction="backward"] .writing-stack-slide[data-active="true"] {
+  animation-name: writing-stack-enter-backward;
 }
 
 .writing-stack-slide img {
@@ -120,16 +118,27 @@
 
 .writing-stack-month { display: block; margin-top: .12em; }
 
-@keyframes writing-stack-turn-forward {
-  0% { z-index: 4; opacity: 1; transform: translate(0, 0) rotate(0) scale(1); }
-  62% { opacity: .45; }
-  100% { z-index: 4; opacity: 0; transform: translate(-4%, 2%) rotate(-2deg) scale(.98); }
+@keyframes writing-stack-enter-forward {
+  from { opacity: .85; transform: translateX(6px); }
+  to { opacity: 1; transform: translateX(0); }
 }
 
-@keyframes writing-stack-turn-backward {
-  0% { z-index: 4; opacity: 1; transform: translate(0, 0) rotate(0) scale(1); }
-  62% { opacity: .45; }
-  100% { z-index: 4; opacity: 0; transform: translate(4%, 2%) rotate(2deg) scale(.98); }
+@keyframes writing-stack-enter-backward {
+  from { opacity: .85; transform: translateX(-6px); }
+  to { opacity: 1; transform: translateX(0); }
+}
+
+@keyframes writing-stack-enter-touch {
+  from { opacity: .85; }
+  to { opacity: 1; }
+}
+
+/* Touch capability also covers an iPad with a connected mouse/trackpad. Do not
+   rely on viewport width to choose the cheaper phone/tablet animation. */
+@media (any-pointer: coarse), (max-width: 48rem) {
+  .writing-image-stack[data-enhanced="true"] .writing-stack-slide[data-active="true"] {
+    animation: writing-stack-enter-touch 180ms ease-out;
+  }
 }
 
 @media (max-width: 48rem), (orientation: portrait) {
@@ -149,5 +158,5 @@
 @media (prefers-reduced-motion: reduce) {
   .writing-stack-slide,
   .writing-stack-nav { transition: none !important; }
-  .writing-stack-slide[data-outgoing] { animation: none !important; }
+  .writing-stack-slide { animation: none !important; }
 }
