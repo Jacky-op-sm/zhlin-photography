@@ -1,10 +1,17 @@
 import { test, expect } from '@playwright/test'
 
+type ErrorWindow = Window & { writingNavigationErrors: string[] }
+
 for (const viewport of [{ width: 1280, height: 800 }, { width: 390, height: 844 }]) {
   test(`Writing opens a fresh document from the ${viewport.width}px navigation`, async ({ page }) => {
     await page.setViewportSize(viewport)
-    const errors: string[] = []
-    page.on('pageerror', error => errors.push(error.message))
+    // Scope errors to the loaded document. WebKit can report cancelled homepage
+    // prefetches while that document is being replaced by the article.
+    await page.addInitScript(() => {
+      const errors = ((window as unknown as ErrorWindow).writingNavigationErrors = [])
+      window.addEventListener('error', event => errors.push(event.message))
+      window.addEventListener('unhandledrejection', event => errors.push(String(event.reason)))
+    })
     // An unavailable/stale router response must not prevent opening Writing.
     const writingRouterRequests: string[] = []
     await page.route('**/writing?*', async route => {
@@ -34,7 +41,7 @@ for (const viewport of [{ width: 1280, height: 800 }, { width: 390, height: 844 
     await expect(page.locator('#writing-archive')).toBeAttached()
     await expect(page.locator('html#__next_error__')).toHaveCount(0)
     expect(writingRouterRequests).toEqual([])
-    expect(errors).toEqual([])
+    expect(await page.evaluate(() => (window as unknown as ErrorWindow).writingNavigationErrors)).toEqual([])
   })
 }
 
