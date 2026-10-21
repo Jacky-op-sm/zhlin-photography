@@ -6,7 +6,6 @@ import type { ExhibitionPhoto } from './PhotographyExhibition'
 import styles from './PhotographyExhibition.module.css'
 
 export const IMAGE_SIZES = '(max-width: 960px) 92vw, 59vw'
-export const MOTION_QUERY = '(prefers-reduced-motion: reduce)'
 export const TRANSITION_MS = 1000
 
 export function useExhibitionCursor(stageRef: RefObject<HTMLDivElement | null>, labelRef: RefObject<HTMLDivElement | null>, collectionId: string | undefined, blocked: boolean) {
@@ -16,7 +15,6 @@ export function useExhibitionCursor(stageRef: RefObject<HTMLDivElement | null>, 
     const label = labelRef.current
     if (!stage || !label) return
     const finePointer = window.matchMedia('(hover: hover) and (pointer: fine)')
-    const reducedMotion = window.matchMedia(MOTION_QUERY)
     let frame = 0
     let entryTimer: ReturnType<typeof setTimeout> | undefined
     let exitTimer: ReturnType<typeof setTimeout> | undefined
@@ -27,9 +25,8 @@ export function useExhibitionCursor(stageRef: RefObject<HTMLDivElement | null>, 
     let targetX = x
     let targetY = y
     const draw = () => {
-      const easing = reducedMotion.matches ? 1 : .5
-      x += (targetX - x) * easing
-      y += (targetY - y) * easing
+      x += (targetX - x) * .5
+      y += (targetY - y) * .5
       const maxX = Math.max(8, window.innerWidth - label.offsetWidth - 8)
       const maxY = Math.max(8, window.innerHeight - label.offsetHeight - 8)
       label.style.transform = `translate3d(${Math.max(8, Math.min(x, maxX))}px, ${Math.max(8, Math.min(y, maxY))}px, 0)`
@@ -61,7 +58,7 @@ export function useExhibitionCursor(stageRef: RefObject<HTMLDivElement | null>, 
       if (pointer) { x = targetX = pointer.x; y = targetY = pointer.y }
       draw()
       if (!pointer || document.elementFromPoint(pointer.x, pointer.y)?.closest('[data-exhibition-surface]')) show()
-      smallTimer = setTimeout(() => { label.dataset.size = 'small' }, reducedMotion.matches ? 0 : 2000)
+      smallTimer = setTimeout(() => { label.dataset.size = 'small' }, 2000)
     }
     const onPointerMove = (event: PointerEvent) => {
       if (event.pointerType !== 'mouse' || blocked || !finePointer.matches) return
@@ -71,16 +68,15 @@ export function useExhibitionCursor(stageRef: RefObject<HTMLDivElement | null>, 
       const overStage = event.target instanceof Element && !!event.target.closest('[data-exhibition-surface]') && !event.target.closest('[data-exhibition-ui]')
       clearTimeout(exitTimer)
       if (!overStage) return hide()
-      if (!active && !entryTimer) entryTimer = setTimeout(() => { entryTimer = undefined; show() }, reducedMotion.matches ? 0 : 100)
+      if (!active && !entryTimer) entryTimer = setTimeout(() => { entryTimer = undefined; show() }, 100)
       else if (!frame) frame = requestAnimationFrame(draw)
     }
-    const onLeave = () => { clearTimeout(exitTimer); exitTimer = setTimeout(hide, reducedMotion.matches ? 0 : 200) }
+    const onLeave = () => { clearTimeout(exitTimer); exitTimer = setTimeout(hide, 200) }
     initialize()
     document.addEventListener('pointermove', onPointerMove, { passive: true })
     document.addEventListener('mouseleave', onLeave)
     window.addEventListener('blur', hide)
     finePointer.addEventListener('change', initialize)
-    reducedMotion.addEventListener('change', initialize)
     return () => {
       hide()
       clearTimeout(exitTimer)
@@ -89,7 +85,6 @@ export function useExhibitionCursor(stageRef: RefObject<HTMLDivElement | null>, 
       document.removeEventListener('mouseleave', onLeave)
       window.removeEventListener('blur', hide)
       finePointer.removeEventListener('change', initialize)
-      reducedMotion.removeEventListener('change', initialize)
     }
   }, [stageRef, labelRef, collectionId, blocked])
 }
@@ -110,7 +105,7 @@ export function ExhibitionImage({ photo, collectionId, onPresent }: { photo: Exh
   const present = () => {
     if (frameRef.current?.dataset.requested !== requestKey) return
     if (clearTransition.current) clearTimeout(clearTransition.current)
-    const animate = !window.matchMedia(MOTION_QUERY).matches && view.collectionId !== collectionId
+    const animate = view.collectionId !== collectionId
     setView((previous) => ({ photo, collectionId, previous: animate ? previous.photo : null }))
     setFailedRequest(null)
     onPresent(collectionId, photo.id)

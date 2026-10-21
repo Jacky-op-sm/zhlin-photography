@@ -101,7 +101,13 @@
 @keyframes incomingCollection { 0%, 49% { opacity: 0; } 50%, 100% { opacity: 1; } }
 @keyframes collectionCurtain { 0% { transform: translateY(100%); } 45%, 50% { transform: translateY(0); } 100% { transform: translateY(-100%); } }
 @media (prefers-reduced-motion: reduce) {
-  .stage, .cursorLabel, .overlay, .indexPanel, .indexContent, .thumbsPanel, .thumbsHeader, .thumbnailGrid, .thumbnailImage img, .collectionButton > span:first-child { transition: none !important; }
-  .collectionIncoming { animation: none; }
-  .collectionCurtain { display: none; }
+  /* Keep the exhibition choreography consistent across devices, overriding
+     the global system-motion reset only for these animated gallery elements. */
+  .stage, .overlay, .indexPanel, .thumbsPanel { transition-duration: 1s !important; }
+  .cursorLabel { transition-duration: .3s, .5s !important; }
+  .indexContent { transition-duration: 1s, .3s !important; }
+  .thumbsHeader, .thumbnailGrid { transition-duration: .6s !important; }
+  .thumbnailImage img { transition-duration: .3s !important; }
+  .collectionButton > span:first-child { transition-duration: .2s !important; }
+  .collectionIncoming, .collectionCurtain { animation-duration: 1s !important; }
 }

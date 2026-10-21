@@ -5,7 +5,7 @@ import Image, { getImageProps } from 'next/image'
 import Link from 'next/link'
 import Modal from '@/components/ui/Modal'
 import profile from '../../../content/site/profile.json'
-import { ExhibitionImage, useExhibitionCursor, IMAGE_SIZES, MOTION_QUERY, TRANSITION_MS } from './ExhibitionPresentation'
+import { ExhibitionImage, useExhibitionCursor, IMAGE_SIZES, TRANSITION_MS } from './ExhibitionPresentation'
 import styles from './PhotographyExhibition.module.css'
 
 export interface ExhibitionPhoto { id: string; src: string; thumbnail: string; width: number; height: number; alt: string }
@@ -86,17 +86,15 @@ export default function PhotographyExhibition({ collections, initialCollectionId
     if (closeTimer.current) clearTimeout(closeTimer.current)
     if (tabTimer.current) clearTimeout(tabTimer.current)
     setTab({ active: 'works', displayed: 'works', fading: false })
-    setPanel({ kind, phase: window.matchMedia(MOTION_QUERY).matches ? 'open' : 'entering' })
+    setPanel({ kind, phase: 'entering' })
   }
   const closePanel = useCallback(() => {
     if (!panel || panel.phase === 'closing') return
-    if (window.matchMedia(MOTION_QUERY).matches) return setPanel(null)
     setPanel({ ...panel, phase: 'closing' })
     closeTimer.current = setTimeout(() => setPanel(null), TRANSITION_MS)
   }, [panel])
   const changeTab = (next: 'works' | 'info') => {
     if (tabTimer.current) clearTimeout(tabTimer.current)
-    if (window.matchMedia(MOTION_QUERY).matches) return setTab({ active: next, displayed: next, fading: false })
     setTab((current) => ({ ...current, active: next, fading: true }))
     tabTimer.current = setTimeout(() => setTab({ active: next, displayed: next, fading: false }), 300)
   }

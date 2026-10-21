@@ -165,27 +165,6 @@ test.describe('photography exhibition', () => {
     }
   })
 
-  test('reduced motion removes menu movement and returns focus promptly', async ({ page }, testInfo) => {
-    test.skip(testInfo.project.name !== 'desktop-1280', 'one reduced-motion browser check')
-    await page.emulateMedia({ reducedMotion: 'reduce' })
-    await page.goto('/photography')
-    const index = page.getByRole('button', { name: 'Index', exact: true })
-    await index.click()
-    const panel = page.getByTestId('exhibition-panel')
-    await expect(panel).toHaveAttribute('data-state', 'open')
-    const movingElements = await panel.evaluate((element) =>
-      [element, ...element.querySelectorAll('*')].filter((item) => {
-        const style = getComputedStyle(item)
-        return style.transitionProperty.split(',').some((property) => /transform|translate|all/.test(property.trim()))
-          && style.transitionDuration.split(',').some((duration) => Number.parseFloat(duration) > 0.01)
-      }).length,
-    )
-    expect(movingElements).toBe(0)
-    await page.keyboard.press('Escape')
-    await expect(page.getByRole('dialog')).not.toBeVisible({ timeout: 500 })
-    await expect(index).toBeFocused()
-  })
-
   test('a mobile swipe advances the photograph once', async ({ page }, testInfo) => {
     test.skip(!testInfo.project.name.startsWith('mobile-'), 'touch interaction')
     await page.goto('/photography#street/z52-8539')
