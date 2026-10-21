@@ -9,7 +9,6 @@ const routes = [
   ['street', '/photography/street'],
   ['travel', '/travel'],
   ['travel-nanjing', '/travel/nanjing'],
-  ['hobby', '/hobby'],
   ['contact', '/contact'],
 ] as const
 

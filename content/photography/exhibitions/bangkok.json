@@ -1,0 +1,135 @@
+{
+  "id": "bangkok",
+  "title": "Bangkok",
+  "description": "Street encounters, temple interiors, and quiet moments in Bangkok.",
+  "photos": [
+    {
+      "id": "bangkok-08",
+      "src": "/assets/photography/bangkok/bangkok-08.webp",
+      "thumbnail": "/assets/photography/bangkok/bangkok-08-thumb.webp",
+      "width": 2400,
+      "height": 1600,
+      "alt": "Two children playing in shallow water beside a park playground."
+    },
+    {
+      "id": "bangkok-04",
+      "src": "/assets/photography/bangkok/bangkok-04.webp",
+      "thumbnail": "/assets/photography/bangkok/bangkok-04-thumb.webp",
+      "width": 1600,
+      "height": 2400,
+      "alt": "A pigeon flying beside a golden fountain with water falling from its upper basin."
+    },
+    {
+      "id": "bangkok-16",
+      "src": "/assets/photography/bangkok/bangkok-16.webp",
+      "thumbnail": "/assets/photography/bangkok/bangkok-16-thumb.webp",
+      "width": 2400,
+      "height": 1600,
+      "alt": "A woman sitting behind a flock of pigeons in a sunlit courtyard."
+    },
+    {
+      "id": "bangkok-14",
+      "src": "/assets/photography/bangkok/bangkok-14.webp",
+      "thumbnail": "/assets/photography/bangkok/bangkok-14-thumb.webp",
+      "width": 1600,
+      "height": 2400,
+      "alt": "A pale cat perched on the back of a blue and red tuk-tuk."
+    },
+    {
+      "id": "bangkok-13",
+      "src": "/assets/photography/bangkok/bangkok-13.webp",
+      "thumbnail": "/assets/photography/bangkok/bangkok-13-thumb.webp",
+      "width": 1600,
+      "height": 2400,
+      "alt": "A monk in orange robes walking along a tree-lined Bangkok street."
+    },
+    {
+      "id": "bangkok-05",
+      "src": "/assets/photography/bangkok/bangkok-05.webp",
+      "thumbnail": "/assets/photography/bangkok/bangkok-05-thumb.webp",
+      "width": 1600,
+      "height": 2400,
+      "alt": "A person framed by golden temple columns and a curving staircase."
+    },
+    {
+      "id": "bangkok-03",
+      "src": "/assets/photography/bangkok/bangkok-03.webp",
+      "thumbnail": "/assets/photography/bangkok/bangkok-03-thumb.webp",
+      "width": 1600,
+      "height": 2400,
+      "alt": "An ornate temple window and patterned wall, photographed in black and white."
+    },
+    {
+      "id": "bangkok-07",
+      "src": "/assets/photography/bangkok/bangkok-07.webp",
+      "thumbnail": "/assets/photography/bangkok/bangkok-07-thumb.webp",
+      "width": 1600,
+      "height": 2400,
+      "alt": "A golden shrine illuminated beneath chandeliers inside a temple."
+    },
+    {
+      "id": "bangkok-01",
+      "src": "/assets/photography/bangkok/bangkok-01.webp",
+      "thumbnail": "/assets/photography/bangkok/bangkok-01-thumb.webp",
+      "width": 2400,
+      "height": 1600,
+      "alt": "A woman in a headscarf standing between stone finials on a temple terrace."
+    },
+    {
+      "id": "bangkok-06",
+      "src": "/assets/photography/bangkok/bangkok-06.webp",
+      "thumbnail": "/assets/photography/bangkok/bangkok-06-thumb.webp",
+      "width": 1600,
+      "height": 2400,
+      "alt": "A couple walking through a busy outdoor market."
+    },
+    {
+      "id": "bangkok-09",
+      "src": "/assets/photography/bangkok/bangkok-09.webp",
+      "thumbnail": "/assets/photography/bangkok/bangkok-09-thumb.webp",
+      "width": 2400,
+      "height": 1600,
+      "alt": "People gathered around an illuminated market stall, photographed in black and white."
+    },
+    {
+      "id": "bangkok-11",
+      "src": "/assets/photography/bangkok/bangkok-11.webp",
+      "thumbnail": "/assets/photography/bangkok/bangkok-11-thumb.webp",
+      "width": 2400,
+      "height": 1600,
+      "alt": "Small objects on a market stall seen between people, photographed in black and white."
+    },
+    {
+      "id": "bangkok-02",
+      "src": "/assets/photography/bangkok/bangkok-02.webp",
+      "thumbnail": "/assets/photography/bangkok/bangkok-02-thumb.webp",
+      "width": 2400,
+      "height": 1600,
+      "alt": "Motorcycles and taxis on a wet Bangkok street beneath an elevated road."
+    },
+    {
+      "id": "bangkok-15",
+      "src": "/assets/photography/bangkok/bangkok-15.webp",
+      "thumbnail": "/assets/photography/bangkok/bangkok-15-thumb.webp",
+      "width": 1600,
+      "height": 2400,
+      "alt": "A pedestrian crossing a street beneath overhead wires and a distant temple spire."
+    },
+    {
+      "id": "bangkok-12",
+      "src": "/assets/photography/bangkok/bangkok-12.webp",
+      "thumbnail": "/assets/photography/bangkok/bangkok-12-thumb.webp",
+      "width": 2400,
+      "height": 1289,
+      "alt": "A passenger boat passing temple buildings on the opposite riverbank."
+    },
+    {
+      "id": "bangkok-10",
+      "src": "/assets/photography/bangkok/bangkok-10.webp",
+      "thumbnail": "/assets/photography/bangkok/bangkok-10-thumb.webp",
+      "width": 2400,
+      "height": 1600,
+      "alt": "A person walking through a green park toward a building framed by trees."
+    }
+  ]
+}

@@ -35,6 +35,26 @@ async function decodePhotographs(root: Locator) {
   })
 }
 
+async function waitForInitialStyles(page: Page) {
+  // WebKit can propagate inherited styles through several transition waves
+  // after stylesheets load. Settle those before measuring a photo change.
+  await page.waitForFunction(async () => {
+    await document.fonts.ready
+    let quietFrames = 0
+    for (let frame = 0; frame < 60 && quietFrames < 2; frame++) {
+      await new Promise<void>(resolve => requestAnimationFrame(() => resolve()))
+      const pending = document.getAnimations().filter(animation => animation.playState !== 'finished')
+      quietFrames = pending.length ? 0 : quietFrames + 1
+      await Promise.all(pending.map(animation => animation.finished.catch(() => {})))
+    }
+    const stage = document.querySelector('.writing-stack-stage')
+    if (!stage || quietFrames < 2) return false
+    const inheritedTabSize = getComputedStyle(document.documentElement).tabSize
+    return Array.from(document.querySelectorAll<HTMLLinkElement>('link[rel="stylesheet"]')).every(link => link.sheet)
+      && [stage, ...stage.querySelectorAll('*')].every(node => getComputedStyle(node).tabSize === inheritedTabSize)
+  }, undefined, { timeout: 10_000 })
+}
+
 // Use the unchanged WritingFigure markup as the size reference. Measuring its
 // computed layout checks the user's existing large-photo sizing at each width.
 async function originalFigureSize(page: Page) {
@@ -206,6 +226,7 @@ for (const reducedMotion of ['no-preference', 'reduce'] as const) {
     await openSeasons(page)
     const gallery = stack(page)
     await decodePhotographs(gallery)
+    await waitForInitialStyles(page)
     const sample = await gallery.evaluate(async (root, nextSource) => {
       const stage = root.querySelector<HTMLElement>('.writing-stack-stage')!
       const next = root.querySelector<HTMLButtonElement>('[aria-label="下一张照片"]')!

@@ -36,12 +36,6 @@ const budgets: Record<
     imageBytes: kib(720),
     requests: 48,
   },
-  '/hobby': {
-    totalBytes: kib(220),
-    javascriptBytes: kib(175),
-    imageBytes: kib(32),
-    requests: 30,
-  },
   '/contact': {
     totalBytes: kib(220),
     javascriptBytes: kib(175),

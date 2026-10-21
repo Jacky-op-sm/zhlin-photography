@@ -4,6 +4,8 @@ import type { Hobby, HobbyCategory, HobbyItem, MonthlyDigest } from '@/lib/types
 import { Fragment, type CSSProperties } from 'react'
 import { extractDigestExcerpt } from '@/lib/utils/hobbyExcerpt'
 import { buildPageMetadata } from '@/lib/site/metadata'
+import { notFound } from 'next/navigation'
+import { isPublicPath } from '@/lib/site/visibility.mjs'
 
 export const metadata = buildPageMetadata({
   title: '兴趣',
@@ -210,6 +212,7 @@ export default async function HobbyPage({
 }: {
   searchParams?: Promise<{ month?: string | string[] }>
 }) {
+  if (!isPublicPath('/hobby')) notFound()
   const resolvedSearchParams = await searchParams
   const hobby = getHobbyContent()
   const categories = hobby.featured

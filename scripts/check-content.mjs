@@ -4,6 +4,7 @@ import fs from 'node:fs'
 import path from 'node:path'
 import {
   contactSchema,
+  exhibitionCollectionSchema,
   hobbyCategorySchema,
   hobbyProfileSchema,
   homepageSchema,
@@ -92,6 +93,20 @@ function validateTravel() {
 }
 
 function validatePhotography() {
+  const exhibitionDirectory = path.join(contentRoot, 'photography', 'exhibitions')
+  const collectionIds = new Set(['street', 'pets', 'project'])
+  for (const filename of fs.readdirSync(exhibitionDirectory).filter((file) => file.endsWith('.json'))) {
+    const label = `content/photography/exhibitions/${filename}`
+    const exhibition = validate(exhibitionCollectionSchema, readJson(label), label)
+    if (!exhibition) continue
+    if (exhibition.id !== path.basename(filename, '.json')) {
+      fail(`${label}.id must match its filename`)
+    }
+    if (collectionIds.has(exhibition.id)) fail(`exhibition id "${exhibition.id}" is duplicated`)
+    collectionIds.add(exhibition.id)
+    collectAssets(exhibition)
+  }
+
   const series = validate(
     photographySeriesListSchema,
     readJson('content/photography/series.json'),

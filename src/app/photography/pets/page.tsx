@@ -1,6 +1,6 @@
-import PhotographySeriesTemplate from '@/components/photography/PhotographySeriesTemplate'
-import { getPhotographySeries, getSeriesPhotos } from '@/components/photography/series'
-import { photographyPhotos } from '@/lib/content/photography'
+import PhotographyExhibition from '@/components/photography/PhotographyExhibition'
+import { getPhotographySeries } from '@/components/photography/series'
+import { photographyExhibitions } from '@/lib/content/exhibitions'
 import { buildPageMetadata } from '@/lib/site/metadata'
 
 const series = getPhotographySeries('pets')
@@ -13,17 +13,7 @@ export const metadata = buildPageMetadata({
 })
 
 export default function PetsPage() {
-  if (!series) {
-    return null
-  }
-
   return (
-    <PhotographySeriesTemplate
-      overline={series.overline}
-      title={series.title}
-      intro={series.landingSummary}
-      description={series.landingDescription}
-      photos={getSeriesPhotos(photographyPhotos, 'pets')}
-    />
+    <PhotographyExhibition collections={photographyExhibitions} initialCollectionId="pets" />
   )
 }

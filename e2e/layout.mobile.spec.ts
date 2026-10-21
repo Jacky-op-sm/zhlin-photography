@@ -1,6 +1,6 @@
 import { test, expect } from '@playwright/test'
 
-const pagesUnderTest = ['/', '/photography', '/travel', '/hobby']
+const pagesUnderTest = ['/', '/photography', '/travel']
 
 function isMobileProject(projectName: string) {
   return projectName.startsWith('mobile-')

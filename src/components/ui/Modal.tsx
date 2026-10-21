@@ -17,6 +17,18 @@ const FOCUSABLE_SELECTOR = [
   '[tabindex]:not([tabindex="-1"])',
 ].join(',')
 
+function isTabbable(element: HTMLElement) {
+  if (
+    element.tabIndex < 0
+    || element.matches(':disabled')
+    || element.closest('[hidden], [inert], [aria-hidden="true"]')
+    || element.getClientRects().length === 0
+  ) return false
+
+  const visibility = window.getComputedStyle(element).visibility
+  return visibility !== 'hidden' && visibility !== 'collapse'
+}
+
 export default function Modal({
   isOpen,
   onClose,
@@ -68,7 +80,7 @@ export default function Modal({
 
     const focusTarget =
       initialFocusRef?.current
-      || dialog?.querySelector<HTMLElement>(FOCUSABLE_SELECTOR)
+      || Array.from(dialog?.querySelectorAll<HTMLElement>(FOCUSABLE_SELECTOR) ?? []).find(isTabbable)
       || dialog
     focusTarget?.focus()
 
@@ -82,11 +94,7 @@ export default function Modal({
       if (event.key === 'Tab' && dialog) {
         const focusable = Array.from(
           dialog.querySelectorAll<HTMLElement>(FOCUSABLE_SELECTOR),
-        ).filter(
-          (element) =>
-            !element.hasAttribute('disabled')
-            && element.getAttribute('aria-hidden') !== 'true',
-        )
+        ).filter(isTabbable)
 
         if (focusable.length === 0) {
           event.preventDefault()

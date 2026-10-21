@@ -27,7 +27,7 @@ export default defineConfig({
   projects: [
     {
       name: 'mobile-390',
-      testMatch: /(?:\.mobile|mobile-menu-animation|responsive-adaptation)\.spec\.ts/,
+      testMatch: /(?:\.mobile|mobile-menu-animation|responsive-adaptation|photography-exhibition)\.spec\.ts/,
       use: {
         ...devices['iPhone 12'],
         viewport: { width: 390, height: 844 },
@@ -35,7 +35,7 @@ export default defineConfig({
     },
     {
       name: 'mobile-375',
-      testMatch: /(?:\.mobile|mobile-menu-animation|responsive-adaptation)\.spec\.ts/,
+      testMatch: /(?:\.mobile|mobile-menu-animation|responsive-adaptation|photography-exhibition)\.spec\.ts/,
       use: {
         ...devices['iPhone SE'],
         viewport: { width: 375, height: 667 },
@@ -75,7 +75,7 @@ export default defineConfig({
     },
     {
       name: 'desktop-1280',
-      testMatch: /desktop-regression\.spec\.ts/,
+      testMatch: /(?:desktop-regression|photography-exhibition|navigation\.desktop)\.spec\.ts/,
       use: {
         viewport: { width: 1280, height: 800 },
       },

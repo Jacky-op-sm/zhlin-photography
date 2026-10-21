@@ -9,7 +9,7 @@ export default function Header() {
   return (
     <header className="site-header">
       <div className="site-shell site-header-inner">
-        <Link href="/" className="site-brand" aria-label="返回首页">
+        <Link href="/photography" className="site-brand" aria-label="打开摄影展览">
           <span className="site-brand-icon" aria-hidden="true">
             <svg
               viewBox="0 0 24 24"

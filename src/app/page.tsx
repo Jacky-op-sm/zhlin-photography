@@ -1,6 +1,7 @@
 import Image from 'next/image'
 import Link from 'next/link'
 import { getHomepageContent, getProfileContent } from '@/lib/site/content'
+import { isPublicPath } from '@/lib/site/visibility.mjs'
 import type {
   HobbyistShowcaseCard,
   PhotographerShowcaseCard,
@@ -61,7 +62,7 @@ export default function Home() {
 
       <TravellerShowcase cards={homepage.travel} />
 
-      <HobbyistShowcase cards={homepage.hobby} />
+      {isPublicPath('/hobby') ? <HobbyistShowcase cards={homepage.hobby} /> : null}
     </main>
   )
 }

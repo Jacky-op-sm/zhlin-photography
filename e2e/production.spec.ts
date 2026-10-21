@@ -55,12 +55,12 @@ test.describe('production route contract', () => {
     for (const route of [
       '/photography/street',
       '/travel/japan',
-      '/hobby',
       '/contact',
     ]) {
       expect(sitemapText).toContain(`https://www.zhlin.space${route}`)
     }
     expect(sitemapText).not.toContain('localhost')
+    expect(sitemapText).not.toContain('https://www.zhlin.space/hobby')
 
     const robots = await request.get('/robots.txt')
     expect(robots.status()).toBe(200)
@@ -124,6 +124,17 @@ test.describe('contact API contract', () => {
 })
 
 test.describe('production interactions', () => {
+  test('Hobby is hidden from public links, sitemap, and direct access', async ({ page, request }) => {
+    await page.goto('/')
+    await expect(page.locator('a[href^="/hobby"]')).toHaveCount(0)
+    const sitemap = await request.get('/sitemap.xml')
+    expect(sitemap.status()).toBe(200)
+    expect(await sitemap.text()).not.toContain('https://www.zhlin.space/hobby')
+    const response = await page.goto('/hobby')
+    expect(response?.status()).toBe(404)
+    await expect(page.locator('meta[name="robots"][content*="noindex"]').first()).toBeAttached()
+  })
+
   test('mobile menu traps focus, closes on Escape, and restores focus', async ({
     page,
   }, testInfo) => {
@@ -142,20 +153,20 @@ test.describe('production interactions', () => {
     await expect(page.locator('#site-root')).not.toHaveAttribute('inert', '')
   })
 
-  test('photo viewer and travel detail restore their trigger focus', async ({
+  test('exhibition panels and travel detail restore their trigger focus', async ({
     page,
   }) => {
     await page.goto('/photography/pets')
-    const photo = page.locator('.photo-gallery-item').first()
-    await photo.click()
-    const viewer = page.getByRole('dialog', { name: /照片查看器/ })
+    const thumbs = page.getByRole('button', { name: 'Thumbs', exact: true })
+    await thumbs.click()
+    const viewer = page.getByRole('dialog', { name: 'Animals — Thumbs', exact: true })
     await expect(viewer).toBeVisible()
     await expect(
-      page.getByRole('button', { name: '关闭照片查看器' }),
+      page.getByRole('button', { name: 'Close thumbnails', exact: true }),
     ).toBeFocused()
     await page.keyboard.press('Escape')
     await expect(viewer).toHaveCount(0)
-    await expect(photo).toBeFocused()
+    await expect(thumbs).toBeFocused()
 
     await page.goto('/travel/nanjing')
     const card = page.getByRole('button', { name: 'Open card 1', exact: true })
@@ -168,10 +179,14 @@ test.describe('production interactions', () => {
     await expect(card).toBeFocused()
   })
 
-  test('generated thumbnails are used by the gallery', async ({ page }) => {
+  test('generated thumbnails are used by the exhibition', async ({ page }) => {
     await page.goto('/photography/street')
     await page.waitForLoadState('networkidle')
-    const sources = await page.locator('.photo-gallery-item img').evaluateAll(
+    await page.getByRole('button', { name: 'Thumbs', exact: true }).click()
+    const images = page.getByRole('dialog', { name: 'Street — Thumbs', exact: true }).locator('img')
+    await expect(images).toHaveCount(7)
+    await expect.poll(() => images.evaluateAll((items) => items.every((image) => (image as HTMLImageElement).naturalWidth > 0))).toBe(true)
+    const sources = await images.evaluateAll(
       (images) =>
         images.map((image) => (image as HTMLImageElement).currentSrc),
     )

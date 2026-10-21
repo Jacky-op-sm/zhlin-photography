@@ -1,6 +1,7 @@
 import type { Metadata } from 'next'
 import Header from '@/components/layout/Header'
 import Footer from '@/components/layout/Footer'
+import SiteFrame from '@/components/layout/SiteFrame'
 import { getProfileContent } from '@/lib/site/content'
 import {
   DEFAULT_OG_IMAGE,
@@ -75,13 +76,9 @@ export default function RootLayout({
         <a href="#main-content" className="skip-link">
           跳到主要内容
         </a>
-        <div id="site-root">
-          <Header />
-          <div id="main-content" className="site-main" tabIndex={-1}>
-            {children}
-          </div>
-          <Footer />
-        </div>
+        <SiteFrame header={<Header />} footer={<Footer />}>
+          {children}
+        </SiteFrame>
         <div id="modal-root" />
       </body>
     </html>

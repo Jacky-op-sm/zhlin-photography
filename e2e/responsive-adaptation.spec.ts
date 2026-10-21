@@ -36,41 +36,41 @@ test.describe('responsive adaptation regressions', () => {
     })
 
     expect(metrics.overflow).toBeLessThanOrEqual(0)
-    expect(metrics.spans.length).toBeGreaterThanOrEqual(3)
+    expect(metrics.spans.map((span) => span.text)).toEqual(['PHOTOGRAPHER', 'TRAVELLER'])
     for (const span of metrics.spans) {
       expect(span.text.length).toBeGreaterThan(0)
       expect(span.width).toBeLessThanOrEqual(390)
     }
   })
 
-  test('photography masonry starts both first-row columns at the same top', async ({ page }, testInfo) => {
+  test('photography exhibition keeps the complete image inside the viewport', async ({ page }, testInfo) => {
     test.skip(!(isMobileProject(testInfo.project.name) || isIPadProject(testInfo.project.name)), 'mobile/ipad test')
 
     await page.goto('/photography/street')
-    await page.waitForLoadState('networkidle')
+    const image = page.getByTestId('exhibition-image')
+    await expect(image).toBeVisible()
+    await expect.poll(() => image.evaluate((element: HTMLImageElement) => element.naturalWidth)).toBeGreaterThan(0)
 
-    const alignment = await page.evaluate(() => {
-      const items = Array.from(document.querySelectorAll('.photo-gallery-item')) as HTMLElement[]
-      const boxes = items.map((item) => item.getBoundingClientRect()).filter((box) => box.width > 0)
-      const columns = new Map<number, number>()
-      for (const box of boxes) {
-        const columnX = Math.round(box.left / 8) * 8
-        const currentTop = columns.get(columnX)
-        if (currentTop === undefined || box.top < currentTop) {
-          columns.set(columnX, box.top)
-        }
-      }
-      const columnTops = Array.from(columns.values()).slice(0, 3)
+    const placement = await image.evaluate((element: HTMLImageElement) => {
+      const box = element.getBoundingClientRect()
       return {
-        columnCount: columnTops.length,
-        topDelta: Math.max(...columnTops) - Math.min(...columnTops),
+        left: box.left,
+        right: box.right,
+        top: box.top,
+        bottom: box.bottom,
+        viewportWidth: window.innerWidth,
+        viewportHeight: window.innerHeight,
+        fit: getComputedStyle(element).objectFit,
+        ratioDifference: Math.abs(box.width / box.height - element.naturalWidth / element.naturalHeight),
       }
     })
-
-    expect(alignment.columnCount).toBeGreaterThanOrEqual(1)
-    if (alignment.columnCount >= 2) {
-      expect(alignment.topDelta).toBeLessThanOrEqual(2)
-    }
+    expect(placement.left).toBeGreaterThanOrEqual(0)
+    expect(placement.right).toBeLessThanOrEqual(placement.viewportWidth)
+    expect(placement.top).toBeGreaterThanOrEqual(0)
+    expect(placement.bottom).toBeLessThanOrEqual(placement.viewportHeight)
+    expect(placement.fit === 'contain' || placement.ratioDifference < 0.01).toBe(true)
+    await expect(page.getByRole('button', { name: 'Index', exact: true })).toBeInViewport()
+    await expect(page.getByRole('button', { name: 'Thumbs', exact: true })).toBeInViewport()
   })
 
   test('travel spot and food sliders align their first card with section titles on iPad', async ({ page }, testInfo) => {
@@ -136,7 +136,7 @@ test.describe('responsive adaptation regressions', () => {
 
     expect(layout).not.toBeNull()
     expect(layout!.panelBelowCopy).toBe(true)
-    expect(layout!.gridData.length).toBeGreaterThanOrEqual(3)
+    expect(layout!.gridData).toHaveLength(2)
     for (const grid of layout!.gridData) {
       expect(grid.rowCount).toBe(1)
       expect(grid.left).toBeGreaterThanOrEqual(20)
@@ -185,45 +185,23 @@ test.describe('responsive adaptation regressions', () => {
     expect(imageRatio!).toBeLessThanOrEqual(0.68)
   })
 
-  test('iPad photo viewer controls stay below image and keep stable Y while switching', async ({ page }, testInfo) => {
+  test('iPad exhibition controls stay outside image and keep stable Y while switching', async ({ page }, testInfo) => {
     test.skip(!isIPadProject(testInfo.project.name), 'ipad-only test')
 
     await page.goto('/photography/pets')
-    await page.waitForLoadState('networkidle')
+    const image = page.getByTestId('exhibition-image')
+    const controls = page.getByTestId('exhibition-controls')
+    await expect(image).toBeVisible()
+    const imageBefore = await image.boundingBox()
+    const before = await controls.boundingBox()
+    expect(before).not.toBeNull()
+    expect(imageBefore).not.toBeNull()
+    expect(before!.y + before!.height <= imageBefore!.y + 1 || before!.y >= imageBefore!.y + imageBefore!.height - 1).toBe(true)
 
-    await page.locator('.photo-gallery-item').nth(1).click()
-    await expect(page.locator('.photo-viewer-image')).toBeVisible()
-
-    const placement = await page.evaluate(() => {
-      const viewer = document.querySelector('.photo-viewer') as HTMLElement | null
-      if (!viewer) return null
-      const image = viewer.querySelector('.photo-viewer-image') as HTMLElement | null
-      const controls = viewer.querySelector('.photo-viewer-controls') as HTMLElement | null
-      if (!image || !controls) return null
-
-      const imageRect = image.getBoundingClientRect()
-      const controlsRect = controls.getBoundingClientRect()
-
-      return {
-        imageBottom: imageRect.bottom,
-        controlsTop: controlsRect.top,
-      }
-    })
-
-    expect(placement).not.toBeNull()
-    expect(placement!.controlsTop).toBeGreaterThanOrEqual(placement!.imageBottom - 1)
-
-    await page.getByRole('button', { name: '下一张照片' }).click()
-    await page.waitForTimeout(180)
-
-    const controlsTopAfter = await page.evaluate(() => {
-      const viewer = document.querySelector('.photo-viewer') as HTMLElement | null
-      const controls = viewer?.querySelector('.photo-viewer-controls') as HTMLElement | null
-      if (!controls) return null
-      return controls.getBoundingClientRect().top
-    })
-
-    expect(controlsTopAfter).not.toBeNull()
-    expect(Math.abs((controlsTopAfter ?? 0) - placement!.controlsTop)).toBeLessThanOrEqual(2)
+    await page.keyboard.press('ArrowRight')
+    await expect(page.getByTestId('exhibition-position')).toContainText(/2\s*\/\s*15/)
+    const after = await controls.boundingBox()
+    expect(after).not.toBeNull()
+    expect(Math.abs(after!.y - before!.y)).toBeLessThanOrEqual(2)
   })
 })

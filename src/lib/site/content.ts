@@ -4,6 +4,7 @@ import navigationData from '../../../content/site/navigation.json'
 import homepageData from '../../../content/site/homepage.json'
 import profileData from '../../../content/site/profile.json'
 import contactData from '../../../content/site/contact.json'
+import { isPublicPath } from '@/lib/site/visibility.mjs'
 import {
   contactSchema,
   homepageSchema,
@@ -37,20 +38,24 @@ const contact = contactSchema.parse(contactData)
 
 export function getHeaderNavigation(): NavigationItem[] {
   return navigation
-    .filter((item) => item.showInHeader)
+    .filter((item) => item.showInHeader && isPublicPath(item.href))
     .map((item) => ({
       ...item,
-      children: item.children?.filter((child) => child.showInHeader),
+      // The photography exhibition has its own Index. Its top-level link opens
+      // directly on every pointer type instead of opening a navigation submenu.
+      children: item.id === 'photography'
+        ? undefined
+        : item.children?.filter((child) => child.showInHeader && isPublicPath(child.href)),
     }))
 }
 
 export function getFooterNavigation(): NavigationItem[] {
   return navigation
-    .filter((item) => item.showInFooter)
+    .filter((item) => item.showInFooter && isPublicPath(item.href))
     .map((item) => ({
       ...item,
       children: item.children
-        ?.filter((child) => child.showInFooter)
+        ?.filter((child) => child.showInFooter && isPublicPath(child.href))
         .sort(
           (a, b) =>
             (a.footerOrder ?? a.order) - (b.footerOrder ?? b.order),

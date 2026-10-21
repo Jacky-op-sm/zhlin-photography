@@ -59,6 +59,31 @@ export const photoRecordSchema = z.object({
 
 export const photoRecordsSchema = z.array(photoRecordSchema)
 
+const exhibitionId = text.regex(/^[a-z0-9]+(?:-[a-z0-9]+)*$/)
+const exhibitionAsset = text.startsWith('/assets/').refine(
+  (value) => !value.split('/').some((segment) => segment === '..' || segment === '.'),
+  'Exhibition images must use a public asset path without traversal segments',
+)
+
+export const exhibitionPhotoSchema = z.object({
+  id: exhibitionId,
+  src: exhibitionAsset,
+  thumbnail: exhibitionAsset,
+  width: z.number().int().positive(),
+  height: z.number().int().positive(),
+  alt: text,
+})
+
+export const exhibitionCollectionSchema = z.object({
+  id: exhibitionId,
+  title: text,
+  description: text.optional(),
+  photos: z.array(exhibitionPhotoSchema).min(1).refine(
+    (photos) => new Set(photos.map((photo) => photo.id)).size === photos.length,
+    'Photo IDs must be unique within an exhibition',
+  ),
+})
+
 const featuredPublicationSchema = z.object({
   title: text,
   description: text,
