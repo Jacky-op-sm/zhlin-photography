@@ -25,9 +25,11 @@ const budgets: Record<
     requests: 57,
   },
   '/photography/street': {
-    totalBytes: kib(350),
+    // Includes the selected photograph plus a bounded five-photo lookahead,
+    // loaded only after the selected image decodes (covered by loading tests).
+    totalBytes: kib(500),
     javascriptBytes: kib(185),
-    imageBytes: kib(122),
+    imageBytes: kib(300),
     requests: 42,
   },
   '/travel': {
