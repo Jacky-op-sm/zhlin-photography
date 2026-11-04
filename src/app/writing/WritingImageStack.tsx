@@ -1,5 +1,6 @@
 'use client'
 
+import { getImageProps } from 'next/image'
 import {
   useCallback,
   useEffect,
@@ -20,6 +21,29 @@ export type WritingStackImage = {
 }
 
 type Gesture = { x: number; y: number; endX: number; endY: number; identifier: number }
+
+// The stack's CSS keeps width and height auto, so `sizes` becomes the image's
+// intrinsic width. It must stay at or above the rendered width for max-width and
+// max-height to keep deciding the published size: the figure is never wider than
+// the viewport, and its 2:3 photos are capped by writing.css's max-height.
+const STACK_IMAGE_SIZES = 'min(100vw, max(8rem, 67vh))'
+// Stack photographs are published at 1600 x 2400. A srcset candidate wider than
+// its file would be scaled down by the browser, which shrinks the rendered photo.
+const SOURCE_SIZE = { width: 1600, height: 2400 }
+
+function optimizedImageProps(image: WritingStackImage) {
+  const { props: { src, srcSet, sizes } } = getImageProps({
+    src: image.src,
+    alt: image.alt,
+    sizes: STACK_IMAGE_SIZES,
+    ...SOURCE_SIZE,
+  })
+  return {
+    src,
+    sizes,
+    srcSet: srcSet?.split(', ').filter(candidate => Number.parseInt(candidate.slice(candidate.lastIndexOf(' ') + 1), 10) <= SOURCE_SIZE.width).join(', '),
+  }
+}
 
 const subscribeToHydration = () => () => {}
 const getClientSnapshot = () => true
@@ -50,7 +74,7 @@ export default function WritingImageStack({ images }: { images: WritingStackImag
 
   useEffect(() => {
     // Decode both neighbours ahead of a gesture, including the first/last seam.
-    // Keep the existing source files and display dimensions on every device.
+    // Keep the published display dimensions on every device.
     if (!enhanced || images.length < 2) return
     for (const offset of [-1, 1]) {
       const index = (activeIndex + offset + images.length) % images.length
@@ -151,7 +175,7 @@ export default function WritingImageStack({ images }: { images: WritingStackImag
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img
               ref={element => { imageRefs.current[index] = element }}
-              src={image.src}
+              {...optimizedImageProps(image)}
               alt={image.alt}
               width={image.width}
               height={image.height}

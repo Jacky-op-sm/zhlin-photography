@@ -24,6 +24,7 @@ export default function TravelPage() {
       className="min-h-screen bg-[rgba(245,245,247,1)] text-neutral-950"
       data-footer-tone="white"
     >
+      <h1 className="sr-only">旅行</h1>
       <section className="bg-white">
         <div className="mx-auto max-w-7xl px-4 sm:px-6">
           <ul

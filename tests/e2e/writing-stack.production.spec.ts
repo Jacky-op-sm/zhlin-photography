@@ -2,6 +2,7 @@ import { test, expect, type Locator, type Page } from '@playwright/test'
 
 const months = ['三月', '四月', '七月', '十月']
 const sources = ['march', 'april', 'july', 'october'].map(month => `/assets/writing/seasons/${month}.webp`)
+const optimizedSource = (source: string) => new RegExp(`^/_next/image\\?url=${encodeURIComponent(source)}&`)
 
 function stack(page: Page) {
   return page.locator('.writing-image-stack')
@@ -11,7 +12,7 @@ async function expectPhoto(root: Locator, index: number) {
   const active = root.locator('.writing-stack-slide[data-active="true"]')
   await expect(active).toHaveCount(1)
   await expect(active).toHaveAttribute('data-full-src', sources[index])
-  await expect(active.locator('img')).toHaveAttribute('src', sources[index])
+  await expect(active.locator('img')).toHaveAttribute('src', optimizedSource(sources[index]))
   await expect(active.locator('img')).toHaveAttribute('alt', new RegExp(`^${months[index]}，`))
   await expect(active).not.toHaveAttribute('aria-hidden', 'true')
   await expect(root.getByRole('img')).toHaveCount(1)
@@ -122,8 +123,8 @@ test('four original photographs preserve the article order and loop in both dire
   await expect(gallery.locator('.writing-stack-slide')).toHaveCount(4)
   expect(await gallery.locator('.writing-stack-slide').evaluateAll(slides => slides.map(slide => slide.getAttribute('data-full-src'))))
     .toEqual(sources)
-  expect(await gallery.locator('img').evaluateAll(images => images.map(image => image.getAttribute('src'))))
-    .toEqual(sources)
+  const imageSources = await gallery.locator('img').evaluateAll(images => images.map(image => image.getAttribute('src')))
+  sources.forEach((source, index) => expect(imageSources[index]).toMatch(optimizedSource(source)))
   const previous = gallery.getByRole('button', { name: '上一张照片', exact: true })
   const next = gallery.getByRole('button', { name: '下一张照片', exact: true })
   await expect(previous).toBeEnabled()
@@ -391,7 +392,7 @@ test('without JavaScript all four photographs and their captions remain readable
       await slide.locator('img').scrollIntoViewIfNeeded()
       await slide.locator('img').evaluate(async (image: HTMLImageElement) => image.decode())
       await expect(slide.locator('img')).toBeVisible()
-      await expect(slide.locator('img')).toHaveAttribute('src', sources[index])
+      await expect(slide.locator('img')).toHaveAttribute('src', optimizedSource(sources[index]))
       await expect(slide.getByText(months[index], { exact: true })).toBeVisible()
       const bounds = await slide.evaluate(node => {
         const rect = node.getBoundingClientRect()
@@ -431,7 +432,8 @@ test('the original large-photo size is preserved across phone, tablet, and deskt
     expect(bounds!.x).toBeGreaterThanOrEqual(-1)
     expect(bounds!.x + bounds!.width).toBeLessThanOrEqual(width + 1)
     const pixels = await image.evaluate((img: HTMLImageElement) => ({ width: img.naturalWidth, height: img.naturalHeight }))
-    expect(pixels).toEqual({ width: 1600, height: 2400 })
+    expect(pixels.height / pixels.width).toBeCloseTo(3 / 2, 2)
+    expect(await image.evaluate((img: HTMLImageElement) => img.currentSrc)).toContain('/_next/image?')
     for (const control of ['上一张照片', '下一张照片']) {
       const buttonBounds = await gallery.getByRole('button', { name: control, exact: true }).boundingBox()
       expect(buttonBounds!.width).toBeGreaterThanOrEqual(44)

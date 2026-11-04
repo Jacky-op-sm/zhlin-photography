@@ -15,6 +15,18 @@ export const writingTypeLabels: Record<WritingEntry['type'], string> = {
 
 export const defaultFilters: WritingFilters = { year: 'all', month: 'all', sort: 'newest' }
 
+export function writingExcerpt(markdown: string, maxLength = 110) {
+  const text = markdown
+    .replace(/!\[[^\]]*\]\([^)]*\)/g, ' ')
+    .replace(/\[([^\]]*)\]\([^)]*\)/g, '$1')
+    .replace(/^\s{0,3}(?:#{1,6}\s|>\s?|[-*+]\s|\d+\.\s)/gm, '')
+    .replace(/[*_~`]/g, '')
+    .replace(/\s+/g, ' ')
+    .trim()
+  const characters = Array.from(text)
+  return characters.length > maxLength ? `${characters.slice(0, maxLength).join('').trimEnd()}…` : text
+}
+
 export function writingPeriods(entries: WritingMetadata[]) {
   return [...new Set(entries.flatMap(entry => entry.date ? [entry.date.slice(0, 7)] : []))].sort().reverse()
 }

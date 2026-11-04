@@ -1,6 +1,6 @@
 'use client'
 
-import { useCallback, useEffect, useMemo, useRef, useState, useSyncExternalStore } from 'react'
+import { useCallback, useEffect, useMemo, useRef, useState, useSyncExternalStore, type MouseEvent as ReactMouseEvent } from 'react'
 import Image from 'next/image'
 import Link from 'next/link'
 import Modal from '@/components/ui/Modal'
@@ -104,6 +104,13 @@ export default function PhotographyExhibition({ collections, initialCollectionId
     setPreview(null)
     setPanel({ kind, phase: 'entering' })
   }
+
+  // Safari does not focus buttons on click, so Modal would otherwise record
+  // <body> and leave nowhere to return focus when the panel closes.
+  const openPanelFrom = (event: ReactMouseEvent<HTMLButtonElement>, kind: Panel['kind']) => {
+    event.currentTarget.focus({ preventScroll: true })
+    openPanel(kind)
+  }
   const preparePhoto = (nextCollection: ExhibitionCollection, index: number) => {
     setPreview((current) => current?.collection.id === nextCollection.id && current.photoIndex === index
       ? current : { collection: nextCollection, photoIndex: index })
@@ -172,7 +179,7 @@ export default function PhotographyExhibition({ collections, initialCollectionId
       <div ref={cursorRef} className={styles.cursorLabel} data-testid="exhibition-cursor" data-visible="false" data-size="large" aria-hidden="true">{label}</div>
       <p className={styles.position} aria-live="polite" aria-atomic="true" data-testid="exhibition-position">{label}</p>
       <nav className={styles.viewNavigation} aria-label="Exhibition views" data-testid="exhibition-controls">
-        <button type="button" aria-haspopup="dialog" aria-expanded={panel?.kind === 'index'} onClick={() => openPanel('index')}>Index</button><span aria-hidden="true">—</span><button type="button" aria-haspopup="dialog" aria-expanded={panel?.kind === 'thumbs'} onClick={() => openPanel('thumbs')}>Thumbs</button>
+        <button type="button" aria-haspopup="dialog" aria-expanded={panel?.kind === 'index'} onClick={(event) => openPanelFrom(event, 'index')}>Index</button><span aria-hidden="true">—</span><button type="button" aria-haspopup="dialog" aria-expanded={panel?.kind === 'thumbs'} onClick={(event) => openPanelFrom(event, 'thumbs')}>Thumbs</button>
       </nav>
       <div className={styles.keyboardNavigation}><button type="button" aria-label="Previous photograph" disabled={!hasPrevious} onClick={() => step(-1)}>← Previous</button><button type="button" aria-label="Next photograph" disabled={!hasNext} onClick={() => step(1)}>Next →</button></div>
       <Modal isOpen={panel !== null} onClose={closePanel} className={`${styles.overlay} ${panel?.kind === 'thumbs' ? styles.thumbsOverlay : ''} ${panel?.phase === 'open' ? styles.overlayOpen : ''}`} ariaLabel={panel?.kind === 'index' ? 'Index' : `${shownCollection.title} — Thumbs`} initialFocusRef={closeButtonRef}>
