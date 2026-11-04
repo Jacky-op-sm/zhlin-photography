@@ -57,7 +57,7 @@ test('the writing URL and homepage link open the latest public article above its
   if (images.length) {
     await expect(page.locator('.writing-prose img')).toHaveCount(images.length)
     for (const [index, image] of images.entries()) {
-      await expect(page.locator('.writing-prose img').nth(index)).toHaveAttribute('src', image[1])
+      await expect(page.locator('.writing-prose img').nth(index)).toHaveAttribute('src', new RegExp(encodeURIComponent(image[1])))
     }
   } else {
     await expect(page.locator('.writing-prose')).toContainText(latest.body.trim().slice(0, 30))
