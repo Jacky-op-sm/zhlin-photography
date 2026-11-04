@@ -10,30 +10,35 @@
     "build": "next build",
     "build:deploy": "npm run verify",
     "start": "next start",
-    "lint": "eslint src e2e tests scripts eslint.config.mjs next.config.js playwright.config.ts playwright.production.config.ts tailwind.config.js --max-warnings=0",
+    "lint": "eslint --config config/eslint.config.mjs src tests scripts config next.config.js --max-warnings=0",
     "lint:fix": "npm run lint -- --fix",
-    "typecheck": "tsc --noEmit",
-    "check:content": "node scripts/check-content.mjs && npm run check:writing",
-    "check:assets": "node scripts/check-assets.mjs && npm run assets:check",
-    "check:build-routes": "node scripts/check-build-routes.mjs",
-    "check:deployment": "node scripts/check-deployment.mjs",
+    "typecheck": "tsc --project config/tsconfig.json --noEmit",
+    "check:content": "node scripts/checks/content.mjs && npm run check:writing",
+    "check:assets": "node scripts/checks/assets.mjs && npm run assets:check",
+    "check:build-routes": "node scripts/checks/build-routes.mjs",
+    "check:deployment": "node scripts/checks/deployment.mjs",
     "check:all-budgets": "npm run check:assets && npm run test:e2e:production -- runtime-budget.production.spec.ts --project=production-desktop",
     "verify:static": "npm run lint && npm run typecheck && npm run check:content && npm run check:assets",
     "verify": "npm run verify:static && npm run test:unit && npm run build",
-    "photos:preview:street": "node scripts/sync-photography-selection.mjs --catalog workspace/photography/street-selection/catalog.json",
-    "photos:publish:street": "node scripts/sync-photography-selection.mjs --catalog workspace/photography/street-selection/catalog.json --write",
+    "photos:preview:street": "node scripts/photography/sync-selection.mjs --catalog workspace/photography/street-selection/catalog.json",
+    "photos:publish:street": "node scripts/photography/sync-selection.mjs --catalog workspace/photography/street-selection/catalog.json --write",
     "assets:write": "node scripts/images/build.mjs --write",
     "assets:check": "node scripts/images/check.mjs",
     "assets:report": "node scripts/images/build.mjs",
     "assets:clean": "node scripts/images/build.mjs --clean",
-    "test:e2e": "playwright test",
-    "test:unit": "node --disable-warning=MODULE_TYPELESS_PACKAGE_JSON --test tests/*.test.ts",
-    "test:e2e:production": "playwright test --config playwright.production.config.ts",
-    "test:e2e:update": "playwright test --update-snapshots",
-    "predev": "node scripts/prepare-writing.mjs --dev",
-    "prebuild": "node scripts/prepare-writing.mjs",
-    "check:writing": "node scripts/prepare-writing.mjs",
-    "pretypecheck": "node scripts/prepare-writing.mjs"
+    "test:e2e": "playwright test --config config/playwright.config.ts",
+    "test:unit": "node --disable-warning=MODULE_TYPELESS_PACKAGE_JSON --test tests/unit/*.test.ts",
+    "test:e2e:production": "playwright test --config config/playwright.production.config.ts",
+    "test:e2e:update": "playwright test --config config/playwright.config.ts --update-snapshots",
+    "predev": "node scripts/writing/prepare.mjs --dev",
+    "prebuild": "node scripts/writing/prepare.mjs",
+    "check:writing": "node scripts/writing/prepare.mjs",
+    "writing:add": "node scripts/writing/add.mjs",
+    "writing:publish": "node scripts/writing/publish.mjs",
+    "pretypecheck": "node scripts/writing/prepare.mjs",
+    "clean": "node scripts/maintenance/clean.mjs",
+    "assets:optimize": "node scripts/images/optimize.mjs",
+    "assets:optimize:write": "node scripts/images/optimize.mjs --write"
   },
   "dependencies": {
     "@upstash/ratelimit": "2.0.8",
@@ -68,5 +73,13 @@
     "postcss": "8.5.28",
     "postcss-selector-parser": "6.1.4",
     "sharp": "0.35.4"
+  },
+  "postcss": {
+    "plugins": {
+      "tailwindcss": {
+        "config": "./config/tailwind.config.js"
+      },
+      "autoprefixer": {}
+    }
   }
 }

@@ -1,0 +1,97 @@
+{
+  "date": "2026-10-23",
+  "status": "Verified locally; not deployed",
+  "recoveryCommit": "705987d9be03ac869cf08b768ac0b725eed8fc3f",
+  "publicAssets": {
+    "beforeBytes": 164220777,
+    "afterBytes": 75013916,
+    "reductionPercent": 54.3,
+    "remainingImages": 302,
+    "convertedImages": 198,
+    "retainedEfficientJpegs": 6,
+    "policy": {
+      "format": "webp",
+      "quality": 82,
+      "maxEdge": 2400,
+      "effort": 6
+    }
+  },
+  "preserved": {
+    "writingSourceFiles": 69,
+    "writingSourceDigestSha256": "d45d724db96b865b265f92d4e76545458e051394011204716a7a65976a63397f",
+    "photographyAndWritingWebPs": 92,
+    "photographySourceFiles": 28,
+    "photographySourceBytes": 20416145,
+    "sourcesMovedTo": "assets-source/photography/",
+    "provenanceMovedTo": "workspace/photography/bangkok/source-report.json",
+    "gitHistoryUnchanged": true
+  },
+  "removed": {
+    "retiredArchive": {
+      "path": "workspace/archive/",
+      "files": 148,
+      "bytes": 42337425,
+      "recovery": "archive-recovery.md"
+    },
+    "unusedSourceModules": 5,
+    "obsoleteCssRules": 56,
+    "publicJunkFiles": 9,
+    "rebuildableOutputs": [
+      {
+        "path": ".next",
+        "bytes": 359376359
+      },
+      {
+        "path": "playwright-report",
+        "bytes": 816118
+      },
+      {
+        "path": "test-results",
+        "bytes": 10716487
+      },
+      {
+        "path": ".npm-cache",
+        "bytes": 129218327
+      },
+      {
+        "path": "tsconfig.tsbuildinfo",
+        "bytes": 149329
+      },
+      {
+        "path": ".generated/writing.json",
+        "bytes": 117670
+      },
+      {
+        "path": ".generated/photography/preview",
+        "bytes": 4995580
+      },
+      {
+        "path": ".generated/photography/refined-preview",
+        "bytes": 4147646
+      }
+    ],
+    "rebuildableOutputBytes": 509537516
+  },
+  "organization": {
+    "designGuide": "docs/design.md",
+    "historicalImporters": "scripts/migrations/",
+    "maintenanceGuide": "docs/maintenance.md",
+    "cleanupCommand": "npm run clean",
+    "imageOptimizationPreview": "npm run assets:optimize",
+    "imageOptimizationWrite": "npm run assets:optimize:write"
+  },
+  "validation": {
+    "lint": "passed",
+    "typecheck": "passed",
+    "contentAndAssets": "passed; zero unreferenced or missing runtime images",
+    "unitTestsPassed": 15,
+    "productionBrowserTestsPassed": 137,
+    "productionBrowserTestsSkipped": 12,
+    "productionBuild": "passed",
+    "routeBuildCheck": "passed",
+    "desktopMobileLayoutsCompared": 14,
+    "layoutsUnchanged": true,
+    "imageQualityReview": "foliage, architecture and food samples visually inspected"
+  },
+  "storageAccounting": "Byte totals measure file contents; allocated disk usage can differ for sparse or cloud-managed files."
+}

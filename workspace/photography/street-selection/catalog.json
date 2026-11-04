@@ -1,8 +1,7 @@
 {
   "series": "street",
   "sourceDir": ".",
-  "assetDir": "public/assets/photos/street",
-  "assetPublicPath": "/assets/photos/street",
+  "assetDir": "assets-source/photography/street",
   "output": "content/photography/photos/street.json",
   "minScore": 86,
   "cleanOutput": true,

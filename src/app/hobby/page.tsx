@@ -11,7 +11,7 @@ export const metadata = buildPageMetadata({
   title: '兴趣',
   description: '阅读、电影与游戏的长期记录。',
   path: '/hobby',
-  image: '/assets/home/three-colours-trilogy-cover.png',
+  image: '/assets/home/three-colours-trilogy-cover.webp',
 })
 
 function monthScore(month: string) {

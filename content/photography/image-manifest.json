@@ -18,7 +18,7 @@
     {
       "id": "pets-1",
       "series": "pets",
-      "source": "/assets/photos/pets/Z52_2306.jpg",
+      "source": "assets-source/photography/pets/Z52_2306.jpg",
       "filename": "/assets/generated/photos/pets/Z52_2306-large.webp",
       "thumbnail": "/assets/generated/photos/pets/Z52_2306-thumb.webp",
       "width": 2000,
@@ -31,7 +31,7 @@
     {
       "id": "pets-11",
       "series": "pets",
-      "source": "/assets/photos/pets/Z52_3679.jpg",
+      "source": "assets-source/photography/pets/Z52_3679.jpg",
       "filename": "/assets/generated/photos/pets/Z52_3679-large.webp",
       "thumbnail": "/assets/generated/photos/pets/Z52_3679-thumb.webp",
       "width": 2000,
@@ -44,7 +44,7 @@
     {
       "id": "pets-12",
       "series": "pets",
-      "source": "/assets/photos/pets/Z52_6037.jpg",
+      "source": "assets-source/photography/pets/Z52_6037.jpg",
       "filename": "/assets/generated/photos/pets/Z52_6037-large.webp",
       "thumbnail": "/assets/generated/photos/pets/Z52_6037-thumb.webp",
       "width": 1333,
@@ -57,7 +57,7 @@
     {
       "id": "pets-13",
       "series": "pets",
-      "source": "/assets/photos/pets/Z52_6039.jpg",
+      "source": "assets-source/photography/pets/Z52_6039.jpg",
       "filename": "/assets/generated/photos/pets/Z52_6039-large.webp",
       "thumbnail": "/assets/generated/photos/pets/Z52_6039-thumb.webp",
       "width": 1333,
@@ -70,7 +70,7 @@
     {
       "id": "pets-14",
       "series": "pets",
-      "source": "/assets/photos/pets/Z52_6041.jpg",
+      "source": "assets-source/photography/pets/Z52_6041.jpg",
       "filename": "/assets/generated/photos/pets/Z52_6041-large.webp",
       "thumbnail": "/assets/generated/photos/pets/Z52_6041-thumb.webp",
       "width": 2000,
@@ -83,7 +83,7 @@
     {
       "id": "pets-15",
       "series": "pets",
-      "source": "/assets/photos/pets/Z52_6168.jpg",
+      "source": "assets-source/photography/pets/Z52_6168.jpg",
       "filename": "/assets/generated/photos/pets/Z52_6168-large.webp",
       "thumbnail": "/assets/generated/photos/pets/Z52_6168-thumb.webp",
       "width": 2000,
@@ -96,7 +96,7 @@
     {
       "id": "pets-16",
       "series": "pets",
-      "source": "/assets/photos/pets/Z52_6215.jpg",
+      "source": "assets-source/photography/pets/Z52_6215.jpg",
       "filename": "/assets/generated/photos/pets/Z52_6215-large.webp",
       "thumbnail": "/assets/generated/photos/pets/Z52_6215-thumb.webp",
       "width": 1333,
@@ -109,7 +109,7 @@
     {
       "id": "pets-2",
       "series": "pets",
-      "source": "/assets/photos/pets/Z52_2309.jpg",
+      "source": "assets-source/photography/pets/Z52_2309.jpg",
       "filename": "/assets/generated/photos/pets/Z52_2309-large.webp",
       "thumbnail": "/assets/generated/photos/pets/Z52_2309-thumb.webp",
       "width": 2000,
@@ -122,7 +122,7 @@
     {
       "id": "pets-3",
       "series": "pets",
-      "source": "/assets/photos/pets/Z52_2324.jpg",
+      "source": "assets-source/photography/pets/Z52_2324.jpg",
       "filename": "/assets/generated/photos/pets/Z52_2324-large.webp",
       "thumbnail": "/assets/generated/photos/pets/Z52_2324-thumb.webp",
       "width": 2000,
@@ -135,7 +135,7 @@
     {
       "id": "pets-4",
       "series": "pets",
-      "source": "/assets/photos/pets/Z52_2359.jpg",
+      "source": "assets-source/photography/pets/Z52_2359.jpg",
       "filename": "/assets/generated/photos/pets/Z52_2359-large.webp",
       "thumbnail": "/assets/generated/photos/pets/Z52_2359-thumb.webp",
       "width": 2000,
@@ -148,7 +148,7 @@
     {
       "id": "pets-5",
       "series": "pets",
-      "source": "/assets/photos/pets/Z52_2376.jpg",
+      "source": "assets-source/photography/pets/Z52_2376.jpg",
       "filename": "/assets/generated/photos/pets/Z52_2376-large.webp",
       "thumbnail": "/assets/generated/photos/pets/Z52_2376-thumb.webp",
       "width": 2000,
@@ -161,7 +161,7 @@
     {
       "id": "pets-6",
       "series": "pets",
-      "source": "/assets/photos/pets/Z52_2732.jpg",
+      "source": "assets-source/photography/pets/Z52_2732.jpg",
       "filename": "/assets/generated/photos/pets/Z52_2732-large.webp",
       "thumbnail": "/assets/generated/photos/pets/Z52_2732-thumb.webp",
       "width": 2000,
@@ -174,7 +174,7 @@
     {
       "id": "pets-7",
       "series": "pets",
-      "source": "/assets/photos/pets/Z52_2742.jpg",
+      "source": "assets-source/photography/pets/Z52_2742.jpg",
       "filename": "/assets/generated/photos/pets/Z52_2742-large.webp",
       "thumbnail": "/assets/generated/photos/pets/Z52_2742-thumb.webp",
       "width": 2000,
@@ -187,7 +187,7 @@
     {
       "id": "pets-8",
       "series": "pets",
-      "source": "/assets/photos/pets/Z52_2745.jpg",
+      "source": "assets-source/photography/pets/Z52_2745.jpg",
       "filename": "/assets/generated/photos/pets/Z52_2745-large.webp",
       "thumbnail": "/assets/generated/photos/pets/Z52_2745-thumb.webp",
       "width": 2000,
@@ -200,7 +200,7 @@
     {
       "id": "pets-9",
       "series": "pets",
-      "source": "/assets/photos/pets/Z52_2760.jpg",
+      "source": "assets-source/photography/pets/Z52_2760.jpg",
       "filename": "/assets/generated/photos/pets/Z52_2760-large.webp",
       "thumbnail": "/assets/generated/photos/pets/Z52_2760-thumb.webp",
       "width": 2000,
@@ -213,7 +213,7 @@
     {
       "id": "project-intersection-1",
       "series": "project",
-      "source": "/assets/photos/project/1.jpg",
+      "source": "assets-source/photography/project/1.jpg",
       "filename": "/assets/generated/photos/project/1-large.webp",
       "thumbnail": "/assets/generated/photos/project/1-thumb.webp",
       "width": 1333,
@@ -226,7 +226,7 @@
     {
       "id": "project-intersection-2",
       "series": "project",
-      "source": "/assets/photos/project/2.jpg",
+      "source": "assets-source/photography/project/2.jpg",
       "filename": "/assets/generated/photos/project/2-large.webp",
       "thumbnail": "/assets/generated/photos/project/2-thumb.webp",
       "width": 1333,
@@ -239,7 +239,7 @@
     {
       "id": "project-intersection-3",
       "series": "project",
-      "source": "/assets/photos/project/3.jpg",
+      "source": "assets-source/photography/project/3.jpg",
       "filename": "/assets/generated/photos/project/3-large.webp",
       "thumbnail": "/assets/generated/photos/project/3-thumb.webp",
       "width": 1333,
@@ -252,7 +252,7 @@
     {
       "id": "project-intersection-4",
       "series": "project",
-      "source": "/assets/photos/project/4.jpg",
+      "source": "assets-source/photography/project/4.jpg",
       "filename": "/assets/generated/photos/project/4-large.webp",
       "thumbnail": "/assets/generated/photos/project/4-thumb.webp",
       "width": 1333,
@@ -265,7 +265,7 @@
     {
       "id": "project-intersection-5",
       "series": "project",
-      "source": "/assets/photos/project/5.jpg",
+      "source": "assets-source/photography/project/5.jpg",
       "filename": "/assets/generated/photos/project/5-large.webp",
       "thumbnail": "/assets/generated/photos/project/5-thumb.webp",
       "width": 1333,
@@ -278,7 +278,7 @@
     {
       "id": "project-intersection-6",
       "series": "project",
-      "source": "/assets/photos/project/6.jpg",
+      "source": "assets-source/photography/project/6.jpg",
       "filename": "/assets/generated/photos/project/6-large.webp",
       "thumbnail": "/assets/generated/photos/project/6-thumb.webp",
       "width": 1333,
@@ -291,7 +291,7 @@
     {
       "id": "z52-3020",
       "series": "street",
-      "source": "/assets/photos/street/Z52_3020.jpg",
+      "source": "assets-source/photography/street/Z52_3020.jpg",
       "filename": "/assets/generated/photos/street/Z52_3020-large.webp",
       "thumbnail": "/assets/generated/photos/street/Z52_3020-thumb.webp",
       "width": 2000,
@@ -304,7 +304,7 @@
     {
       "id": "z52-7408",
       "series": "street",
-      "source": "/assets/photos/street/Z52_7408.jpg",
+      "source": "assets-source/photography/street/Z52_7408.jpg",
       "filename": "/assets/generated/photos/street/Z52_7408-large.webp",
       "thumbnail": "/assets/generated/photos/street/Z52_7408-thumb.webp",
       "width": 2000,
@@ -317,7 +317,7 @@
     {
       "id": "z52-7693",
       "series": "street",
-      "source": "/assets/photos/street/Z52_7693.jpg",
+      "source": "assets-source/photography/street/Z52_7693.jpg",
       "filename": "/assets/generated/photos/street/Z52_7693-large.webp",
       "thumbnail": "/assets/generated/photos/street/Z52_7693-thumb.webp",
       "width": 1333,
@@ -330,7 +330,7 @@
     {
       "id": "z52-8055",
       "series": "street",
-      "source": "/assets/photos/street/Z52_8055.jpg",
+      "source": "assets-source/photography/street/Z52_8055.jpg",
       "filename": "/assets/generated/photos/street/Z52_8055-large.webp",
       "thumbnail": "/assets/generated/photos/street/Z52_8055-thumb.webp",
       "width": 2000,
@@ -343,7 +343,7 @@
     {
       "id": "z52-8331",
       "series": "street",
-      "source": "/assets/photos/street/Z52_8331.jpg",
+      "source": "assets-source/photography/street/Z52_8331.jpg",
       "filename": "/assets/generated/photos/street/Z52_8331-large.webp",
       "thumbnail": "/assets/generated/photos/street/Z52_8331-thumb.webp",
       "width": 1231,
@@ -356,7 +356,7 @@
     {
       "id": "z52-8337",
       "series": "street",
-      "source": "/assets/photos/street/Z52_8337.jpg",
+      "source": "assets-source/photography/street/Z52_8337.jpg",
       "filename": "/assets/generated/photos/street/Z52_8337-large.webp",
       "thumbnail": "/assets/generated/photos/street/Z52_8337-thumb.webp",
       "width": 1333,
@@ -369,7 +369,7 @@
     {
       "id": "z52-8539",
       "series": "street",
-      "source": "/assets/photos/street/Z52_8539.jpg",
+      "source": "assets-source/photography/street/Z52_8539.jpg",
       "filename": "/assets/generated/photos/street/Z52_8539-large.webp",
       "thumbnail": "/assets/generated/photos/street/Z52_8539-thumb.webp",
       "width": 1333,

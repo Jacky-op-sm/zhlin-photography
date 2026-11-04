@@ -8,7 +8,7 @@ export const metadata = buildPageMetadata({
   title: '旅行',
   description: '旅行摄影与城市游记，按不同目的地整理成路书。',
   path: '/travel',
-  image: '/assets/travel/japan-front.jpeg',
+  image: '/assets/travel/japan-front.webp',
 });
 
 export default function TravelPage() {

@@ -14,7 +14,7 @@
       "morning",
       "intersection"
     ],
-    "source": "/assets/photos/project/1.jpg"
+    "source": "assets-source/photography/project/1.jpg"
   },
   {
     "id": "project-intersection-2",
@@ -31,7 +31,7 @@
       "afternoon",
       "traffic"
     ],
-    "source": "/assets/photos/project/2.jpg"
+    "source": "assets-source/photography/project/2.jpg"
   },
   {
     "id": "project-intersection-3",
@@ -48,7 +48,7 @@
       "evening",
       "sunset"
     ],
-    "source": "/assets/photos/project/3.jpg"
+    "source": "assets-source/photography/project/3.jpg"
   },
   {
     "id": "project-intersection-4",
@@ -65,7 +65,7 @@
       "evening",
       "lights"
     ],
-    "source": "/assets/photos/project/4.jpg"
+    "source": "assets-source/photography/project/4.jpg"
   },
   {
     "id": "project-intersection-5",
@@ -82,7 +82,7 @@
       "night",
       "lonely"
     ],
-    "source": "/assets/photos/project/5.jpg"
+    "source": "assets-source/photography/project/5.jpg"
   },
   {
     "id": "project-intersection-6",
@@ -99,6 +99,6 @@
       "rain",
       "reflection"
     ],
-    "source": "/assets/photos/project/6.jpg"
+    "source": "assets-source/photography/project/6.jpg"
   }
 ]

@@ -45,3 +45,8 @@ assets-src/
 /.npm-cache/
 /.generated/
 /workspace/writing/
+/workspace/photography/bangkok/
+
+# Reproducible local caches; authored sources stay tracked.
+/.cache/
+/.eslintcache

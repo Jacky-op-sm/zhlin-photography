@@ -14,7 +14,7 @@
       "portrait",
       "pet"
     ],
-    "source": "/assets/photos/pets/Z52_2306.jpg"
+    "source": "assets-source/photography/pets/Z52_2306.jpg"
   },
   {
     "id": "pets-2",
@@ -31,7 +31,7 @@
       "portrait",
       "pet"
     ],
-    "source": "/assets/photos/pets/Z52_2309.jpg"
+    "source": "assets-source/photography/pets/Z52_2309.jpg"
   },
   {
     "id": "pets-3",
@@ -48,7 +48,7 @@
       "portrait",
       "pet"
     ],
-    "source": "/assets/photos/pets/Z52_2324.jpg"
+    "source": "assets-source/photography/pets/Z52_2324.jpg"
   },
   {
     "id": "pets-4",
@@ -65,7 +65,7 @@
       "portrait",
       "pet"
     ],
-    "source": "/assets/photos/pets/Z52_2359.jpg"
+    "source": "assets-source/photography/pets/Z52_2359.jpg"
   },
   {
     "id": "pets-5",
@@ -82,7 +82,7 @@
       "portrait",
       "pet"
     ],
-    "source": "/assets/photos/pets/Z52_2376.jpg"
+    "source": "assets-source/photography/pets/Z52_2376.jpg"
   },
   {
     "id": "pets-6",
@@ -99,7 +99,7 @@
       "portrait",
       "pet"
     ],
-    "source": "/assets/photos/pets/Z52_2732.jpg"
+    "source": "assets-source/photography/pets/Z52_2732.jpg"
   },
   {
     "id": "pets-7",
@@ -116,7 +116,7 @@
       "portrait",
       "pet"
     ],
-    "source": "/assets/photos/pets/Z52_2742.jpg"
+    "source": "assets-source/photography/pets/Z52_2742.jpg"
   },
   {
     "id": "pets-8",
@@ -133,7 +133,7 @@
       "portrait",
       "pet"
     ],
-    "source": "/assets/photos/pets/Z52_2745.jpg"
+    "source": "assets-source/photography/pets/Z52_2745.jpg"
   },
   {
     "id": "pets-9",
@@ -150,7 +150,7 @@
       "portrait",
       "pet"
     ],
-    "source": "/assets/photos/pets/Z52_2760.jpg"
+    "source": "assets-source/photography/pets/Z52_2760.jpg"
   },
   {
     "id": "pets-11",
@@ -167,7 +167,7 @@
       "portrait",
       "pet"
     ],
-    "source": "/assets/photos/pets/Z52_3679.jpg"
+    "source": "assets-source/photography/pets/Z52_3679.jpg"
   },
   {
     "id": "pets-12",
@@ -184,7 +184,7 @@
       "portrait",
       "pet"
     ],
-    "source": "/assets/photos/pets/Z52_6037.jpg"
+    "source": "assets-source/photography/pets/Z52_6037.jpg"
   },
   {
     "id": "pets-13",
@@ -201,7 +201,7 @@
       "portrait",
       "pet"
     ],
-    "source": "/assets/photos/pets/Z52_6039.jpg"
+    "source": "assets-source/photography/pets/Z52_6039.jpg"
   },
   {
     "id": "pets-14",
@@ -218,7 +218,7 @@
       "portrait",
       "pet"
     ],
-    "source": "/assets/photos/pets/Z52_6041.jpg"
+    "source": "assets-source/photography/pets/Z52_6041.jpg"
   },
   {
     "id": "pets-15",
@@ -235,7 +235,7 @@
       "portrait",
       "pet"
     ],
-    "source": "/assets/photos/pets/Z52_6168.jpg"
+    "source": "assets-source/photography/pets/Z52_6168.jpg"
   },
   {
     "id": "pets-16",
@@ -252,6 +252,6 @@
       "portrait",
       "pet"
     ],
-    "source": "/assets/photos/pets/Z52_6215.jpg"
+    "source": "assets-source/photography/pets/Z52_6215.jpg"
   }
 ]

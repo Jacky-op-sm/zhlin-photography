@@ -1,5 +1,8 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
+  typescript: {
+    tsconfigPath: 'config/tsconfig.json',
+  },
   // Keep navigation responses and assets on the same release after publishing.
   deploymentId:
     process.env.NEXT_DEPLOYMENT_ID ||

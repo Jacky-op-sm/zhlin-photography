@@ -39,7 +39,7 @@
     {
       "place": "日本",
       "href": "/travel/japan",
-      "image": "/assets/travel/japan-front.jpeg",
+      "image": "/assets/travel/japan-front.webp",
       "alt": "日本旅行封面",
       "body": "我记住日本，\n不仅因为高松的悠闲、京都的红，\n鸭川的夜和奈良的鹿，也因为朋友同行的时光，\n以及初识相机时那份欣喜。",
       "imageClassName": "object-[56%_center]",
@@ -48,14 +48,14 @@
     {
       "place": "南京",
       "href": "/travel/nanjing",
-      "image": "/assets/travel/nanjing-hero-wutong-street.jpg",
+      "image": "/assets/travel/nanjing-hero-wutong-street.webp",
       "alt": "南京旅行封面",
       "body": "春节的南京大概不是最好的旅行时机，\n可旅行本就不只有轻松和快乐，\n也有拥挤、劳累和意外。"
     },
     {
       "place": "北京",
       "href": "/travel/beijing",
-      "image": "/assets/travel/beijing-front.jpeg",
+      "image": "/assets/travel/beijing-front.webp",
       "alt": "北京旅行封面",
       "body": "北京给了我太多第一次：\n第一次独自旅行，第一次走进音乐酒吧，\n第一次在艺术展里结识朋友。",
       "imageClassName": "object-[56%_center]"
@@ -65,14 +65,14 @@
     {
       "title": "阅读",
       "href": "/hobby#reading",
-      "image": "/assets/home/ward-no-6-cover.jpg",
+      "image": "/assets/home/ward-no-6-cover.webp",
       "alt": "Book cover",
       "body": "阅读教会我耐心，\n契诃夫的温柔、海明威的力量，\n和陀思妥耶夫斯基笔下的人心。"
     },
     {
       "title": "电影",
       "href": "/hobby#film",
-      "image": "/assets/home/three-colours-trilogy-cover.png",
+      "image": "/assets/home/three-colours-trilogy-cover.webp",
       "alt": "Film cover",
       "body": "看哪，红白蓝三部曲的美学，\n小津安二郎讲述的家庭，今敏的时空跳跃。",
       "imageClassName": "object-cover object-center scale-[1.05]"
@@ -80,7 +80,7 @@
     {
       "title": "游戏",
       "href": "/hobby#game",
-      "image": "/assets/home/league-of-legends-cover.jpg",
+      "image": "/assets/home/league-of-legends-cover.webp",
       "alt": "Video game cover",
       "body": "游戏对我到底意味着什么？\n是考验反应、团队协作的激情，\n还是结束后的疲惫与空虚。"
     }

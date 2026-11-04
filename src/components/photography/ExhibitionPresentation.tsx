@@ -1,12 +1,9 @@
 'use client'
 
-import { useEffect, useRef, useState, type RefObject } from 'react'
-import Image from 'next/image'
-import type { ExhibitionPhoto } from './PhotographyExhibition'
-import styles from './PhotographyExhibition.module.css'
+import { useEffect, useRef, type RefObject } from 'react'
 
-export const IMAGE_SIZES = '(max-width: 960px) 92vw, 59vw'
-export const TRANSITION_MS = 1000
+export { TRANSITION_MS } from './exhibition-images'
+export { ExhibitionImage } from './ExhibitionImage'
 
 export function useExhibitionCursor(stageRef: RefObject<HTMLDivElement | null>, labelRef: RefObject<HTMLDivElement | null>, collectionId: string | undefined, blocked: boolean) {
   const lastPointer = useRef<{ x: number; y: number } | null>(null)
@@ -87,39 +84,4 @@ export function useExhibitionCursor(stageRef: RefObject<HTMLDivElement | null>, 
       finePointer.removeEventListener('change', initialize)
     }
   }, [stageRef, labelRef, collectionId, blocked])
-}
-
-// Keep the decoded photograph until its successor is ready. A DOM request marker
-// prevents a late image event from winning over rapid navigation or browser Back.
-export function ExhibitionImage({ photo, collectionId, onPresent }: { photo: ExhibitionPhoto; collectionId: string; onPresent: (collectionId: string, photoId: string) => void }) {
-  const [view, setView] = useState({ photo, collectionId, previous: null as ExhibitionPhoto | null })
-  const [failedRequest, setFailedRequest] = useState<string | null>(null)
-  const [retry, setRetry] = useState(0)
-  const frameRef = useRef<HTMLDivElement>(null)
-  const clearTransition = useRef<ReturnType<typeof setTimeout> | null>(null)
-  const requestKey = `${collectionId}/${photo.id}`
-  const displayedKey = `${view.collectionId}/${view.photo.id}`
-  const pending = requestKey !== displayedKey
-  const failed = failedRequest === requestKey
-  useEffect(() => () => { if (clearTransition.current) clearTimeout(clearTransition.current) }, [])
-  const present = () => {
-    if (frameRef.current?.dataset.requested !== requestKey) return
-    if (clearTransition.current) clearTimeout(clearTransition.current)
-    const animate = view.collectionId !== collectionId
-    setView((previous) => ({ photo, collectionId, previous: animate ? previous.photo : null }))
-    setFailedRequest(null)
-    onPresent(collectionId, photo.id)
-    if (animate) clearTransition.current = setTimeout(() => setView((current) => ({ ...current, previous: null })), TRANSITION_MS)
-  }
-  return (
-    <div ref={frameRef} className={styles.imageFrame} data-testid="exhibition-image-frame" data-requested={requestKey} data-state={failed ? 'error' : pending ? 'loading' : view.previous ? 'transitioning' : 'ready'} aria-busy={pending && !failed}>
-      {view.previous ? <div className={styles.imageLayer} data-orientation={view.previous.width > view.previous.height ? 'landscape' : 'portrait'} aria-hidden="true"><Image src={view.previous.src} alt="" width={view.previous.width} height={view.previous.height} className={styles.image} sizes={IMAGE_SIZES} loading="eager" draggable={false} /></div> : null}
-      <div key={`${displayedKey}/${retry}`} className={`${styles.imageLayer} ${view.previous ? styles.collectionIncoming : ''}`} data-orientation={view.photo.width > view.photo.height ? 'landscape' : 'portrait'}>
-        <Image src={view.photo.src} alt={view.photo.alt} width={view.photo.width} height={view.photo.height} className={styles.image} data-testid="exhibition-image" data-photo-id={view.photo.id} sizes={IMAGE_SIZES} loading="eager" fetchPriority="high" draggable={false} onLoad={() => { if (frameRef.current?.dataset.requested === displayedKey) { setFailedRequest(null); onPresent(view.collectionId, view.photo.id) } }} onError={() => { if (frameRef.current?.dataset.requested === displayedKey) setFailedRequest(displayedKey) }} />
-      </div>
-      {pending ? <div className={styles.pendingImage} aria-hidden="true"><Image key={`${requestKey}/${retry}`} src={photo.src} alt="" width={photo.width} height={photo.height} sizes={IMAGE_SIZES} loading="eager" fetchPriority="high" onLoad={present} onError={() => { if (frameRef.current?.dataset.requested === requestKey) setFailedRequest(requestKey) }} /></div> : null}
-      {view.previous ? <div key={`curtain-${displayedKey}`} className={styles.collectionCurtain} aria-hidden="true" /> : null}
-      {failed ? <div className={styles.imageError} role="alert" data-exhibition-ui><span>This photograph could not load.</span><button type="button" onClick={() => { setFailedRequest(null); setRetry((value) => value + 1) }}>Retry</button></div> : null}
-    </div>
-  )
 }

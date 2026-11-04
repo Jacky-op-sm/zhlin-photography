@@ -1,6 +1,7 @@
 import type {
   HobbyContent,
   PhotographyPhotoContent,
+  PhotographySeriesContent,
 } from '@/lib/content/schemas'
 
 export type {
@@ -10,15 +11,7 @@ export type {
   Travel,
 } from '@/lib/content/schemas'
 
-export const PhotoCategory = {
-  All: 'all',
-  Street: 'street',
-  Pets: 'pets',
-  Project: 'project',
-} as const
-
-export type PhotoCategory =
-  (typeof PhotoCategory)[keyof typeof PhotoCategory]
+export type PhotoCategory = PhotographySeriesContent['slug']
 
 export type Photo = PhotographyPhotoContent & {
   category: PhotoCategory

@@ -5,12 +5,13 @@
 .imageLayer { position: absolute; left: 50%; top: 50%; width: 58.333333vw; height: calc(100vh - 200px); height: calc(100dvh - 200px); min-height: 120px; transform: translate(-50%, -50%); }
 .imageLayer[data-orientation="portrait"] { width: 41.666667vw; }
 .image { display: block; width: 100%; height: 100%; object-fit: contain; user-select: none; }
-.pendingImage { position: absolute; width: 1px; height: 1px; overflow: hidden; opacity: 0; pointer-events: none; }
+.preparedImage { visibility: hidden; opacity: 0; pointer-events: none; }
 .imageError { position: absolute; z-index: 5; bottom: 88px; left: 50%; transform: translateX(-50%); display: flex; align-items: center; gap: 16px; padding: 8px 16px; background: #fff; white-space: nowrap; }
 .imageError button { min-height: 44px; background: none; border: 0; padding: 8px; font: inherit; text-decoration: underline; cursor: pointer; }
-.collectionIncoming { animation: incomingCollection 1s step-end both; }
 .collectionCurtain { position: absolute; inset: 0; background: #fff; pointer-events: none; animation: collectionCurtain 1s cubic-bezier(.165,.84,.44,1) both; }
 .clickZone { position: absolute; top: 0; bottom: 0; width: 50%; border: 0; background: transparent; padding: 0; cursor: w-resize; }
+/* Pointer-only hit areas have separate, visible keyboard navigation controls. */
+.exhibition .clickZone:focus-visible { outline: none !important; }
 .previousZone { left: 0; }
 .nextZone { right: 0; cursor: e-resize; }
 .clickZone:disabled { cursor: default; }
@@ -98,7 +99,6 @@
   .position { bottom: max(16px, env(safe-area-inset-bottom)); }
 }
 @media (max-height: 500px) and (max-width: 960px), (max-height: 500px) and (pointer: coarse) { .viewNavigation { bottom: auto; } }
-@keyframes incomingCollection { 0%, 49% { opacity: 0; } 50%, 100% { opacity: 1; } }
 @keyframes collectionCurtain { 0% { transform: translateY(100%); } 45%, 50% { transform: translateY(0); } 100% { transform: translateY(-100%); } }
 @media (prefers-reduced-motion: reduce) {
   /* Keep the exhibition choreography consistent across devices, overriding
@@ -109,5 +109,5 @@
   .thumbsHeader, .thumbnailGrid { transition-duration: .6s !important; }
   .thumbnailImage img { transition-duration: .3s !important; }
   .collectionButton > span:first-child { transition-duration: .2s !important; }
-  .collectionIncoming, .collectionCurtain { animation-duration: 1s !important; }
+  .collectionCurtain { animation-duration: 1s !important; }
 }

@@ -13,7 +13,7 @@
       "street",
       "black-white"
     ],
-    "source": "/assets/photos/street/Z52_8539.jpg"
+    "source": "assets-source/photography/street/Z52_8539.jpg"
   },
   {
     "id": "z52-8331",
@@ -29,7 +29,7 @@
       "street",
       "black-white"
     ],
-    "source": "/assets/photos/street/Z52_8331.jpg"
+    "source": "assets-source/photography/street/Z52_8331.jpg"
   },
   {
     "id": "z52-7693",
@@ -45,7 +45,7 @@
       "street",
       "black-white"
     ],
-    "source": "/assets/photos/street/Z52_7693.jpg"
+    "source": "assets-source/photography/street/Z52_7693.jpg"
   },
   {
     "id": "z52-8337",
@@ -61,7 +61,7 @@
       "street",
       "black-white"
     ],
-    "source": "/assets/photos/street/Z52_8337.jpg"
+    "source": "assets-source/photography/street/Z52_8337.jpg"
   },
   {
     "id": "z52-8055",
@@ -77,7 +77,7 @@
       "street",
       "black-white"
     ],
-    "source": "/assets/photos/street/Z52_8055.jpg"
+    "source": "assets-source/photography/street/Z52_8055.jpg"
   },
   {
     "id": "z52-7408",
@@ -93,7 +93,7 @@
       "street",
       "black-white"
     ],
-    "source": "/assets/photos/street/Z52_7408.jpg"
+    "source": "assets-source/photography/street/Z52_7408.jpg"
   },
   {
     "id": "z52-3020",
@@ -109,6 +109,6 @@
       "street",
       "black-white"
     ],
-    "source": "/assets/photos/street/Z52_3020.jpg"
+    "source": "assets-source/photography/street/Z52_3020.jpg"
   }
 ]

@@ -1,0 +1,28 @@
+# Local build and dependency caches are recreated by Vercel.
+.git/
+.next/
+node_modules/
+.npm-cache/
+.cache/
+.eslintcache
+*.tsbuildinfo
+
+# Curation, local masters and import receipts are not deployment inputs.
+workspace/
+assets-src/
+.generated/
+
+# Local reports and documentation.
+playwright-report/
+test-results/
+coverage/
+tests/e2e/*-snapshots/
+docs/
+.github/
+*.log
+.DS_Store
+scripts/dev/*.bat
+.env*.local
+
+# Keep assets-source/, scripts/, content/, config/ and tests/ source files:
+# build:deploy runs the repository's asset checks and lint targets.

@@ -23,14 +23,14 @@
       {
         "title": "Nanjing Travel Story",
         "description": "A long-form city walk with portraits, food notes, and narrative captions.",
-        "image": "/assets/travel/nanjing-hero-wutong-street.jpg",
+        "image": "/assets/travel/nanjing-hero-wutong-street.webp",
         "href": "/travel/nanjing",
         "ctaLabel": "Read journey"
       },
       {
         "title": "Shanghai Travel Story",
         "description": "Dense street scenes and movement studies from one of my busiest routes.",
-        "image": "/assets/travel/shanghai-hero-cityscape.jpg",
+        "image": "/assets/travel/shanghai-hero-cityscape.webp",
         "href": "/travel/shanghai",
         "ctaLabel": "Read journey"
       }
@@ -80,14 +80,14 @@
       {
         "title": "Hangzhou City Notes",
         "description": "A companion city archive that extends the same long-form attention.",
-        "image": "/assets/travel/hangzhou-front.jpeg",
+        "image": "/assets/travel/hangzhou-front.webp",
         "href": "/travel/hangzhou",
         "ctaLabel": "Read journey"
       },
       {
         "title": "Daily Notes / Hobby",
         "description": "Reading, films, and game notes that shaped the rhythm of this project.",
-        "image": "/assets/home/three-colours-trilogy-cover.png",
+        "image": "/assets/home/three-colours-trilogy-cover.webp",
         "href": "/hobby",
         "ctaLabel": "View notes"
       }

@@ -7,7 +7,7 @@ import {
   photographySeriesListSchema,
   type PhotographySeriesContent,
 } from '@/lib/content/schemas';
-import { PhotoCategory, type Photo } from '@/lib/types';
+import type { PhotoCategory, Photo } from '@/lib/types';
 
 const photoContent = {
   street: photoRecordsSchema.parse(streetPhotos),

@@ -140,4 +140,4 @@ Markdown 是唯一的文章编辑源。`.generated/writing.json` 是准备与构
 
 旧 JSON 文章已逐篇校验无损转换并备份到 `workspace/writing/replaced-content/markdown-2026-09-22T12-10-07-654Z/`，不参与网站构建或部署。`workspace/writing/markdown-migration.json` 记录文件对应关系和转换时的正文校验值。此后的手动修改无需更新这些历史校验值。
 
-`scripts/import-writing-selection.mjs` 已改为输出 Markdown；它只用于主动重新导入整批 handoff。执行它的 `--write` 会替换当前选稿，可能覆盖手动编辑，不要把它当作日常刷新命令。
+`scripts/migrations/import-writing-selection.mjs` 已改为输出 Markdown；它只用于主动重新导入整批 handoff。执行它的 `--write` 会替换当前选稿，可能覆盖手动编辑，不要把它当作日常刷新命令。

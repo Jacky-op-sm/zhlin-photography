@@ -46,6 +46,7 @@ jobs:
         with:
           name: playwright-diagnostics
           path: |
-            playwright-report
-            test-results
+            .cache/playwright/report
+            .cache/playwright/results
+          include-hidden-files: true
           if-no-files-found: ignore

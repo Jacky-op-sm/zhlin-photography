@@ -1,11 +1,11 @@
 'use client'
 
 import { useCallback, useEffect, useMemo, useRef, useState, useSyncExternalStore } from 'react'
-import Image, { getImageProps } from 'next/image'
+import Image from 'next/image'
 import Link from 'next/link'
 import Modal from '@/components/ui/Modal'
 import profile from '../../../content/site/profile.json'
-import { ExhibitionImage, useExhibitionCursor, IMAGE_SIZES, TRANSITION_MS } from './ExhibitionPresentation'
+import { ExhibitionImage, useExhibitionCursor, TRANSITION_MS } from './ExhibitionPresentation'
 import styles from './PhotographyExhibition.module.css'
 
 export interface ExhibitionPhoto { id: string; src: string; thumbnail: string; width: number; height: number; alt: string }
@@ -40,6 +40,7 @@ export default function PhotographyExhibition({ collections, initialCollectionId
   const selection = useMemo(() => resolveSelection(hash, availableCollections, initialCollectionId), [hash, availableCollections, initialCollectionId])
   const [presented, setPresented] = useState(selection)
   const [panel, setPanel] = useState<Panel | null>(null)
+  const [preview, setPreview] = useState<Selection | null>(null)
   const [tab, setTab] = useState({ active: 'works', displayed: 'works', fading: false })
   const closeButtonRef = useRef<HTMLButtonElement>(null)
   const worksTabRef = useRef<HTMLButtonElement>(null)
@@ -56,6 +57,18 @@ export default function PhotographyExhibition({ collections, initialCollectionId
   const shownCollection = presented?.collection ?? collection
   const shownIndex = presented?.photoIndex ?? photoIndex
   const collectionIndex = availableCollections.findIndex((item) => item.id === collection?.id)
+  const sequence = useMemo(() => availableCollections.flatMap((item) => item.photos.map((entry) => ({ photo: entry, collectionId: item.id }))), [availableCollections])
+  const neighbours = useMemo(() => {
+    const index = sequence.findIndex((item) => item.collectionId === collection?.id && item.photo.id === photo?.id)
+    const adjacent = [1, -1, 2, -2, 3].map((offset) => sequence[index + offset]).filter((item) => item !== undefined)
+    if (!panel || panel.phase === 'closing') return adjacent
+    const intended = preview ? [{ photo: preview.collection.photos[preview.photoIndex], collectionId: preview.collection.id }] : []
+    const entrances = panel.kind === 'index' && tab.displayed === 'works'
+      ? availableCollections.map((item) => ({ photo: item.photos[0], collectionId: item.id })) : []
+    // Prepare destinations while the visitor is deciding, without loading a
+    // whole work. ExhibitionImage retains at most six decoded image nodes.
+    return [...intended, ...entrances, ...adjacent]
+  }, [sequence, collection?.id, photo?.id, panel, preview, tab.displayed, availableCollections])
   const hasPrevious = photoIndex > 0 || collectionIndex > 0
   const hasNext = !!collection && (photoIndex < collection.photos.length - 1 || collectionIndex < availableCollections.length - 1)
 
@@ -79,14 +92,21 @@ export default function PhotographyExhibition({ collections, initialCollectionId
   const onPresent = useCallback((collectionId: string, photoId: string) => {
     const nextCollection = availableCollections.find((item) => item.id === collectionId)
     const nextIndex = nextCollection?.photos.findIndex((item) => item.id === photoId) ?? -1
-    if (nextCollection && nextIndex >= 0) setPresented((current) => current?.collection.id === collectionId && current.photoIndex === nextIndex ? current : { collection: nextCollection, photoIndex: nextIndex })
+    if (nextCollection && nextIndex >= 0) {
+      setPresented((current) => current?.collection.id === collectionId && current.photoIndex === nextIndex ? current : { collection: nextCollection, photoIndex: nextIndex })
+    }
   }, [availableCollections])
 
   const openPanel = (kind: Panel['kind']) => {
     if (closeTimer.current) clearTimeout(closeTimer.current)
     if (tabTimer.current) clearTimeout(tabTimer.current)
     setTab({ active: 'works', displayed: 'works', fading: false })
+    setPreview(null)
     setPanel({ kind, phase: 'entering' })
+  }
+  const preparePhoto = (nextCollection: ExhibitionCollection, index: number) => {
+    setPreview((current) => current?.collection.id === nextCollection.id && current.photoIndex === index
+      ? current : { collection: nextCollection, photoIndex: index })
   }
   const closePanel = useCallback(() => {
     if (!panel || panel.phase === 'closing') return
@@ -125,17 +145,6 @@ export default function PhotographyExhibition({ collections, initialCollectionId
     document.addEventListener('keydown', onKeyDown)
     return () => document.removeEventListener('keydown', onKeyDown)
   }, [panel, step])
-  useEffect(() => {
-    const nextPhoto = collection?.photos[photoIndex + 1] ?? availableCollections[collectionIndex + 1]?.photos[0]
-    if (!nextPhoto) return
-    const { props } = getImageProps({ src: nextPhoto.src, alt: nextPhoto.alt, width: nextPhoto.width, height: nextPhoto.height, sizes: IMAGE_SIZES })
-    const image = new window.Image()
-    image.fetchPriority = 'low'
-    image.decoding = 'async'
-    if (props.sizes) image.sizes = props.sizes
-    if (props.srcSet) image.srcset = props.srcSet
-    image.src = props.src
-  }, [collection, photoIndex, availableCollections, collectionIndex])
 
   if (!collection || !photo || !shownCollection) return <main lang="en" className={styles.exhibition}><Link href="/">Back to Zhlin</Link><p>No photographs are available.</p></main>
   const label = `${shownCollection.title} - ${shownIndex + 1}/${shownCollection.photos.length}`
@@ -156,7 +165,7 @@ export default function PhotographyExhibition({ collections, initialCollectionId
         }}
         onTouchCancel={() => { touchStart.current = null }}
       >
-        <ExhibitionImage photo={photo} collectionId={collection.id} onPresent={onPresent} />
+        <ExhibitionImage photo={photo} collectionId={collection.id} neighbours={neighbours} locationHash={hash} onPresent={onPresent} />
         <button type="button" className={`${styles.clickZone} ${styles.previousZone}`} tabIndex={-1} aria-hidden="true" disabled={!hasPrevious} onClick={() => { if (Date.now() > suppressClickUntil.current) step(-1) }} />
         <button type="button" className={`${styles.clickZone} ${styles.nextZone}`} tabIndex={-1} aria-hidden="true" disabled={!hasNext} onClick={() => { if (Date.now() > suppressClickUntil.current) step(1) }} />
       </div>
@@ -182,13 +191,19 @@ export default function PhotographyExhibition({ collections, initialCollectionId
             </header>
             <div className={styles.indexContent} data-fading={tab.fading}>
               <div role="tabpanel" id="exhibition-works-panel" aria-labelledby="exhibition-works-tab" hidden={tab.displayed !== 'works'}>{tab.displayed === 'works' ? <div className={styles.collectionList}>
-                {availableCollections.map((item) => <button type="button" key={item.id} className={styles.collectionButton} aria-current={item.id === shownCollection.id ? 'true' : undefined} onClick={() => { selectPhoto(item, item.id === shownCollection.id ? shownIndex : 0); closePanel() }}><span>{item.title}</span><span className={styles.collectionCount}>{item.photos.length}</span></button>)}
+                {availableCollections.map((item) => <button type="button" key={item.id} className={styles.collectionButton} aria-current={item.id === shownCollection.id ? 'true' : undefined}
+                  onMouseEnter={() => preparePhoto(item, item.id === shownCollection.id ? shownIndex : 0)}
+                  onFocus={() => preparePhoto(item, item.id === shownCollection.id ? shownIndex : 0)}
+                  onTouchStart={() => preparePhoto(item, item.id === shownCollection.id ? shownIndex : 0)}
+                  onClick={() => { selectPhoto(item, item.id === shownCollection.id ? shownIndex : 0); closePanel() }}><span>{item.title}</span><span className={styles.collectionCount}>{item.photos.length}</span></button>)}
               </div> : null}</div>
               <div role="tabpanel" id="exhibition-info-panel" aria-labelledby="exhibition-info-tab" hidden={tab.displayed !== 'info'} className={styles.infoContent}>{tab.displayed === 'info' ? <><h2>{profile.name}</h2><p>Photographer<br />{profile.city}</p>{shownCollection.description ? <p lang={/[\u3400-\u9fff]/.test(shownCollection.description) ? 'zh-CN' : 'en'}>{shownCollection.description}</p> : null}<p><a href={`mailto:${profile.email}`}>{profile.email}</a></p></> : null}</div>
             </div>
           </> : <>
             <header className={styles.thumbsHeader}><h2>{shownCollection.title}</h2><button ref={closeButtonRef} type="button" aria-label="Close thumbnails" onClick={closePanel}>Close</button></header>
-            <div className={styles.thumbnailGrid}>{shownCollection.photos.map((item, index) => <button type="button" key={item.id} className={styles.thumbnailButton} aria-label={`View photograph ${index + 1}: ${item.alt}`} aria-current={index === shownIndex ? 'true' : undefined} onClick={() => { selectPhoto(shownCollection, index); closePanel() }}><span className={styles.thumbnailImage}><Image src={item.thumbnail} alt="" width={item.width} height={item.height} sizes="(max-width: 480px) 18vw, (max-width: 991px) 16vw, 8vw" /></span><span className={styles.srOnly}>{index + 1}</span></button>)}</div>
+            <div className={styles.thumbnailGrid}>{shownCollection.photos.map((item, index) => <button type="button" key={item.id} className={styles.thumbnailButton} aria-label={`View photograph ${index + 1}: ${item.alt}`} aria-current={index === shownIndex ? 'true' : undefined}
+              onMouseEnter={() => preparePhoto(shownCollection, index)} onFocus={() => preparePhoto(shownCollection, index)} onTouchStart={() => preparePhoto(shownCollection, index)}
+              onClick={() => { selectPhoto(shownCollection, index); closePanel() }}><span className={styles.thumbnailImage}><Image src={item.thumbnail} alt="" width={item.width} height={item.height} sizes="(max-width: 480px) 18vw, (max-width: 991px) 16vw, 8vw" /></span><span className={styles.srOnly}>{index + 1}</span></button>)}</div>
           </>}
         </section>
       </Modal>

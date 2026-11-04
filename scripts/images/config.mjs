@@ -3,9 +3,9 @@ import path from 'node:path'
 export const projectRoot = process.cwd()
 export const publicRoot = path.join(projectRoot, 'public')
 export const photographyOriginalRoot = path.join(
-  publicRoot,
-  'assets',
-  'photos',
+  projectRoot,
+  'assets-source',
+  'photography',
 )
 export const generatedRoot = path.join(
   publicRoot,
@@ -41,7 +41,7 @@ export const imageProfiles = {
 }
 
 export const publicAssetBudget = {
-  totalMb: 170,
+  totalMb: 85,
   fileMb: 1.8,
 }
 export const publicImageHardLimitBytes = Math.round(
@@ -61,7 +61,7 @@ export function getPhotographySeriesPaths(series) {
   return {
     contentPath: path.join(photographyContentRoot, `${series}.json`),
     originalDir,
-    originalPublicPath: toPublicPath(originalDir),
+    originalRelativePath: path.relative(projectRoot, originalDir).split(path.sep).join('/'),
     generatedDir: path.join(generatedRoot, series),
   }
 }
