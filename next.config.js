@@ -15,20 +15,22 @@ const nextConfig = {
     '/*': ['./content/writing/**/*', './workspace/writing/**/*'],
   },
   images: {
-    remotePatterns: [
+    // Every image is first-party. Filenames are stable, but the optimizer URL
+    // carries the deployment ID, so a release still picks up replaced files.
+    minimumCacheTTL: 2678400,
+  },
+  async headers() {
+    return [
       {
-        protocol: 'https',
-        hostname: 'images.unsplash.com',
+        source: '/:path*',
+        headers: [
+          { key: 'X-Content-Type-Options', value: 'nosniff' },
+          { key: 'X-Frame-Options', value: 'SAMEORIGIN' },
+          { key: 'Referrer-Policy', value: 'strict-origin-when-cross-origin' },
+          { key: 'Permissions-Policy', value: 'camera=(), microphone=(), geolocation=()' },
+        ],
       },
-      {
-        protocol: 'https',
-        hostname: '**.vercel.app',
-      },
-      {
-        protocol: 'https',
-        hostname: 'picsum.photos',
-      },
-    ],
+    ];
   },
 };
 

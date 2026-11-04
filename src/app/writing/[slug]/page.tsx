@@ -1,6 +1,6 @@
 import { notFound } from 'next/navigation'
 import { getWritingArchiveSections, getWritingEntry, getWritingMetadata } from '@/lib/content/writing'
-import { writingTypeLabels } from '@/lib/content/writing-model'
+import { writingExcerpt, writingTypeLabels } from '@/lib/content/writing-model'
 import { buildPageMetadata } from '@/lib/site/metadata'
 import ReturnLink from '../ReturnLink'
 import ArchiveList from '../ArchiveList'
@@ -11,7 +11,7 @@ export function generateStaticParams() { return getWritingMetadata().map(({ slug
 export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }) {
   const entry = getWritingEntry((await params).slug)
   if (!entry) notFound()
-  return buildPageMetadata({ title: entry.title, description: `${entry.title} · ${writingTypeLabels[entry.type]} · 文字`, path: `/writing/${entry.slug}` })
+  return buildPageMetadata({ title: entry.title, description: writingExcerpt(entry.body) || `${entry.title} · ${writingTypeLabels[entry.type]} · 文字`, path: `/writing/${entry.slug}` })
 }
 export default async function ArticlePage({ params }: { params: Promise<{ slug: string }> }) {
   const entry = getWritingEntry((await params).slug)
