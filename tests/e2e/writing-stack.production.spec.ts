@@ -1,4 +1,11 @@
 import { test, expect, type Locator, type Page } from '@playwright/test'
+import fs from 'node:fs'
+
+// These cases exercise the image stack in 季节 (seasons), withdrawn on 2026-11-23.
+// They run again automatically once that piece is public.
+const seasonsPublic = (JSON.parse(fs.readFileSync('.generated/writing.json', 'utf8')).entries as { slug: string }[])
+  .some(entry => entry.slug === 'seasons')
+test.skip(!seasonsPublic, '季节 is not public; no article currently has an image stack.')
 
 const months = ['三月', '四月', '七月', '十月']
 const sources = ['march', 'april', 'july', 'october'].map(month => `/assets/writing/seasons/${month}.webp`)
