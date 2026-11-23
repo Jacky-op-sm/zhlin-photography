@@ -26,7 +26,7 @@ export function getWritingArchiveSections() {
     const entry = entries.find(item => item.slug === slug)
     if (!entry) throw new Error(`Missing featured writing: ${slug}`)
     return entry
-  }).sort((a, b) => [...a.title].length - [...b.title].length)
+  })
   const featuredSlugs = new Set<string>(featuredWritingSlugs)
   const archive = filterWriting(entries.filter(entry => !featuredSlugs.has(entry.slug)), defaultFilters)
   return { featured, archive }
