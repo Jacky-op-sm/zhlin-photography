@@ -4,7 +4,7 @@
     "summary": "常驻杭州，穷学生一枚。现有三大爱好，摄影 - 已拥有相机三个月，常在散步时拍照，现快门数6897；旅行 - 走在陌生的地方，看着沿路风景的同时，也看着自己；读书和写作 - 读书培养语感，日记让我自省，游记让我定格回忆。",
     "links": [
       { "label": "查看摄影作品", "href": "/photography" },
-      { "label": "查看旅行记录", "href": "/travel" }
+      { "label": "查看旅行记录", "href": "/photography#travels" }
     ]
   },
   "photography": [
@@ -38,7 +38,7 @@
   "travel": [
     {
       "place": "日本",
-      "href": "/travel/japan",
+      "href": "/photography#travels/japan/1",
       "image": "/assets/travel/japan-front.webp",
       "alt": "日本旅行封面",
       "body": "我记住日本，\n不仅因为高松的悠闲、京都的红，\n鸭川的夜和奈良的鹿，也因为朋友同行的时光，\n以及初识相机时那份欣喜。",
@@ -47,14 +47,14 @@
     },
     {
       "place": "南京",
-      "href": "/travel/nanjing",
+      "href": "/photography#travels/nanjing/1",
       "image": "/assets/travel/nanjing-hero-wutong-street.webp",
       "alt": "南京旅行封面",
       "body": "春节的南京大概不是最好的旅行时机，\n可旅行本就不只有轻松和快乐，\n也有拥挤、劳累和意外。"
     },
     {
       "place": "北京",
-      "href": "/travel/beijing",
+      "href": "/photography#travels/beijing/1",
       "image": "/assets/travel/beijing-front.webp",
       "alt": "北京旅行封面",
       "body": "北京给了我太多第一次：\n第一次独自旅行，第一次走进音乐酒吧，\n第一次在艺术展里结识朋友。",

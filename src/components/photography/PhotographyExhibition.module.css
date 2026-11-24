@@ -1,5 +1,6 @@
 .exhibition { position: relative; width: 100%; height: 100vh; height: 100dvh; min-height: 280px; overflow: hidden; background: #fff; color: #111; font-family: Arial, Helvetica, sans-serif; font-size: 12px; line-height: 1.4; -webkit-tap-highlight-color: transparent; }
 .stage { position: absolute; inset: 0; touch-action: pan-y pinch-zoom; transition: transform 1s cubic-bezier(.165,.84,.44,1) .1s; }
+.photoSurface { position: absolute; inset: 0; }
 .exhibition[data-index-open="true"] .stage { transform: translateX(-25%); transition-delay: .2s; }
 .imageFrame { position: absolute; inset: 0; overflow: hidden; }
 .imageLayer { position: absolute; left: 50%; top: 50%; width: 58.333333vw; height: calc(100vh - 200px); height: calc(100dvh - 200px); min-height: 120px; transform: translate(-50%, -50%); }
@@ -100,6 +101,63 @@
 }
 @media (max-height: 500px) and (max-width: 960px), (max-height: 500px) and (pointer: coarse) { .viewNavigation { bottom: auto; } }
 @keyframes collectionCurtain { 0% { transform: translateY(100%); } 45%, 50% { transform: translateY(0); } 100% { transform: translateY(-100%); } }
+
+/* Stacking the captions in one grid cell reserves exactly the height of the
+   tallest one, including line wrapping at the current width and font size. */
+.exhibition[data-travel="true"] .stage {
+  inset: max(30px, env(safe-area-inset-top)) 0 max(80px, calc(env(safe-area-inset-bottom) + 60px));
+  display: flex;
+  flex-direction: column;
+  gap: 28px;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+}
+.exhibition[data-travel="true"] .photoSurface {
+  position: relative;
+  inset: auto;
+  flex: 0 1 var(--desktop-photo-height);
+  min-height: 150px;
+  margin-top: auto;
+}
+.exhibition[data-travel="true"] .imageLayer {
+  top: 0;
+  height: 100%;
+  min-height: 0;
+  transform: translateX(-50%);
+}
+.exhibition[data-travel="true"] .image { object-position: center bottom; }
+.captions {
+  display: grid;
+  width: min(600px, calc(100% - 40px));
+  align-self: center;
+  flex: none;
+  margin-bottom: auto;
+  text-align: left;
+  font-family: 'PingFang SC', 'Hiragino Sans GB', 'Noto Sans SC', 'Microsoft YaHei', sans-serif;
+}
+.caption { grid-area: 1 / 1; min-width: 0; white-space: pre-line; overflow-wrap: anywhere; }
+.caption[aria-hidden="true"] { visibility: hidden; }
+.eyebrow { margin: 0 0 3px; color: #6b6b6b; font-size: 13px; line-height: 1.5; letter-spacing: .04em; }
+.caption h2 { margin: 0 0 4px; color: #222; font-size: 17px; font-weight: 600; line-height: 1.8; }
+.body { margin: 0; color: #3d3d3d; font-size: 17px; line-height: 2; }
+.exhibition[data-travel="true"] .viewNavigation { top: auto; bottom: max(10px, env(safe-area-inset-bottom)); }
+@media (min-width: 961px) and (pointer: fine) {
+  .exhibition[data-travel="true"] .viewNavigation { bottom: max(23px, env(safe-area-inset-bottom)); }
+}
+@media (hover: none), (pointer: coarse) {
+  .exhibition[data-travel="true"] .position { top: max(16px, env(safe-area-inset-top)); bottom: auto; }
+  .exhibition[data-travel="true"] .stage { top: max(52px, calc(env(safe-area-inset-top) + 36px)); }
+}
+@media (max-width: 960px) {
+  .exhibition[data-travel="true"] .photoSurface { flex-basis: var(--tablet-photo-height); }
+}
+@media (max-width: 767px) {
+  .exhibition[data-travel="true"] .photoSurface { flex: 0 0 var(--mobile-photo-height); min-height: 0; }
+  .exhibition[data-travel="true"] .stage {
+    bottom: max(64px, calc(env(safe-area-inset-bottom) + 52px));
+  }
+  .exhibition[data-travel="true"] .imageLayer { width: 100%; }
+}
 @media (prefers-reduced-motion: reduce) {
   /* Keep the exhibition choreography consistent across devices, overriding
      the global system-motion reset only for these animated gallery elements. */

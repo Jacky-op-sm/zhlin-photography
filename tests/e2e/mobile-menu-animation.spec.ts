@@ -57,7 +57,7 @@ test.describe('mobile menu animation', () => {
   test('menu can still open while scrolled and page can scroll again after close', async ({ page }, testInfo) => {
     test.skip(!isMobileProject(testInfo.project.name), 'mobile-only test')
 
-    await page.goto('/travel/nanjing')
+    await page.goto('/')
     await page.evaluate(() => window.scrollTo(0, Math.max(600, document.body.scrollHeight * 0.4)))
     await page.waitForTimeout(100)
 

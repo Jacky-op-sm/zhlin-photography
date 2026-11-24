@@ -459,14 +459,17 @@ html {
   overscroll-behavior: contain;
 }
 
-.site-nav-mobile .site-nav-parent-link {
-  flex: 1;
-  font-size: clamp(2rem, 7.6vw, 2.9rem);
-  font-weight: 600;
-  letter-spacing: -0.02em;
-  text-transform: none;
-  color: rgba(45, 45, 49, 1);
-  line-height: 1.08;
+.site-nav-disclosure {
+  min-width: 44px;
+  min-height: 44px;
+  font-size: 1.25rem;
+  line-height: 1;
+}
+
+.site-nav-mobile .site-nav-item--has-dropdown {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
 }
 
 .site-nav-mobile .site-nav-mobile-submenu-screen {

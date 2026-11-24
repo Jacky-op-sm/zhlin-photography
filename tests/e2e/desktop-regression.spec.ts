@@ -13,6 +13,15 @@ test.describe('desktop visual regression guard', () => {
 
       await page.goto(target.path)
       await page.waitForLoadState('networkidle')
+      if (target.name === 'photography-index') {
+        // A pointer over the controls hides the floating position label.
+        await page.getByRole('button', { name: 'Index', exact: true }).hover()
+        await expect(page.getByTestId('exhibition-cursor')).toHaveAttribute('data-visible', 'false')
+      }
+      if (target.name === 'travel-index') {
+        await expect(page.getByTestId('exhibition-panel')).toHaveAttribute('data-state', 'open')
+        await expect(page.getByTestId('exhibition-image-frame')).toHaveAttribute('data-state', 'ready')
+      }
 
       await page.addStyleTag({
         content: `
@@ -20,6 +29,7 @@ test.describe('desktop visual regression guard', () => {
             transition: none !important;
             animation: none !important;
           }
+          nextjs-portal { display: none !important; }
         `,
       })
 

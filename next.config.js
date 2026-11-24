@@ -11,6 +11,19 @@ const nextConfig = {
     process.env.NEXT_PUBLIC_BUILD_SHA ||
     process.env.GITHUB_SHA,
   allowedDevOrigins: ['127.0.0.1', 'localhost'],
+  async redirects() {
+    const { default: travels } = await import('./content/travel/exhibition.json', { with: { type: 'json' } })
+    const { default: bangkok } = await import('./content/photography/exhibitions/bangkok.json', { with: { type: 'json' } })
+    return [
+      ...['/travel', '/travel/hangzhou', '/travel/huzhou'].map(source => ({
+        source, destination: '/photography#travels', permanent: true,
+      })),
+      ...travels.map(({ slug }) => ({
+        source: `/travel/${slug}`, destination: `/photography#travels/${slug}/1`, permanent: true,
+      })),
+      { source: '/travel/bangkok', destination: `/photography#bangkok/${bangkok.photos[0].id}`, permanent: true },
+    ]
+  },
   outputFileTracingIncludes: {
     '/*': ['./content/site/**/*', './content/photography/**/*', './content/travel/**/*', './content/hobby/**/*'],
   },

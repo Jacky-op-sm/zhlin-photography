@@ -8,10 +8,6 @@ function isIPadProject(projectName: string) {
   return projectName.startsWith('ipad-')
 }
 
-function isIPadPortraitProject(projectName: string) {
-  return isIPadProject(projectName) && projectName.includes('portrait')
-}
-
 test.describe('responsive adaptation regressions', () => {
   test('home marquee keeps full words in mobile viewport without overflow', async ({ page }, testInfo) => {
     test.skip(!isMobileProject(testInfo.project.name), 'mobile-only test')
@@ -73,38 +69,6 @@ test.describe('responsive adaptation regressions', () => {
     await expect(page.getByRole('button', { name: 'Thumbs', exact: true })).toBeInViewport()
   })
 
-  test('travel spot and food sliders align their first card with section titles on iPad', async ({ page }, testInfo) => {
-    test.skip(!isIPadProject(testInfo.project.name), 'ipad-only test')
-
-    await page.goto('/travel/nanjing')
-    await page.waitForLoadState('networkidle')
-
-    const spotTitle = page.locator('h2').filter({ hasText: /^景点$/ })
-    const spotCard = page.getByRole('button', { name: 'Open card 1', exact: true })
-    await expect(spotTitle).toBeVisible()
-    await expect(spotCard).toBeVisible()
-
-    const spotDelta = await spotTitle.evaluate((title) => {
-      const card = document.querySelector('button[aria-label="Open card 1"]') as HTMLElement | null
-      if (!card) return Number.POSITIVE_INFINITY
-      return Math.abs(card.getBoundingClientRect().left - title.getBoundingClientRect().left)
-    })
-    expect(spotDelta).toBeLessThanOrEqual(16)
-
-    const foodTitle = page.locator('h2').filter({ hasText: /^美食$/ })
-    await foodTitle.scrollIntoViewIfNeeded()
-    const foodCard = page.getByRole('button', { name: 'Open food card 1', exact: true })
-    await expect(foodTitle).toBeVisible()
-    await expect(foodCard).toBeVisible()
-
-    const foodDelta = await foodTitle.evaluate((title) => {
-      const card = document.querySelector('button[aria-label="Open food card 1"]') as HTMLElement | null
-      if (!card) return Number.POSITIVE_INFINITY
-      return Math.abs(card.getBoundingClientRect().left - title.getBoundingClientRect().left)
-    })
-    expect(foodDelta).toBeLessThanOrEqual(16)
-  })
-
   test('iPad portrait home hero stacks and three-card sections stay together', async ({ page }, testInfo) => {
     test.skip(testInfo.project.name !== 'ipad-portrait', 'ipad portrait-only test')
 
@@ -153,7 +117,7 @@ test.describe('responsive adaptation regressions', () => {
     const desktopNav = page.locator('.site-nav-desktop')
     test.skip(!(await desktopNav.isVisible()), 'desktop navigation is not visible at this iPad width')
 
-    await desktopNav.locator('.site-nav-link', { hasText: 'Travel' }).tap()
+    await desktopNav.getByRole('button', { name: '展开 Travel 子菜单' }).tap()
     await expect(page.locator('.site-nav-dropdown-shell')).toHaveAttribute('data-open', 'true')
 
     const urlBefore = page.url()
@@ -162,27 +126,6 @@ test.describe('responsive adaptation regressions', () => {
     await page.touchscreen.tap(8, (viewport?.height ?? 768) - 8)
     await expect(page.locator('.site-nav-dropdown-shell')).toHaveAttribute('data-open', 'false')
     expect(page.url()).toBe(urlBefore)
-  })
-
-  test('iPad portrait travel expand keeps portrait image within readable height', async ({ page }, testInfo) => {
-    test.skip(!isIPadPortraitProject(testInfo.project.name), 'ipad portrait-only test')
-
-    await page.goto('/travel/nanjing')
-    await page.waitForLoadState('networkidle')
-
-    await page.getByRole('button', { name: 'Open card 1', exact: true }).click()
-    await expect(page.getByRole('button', { name: '关闭详情' })).toBeVisible()
-
-    const imageRatio = await page.evaluate(() => {
-      const overlay = document.querySelector('div.fixed.inset-0') as HTMLElement | null
-      const image = overlay?.querySelector('img') as HTMLImageElement | null
-      if (!overlay || !image) return null
-      const imageRect = image.getBoundingClientRect()
-      return imageRect.height / window.innerHeight
-    })
-
-    expect(imageRatio).not.toBeNull()
-    expect(imageRatio!).toBeLessThanOrEqual(0.68)
   })
 
   test('iPad exhibition controls stay outside image and keep stable Y while switching', async ({ page }, testInfo) => {

@@ -24,7 +24,7 @@ function mobilePanel(page: import('@playwright/test').Page) {
 }
 
 function mobileParentLink(page: import('@playwright/test').Page, label: string) {
-  return mobilePanel(page).locator('.site-nav-parent-link', { hasText: label }).first()
+  return mobilePanel(page).getByRole('button', { name: `展开 ${label} 子菜单` })
 }
 
 test.describe('mobile navigation behavior', () => {
@@ -60,7 +60,7 @@ test.describe('mobile navigation behavior', () => {
 
     await mobileParentLink(page, 'Travel').click()
     await expect(mobilePanel(page).getByRole('button', { name: '返回主菜单' })).toBeVisible()
-    await expect(mobilePanel(page).getByRole('link', { name: '探索全部' })).toBeVisible()
+    await expect(mobilePanel(page).getByRole('link', { name: '武汉' })).toBeVisible()
     await expect(mobilePanel(page).getByRole('link', { name: '南京' })).toBeVisible()
 
     await mobilePanel(page).getByRole('button', { name: '关闭菜单' }).click()
@@ -85,13 +85,13 @@ test.describe('mobile navigation behavior', () => {
     await expect(page.locator('.site-header')).toBeVisible()
 
     await openMobileMenu(page)
-    await mobileParentLink(page, 'Travel').click()
-    await mobilePanel(page).getByRole('link', { name: '探索全部' }).click()
-    await expect(page).toHaveURL(/\/travel$/)
+    await mobilePanel(page).getByRole('link', { name: 'Travel', exact: true }).click()
+    await expect(page.getByRole('tab', { name: 'Travels' })).toHaveAttribute('aria-selected', 'true')
+    await page.getByRole('link', { name: 'Zhlin home' }).click()
 
     await openMobileMenu(page)
     await mobileParentLink(page, 'Travel').click()
     await mobilePanel(page).getByRole('link', { name: '上海' }).click()
-    await expect(page).toHaveURL(/\/travel\/shanghai$/)
+    await expect(page).toHaveURL(/#travels\/shanghai\/1$/)
   })
 })

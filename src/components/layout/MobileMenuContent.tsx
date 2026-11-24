@@ -69,15 +69,16 @@ export default function MobileMenuContent({
                     key={item.href}
                     className="site-nav-item site-nav-item--has-dropdown"
                   >
+                    <Link href={item.href} onClick={onNavigate} className="site-nav-link">{item.label}</Link>
                     <button
                       type="button"
                       onClick={() => setSubmenuHref(item.href)}
-                      className="site-nav-link site-nav-parent-link"
+                      className="site-nav-disclosure"
                       aria-expanded={submenuHref === item.href}
                       aria-controls={`submenu-${index}`}
                       aria-label={`展开 ${item.label} 子菜单`}
                     >
-                      <span>{item.label}</span>
+                      <span aria-hidden="true">›</span>
                     </button>
                   </li>
                 ) : (

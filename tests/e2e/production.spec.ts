@@ -54,11 +54,12 @@ test.describe('production route contract', () => {
     const sitemapText = await sitemap.text()
     for (const route of [
       '/photography/street',
-      '/travel/japan',
+      '/photography',
       '/contact',
     ]) {
       expect(sitemapText).toContain(`https://www.zhlin.space${route}`)
     }
+    expect(sitemapText).not.toContain('https://www.zhlin.space/travel')
     expect(sitemapText).not.toContain('localhost')
     expect(sitemapText).not.toContain('https://www.zhlin.space/hobby')
 
@@ -153,7 +154,7 @@ test.describe('production interactions', () => {
     await expect(page.locator('#site-root')).not.toHaveAttribute('inert', '')
   })
 
-  test('exhibition panels and travel detail restore their trigger focus', async ({
+  test('exhibition panels in Works and Travels restore their trigger focus', async ({
     page,
   }) => {
     await page.goto('/photography/pets')
@@ -169,11 +170,11 @@ test.describe('production interactions', () => {
     await expect(thumbs).toBeFocused()
 
     await page.goto('/travel/nanjing')
-    const card = page.getByRole('button', { name: 'Open card 1', exact: true })
+    const card = page.getByRole('button', { name: 'Index', exact: true })
     await card.click()
     const detail = page.getByRole('dialog')
     await expect(detail).toBeVisible()
-    await expect(page.getByRole('button', { name: '关闭详情' })).toBeFocused()
+    await expect(page.getByRole('button', { name: 'Close index' })).toBeFocused()
     await page.keyboard.press('Escape')
     await expect(detail).toHaveCount(0)
     await expect(card).toBeFocused()

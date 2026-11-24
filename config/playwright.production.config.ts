@@ -27,6 +27,7 @@ export default defineConfig({
         /runtime-budget\.production\.spec\.ts/,
         /visual-audit\.production\.spec\.ts/,
         /navigation\.desktop\.spec\.ts/,
+        /travels-photography-exhibition\.spec\.ts/,
       ],
       use: {
         viewport: { width: 1280, height: 800 },
@@ -34,7 +35,7 @@ export default defineConfig({
     },
     {
       name: 'production-mobile',
-      testMatch: [/(^|\/)production\.spec\.ts$/, /(?:writing-(?:stack|navigation)|photography-(?:motion|loading|smoothness|focus))\.production\.spec\.ts$/, /navigation\.mobile\.spec\.ts$/],
+      testMatch: [/(^|\/)production\.spec\.ts$/, /(?:writing-(?:stack|navigation)|photography-(?:motion|loading|smoothness|focus))\.production\.spec\.ts$/, /navigation\.mobile\.spec\.ts$/, /travels-photography-exhibition\.spec\.ts$/],
       use: {
         ...devices['iPhone 12'],
         viewport: { width: 390, height: 844 },

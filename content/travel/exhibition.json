@@ -1,0 +1,313 @@
+[
+  {
+    "slug": "wuhan",
+    "title": "Wuhan",
+    "photos": [
+      {
+        "src": "/assets/travel/wuhan/黄鹤楼-1.webp",
+        "width": 1800,
+        "height": 1200
+      },
+      {
+        "src": "/assets/travel/wuhan/长江渡轮.webp",
+        "width": 1800,
+        "height": 1200
+      },
+      {
+        "src": "/assets/travel/wuhan/轮渡相机对话.webp",
+        "width": 1800,
+        "height": 1200
+      },
+      {
+        "src": "/assets/travel/wuhan/东湖1.webp",
+        "width": 1800,
+        "height": 1200
+      },
+      {
+        "src": "/assets/travel/wuhan/武汉大学.jpg",
+        "width": 1800,
+        "height": 1200
+      },
+      {
+        "src": "/assets/travel/wuhan/武汉大学车.webp",
+        "width": 1500,
+        "height": 998
+      },
+      {
+        "src": "/assets/travel/wuhan/凌波门拉客男人.webp",
+        "width": 1800,
+        "height": 1200
+      },
+      {
+        "src": "/assets/travel/wuhan/光谷商业街.webp",
+        "width": 1800,
+        "height": 1200
+      },
+      {
+        "src": "/assets/travel/wuhan/书店.webp",
+        "width": 1800,
+        "height": 1200
+      },
+      {
+        "src": "/assets/travel/wuhan/酒馆.webp",
+        "width": 1600,
+        "height": 1065
+      }
+    ]
+  },
+  {
+    "slug": "nanjing",
+    "title": "Nanjing",
+    "photos": [
+      {
+        "src": "/assets/travel/nanjing-hero-wutong-street.webp",
+        "width": 2400,
+        "height": 1599
+      },
+      {
+        "src": "/assets/travel/nanjing/nj-laomendong-crowd.webp",
+        "width": 2400,
+        "height": 1599
+      },
+      {
+        "src": "/assets/travel/nanjing/nj-nanjing-museum-caravaggio.webp",
+        "width": 2400,
+        "height": 1800
+      },
+      {
+        "src": "/assets/travel/nanjing/nj-portrait-riverside-auntie.webp",
+        "width": 1599,
+        "height": 2400
+      },
+      {
+        "src": "/assets/travel/nanjing/nj-portrait-korean-style-guy.webp",
+        "width": 1599,
+        "height": 2400
+      },
+      {
+        "src": "/assets/travel/nanjing/nj-fuzimiao-night-crowd.webp",
+        "width": 2400,
+        "height": 1599
+      },
+      {
+        "src": "/assets/travel/nanjing/nj-hongshan-zoo-entrance.webp",
+        "width": 1494,
+        "height": 2400
+      },
+      {
+        "src": "/assets/travel/nanjing/nj-portrait-biker-man.webp",
+        "width": 1599,
+        "height": 2400
+      },
+      {
+        "src": "/assets/travel/nanjing/nj-portrait-jiming-temple-prayer.webp",
+        "width": 1599,
+        "height": 2400
+      },
+      {
+        "src": "/assets/travel/nanjing/nj-zhongshanling-rain-steps.webp",
+        "width": 2400,
+        "height": 1600
+      }
+    ]
+  },
+  {
+    "slug": "japan",
+    "title": "Japan",
+    "photos": [
+      {
+        "src": "/assets/travel/japan/02-takamatsu-rural-house.webp",
+        "width": 2400,
+        "height": 1599
+      },
+      {
+        "src": "/assets/travel/japan/07-naoshima-ferry-blue-sea.webp",
+        "width": 2400,
+        "height": 1599
+      },
+      {
+        "src": "/assets/travel/japan/08-naoshima-museum-sign.webp",
+        "width": 2400,
+        "height": 1599
+      },
+      {
+        "src": "/assets/travel/japan/15-yashima-observatory.webp",
+        "width": 2400,
+        "height": 1599
+      },
+      {
+        "src": "/assets/travel/japan/30-kyoto-kamogawa-night.webp",
+        "width": 2400,
+        "height": 1599
+      },
+      {
+        "src": "/assets/travel/japan/food-09-kamogawa-dinner.webp",
+        "width": 2400,
+        "height": 1599
+      },
+      {
+        "src": "/assets/travel/japan/31-nara-deer-greeting.webp",
+        "width": 2300,
+        "height": 1533
+      },
+      {
+        "src": "/assets/travel/japan/food-03-nara-lunch.webp",
+        "width": 2400,
+        "height": 1599
+      },
+      {
+        "src": "/assets/travel/japan/34-nara-portrait.webp",
+        "width": 2300,
+        "height": 1533
+      },
+      {
+        "src": "/assets/travel/japan/35-nara-mt-wakakusa-sunset.webp",
+        "width": 2400,
+        "height": 1599
+      }
+    ]
+  },
+  {
+    "slug": "shanghai",
+    "title": "Shanghai",
+    "photos": [
+      {
+        "src": "/assets/travel/shanghai/story/metro-second-display.webp",
+        "width": 960,
+        "height": 1280
+      },
+      {
+        "src": "/assets/travel/shanghai/story/metro-chess-kids.webp",
+        "width": 960,
+        "height": 1280
+      },
+      {
+        "src": "/assets/travel/shanghai/story/huangpu-riverside-track.webp",
+        "width": 960,
+        "height": 1280
+      },
+      {
+        "src": "/assets/travel/shanghai/story/jingan-city-lawn.webp",
+        "width": 960,
+        "height": 1280
+      },
+      {
+        "src": "/assets/travel/shanghai/story/church-entrance.webp",
+        "width": 960,
+        "height": 1280
+      },
+      {
+        "src": "/assets/travel/shanghai/story/bund-clocktower-night.webp",
+        "width": 960,
+        "height": 1280
+      },
+      {
+        "src": "/assets/travel/shanghai/story/taxi-riverside-midnight.webp",
+        "width": 960,
+        "height": 1280
+      },
+      {
+        "src": "/assets/travel/shanghai/story/disney-fireworks-castle.webp",
+        "width": 1700,
+        "height": 1280
+      }
+    ]
+  },
+  {
+    "slug": "dongbei",
+    "title": "Northeast China",
+    "photos": [
+      {
+        "src": "/assets/travel/dongbei/0206/p1.webp",
+        "width": 960,
+        "height": 1280
+      },
+      {
+        "src": "/assets/travel/dongbei/0208/p8.webp",
+        "width": 960,
+        "height": 1280
+      },
+      {
+        "src": "/assets/travel/dongbei/changbai-portrait-white-fur-hat.webp",
+        "width": 1800,
+        "height": 2400
+      },
+      {
+        "src": "/assets/travel/dongbei/changbai-portrait-earmuffs.webp",
+        "width": 1800,
+        "height": 2400
+      },
+      {
+        "src": "/assets/travel/dongbei/beidahu-snow-portrait.webp",
+        "width": 1800,
+        "height": 2400
+      },
+      {
+        "src": "/assets/travel/dongbei/0213/t2.webp",
+        "width": 960,
+        "height": 1280
+      },
+      {
+        "src": "/assets/travel/dongbei/0215/t3.webp",
+        "width": 960,
+        "height": 1280
+      },
+      {
+        "src": "/assets/travel/dongbei/harbin-window-snow-night.webp",
+        "width": 1800,
+        "height": 2400
+      }
+    ]
+  },
+  {
+    "slug": "beijing",
+    "title": "Beijing",
+    "photos": [
+      {
+        "src": "/assets/travel/beijing/pku-library-outside.webp",
+        "width": 640,
+        "height": 480
+      },
+      {
+        "src": "/assets/travel/beijing/tsinghua-gate.webp",
+        "width": 640,
+        "height": 480
+      },
+      {
+        "src": "/assets/travel/beijing/motuo-stage.webp",
+        "width": 640,
+        "height": 480
+      },
+      {
+        "src": "/assets/travel/beijing/taxi-driver-profile.webp",
+        "width": 1280,
+        "height": 960
+      },
+      {
+        "src": "/assets/travel/beijing/summer-palace-kunming-lake-overlook.jpeg",
+        "width": 2200,
+        "height": 1650
+      },
+      {
+        "src": "/assets/travel/beijing/798-art-district-poster.jpeg",
+        "width": 1350,
+        "height": 1800
+      },
+      {
+        "src": "/assets/travel/beijing/botanical-garden-gate.webp",
+        "width": 1280,
+        "height": 960
+      },
+      {
+        "src": "/assets/travel/beijing/ice-skating-first-try.webp",
+        "width": 1500,
+        "height": 2000
+      },
+      {
+        "src": "/assets/travel/beijing/shichahai-livehouse-night.webp",
+        "width": 1400,
+        "height": 1050
+      }
+    ]
+  }
+]

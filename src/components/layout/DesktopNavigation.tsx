@@ -2,7 +2,6 @@
 
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
-import type { MouseEvent, PointerEvent as ReactPointerEvent } from 'react'
 import { useEffect, useMemo, useRef, useState } from 'react'
 import type { NavigationItem } from '@/lib/site/types'
 
@@ -24,7 +23,6 @@ export default function DesktopNavigation({
   const [isPanelOpen, setIsPanelOpen] = useState(false)
   const [isCoarsePointer, setIsCoarsePointer] = useState(false)
   const closeTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null)
-  const handledTouchParentHrefRef = useRef<string | null>(null)
   const navRootRef = useRef<HTMLElement | null>(null)
   const dropdownShellRef = useRef<HTMLDivElement | null>(null)
 
@@ -63,40 +61,6 @@ export default function DesktopNavigation({
     closeTimerRef.current = setTimeout(() => {
       setDropdownOpen(null)
     }, NAV_TO_PANEL_GRACE_MS)
-  }
-
-  const handleParentClick = (
-    event: MouseEvent<HTMLAnchorElement>,
-    href: string,
-  ) => {
-    if (handledTouchParentHrefRef.current === href) {
-      handledTouchParentHrefRef.current = null
-      event.preventDefault()
-      event.stopPropagation()
-      return
-    }
-    if (!isCoarsePointer && navigator.maxTouchPoints === 0) {
-      onNavigate?.()
-      return
-    }
-    event.preventDefault()
-    event.stopPropagation()
-    setDropdownOpen(isPanelOpen && panelHref === href ? null : href)
-  }
-
-  const handleParentPointerDown = (
-    event: ReactPointerEvent<HTMLAnchorElement>,
-    href: string,
-  ) => {
-    const useTouchDropdown =
-      event.pointerType === 'touch' ||
-      isCoarsePointer ||
-      navigator.maxTouchPoints > 0
-    if (!useTouchDropdown) return
-    event.preventDefault()
-    event.stopPropagation()
-    handledTouchParentHrefRef.current = href
-    setDropdownOpen(isPanelOpen && panelHref === href ? null : href)
   }
 
   useEffect(() => {
@@ -172,8 +136,8 @@ export default function DesktopNavigation({
             <li
               key={item.href}
               className={`site-nav-item ${hasChildren ? 'site-nav-item--has-dropdown' : ''}`}
-              onMouseEnter={() => setDropdownOpen(hasChildren ? item.href : null)}
-              onFocusCapture={() => setDropdownOpen(hasChildren ? item.href : null)}
+              onPointerEnter={(event) => { if (event.pointerType === 'mouse') setDropdownOpen(hasChildren ? item.href : null) }}
+              onFocusCapture={() => { if (!isCoarsePointer) setDropdownOpen(hasChildren ? item.href : null) }}
               onBlurCapture={(event) => {
                 const nextTarget = event.relatedTarget as Node | null
                 if (!event.currentTarget.contains(nextTarget)) {
@@ -182,19 +146,16 @@ export default function DesktopNavigation({
               }}
             >
               {hasChildren ? (
-                <Link
-                  href={item.href}
-                  onPointerDown={(event) =>
-                    handleParentPointerDown(event, item.href)
-                  }
-                  onClick={(event) => handleParentClick(event, item.href)}
-                  className="site-nav-link"
-                  data-active={isActive(item.href)}
-                  aria-haspopup="menu"
-                  aria-expanded={isPanelOpen && panelHref === item.href}
-                >
-                  <span>{item.label}</span>
-                </Link>
+                <>
+                  <Link href={item.href} onClick={onNavigate} className="site-nav-link" data-active={isActive(item.href)}>
+                    {item.label}
+                  </Link>
+                  {isCoarsePointer && <button type="button" className="site-nav-disclosure"
+                    aria-label={`展开 ${item.label} 子菜单`} aria-expanded={isPanelOpen && panelHref === item.href}
+                    onClick={() => setDropdownOpen(isPanelOpen && panelHref === item.href ? null : item.href)}>
+                    <span aria-hidden="true">⌄</span>
+                  </button>}
+                </>
               ) : (
                 <ItemLink
                   href={item.href}
