@@ -89,7 +89,7 @@ export function ExhibitionImage({ photo, collectionId, neighbours, locationHash,
         const visible = previous.previous && !previous.revealed ? previous.previous : previous.target
         return {
           target,
-          previous: previous.target.collectionId !== target.collectionId ? visible : null,
+          previous: current.locationHash !== '#travels' && previous.target.collectionId !== target.collectionId ? visible : null,
           revealed: false,
           transition: version,
         }
@@ -175,23 +175,27 @@ export function ExhibitionImage({ photo, collectionId, neighbours, locationHash,
     return () => { clearTimeout(revealTimer); clearTimeout(clearTimer) }
   }, [view.previous, view.transition])
 
-  const displayedKey = targetKey(view.target)
-  const visibleKey = view.previous && !view.revealed ? targetKey(view.previous) : displayedKey
-  const pending = requestKey !== displayedKey
+  // A directory deep link initializes a stage, rather than navigating from
+  // the SSR default work. Its cover and caption must describe the same frame.
+  const directoryEntry = locationHash === '#travels'
+  const displayedKey = directoryEntry ? requestKey : targetKey(view.target)
+  const outgoing = directoryEntry ? null : view.previous
+  const visibleKey = outgoing && !view.revealed ? targetKey(outgoing) : displayedKey
+  const pending = requestKey !== targetKey(view.target)
   const failed = failedRequest === requestKey
   // Keep the requested, displayed and outgoing nodes before filling the small
   // lookahead window. Reordering keyed layers never replaces their decoded img.
   const layers = [...new Map([requested, view.target, ...(view.previous ? [view.previous] : []), ...prepared]
     .map((target) => [targetKey(target), target])).values()].slice(0, MAX_IMAGES)
   return <div ref={frameRef} className={styles.imageFrame} data-testid="exhibition-image-frame" data-requested={requestKey}
-    data-state={failed ? 'error' : pending ? 'loading' : view.previous ? 'transitioning' : 'ready'} aria-busy={pending && !failed}>
+    data-state={failed ? 'error' : pending ? 'loading' : outgoing ? 'transitioning' : 'ready'} aria-busy={pending && !failed}>
     {layers.map((target) => {
       const key = targetKey(target)
       return <ImageLayer key={`${key}/${retries[key] ?? 0}`} target={target}
         active={key === displayedKey} visible={key === visibleKey}
         requested={key === requestKey} register={register} decode={decode} fail={fail} />
     })}
-    {view.previous ? <div key={`curtain-${view.transition}`} className={styles.collectionCurtain} aria-hidden="true" /> : null}
+    {outgoing ? <div key={`curtain-${view.transition}`} className={styles.collectionCurtain} aria-hidden="true" /> : null}
     {failed ? <div className={styles.imageError} role="alert" data-exhibition-ui><span>This photograph could not load.</span><button type="button" onClick={() => {
       failures.current.delete(requestKey)
       decoded.current.delete(requestKey)

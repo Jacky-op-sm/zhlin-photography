@@ -152,9 +152,14 @@
   .exhibition[data-travel="true"] .photoSurface { flex-basis: var(--tablet-photo-height); }
 }
 @media (max-width: 767px) {
-  .exhibition[data-travel="true"] .photoSurface { flex: 0 0 var(--mobile-photo-height); min-height: 0; }
+  .exhibition[data-travel="true"] .photoSurface {
+    /* Reserve the caption heading and its first two lines on short screens. */
+    flex: 0 0 min(var(--mobile-photo-height), 55svh, max(80px, calc(100% - 190px)));
+    min-height: 0;
+  }
   .exhibition[data-travel="true"] .stage {
     bottom: max(64px, calc(env(safe-area-inset-bottom) + 52px));
+    padding-bottom: 44px;
   }
   .exhibition[data-travel="true"] .imageLayer { width: 100%; }
 }

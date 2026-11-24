@@ -16,6 +16,42 @@ test('legacy travel routes preserve every destination', async ({ request }) => {
   }
 })
 
+test('directory entry opens over the decoded Wuhan cover, including with a cold cache', async ({ page, isMobile }) => {
+  await page.setViewportSize(isMobile ? { width: 375, height: 812 } : { width: 1440, height: 900 })
+  const cover = travels[0].photos[0]
+  const card = wuhan.spots[0]
+  let releaseCover!: () => void
+  const gate = new Promise<void>(resolve => { releaseCover = resolve })
+  let requested = false
+  await page.route(url => decodeURIComponent(url.searchParams.get('url') ?? '') === cover.src, async route => {
+    requested = true
+    await gate
+    await route.continue()
+  })
+  const index = page.getByRole('dialog', { name: 'Index', exact: true })
+  try {
+    await page.goto('/travel/hangzhou', { waitUntil: 'domcontentloaded' })
+    await expect.poll(() => requested).toBe(true)
+    await expect(index).toHaveCount(0)
+    await expect(page.locator('main h1')).toContainText('Wuhan')
+    await expect(page.getByTestId('exhibition-position')).toHaveText('Wuhan - 1/10')
+    await expect(page.getByTestId('exhibition-image')).toHaveAttribute('alt', card.imageAlt)
+    await expect(page.locator('article[aria-hidden="false"] h2')).toHaveText(card.title)
+  } finally {
+    releaseCover()
+  }
+  await expect(index.getByRole('tab', { name: 'Travels' })).toHaveAttribute('aria-selected', 'true')
+  const painted = await page.getByTestId('exhibition-image').evaluate((img: HTMLImageElement) => ({
+    loaded: img.complete && img.naturalWidth > 0,
+    visible: getComputedStyle(img).visibility === 'visible' && getComputedStyle(img.parentElement!).opacity === '1',
+  }))
+  expect(painted).toEqual({ loaded: true, visible: true })
+  await expect(page.getByTestId('exhibition-cursor')).toHaveText('Wuhan - 1/10')
+  await page.keyboard.press('Escape')
+  await expect(index).toHaveCount(0)
+  await expect(page).toHaveURL(/#travels\/wuhan\/1$/)
+})
+
 test('Travels index, all Wuhan frames, Thumbs and frame history', async ({ page, isMobile }, testInfo) => {
   await page.setViewportSize(isMobile ? { width: 390, height: 844 } : { width: 1440, height: 900 })
   await page.goto('/')
@@ -79,7 +115,7 @@ test('Travels index, all Wuhan frames, Thumbs and frame history', async ({ page,
 })
 
 test('Nanjing keeps the same image baseline across portrait and landscape frames', async ({ page, isMobile }) => {
-  await page.setViewportSize(isMobile ? { width: 390, height: 700 } : { width: 1440, height: 900 })
+  await page.setViewportSize(isMobile ? { width: 375, height: 812 } : { width: 1440, height: 900 })
   await page.goto('/travel/nanjing')
   const stage = page.getByTestId('exhibition-stage')
   const photo = page.getByTestId('exhibition-image')
@@ -96,15 +132,21 @@ test('Nanjing keeps the same image baseline across portrait and landscape frames
     expect(text.y - box.y - box.height).toBeCloseTo(28, 0)
     orientations.add(await photo.evaluate((img: HTMLImageElement) => img.naturalWidth > img.naturalHeight ? 'landscape' : 'portrait'))
     if (isMobile) {
-      await stage.evaluate(el => { el.scrollTop = el.scrollHeight })
-      expect(await stage.evaluate(el => el.scrollTop)).toBeGreaterThan(0)
-      const scrolled = (await caption.boundingBox())!
+      expect(box.height).toBeLessThanOrEqual(812 * 0.55 + 1)
       const controls = (await page.getByTestId('exhibition-controls').boundingBox())!
+      const stageBox = (await stage.boundingBox())!
+      const body = caption.locator('p').last()
+      const bodyBox = (await body.boundingBox())!
+      const lineHeight = await body.evaluate(el => parseFloat(getComputedStyle(el).lineHeight))
+      expect(bodyBox.y + 2 * lineHeight).toBeLessThanOrEqual(Math.min(stageBox.y + stageBox.height, controls.y))
+      await stage.evaluate(el => { el.scrollTop = el.scrollHeight })
+      const scrolled = (await caption.boundingBox())!
       expect(scrolled.y + scrolled.height).toBeLessThanOrEqual(controls.y)
     }
     if (i < 10) {
       const region = (await stage.boundingBox())!
-      await page.mouse.click(region.x + region.width * 0.8, region.y + 32)
+      const imageBox = (await photo.boundingBox())!
+      await page.mouse.click(region.x + region.width * 0.8, Math.max(region.y, imageBox.y) + 32)
     }
   }
   expect(orientations).toEqual(new Set(['landscape', 'portrait']))

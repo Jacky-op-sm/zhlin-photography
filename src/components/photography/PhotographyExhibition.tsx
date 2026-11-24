@@ -46,7 +46,7 @@ export default function PhotographyExhibition({ collections, initialCollectionId
   const availableCollections = useMemo(() => collections.filter((collection) => collection.photos.length > 0), [collections])
   const hash = useSyncExternalStore(subscribeToLocation, locationSnapshot, serverLocationSnapshot)
   const selection = useMemo(() => resolveSelection(hash, availableCollections, initialCollectionId), [hash, availableCollections, initialCollectionId])
-  const [presented, setPresented] = useState(selection)
+  const [presented, setPresented] = useState(() => selection && { ...selection, decoded: false })
   const [panel, setPanel] = useState<Panel | null>(null)
   const [preview, setPreview] = useState<Selection | null>(null)
   const [tab, setTab] = useState<{ active: IndexTab; displayed: IndexTab; fading: boolean }>({ active: 'works', displayed: 'works', fading: false })
@@ -62,8 +62,9 @@ export default function PhotographyExhibition({ collections, initialCollectionId
   const collection = selection?.collection
   const photoIndex = selection?.photoIndex ?? 0
   const photo = collection?.photos[photoIndex]
-  const shownCollection = presented?.collection ?? collection
-  const shownIndex = presented?.photoIndex ?? photoIndex
+  const shown = hash === '#travels' ? selection : presented ?? selection
+  const shownCollection = shown?.collection
+  const shownIndex = shown?.photoIndex ?? 0
   const section = collection?.section ?? 'works'
   const sectionCollections = useMemo(() => availableCollections.filter(item => (item.section ?? 'works') === section), [availableCollections, section])
   const tabCollections = useMemo(() => availableCollections.filter(item => (item.section ?? 'works') === tab.displayed), [availableCollections, tab.displayed])
@@ -104,7 +105,8 @@ export default function PhotographyExhibition({ collections, initialCollectionId
     const nextCollection = availableCollections.find((item) => item.id === collectionId)
     const nextIndex = nextCollection?.photos.findIndex((item) => item.id === photoId) ?? -1
     if (nextCollection && nextIndex >= 0) {
-      setPresented((current) => current?.collection.id === collectionId && current.photoIndex === nextIndex ? current : { collection: nextCollection, photoIndex: nextIndex })
+      setPresented((current) => current?.decoded && current.collection.id === collectionId && current.photoIndex === nextIndex
+        ? current : { collection: nextCollection, photoIndex: nextIndex, decoded: true })
     }
   }, [availableCollections])
 
@@ -141,27 +143,28 @@ export default function PhotographyExhibition({ collections, initialCollectionId
     tabTimer.current = setTimeout(() => setTab({ active: next, displayed: next, fading: false }), 300)
   }
 
+  // The server cannot read the fragment. Open the directory only after its
+  // first photograph has decoded, so the drawer never opens over the SSR cover.
+  useLayoutEffect(() => {
+    if (hash !== '#travels' || !presented?.decoded || presented.collection !== collection || presented.photoIndex !== 0) return
+    const frame = requestAnimationFrame(() => {
+      if (window.location.hash !== '#travels') return
+      indexTrigger.current?.focus({ preventScroll: true })
+      openPanel('index', 'travels')
+    })
+    return () => cancelAnimationFrame(frame)
+  }, [hash, collection, presented, openPanel])
+
   useEffect(() => {
-    const syncEntryPanel = () => {
-      if (window.location.hash === '#travels') {
-        indexTrigger.current?.focus({ preventScroll: true })
-        openPanel('index', 'travels')
-      }
-    }
     const restoreHistoryPanel = () => {
       if (window.location.hash !== '#travels') {
         if (closeTimer.current) clearTimeout(closeTimer.current)
         setPanel(null)
       }
     }
-    syncEntryPanel()
-    window.addEventListener('hashchange', syncEntryPanel)
     window.addEventListener('popstate', restoreHistoryPanel)
-    return () => {
-      window.removeEventListener('hashchange', syncEntryPanel)
-      window.removeEventListener('popstate', restoreHistoryPanel)
-    }
-  }, [openPanel])
+    return () => window.removeEventListener('popstate', restoreHistoryPanel)
+  }, [])
 
   useLayoutEffect(() => {
     if (stageRef.current) stageRef.current.scrollTop = 0
