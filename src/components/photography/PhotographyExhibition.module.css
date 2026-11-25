@@ -143,7 +143,7 @@
 .body { margin: 0; color: #3d3d3d; font-size: 14px; line-height: 1.8; }
 
 .safariTopEdge, .safariBottomEdge { display: none; }
-@supports (-webkit-touch-callout: none) {
+@media (hover: none) and (pointer: coarse) {
   /* Edge backgrounds for Safari's browser chrome. The opaque exhibition
      paints above them so no black line interrupts the white page. */
   .safariTopEdge, .safariBottomEdge {
