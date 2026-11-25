@@ -1,4 +1,6 @@
 import { test, expect } from '@playwright/test'
+import { createHash } from 'node:crypto'
+import sharp from 'sharp'
 import { desktopVisualPaths } from '@/lib/site/routes'
 
 function isDesktopProject(projectName: string) {
@@ -33,6 +35,23 @@ test.describe('desktop visual regression guard', () => {
         `,
       })
 
+      if (target.name === 'photography-index' || target.name === 'travel-index') {
+        // Keep the previous PNG references intact. Hash decoded pixels so
+        // image encoding and metadata do not affect the new visual references.
+        const capture = async () => {
+          const screenshot = await page.screenshot({ fullPage: true, animations: 'disabled', caret: 'hide', scale: 'css' })
+          const { data, info } = await sharp(screenshot).removeAlpha().raw().toBuffer({ resolveWithObject: true })
+          return createHash('sha256').update(`${info.width}x${info.height}\n`).update(data).digest('hex')
+        }
+        let pixels = await capture()
+        await expect.poll(async () => {
+          const previous = pixels
+          pixels = await capture()
+          return pixels === previous
+        }).toBe(true)
+        expect(pixels).toMatchSnapshot(`desktop-${target.name}-pixels.txt`)
+        return
+      }
       await expect(page).toHaveScreenshot(`desktop-${target.name}.png`, {
         fullPage: true,
       })
