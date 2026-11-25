@@ -13,7 +13,7 @@ import { createCaptionMeasure, measureTravelBounds, placeLandscape, placePortrai
 import styles from './PhotographyExhibition.module.css'
 
 type Caption = { place: string; eyebrow: string; title: string; body: string }
-const sections = ['works', 'projects', 'travels'] as const
+const sections = ['works', 'travels'] as const
 type Section = (typeof sections)[number]
 const indexTabs = [...sections, 'info'] as const
 type IndexTab = (typeof indexTabs)[number]
@@ -43,7 +43,8 @@ function placeFrame(bounds: TravelBounds, { collection, photoIndex }: Selection,
   return placePortrait(bounds, collection.photos.flatMap(entry => entry.caption ? [entry.caption] : []), measure)
 }
 function directorySection(hash: string) {
-  return hash === '#projects' ? 'projects' : hash === '#travels' ? 'travels' : null
+  // The projects now sit in Works; earlier #projects links open that index.
+  return hash === '#projects' ? 'works' : hash === '#travels' ? 'travels' : null
 }
 function resolveSelection(hash: string, collections: ExhibitionCollection[], initialId?: string): Selection | null {
   const fallback = collections.find((collection) => collection.id === initialId) ?? collections[0]

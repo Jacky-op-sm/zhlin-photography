@@ -2,7 +2,7 @@
 
 ## Source and generated boundaries
 
-- `content/photography/series.json` lists Works and the three Projects. The corresponding files in `content/photography/photos/` define their frame order. The village’s colour edition shares the monochrome edition’s IDs.
+- `content/photography/series.json` lists Works and the three projects, which share the Works index. The corresponding files in `content/photography/photos/` define their frame order. The village’s colour edition shares the monochrome edition’s IDs.
 - Versioned photography generation inputs live in `assets-source/photography/<series>/`, outside `public/`. A photo record's `source` is a repository-relative generation input, not a browser URL.
 - Local RAW masters remain in ignored `assets-src/` or their original external directory. These workflows never overwrite masters.
 - Photography `filename` and `thumbnail` records point to AVIF derivatives in `public/assets/generated/photos/`. Their dimensions and hashes are recorded in `content/photography/image-manifest.json`.

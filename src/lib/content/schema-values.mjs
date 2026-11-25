@@ -67,7 +67,7 @@ export const photoRecordsSchema = z.array(photoRecordSchema).min(1).refine(
 
 export const photographySeriesSchema = z.object({
   slug: z.enum(['works', 'intersection', 'miaoqiantan', 'bangkok']),
-  section: z.enum(['works', 'projects']),
+  section: z.enum(['works']),
   title: text,
   description: text,
   brightnessOrder: z.array(exhibitionId).optional(),

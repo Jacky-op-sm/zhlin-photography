@@ -5,7 +5,7 @@ This directory is the canonical local content source for the site.
 - `writing/*.md`: authored writing, frontmatter and stable article slugs. See [the writing workflow](writing/README.md).
 - `travel/<slug>/meta.json`: travel listing and page metadata.
 - `travel/<slug>/cards.json`: spot, bookstore and food slider cards.
-- `photography/series.json`: the Works and Projects index, project statements and alternate order for the intersection.
+- `photography/series.json`: the Works index (the Works sequence followed by the three projects), project statements and alternate order for the intersection.
 - `photography/photos/<series>.json`: published photo records. `filename` and `thumbnail` are public image URLs; `source` is a repository-relative input under `assets-source/photography/`.
 - `photography/image-manifest.json`: generated-image integrity record; never edit it by hand.
 - `hobby/profile.json`, `hobby/featured.json`, `hobby/monthly/*.json`: retained hobby profile, selections and monthly summaries; public visibility is controlled separately.

@@ -260,9 +260,10 @@ test('a portrait downloads the smallest candidate covering its displayed pixels'
 })
 
 test('the published projects follow both approved readings without duplicating photographs', async ({ page }) => {
+  // Earlier #projects links open the Works index, where the projects now live.
   await page.goto('/photography#projects')
   const index = page.getByRole('dialog', { name: 'Index', exact: true })
-  await expect(index.getByRole('tab', { name: 'Projects', exact: true })).toHaveAttribute('aria-selected', 'true')
+  await expect(index.getByRole('tab', { name: 'Works', exact: true })).toHaveAttribute('aria-selected', 'true')
   await index.getByRole('button', { name: /同一路口 13/ }).click()
   await page.getByRole('button', { name: 'Thumbs', exact: true }).click()
   const thumbs = page.getByRole('dialog', { name: /Thumbs/ })

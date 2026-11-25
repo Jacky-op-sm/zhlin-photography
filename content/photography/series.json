@@ -7,7 +7,7 @@
   },
   {
     "slug": "intersection",
-    "section": "projects",
+    "section": "works",
     "title": "同一路口",
     "description": "从同一扇窗看出去，路牌立在原处，车流、雨伞与树叶轮流改变路面的模样。",
     "brightnessOrder": [
@@ -28,13 +28,13 @@
   },
   {
     "slug": "miaoqiantan",
-    "section": "projects",
+    "section": "works",
     "title": "庙前潭桥",
     "description": "过年回家和三月重访时，人、狗与日用物件轮流占据村里的门口、田埂和小路。"
   },
   {
     "slug": "bangkok",
-    "section": "projects",
+    "section": "works",
     "title": "Bangkok",
     "description": "在曼谷的街头、车座和市场，从人群与物件的缝隙里看见另一种生活。"
   }
