@@ -1,7 +1,35 @@
-import { test, expect } from '@playwright/test'
+import { test, expect, type Page } from '@playwright/test'
 import wuhan from '../../content/travel/wuhan/cards.json'
 import travels from '../../content/travel/exhibition.json'
 import bangkok from '../../content/photography/exhibitions/bangkok.json'
+
+async function worksLandscape(page: Page) {
+  await page.goto('/photography')
+  return (await page.getByTestId('exhibition-image').boundingBox())!
+}
+
+async function expectLandscapePlacement(page: Page, works: Awaited<ReturnType<typeof worksLandscape>>, mobile: boolean) {
+  const photo = (await page.getByTestId('exhibition-image').boundingBox())!
+  const footer = mobile ? page.getByTestId('exhibition-position') : page.getByRole('button', { name: 'Index', exact: true })
+  const textBox = (element: Element) => {
+    const range = document.createRange()
+    range.selectNodeContents(element)
+    return range.getBoundingClientRect().toJSON()
+  }
+  const lastLine = await page.locator('article[aria-hidden="false"] p').last().evaluate(textBox)
+  const clearance = (await footer.evaluate(textBox)).top - lastLine.bottom
+  const minimum = mobile ? 20 : 24
+  expect(clearance).toBeGreaterThanOrEqual(minimum - 0.5)
+  expect(photo.width).toBeLessThanOrEqual(works.width + 1)
+  if (Math.abs(photo.width - works.width) < 1) {
+    expect(photo.x).toBeCloseTo(works.x, 0)
+    // At full size the photo moves only by the amount its own text overflows.
+    expect(photo.y).toBeCloseTo(Math.min(works.y, photo.y + clearance - minimum), 0)
+  } else {
+    const controls = (await page.getByTestId('exhibition-controls').boundingBox())!
+    expect(photo.y).toBeCloseTo(mobile ? controls.y + controls.height + 16 : 40, 0)
+  }
+}
 
 test('legacy travel routes preserve every destination', async ({ request }) => {
   const redirects = new Map([
@@ -54,6 +82,7 @@ test('directory entry opens over the decoded Wuhan cover, including with a cold 
 
 test('Travels index, all Wuhan frames, Thumbs and frame history', async ({ page, isMobile }, testInfo) => {
   await page.setViewportSize(isMobile ? { width: 390, height: 844 } : { width: 1440, height: 900 })
+  const works = await worksLandscape(page)
   await page.goto('/')
   await expect(page.locator('a[href^="/travel"]')).toHaveCount(0)
   await page.getByRole('link', { name: '查看旅行记录' }).click()
@@ -70,7 +99,6 @@ test('Travels index, all Wuhan frames, Thumbs and frame history', async ({ page,
   const touch = isMobile ? await page.context().newCDPSession(page) : null
   const cards = Object.values(wuhan).flat()
   const visible = travels[0].photos.filter(photo => !photo.hidden)
-  let captionTop: number | undefined
   for (const [i, frame] of visible.entries()) {
     const card = cards.find(card => card.imageSrc === frame.src)!
     await expect(page.getByTestId('exhibition-position')).toHaveText(`Wuhan - ${i + 1}/7`)
@@ -84,8 +112,7 @@ test('Travels index, all Wuhan frames, Thumbs and frame history', async ({ page,
     const text = (await caption.boundingBox())!
     const bar = (await controls.boundingBox())!
     expect(text.y - (box.y + box.height)).toBeCloseTo(16, 0)
-    captionTop ??= text.y
-    expect(text.y).toBeCloseTo(captionTop, 0)
+    await expectLandscapePlacement(page, works, isMobile)
     if (isMobile) expect(bar.y + bar.height).toBeLessThan(box.y)
     else expect(text.y + text.height).toBeLessThanOrEqual(bar.y)
     expect(text.width).toBeLessThanOrEqual(600)
@@ -117,13 +144,14 @@ test('Travels index, all Wuhan frames, Thumbs and frame history', async ({ page,
   await expect(page).toHaveURL(/#travels\/wuhan\/1$/)
 })
 
-test('Nanjing fits every caption and keeps same-orientation frames aligned', async ({ page, isMobile }) => {
+test('Nanjing fits each landscape caption and keeps portrait frames aligned', async ({ page, isMobile }) => {
   await page.setViewportSize(isMobile ? { width: 375, height: 667 } : { width: 1440, height: 900 })
+  const works = await worksLandscape(page)
   await page.goto('/photography#travels/nanjing/10')
   await expect(page).toHaveURL(/#travels\/nanjing\/1$/)
   const stage = page.getByTestId('exhibition-stage')
   const photo = page.getByTestId('exhibition-image')
-  const baselines = new Map<boolean, number>()
+  let portraitCaptionTop: number | undefined
   for (let i = 1; i <= 5; i++) {
     await expect(page.getByTestId('exhibition-position')).toHaveText(`Nanjing - ${i}/5`)
     const box = (await photo.boundingBox())!
@@ -132,14 +160,18 @@ test('Nanjing fits every caption and keeps same-orientation frames aligned', asy
     expect(box.y).toBeGreaterThanOrEqual(region.y - 1)
     expect(text.y + text.height).toBeLessThanOrEqual(region.y + region.height + 1)
     expect(text.x).toBeCloseTo(box.x, 0)
-    expect(text.width).toBeCloseTo(box.width, 0)
+    expect(text.width).toBeGreaterThanOrEqual(box.width - 1)
     expect(text.y - box.y - box.height).toBeCloseTo(16, 0)
-    const landscape = box.width >= box.height
-    expect(text.y).toBeCloseTo(baselines.get(landscape) ?? text.y, 0)
-    baselines.set(landscape, text.y)
+    if (box.width >= box.height) {
+      await expectLandscapePlacement(page, works, isMobile)
+    } else {
+      expect(text.width).toBeCloseTo(box.width, 0)
+      portraitCaptionTop ??= text.y
+      expect(text.y).toBeCloseTo(portraitCaptionTop, 0)
+    }
     if (i < 5) await page.mouse.click(region.x + region.width * 0.8, box.y + 32)
   }
-  expect(baselines.size).toBe(2)
+  expect(portraitCaptionTop).toBeDefined()
 })
 
 test('short phone screens keep the photograph and the whole travel caption visible', async ({ page }) => {

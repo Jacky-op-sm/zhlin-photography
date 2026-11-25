@@ -1,14 +1,35 @@
+/* The page marker is in the server HTML and disappears with this exact route. */
+html:has(.viewerPage), body:has(.viewerPage) {
+  height: 100%;
+  min-height: 0;
+  overflow: hidden;
+  overscroll-behavior: none;
+}
+html:has(.viewerPage) { background-color: #000; }
+body:has(.viewerPage) {
+  position: fixed;
+  inset: 0;
+  width: 100%;
+  transition: none;
+  /* A constant fill leaves the site's underlying color intact. Removing the
+     marker restores it immediately, even with the site's 200ms transition. */
+  animation: viewerCanvas 0s both;
+}
+@keyframes viewerCanvas { from, to { background-color: #000; } }
+.viewerPage { min-height: 100%; background: #fff; touch-action: pinch-zoom; }
+.viewerPage .exhibition { touch-action: pinch-zoom; }
 .exhibition { --photo-width: 41.666667vw; --photo-height: calc(100dvh - 200px); position: relative; width: 100%; height: 100vh; height: 100dvh; min-height: 280px; overflow: hidden; background: #fff; color: #111; font-family: Arial, Helvetica, sans-serif; font-size: 12px; line-height: 1.4; -webkit-tap-highlight-color: transparent; }
-.stage { position: absolute; inset: 0; touch-action: pan-y pinch-zoom; transition: transform 1s cubic-bezier(.165,.84,.44,1) .1s; }
+.stage { position: absolute; inset: 0; touch-action: pinch-zoom; transition: transform 1s cubic-bezier(.165,.84,.44,1) .1s; }
 .photoSurface { position: absolute; inset: 0; }
 .exhibition[data-index-open="true"] .stage { transform: translateX(-25%); transition-delay: .2s; }
 .imageFrame { position: absolute; inset: 0; overflow: hidden; }
-.imageLayer {
+.imageLayer, .landscapeFrame {
   --crop-ratio: 1.25;
+  --works-width: min(var(--photo-width), calc(var(--photo-height) * var(--crop-ratio)));
   position: absolute;
   left: 50%;
   top: 50%;
-  width: min(var(--photo-width), calc(var(--photo-height) * var(--crop-ratio)));
+  width: var(--works-width);
   aspect-ratio: var(--crop-ratio);
   transform: translate(-50%, -50%);
 }
@@ -64,6 +85,7 @@
 .infoContent a { color: inherit; text-decoration: none; }
 .thumbsOverlay { display: block; background: transparent; }
 .thumbsPanel { position: relative; width: 100%; height: 100%; overflow-y: auto; overscroll-behavior: contain; background: rgb(255 255 255 / .94); padding: max(30px, env(safe-area-inset-top)) 6% max(60px, env(safe-area-inset-bottom)); transform: translateY(100%); transition: transform 1s cubic-bezier(.165,.84,.44,1); }
+.indexPanel, .thumbsPanel { touch-action: pan-y; }
 .overlayOpen .thumbsPanel { transform: translateY(0); }
 .thumbsHeader { display: flex; align-items: center; justify-content: space-between; min-height: 25px; margin-bottom: 30px; opacity: 0; transition: opacity .6s ease; }
 .thumbsHeader h2 { font: inherit; margin: 0; }
@@ -111,7 +133,7 @@
 @media (max-height: 500px) and (max-width: 960px), (max-height: 500px) and (pointer: coarse) { .viewNavigation { bottom: auto; } }
 @keyframes collectionCurtain { 0% { transform: translateY(100%); } 45%, 50% { transform: translateY(0); } 100% { transform: translateY(-100%); } }
 
-.exhibition[data-travel="true"] .stage {
+.stage[data-travel-layout="portrait"] {
   --travel-width: var(--fitted-width, min(var(--photo-width), calc(var(--photo-height) * var(--stage-ratio))));
   padding-block: calc((100dvh - var(--photo-height)) / 2);
   display: flex;
@@ -119,12 +141,12 @@
   justify-content: center;
   gap: 16px;
 }
-.exhibition[data-travel="true"] .stage::before {
+.stage[data-travel-layout="portrait"]::before {
   content: "";
   flex: none;
   height: calc(var(--travel-width) / var(--stage-ratio));
 }
-.exhibition[data-travel="true"] .imageLayer {
+.stage[data-travel-layout="portrait"] .imageLayer {
   width: min(var(--travel-width), calc(var(--travel-width) / var(--stage-ratio) * var(--crop-ratio)));
   transform: translate(-50%, calc(-50% - (var(--caption-height, 0px) + 16px) / 2));
 }
@@ -134,6 +156,20 @@
   width: var(--caption-width, var(--travel-width));
   align-self: center;
   flex: none;
+}
+.stage[data-travel-layout="landscape"] :is(.imageLayer[data-orientation="landscape"], .landscapeFrame) {
+  top: var(--landscape-top, 50%);
+  width: var(--landscape-width, var(--works-width));
+  transform: translate(-50%, var(--landscape-translate-y, -50%));
+}
+.landscapeFrame { pointer-events: none; }
+.landscapeFrame > .caption { position: absolute; inset-inline: 0; top: calc(100% + 16px); }
+.stage[data-wide-caption] :is(.imageLayer[data-orientation="landscape"], .landscapeFrame) {
+  left: calc((100% - var(--works-width)) / 2);
+  transform: none;
+}
+.stage[data-wide-caption] .landscapeFrame > .caption { width: var(--works-width); }
+.captions, .landscapeFrame {
   text-align: left;
   font-family: 'PingFang SC', 'Hiragino Sans GB', 'Noto Sans SC', 'Microsoft YaHei', sans-serif;
 }
@@ -141,25 +177,11 @@
 .caption[aria-hidden="true"] { visibility: hidden; }
 .eyebrow { margin: 0 0 6px; color: #6b6b6b; font-size: 13px; line-height: 1.5; letter-spacing: .04em; }
 .body { margin: 0; color: #3d3d3d; font-size: 14px; line-height: 1.8; }
+.landscapeFrame .eyebrow { font-size: calc(13px * var(--caption-scale, 1)); }
+.landscapeFrame .body { font-size: calc(14px * var(--caption-scale, 1)); }
 
 @media (max-height: 620px) {
-  .exhibition[data-travel="true"] .stage { padding-block: max(60px, env(safe-area-inset-top), env(safe-area-inset-bottom)); }
-}
-
-.safariTopEdge, .safariBottomEdge { display: none; }
-@media (hover: none) and (pointer: coarse) {
-  /* Edge backgrounds for Safari's browser chrome. The opaque exhibition
-     paints above them so no black line interrupts the white page. */
-  .safariTopEdge, .safariBottomEdge {
-    display: block;
-    position: fixed;
-    inset-inline: 0;
-    height: 1px;
-    background: #000;
-    pointer-events: none;
-  }
-  .safariTopEdge { top: 0; }
-  .safariBottomEdge { bottom: 0; }
+  .stage[data-travel-layout="portrait"] { padding-block: max(60px, env(safe-area-inset-top), env(safe-area-inset-bottom)); }
 }
 @media (prefers-reduced-motion: reduce) {
   /* Keep the exhibition choreography consistent across devices, overriding

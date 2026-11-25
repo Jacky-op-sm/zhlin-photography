@@ -7,6 +7,7 @@ import Modal from '@/components/ui/Modal'
 import profile from '../../../content/site/profile.json'
 import { ExhibitionImage, useExhibitionCursor, TRANSITION_MS } from './ExhibitionPresentation'
 import { cropRatio } from './exhibition-images'
+import { observeLandscapeCaption } from './landscape-caption'
 import styles from './PhotographyExhibition.module.css'
 
 type Caption = { place: string; eyebrow: string; title: string; body: string }
@@ -57,6 +58,8 @@ export default function PhotographyExhibition({ collections, initialCollectionId
   const indexTrigger = useRef<HTMLButtonElement>(null)
   const stageRef = useRef<HTMLDivElement>(null)
   const captionsRef = useRef<HTMLDivElement>(null)
+  const controlsRef = useRef<HTMLElement>(null)
+  const positionRef = useRef<HTMLParagraphElement>(null)
   const cursorRef = useRef<HTMLDivElement>(null)
   const closeTimer = useRef<ReturnType<typeof setTimeout> | null>(null)
   const tabTimer = useRef<ReturnType<typeof setTimeout> | null>(null)
@@ -71,6 +74,7 @@ export default function PhotographyExhibition({ collections, initialCollectionId
   const isTravel = shownCollection?.section === 'travels'
   const shownPhoto = shownCollection?.photos[shownIndex]
   const ratio = shownPhoto ? cropRatio(shownPhoto) : 1
+  const travelLayout = isTravel ? (ratio > 1 ? 'landscape' : 'portrait') : undefined
   const section = collection?.section ?? 'works'
   const sectionCollections = useMemo(() => availableCollections.filter(item => (item.section ?? 'works') === section), [availableCollections, section])
   const tabCollections = useMemo(() => availableCollections.filter(item => (item.section ?? 'works') === tab.displayed), [availableCollections, tab.displayed])
@@ -175,7 +179,7 @@ export default function PhotographyExhibition({ collections, initialCollectionId
   useLayoutEffect(() => {
     const stage = stageRef.current
     const captions = captionsRef.current
-    if (!isTravel || !stage || !captions) return
+    if (travelLayout !== 'portrait' || !stage || !captions) return
 
     // All captions share one grid cell. A narrower photo can add a line of text,
     // so measure again at each new width until both fit at the largest size.
@@ -216,7 +220,12 @@ export default function PhotographyExhibition({ collections, initialCollectionId
       stage.style.removeProperty('--caption-height')
       stage.style.removeProperty('--caption-width')
     }
-  }, [isTravel, shownCollection, ratio])
+  }, [travelLayout, shownCollection, ratio])
+
+  useLayoutEffect(() => {
+    if (travelLayout !== 'landscape' || !stageRef.current || !captionsRef.current || !controlsRef.current || !positionRef.current) return
+    return observeLandscapeCaption(stageRef.current, captionsRef.current, controlsRef.current, positionRef.current, ratio)
+  }, [travelLayout, shownPhoto, ratio])
 
   useEffect(() => {
     if (panel?.phase !== 'entering') return
@@ -248,16 +257,14 @@ export default function PhotographyExhibition({ collections, initialCollectionId
   }, [panel, step])
 
   if (!collection || !photo || !shownCollection) return <main lang="en" className={styles.exhibition}><Link href="/">Back to Zhlin</Link><p>No photographs are available.</p></main>
-  const travelLayout = isTravel ? { '--stage-ratio': ratio } as CSSProperties : undefined
+  const portraitStyle = travelLayout === 'portrait' ? { '--stage-ratio': ratio } as CSSProperties : undefined
+  const captionPhotos = travelLayout === 'landscape' && shownPhoto ? [shownPhoto] : shownCollection.photos
   const label = `${shownCollection.title} - ${shownIndex + 1}/${shownCollection.photos.length}`
 
   return (
-    <>
-      <div className={styles.safariTopEdge} aria-hidden="true" />
-      <div className={styles.safariBottomEdge} aria-hidden="true" />
     <main lang="en" className={styles.exhibition} aria-label="Photography exhibition" data-exhibition-collection={shownCollection.id} data-travel={isTravel} data-index-open={panel?.kind === 'index' && panel.phase !== 'closing'}>
       <h1 className={styles.srOnly}>{shownCollection.title} — Photography by Zhlin</h1>
-      <div ref={stageRef} className={styles.stage} style={travelLayout} data-testid="exhibition-stage" data-exhibition-surface
+      <div ref={stageRef} className={styles.stage} style={portraitStyle} data-travel-layout={travelLayout} data-testid="exhibition-stage" data-exhibition-surface
         onTouchStart={(event) => { const touch = event.touches[0]; touchStart.current = event.touches.length === 1 ? { x: touch.clientX, y: touch.clientY } : null }}
         onTouchEnd={(event) => {
           const start = touchStart.current
@@ -275,9 +282,9 @@ export default function PhotographyExhibition({ collections, initialCollectionId
           <button type="button" className={`${styles.clickZone} ${styles.previousZone}`} tabIndex={-1} aria-hidden="true" disabled={!hasPrevious} onClick={() => { if (Date.now() > suppressClickUntil.current) step(-1) }} />
           <button type="button" className={`${styles.clickZone} ${styles.nextZone}`} tabIndex={-1} aria-hidden="true" disabled={!hasNext} onClick={() => { if (Date.now() > suppressClickUntil.current) step(1) }} />
         </div>
-        {isTravel && <div ref={captionsRef} className={styles.captions} lang="zh-CN">
-          {shownCollection.photos.map(({ id, caption }, index) => caption && (
-            <article key={id} className={styles.caption} aria-hidden={index !== shownIndex}>
+        {isTravel && <div ref={captionsRef} className={travelLayout === 'landscape' ? styles.landscapeFrame : styles.captions} lang="zh-CN">
+          {captionPhotos.map(({ id, caption }) => caption && (
+            <article key={id} className={styles.caption} aria-hidden={id !== shownPhoto?.id}>
               <p className={styles.eyebrow}>{caption.place}</p>
               <p className={styles.body}>{caption.body}</p>
             </article>
@@ -285,8 +292,8 @@ export default function PhotographyExhibition({ collections, initialCollectionId
         </div>}
       </div>
       <div ref={cursorRef} className={styles.cursorLabel} data-testid="exhibition-cursor" data-visible="false" data-size="large" aria-hidden="true">{label}</div>
-      <p className={styles.position} aria-live="polite" aria-atomic="true" data-testid="exhibition-position">{label}</p>
-      <nav className={styles.viewNavigation} aria-label="Exhibition views" data-testid="exhibition-controls">
+      <p ref={positionRef} className={styles.position} aria-live="polite" aria-atomic="true" data-testid="exhibition-position">{label}</p>
+      <nav ref={controlsRef} className={styles.viewNavigation} aria-label="Exhibition views" data-testid="exhibition-controls">
         <button type="button" aria-haspopup="dialog" aria-expanded={panel?.kind === 'index'} ref={indexTrigger} onClick={(event) => openPanelFrom(event, 'index')}>Index</button><span className={styles.divider} aria-hidden="true" /><button type="button" aria-haspopup="dialog" aria-expanded={panel?.kind === 'thumbs'} onClick={(event) => openPanelFrom(event, 'thumbs')}>Thumbs</button>
       </nav>
       <div className={styles.keyboardNavigation}><button type="button" aria-label="Previous photograph" disabled={!hasPrevious} onClick={() => step(-1)}>← Previous</button><button type="button" aria-label="Next photograph" disabled={!hasNext} onClick={() => step(1)}>Next →</button></div>
@@ -338,6 +345,5 @@ export default function PhotographyExhibition({ collections, initialCollectionId
         </section>
       </Modal>
     </main>
-    </>
   )
 }
