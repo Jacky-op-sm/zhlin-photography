@@ -10,4 +10,4 @@ This block is written and re-added by `next dev` — verify at `node_modules/nex
 
 ## 发布约定
 
-网站改动完成并通过相关验证后，自动部署到现有线上站点，并核对线上版本与交互效果。工作区存在其他未提交改动时，使用隔离工作树，仅发布本次任务涉及的文件。
+网站改动通过相关验证后，直接发布到 `main`，并在正式站 https://www.zhlin.space 核对线上版本与交互效果。只有站长明确要求时才创建 Preview。工作区存在其他未提交改动时，使用隔离工作树，仅发布本次任务涉及的文件。
