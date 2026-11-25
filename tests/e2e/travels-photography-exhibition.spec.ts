@@ -141,3 +141,19 @@ test('Nanjing fits every caption and keeps same-orientation frames aligned', asy
   }
   expect(baselines.size).toBe(2)
 })
+
+test('short phone screens keep the photograph and the whole travel caption visible', async ({ page }) => {
+  await page.goto('/photography#travels/nanjing/4')
+  await expect(page.getByTestId('exhibition-position')).toHaveText('Nanjing - 4/5')
+  for (const viewport of [{ width: 320, height: 568 }, { width: 667, height: 375 }]) {
+    await page.setViewportSize(viewport)
+    const image = page.getByTestId('exhibition-image')
+    const caption = page.locator('article[aria-hidden="false"]')
+    await expect(image).toBeInViewport({ ratio: 1 })
+    await expect(caption).toBeInViewport({ ratio: 1 })
+    const photoBox = (await image.boundingBox())!
+    const textBox = (await caption.boundingBox())!
+    expect(textBox.y - photoBox.y - photoBox.height).toBeCloseTo(16, 0)
+    if (viewport.height > viewport.width) expect(textBox.width).toBeCloseTo(photoBox.width, 0)
+  }
+})

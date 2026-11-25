@@ -181,15 +181,25 @@ export default function PhotographyExhibition({ collections, initialCollectionId
     // so measure again at each new width until both fit at the largest size.
     const fit = () => {
       stage.style.removeProperty('--fitted-width')
+      stage.style.removeProperty('--caption-width')
       const layout = getComputedStyle(stage)
       const available = stage.clientHeight - parseFloat(layout.paddingTop) - parseFloat(layout.paddingBottom)
       const gap = parseFloat(layout.rowGap)
-      let width = captions.getBoundingClientRect().width
+      const maxWidth = captions.getBoundingClientRect().width
+      let width = maxWidth
       while (width > 1) {
         const room = available - gap - captions.getBoundingClientRect().height
         if (width / ratio <= room + 0.5) break
         const next = Math.floor(room * ratio)
-        if (next < 1) break
+        if (next < 1) {
+          // On very short landscape screens no equal-width column may fit:
+          // narrowing it again produces more lines than the entire viewport.
+          stage.style.setProperty('--caption-width', 'var(--photo-width)')
+          const remaining = available - gap - captions.getBoundingClientRect().height
+          const photoWidth = Math.max(1, Math.min(maxWidth, Math.floor(remaining * ratio)))
+          stage.style.setProperty('--fitted-width', `${photoWidth}px`)
+          break
+        }
         stage.style.setProperty('--fitted-width', `${next}px`)
         width = next
       }
@@ -204,6 +214,7 @@ export default function PhotographyExhibition({ collections, initialCollectionId
       document.fonts.removeEventListener('loadingdone', fit)
       stage.style.removeProperty('--fitted-width')
       stage.style.removeProperty('--caption-height')
+      stage.style.removeProperty('--caption-width')
     }
   }, [isTravel, shownCollection, ratio])
 

@@ -131,7 +131,7 @@
 .captions {
   position: relative;
   display: grid;
-  width: var(--travel-width);
+  width: var(--caption-width, var(--travel-width));
   align-self: center;
   flex: none;
   text-align: left;
@@ -141,6 +141,10 @@
 .caption[aria-hidden="true"] { visibility: hidden; }
 .eyebrow { margin: 0 0 6px; color: #6b6b6b; font-size: 13px; line-height: 1.5; letter-spacing: .04em; }
 .body { margin: 0; color: #3d3d3d; font-size: 14px; line-height: 1.8; }
+
+@media (max-height: 620px) {
+  .exhibition[data-travel="true"] .stage { padding-block: max(60px, env(safe-area-inset-top), env(safe-area-inset-bottom)); }
+}
 
 .safariTopEdge, .safariBottomEdge { display: none; }
 @media (hover: none) and (pointer: coarse) {
