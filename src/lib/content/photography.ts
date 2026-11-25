@@ -1,26 +1,41 @@
-import streetPhotos from '../../../content/photography/photos/street.json';
-import petsPhotos from '../../../content/photography/photos/pets.json';
-import projectPhotos from '../../../content/photography/photos/project.json';
-import series from '../../../content/photography/series.json';
-import {
-  photoRecordsSchema,
-  photographySeriesListSchema,
-  type PhotographySeriesContent,
-} from '@/lib/content/schemas';
-import type { PhotoCategory, Photo } from '@/lib/types';
+import works from '../../../content/photography/photos/works.json'
+import intersection from '../../../content/photography/photos/intersection.json'
+import village from '../../../content/photography/photos/miaoqiantan.json'
+import villageColor from '../../../content/photography/photos/miaoqiantan-color.json'
+import bangkok from '../../../content/photography/photos/bangkok.json'
+import series from '../../../content/photography/series.json'
+import { photoRecordsSchema, photographySeriesListSchema } from './schemas'
+import type { ExhibitionCollection, ExhibitionPhoto } from '@/components/photography/PhotographyExhibition'
 
-const photoContent = {
-  street: photoRecordsSchema.parse(streetPhotos),
-  pets: photoRecordsSchema.parse(petsPhotos),
-  project: photoRecordsSchema.parse(projectPhotos),
-} satisfies Record<PhotographySeriesContent['slug'], unknown>
+function exhibitionPhotos(records: unknown): ExhibitionPhoto[] {
+  return photoRecordsSchema.parse(records).map(photo => ({
+    id: photo.id, alt: photo.title, src: photo.filename, thumbnail: photo.thumbnail,
+    width: photo.width, height: photo.height, legacyHash: photo.legacyHash,
+  }))
+}
 
-export const photographyPhotos: Photo[] = Object.entries(photoContent).flatMap(
-  ([category, photos]) =>
-    photos.map((photo) => ({
-      ...photo,
-      category: category as PhotoCategory,
-    })),
-)
+const records = { works, intersection, miaoqiantan: village, bangkok }
 
-export const photographySeriesContent = photographySeriesListSchema.parse(series);
+export const curatedExhibitions: ExhibitionCollection[] = photographySeriesListSchema.parse(series).flatMap(series => {
+  const photos = exhibitionPhotos(records[series.slug])
+  const collection: ExhibitionCollection = {
+    id: series.slug, section: series.section, title: series.title, description: series.description, photos,
+  }
+  if (series.brightnessOrder) {
+    collection.viewType = 'order'
+    const byId = new Map(photos.map(photo => [photo.id, photo]))
+    const ordered = series.brightnessOrder.map(id => {
+      const photo = byId.get(id)
+      if (!photo) throw new Error(`Unknown photograph in brightness order: ${id}`)
+      return photo
+    })
+    return [{ ...collection, viewLabel: '拍摄时间' },
+      { ...collection, id: `${series.slug}/light`, baseId: series.slug, viewLabel: '由亮到暗', photos: ordered }]
+  }
+  if (series.slug === 'miaoqiantan') {
+    collection.viewType = 'color'
+    return [{ ...collection, viewLabel: '黑白' },
+      { ...collection, id: 'miaoqiantan/color', baseId: series.slug, viewLabel: '彩色', photos: exhibitionPhotos(villageColor) }]
+  }
+  return [collection]
+})

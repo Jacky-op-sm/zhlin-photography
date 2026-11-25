@@ -56,10 +56,10 @@ async function checkVariant(image, field, hashField, expectedDimensions) {
   }
 
   const metadata = await sharp(buffer).metadata()
-  if (metadata.format !== imageFormat) {
+  if (metadata.format !== 'heif' || metadata.compression !== 'av1') {
     failures.push(`${publicPath} must be ${imageFormat}`)
   }
-  if (metadata.exif || metadata.gps) {
+  if (metadata.exif || metadata.gps || metadata.xmp || metadata.iptc) {
     failures.push(`${publicPath} contains EXIF or GPS metadata`)
   }
   if (

@@ -696,6 +696,13 @@ html {
   gap: clamp(4.4rem, 8.3vw, 9.4rem);
 }
 
+@media (min-width: 1100px) {
+  .home-photographer-grid.home-works-grid {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    column-gap: clamp(1.75rem, 3.6vw, 4rem);
+  }
+}
+
 .home-photographer-card {
   display: flex;
   flex-direction: column;

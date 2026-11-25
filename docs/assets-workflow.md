@@ -2,11 +2,10 @@
 
 ## Source and generated boundaries
 
-- `content/photography/photos/*.json` is the published source of truth for the Street, Animals and Projects exhibitions. `content/photography/exhibitions/bangkok.json` defines the separate Bangkok sequence.
+- `content/photography/series.json` lists Works and the three Projects. The corresponding files in `content/photography/photos/` define their frame order. The village’s colour edition shares the monochrome edition’s IDs.
 - Versioned photography generation inputs live in `assets-source/photography/<series>/`, outside `public/`. A photo record's `source` is a repository-relative generation input, not a browser URL.
 - Local RAW masters remain in ignored `assets-src/` or their original external directory. These workflows never overwrite masters.
-- Photography `filename` and `thumbnail` records point to WebP derivatives in `public/assets/generated/photos/`. Their dimensions and hashes are recorded in `content/photography/image-manifest.json`.
-- Bangkok's public WebP files live in `public/assets/photography/bangkok/`. Its private original-file report lives in ignored `workspace/photography/bangkok/source-report.json`.
+- Photography `filename` and `thumbnail` records point to AVIF derivatives in `public/assets/generated/photos/`. Their dimensions and hashes are recorded in `content/photography/image-manifest.json`.
 - Only browser-used images belong in `public/assets/`. Source files required by validation remain available to the build, but are not served as public files.
 
 All generation paths and budgets are defined in `scripts/images/config.mjs`. Catalog path fields are compatibility assertions and cannot override that configuration.
@@ -15,10 +14,10 @@ All generation paths and budgets are defined in `scripts/images/config.mjs`. Cat
 
 | Use | Publication format | Resolution / quality |
 |---|---|---|
-| Photography large image | WebP | Long edge at most 2400 px, quality 84 |
-| Photography thumbnail | WebP | Long edge at most 640 px, quality 76 |
+| Photography large image | AVIF | Long edge at most 2400 px, quality 55 |
+| Photography thumbnail | AVIF | Long edge at most 640 px, quality 49 |
 | Travel and home JPEG/PNG publication copies | WebP | Long edge at most 2400 px, quality 82, encoder effort 6 |
-| Existing Photography and Writing WebP | Retain existing files | Avoid another lossy recompression |
+| Existing Writing WebP | Retain existing files | Avoid another lossy recompression |
 | Icons and vector artwork | SVG where already used | Preserve vector detail |
 
 Never enlarge a small image. Preserve aspect ratio and orientation; remove EXIF/GPS from public derivatives. Convert a travel/home image only when the resulting file is smaller. Keep source photographs or a recorded recovery copy so future exports do not repeatedly compress a previously compressed publication file.
@@ -46,11 +45,6 @@ npm run assets:write
 # Verify sources, public files, hashes, dimensions and references.
 npm run check:assets
 
-# Preview the staged Street selection without changing the current site.
-npm run photos:preview:street
-
-# Explicitly publish the staged selection and generate its derivatives.
-npm run photos:publish:street
 ```
 
 `assets:clean` removes only reproducible generated photography files; run `assets:write` before serving or deploying again. `npm run clean` handles local build/test output and preserves source photographs, original-file reports and writing backups.

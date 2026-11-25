@@ -42,7 +42,7 @@ test.describe('responsive adaptation regressions', () => {
   test('photography exhibition keeps the cropped frame inside the viewport', async ({ page }, testInfo) => {
     test.skip(!(isMobileProject(testInfo.project.name) || isIPadProject(testInfo.project.name)), 'mobile/ipad test')
 
-    await page.goto('/photography/street')
+    await page.goto('/photography/intersection')
     const image = page.getByTestId('exhibition-image')
     await expect(image).toBeVisible()
     await expect.poll(() => image.evaluate((element: HTMLImageElement) => element.naturalWidth)).toBeGreaterThan(0)
@@ -132,7 +132,7 @@ test.describe('responsive adaptation regressions', () => {
   test('iPad exhibition controls stay outside image and keep stable Y while switching', async ({ page }, testInfo) => {
     test.skip(!isIPadProject(testInfo.project.name), 'ipad-only test')
 
-    await page.goto('/photography/pets')
+    await page.goto('/photography/miaoqiantan')
     const image = page.getByTestId('exhibition-image')
     const controls = page.getByTestId('exhibition-controls')
     await expect(image).toBeVisible()
@@ -143,7 +143,7 @@ test.describe('responsive adaptation regressions', () => {
     expect(before!.y + before!.height <= imageBefore!.y + 1 || before!.y >= imageBefore!.y + imageBefore!.height - 1).toBe(true)
 
     await page.keyboard.press('ArrowRight')
-    await expect(page.getByTestId('exhibition-position')).toContainText(/2\s*\/\s*15/)
+    await expect(page.getByTestId('exhibition-position')).toContainText(/2\s*\/\s*13/)
     const after = await controls.boundingBox()
     expect(after).not.toBeNull()
     expect(Math.abs(after!.y - before!.y)).toBeLessThanOrEqual(2)

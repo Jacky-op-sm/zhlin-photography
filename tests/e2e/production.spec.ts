@@ -53,7 +53,7 @@ test.describe('production route contract', () => {
     expect(sitemap.status()).toBe(200)
     const sitemapText = await sitemap.text()
     for (const route of [
-      '/photography/street',
+      '/photography/intersection',
       '/photography',
       '/contact',
     ]) {
@@ -157,10 +157,10 @@ test.describe('production interactions', () => {
   test('exhibition panels in Works and Travels restore their trigger focus', async ({
     page,
   }) => {
-    await page.goto('/photography/pets')
+    await page.goto('/photography/miaoqiantan')
     const thumbs = page.getByRole('button', { name: 'Thumbs', exact: true })
     await thumbs.click()
-    const viewer = page.getByRole('dialog', { name: 'Animals — Thumbs', exact: true })
+    const viewer = page.getByRole('dialog', { name: '庙前潭桥 — Thumbs', exact: true })
     await expect(viewer).toBeVisible()
     await expect(
       page.getByRole('button', { name: 'Close thumbnails', exact: true }),
@@ -181,11 +181,11 @@ test.describe('production interactions', () => {
   })
 
   test('generated thumbnails are used by the exhibition', async ({ page }) => {
-    await page.goto('/photography/street')
+    await page.goto('/photography/intersection')
     await page.waitForLoadState('networkidle')
     await page.getByRole('button', { name: 'Thumbs', exact: true }).click()
-    const images = page.getByRole('dialog', { name: 'Street — Thumbs', exact: true }).locator('img')
-    await expect(images).toHaveCount(7)
+    const images = page.getByRole('dialog', { name: '同一路口 — Thumbs', exact: true }).locator('img')
+    await expect(images).toHaveCount(13)
     await expect.poll(() => images.evaluateAll((items) => items.every((image) => (image as HTMLImageElement).naturalWidth > 0))).toBe(true)
     const sources = await images.evaluateAll(
       (images) =>

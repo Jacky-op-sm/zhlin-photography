@@ -11,12 +11,13 @@ import { observeLandscapeCaption } from './landscape-caption'
 import styles from './PhotographyExhibition.module.css'
 
 type Caption = { place: string; eyebrow: string; title: string; body: string }
-type Section = 'works' | 'travels'
-const indexTabs = ['works', 'travels', 'info'] as const
+const sections = ['works', 'projects', 'travels'] as const
+type Section = (typeof sections)[number]
+const indexTabs = [...sections, 'info'] as const
 type IndexTab = (typeof indexTabs)[number]
 
-export interface ExhibitionPhoto { focus?: string; caption?: Caption; id: string; src: string; thumbnail: string; width: number; height: number; alt: string }
-export interface ExhibitionCollection { section?: Section; id: string; title: string; description?: string; photos: ExhibitionPhoto[] }
+export interface ExhibitionPhoto { legacyHash?: string; focus?: string; caption?: Caption; id: string; src: string; thumbnail: string; width: number; height: number; alt: string }
+export interface ExhibitionCollection { baseId?: string; viewLabel?: string; viewType?: 'order' | 'color'; section?: Section; id: string; title: string; description?: string; photos: ExhibitionPhoto[] }
 interface PhotographyExhibitionProps { collections: ExhibitionCollection[]; initialCollectionId?: string }
 type Selection = { collection: ExhibitionCollection; photoIndex: number }
 type Panel = { kind: 'index' | 'thumbs'; phase: 'entering' | 'open' | 'closing' }
@@ -29,18 +30,31 @@ function subscribeToLocation(onChange: () => void) {
 function locationSnapshot() { return window.location.hash }
 function serverLocationSnapshot() { return '' }
 function photoHash(collectionId: string, photoId: string) { return `#${collectionId.split('/').map(encodeURIComponent).join('/')}/${encodeURIComponent(photoId)}` }
+function directorySection(hash: string) {
+  return hash === '#projects' ? 'projects' : hash === '#travels' ? 'travels' : null
+}
 function resolveSelection(hash: string, collections: ExhibitionCollection[], initialId?: string): Selection | null {
   const fallback = collections.find((collection) => collection.id === initialId) ?? collections[0]
   if (!fallback) return null
   try {
     const parts = hash.slice(1).split('/').map(decodeURIComponent)
-    if (hash === '#travels') return { collection: collections.find(item => item.section === 'travels') ?? fallback, photoIndex: 0 }
+    const directory = directorySection(hash)
+    if (directory) return { collection: collections.find(item => item.section === directory) ?? fallback, photoIndex: 0 }
     const photoId = parts.pop()
     const collectionId = parts.join('/')
     const collection = collections.find((item) => item.id === collectionId)
     const photoIndex = collection?.photos.findIndex((photo) => photo.id === photoId) ?? -1
     if (collection && photoIndex >= 0) return { collection, photoIndex }
-    if (collection?.section === 'travels') return { collection, photoIndex: 0 }
+    // Previously shared links to a retained picture follow it into its new sequence.
+    const legacy = parts.concat(photoId ?? '').join('/')
+    for (const item of collections) {
+      if (item.baseId) continue
+      const index = item.photos.findIndex(entry => entry.legacyHash === legacy)
+      if (index >= 0) return { collection: item, photoIndex: index }
+    }
+    const oldSections: Record<string, string> = { street: 'works', pets: 'miaoqiantan', project: 'intersection' }
+    const entrance = collection ?? collections.find(item => item.id === (oldSections[collectionId] ?? photoId))
+    if (entrance) return { collection: entrance, photoIndex: 0 }
   } catch { /* A malformed or stale photo link opens the default exhibition. */ }
   return { collection: fallback, photoIndex: 0 }
 }
@@ -68,7 +82,8 @@ export default function PhotographyExhibition({ collections, initialCollectionId
   const collection = selection?.collection
   const photoIndex = selection?.photoIndex ?? 0
   const photo = collection?.photos[photoIndex]
-  const shown = hash === '#travels' ? selection : presented ?? selection
+  const directory = directorySection(hash)
+  const shown = directory ? selection : presented ?? selection
   const shownCollection = shown?.collection
   const shownIndex = shown?.photoIndex ?? 0
   const isTravel = shownCollection?.section === 'travels'
@@ -76,8 +91,16 @@ export default function PhotographyExhibition({ collections, initialCollectionId
   const ratio = shownPhoto ? cropRatio(shownPhoto) : 1
   const travelLayout = isTravel ? (ratio > 1 ? 'landscape' : 'portrait') : undefined
   const section = collection?.section ?? 'works'
-  const sectionCollections = useMemo(() => availableCollections.filter(item => (item.section ?? 'works') === section), [availableCollections, section])
-  const tabCollections = useMemo(() => availableCollections.filter(item => (item.section ?? 'works') === tab.displayed), [availableCollections, tab.displayed])
+  // Each project has one index entry even when a visitor chooses its alternate reading.
+  const primaryCollections = useMemo(() => availableCollections.filter(item => !item.baseId)
+    .map(item => collection?.baseId === item.id ? collection : item), [availableCollections, collection])
+  const sectionCollections = useMemo(() => primaryCollections.filter(item => (item.section ?? 'works') === section), [primaryCollections, section])
+  const tabCollections = useMemo(() => primaryCollections.filter(item => (item.section ?? 'works') === tab.displayed), [primaryCollections, tab.displayed])
+  const viewOptions = useMemo(() => {
+    if (!collection?.viewLabel) return []
+    const base = collection.baseId ?? collection.id
+    return availableCollections.filter(item => (item.baseId ?? item.id) === base)
+  }, [availableCollections, collection])
   const collectionIndex = sectionCollections.findIndex((item) => item.id === collection?.id)
   const sequence = useMemo(() => sectionCollections.flatMap((item) => item.photos.map((entry) => ({ photo: entry, collectionId: item.id }))), [sectionCollections])
   const neighbours = useMemo(() => {
@@ -140,7 +163,7 @@ export default function PhotographyExhibition({ collections, initialCollectionId
   }
   const closePanel = useCallback(() => {
     if (!panel || panel.phase === 'closing') return
-    if (window.location.hash === '#travels' && collection && photo) {
+    if (directorySection(window.location.hash) && collection && photo) {
       window.history.replaceState(window.history.state, '', photoHash(collection.id, photo.id))
       window.dispatchEvent(new HashChangeEvent('hashchange'))
     }
@@ -156,18 +179,18 @@ export default function PhotographyExhibition({ collections, initialCollectionId
   // The server cannot read the fragment. Open the directory only after its
   // first photograph has decoded, so the drawer never opens over the SSR cover.
   useLayoutEffect(() => {
-    if (hash !== '#travels' || !presented?.decoded || presented.collection !== collection || presented.photoIndex !== 0) return
+    if (!directory || !presented?.decoded || presented.collection !== collection || presented.photoIndex !== 0) return
     const frame = requestAnimationFrame(() => {
-      if (window.location.hash !== '#travels') return
+      if (directorySection(window.location.hash) !== directory) return
       indexTrigger.current?.focus({ preventScroll: true })
-      openPanel('index', 'travels')
+      openPanel('index', directory)
     })
     return () => cancelAnimationFrame(frame)
-  }, [hash, collection, presented, openPanel])
+  }, [directory, collection, presented, openPanel])
 
   useEffect(() => {
     const restoreHistoryPanel = () => {
-      if (window.location.hash !== '#travels') {
+      if (!directorySection(window.location.hash)) {
         if (closeTimer.current) clearTimeout(closeTimer.current)
         setPanel(null)
       }
@@ -236,10 +259,10 @@ export default function PhotographyExhibition({ collections, initialCollectionId
   useEffect(() => {
     if (!collection || !photo || window.location.hash !== hash) return
     const canonical = photoHash(collection.id, photo.id)
-    if (hash && !(collection.section === 'travels' && hash.startsWith(`#${collection.id}/`) && hash !== canonical)) return
-    window.history.replaceState(window.history.state, '', photoHash(collection.id, photo.id))
+    if (directory || hash === canonical) return
+    window.history.replaceState(window.history.state, '', canonical)
     window.dispatchEvent(new HashChangeEvent('hashchange'))
-  }, [collection, photo, hash])
+  }, [collection, photo, hash, directory])
   useEffect(() => {
     const skipLink = document.querySelector<HTMLAnchorElement>('a.skip-link[href="#main-content"]')
     const focusExhibition = (event: MouseEvent) => { event.preventDefault(); document.getElementById('main-content')?.focus({ preventScroll: true }) }
@@ -319,11 +342,11 @@ export default function PhotographyExhibition({ collections, initialCollectionId
               <button ref={closeButtonRef} type="button" aria-label="Close index" className={styles.closeButton} onClick={closePanel}>Close</button>
             </header>
             <div className={styles.indexContent} data-fading={tab.fading}>
-              {(['works', 'travels'] as const).map(name => (
+              {sections.map(name => (
                 <div key={name} role="tabpanel" id={`exhibition-${name}-panel`} aria-labelledby={`exhibition-${name}-tab`} hidden={tab.displayed !== name}>
                   {tab.displayed === name && <div className={styles.collectionList}>
                     {tabCollections.map(item => {
-                      const destination = name === 'works' && item.id === shownCollection.id ? shownIndex : 0
+                      const destination = name !== 'travels' && item.id === shownCollection.id ? shownIndex : 0
                       const prepare = () => preparePhoto(item, destination)
                       return <button type="button" key={item.id} className={styles.collectionButton} aria-current={item.id === shownCollection.id ? 'true' : undefined}
                         onMouseEnter={prepare} onFocus={prepare} onTouchStart={prepare}
@@ -337,10 +360,20 @@ export default function PhotographyExhibition({ collections, initialCollectionId
               <div role="tabpanel" id="exhibition-info-panel" aria-labelledby="exhibition-info-tab" hidden={tab.displayed !== 'info'} className={styles.infoContent}>{tab.displayed === 'info' ? <><h2>{profile.name}</h2><p>Photographer<br />{profile.city}</p>{shownCollection.description ? <p lang={/[\u3400-\u9fff]/.test(shownCollection.description) ? 'zh-CN' : 'en'}>{shownCollection.description}</p> : null}<p><a href={`mailto:${profile.email}`}>{profile.email}</a></p></> : null}</div>
             </div>
           </> : <>
-            <header className={styles.thumbsHeader}><h2>{shownCollection.title}</h2><button ref={closeButtonRef} type="button" aria-label="Close thumbnails" onClick={closePanel}>Close</button></header>
-            <div className={styles.thumbnailGrid}>{shownCollection.photos.map((item, index) => <button type="button" key={item.id} className={styles.thumbnailButton} aria-label={`View photograph ${index + 1}: ${item.alt}`} aria-current={index === shownIndex ? 'true' : undefined}
-              onMouseEnter={() => preparePhoto(shownCollection, index)} onFocus={() => preparePhoto(shownCollection, index)} onTouchStart={() => preparePhoto(shownCollection, index)}
-              onClick={() => { selectPhoto(shownCollection, index); closePanel() }}><span className={styles.thumbnailImage}><Image src={item.thumbnail} alt="" width={item.width} height={item.height} sizes="(max-width: 480px) 18vw, (max-width: 991px) 16vw, 8vw" /></span><span className={styles.srOnly}>{index + 1}</span></button>)}</div>
+            <header className={styles.thumbsHeader}><h2>{collection.title}</h2>
+              {viewOptions.length > 0 && <div className={styles.viewOptions} role="group" aria-label={collection.viewType === 'order' ? '照片排序' : '照片色调'}>
+                {viewOptions.map(option => <button type="button" key={option.id} lang="zh-CN"
+                  aria-pressed={collection.id === option.id} onClick={() => {
+                    if (collection.id === option.id) return
+                    setPreview(null)
+                    const page = option.photos.findIndex(entry => entry.id === photo.id)
+                    selectPhoto(option, option.viewType === 'color' ? Math.max(0, page) : 0)
+                  }}>{option.viewLabel}</button>)}
+              </div>}
+              <button ref={closeButtonRef} type="button" aria-label="Close thumbnails" onClick={closePanel}>Close</button></header>
+            <div className={styles.thumbnailGrid}>{collection.photos.map((item, index) => <button type="button" key={item.id} className={styles.thumbnailButton} aria-label={`View photograph ${index + 1}: ${item.alt}`} aria-current={index === photoIndex ? 'true' : undefined}
+              onMouseEnter={() => preparePhoto(collection, index)} onFocus={() => preparePhoto(collection, index)} onTouchStart={() => preparePhoto(collection, index)}
+              onClick={() => { selectPhoto(collection, index); closePanel() }}><span className={styles.thumbnailImage}><Image src={item.thumbnail} alt="" width={item.width} height={item.height} sizes="(max-width: 480px) 18vw, (max-width: 991px) 16vw, 8vw" /></span><span className={styles.srOnly}>{index + 1}</span></button>)}</div>
           </>}
         </section>
       </Modal>

@@ -26,17 +26,17 @@ export const manifestPath = path.join(
   'image-manifest.json',
 )
 
-export const imageFormat = 'webp'
+export const imageFormat = 'avif'
 export const imageProfiles = {
   thumbnail: {
     suffix: 'thumb',
     maxEdge: 640,
-    quality: 76,
+    quality: 49,
   },
   large: {
     suffix: 'large',
     maxEdge: 2400,
-    quality: 84,
+    quality: 55,
   },
 }
 

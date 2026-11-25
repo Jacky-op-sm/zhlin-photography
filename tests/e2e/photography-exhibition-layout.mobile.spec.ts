@@ -1,7 +1,7 @@
 import { test, expect } from '@playwright/test'
 
 test('street exhibition crops the photograph and fits the mobile viewport', async ({ page }) => {
-  await page.goto('/photography/street')
+  await page.goto('/photography/intersection')
   const image = page.getByTestId('exhibition-image')
   await expect(image).toBeVisible()
   await expect.poll(() => image.evaluate((element: HTMLImageElement) => element.naturalWidth)).toBeGreaterThan(0)
@@ -28,7 +28,7 @@ test('street exhibition crops the photograph and fits the mobile viewport', asyn
   expect(layout.fit).toBe('cover')
   expect(layout.ratioDifference).toBeLessThan(0.01)
   expect(layout.overflow).toBeLessThanOrEqual(0)
-  await expect(page.getByTestId('exhibition-position')).toContainText(/1\s*\/\s*7/)
+  await expect(page.getByTestId('exhibition-position')).toContainText(/1\s*\/\s*13/)
   await expect(page.getByRole('button', { name: 'Index', exact: true })).toBeInViewport()
   await expect(page.getByRole('button', { name: 'Thumbs', exact: true })).toBeInViewport()
 })

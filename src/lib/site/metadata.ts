@@ -12,7 +12,7 @@ export const SITE_URL = (() => {
 })()
 
 export const DEFAULT_OG_IMAGE =
-  '/assets/generated/photos/street/Z52_8539-large.webp'
+  '/assets/generated/photos/works/w01-large.avif'
 
 export function getBuildRevision() {
   const revision =

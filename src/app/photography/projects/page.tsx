@@ -1,6 +1,5 @@
-import { redirect } from 'next/navigation'
+import { permanentRedirect } from 'next/navigation'
 
-export default function ProjectsPage() {
-  redirect('/photography/project')
+export default function Page() {
+  permanentRedirect('/photography#projects')
 }
-

@@ -1,14 +1,7 @@
-import PhotographyExhibition from '@/components/photography/PhotographyExhibition'
-import { photographyExhibitions } from '@/lib/content/exhibitions'
-import { buildPageMetadata } from '@/lib/site/metadata'
+import { CuratedExhibition, exhibitionMetadata } from '@/components/photography/CuratedExhibition'
 
-export const metadata = buildPageMetadata({
-  title: 'Bangkok · Photography',
-  description: 'Photographs from Bangkok, presented one frame at a time.',
-  path: '/photography/bangkok',
-  image: photographyExhibitions[0].photos[0].src,
-})
+export const metadata = exhibitionMetadata('bangkok')
 
-export default function BangkokPhotographyPage() {
-  return <PhotographyExhibition collections={photographyExhibitions} initialCollectionId="bangkok" />
+export default function Page() {
+  return <CuratedExhibition collectionId="bangkok" />
 }

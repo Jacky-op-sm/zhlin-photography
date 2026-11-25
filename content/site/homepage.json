@@ -9,30 +9,36 @@
   },
   "photography": [
     {
-      "title": "街拍",
-      "href": "/photography/street",
-      "image": "/assets/generated/photos/street/Z52_8539-large.webp",
-      "alt": "Street photography cover",
-      "quote": "什么是街拍？\n街拍是对城市的观察，\n街拍是去展现平日被人忽略的美。",
-      "body": "我喜欢去观察光影，\n去捕捉人们生存的状态。"
+      "title": "Works",
+      "href": "/photography",
+      "image": "/assets/generated/photos/works/w01-large.avif",
+      "alt": "端着托盘的人走过地面上直角形的阴影。",
+      "quote": "光落在人的身上，也落在身边的东西上。",
+      "body": "二十二张照片，从黑白走向彩色。"
     },
     {
-      "title": "动物",
-      "href": "/photography/pets",
-      "image": "/assets/generated/photos/pets/Z52_6039-large.webp",
-      "alt": "Pet photography cover",
-      "quote": "动物给予我感情，\n热情的狗，高冷的猫，\n关在动物园的老虎。",
-      "body": "我最喜欢拍狗狗们，\n它们来自故乡，各有个性。",
-      "imageClassName": "object-[52%_center]"
+      "title": "同一路口",
+      "href": "/photography/intersection",
+      "image": "/assets/generated/photos/intersection/p1-01-large.avif",
+      "alt": "春日路口，交警与几辆朝不同方向行驶的车。",
+      "quote": "我看着宿舍阳台下的十字路口。",
+      "body": "同一块路面，从春天的雨走到十月底。"
     },
     {
-      "title": "项目",
-      "href": "/photography/project",
-      "image": "/assets/generated/photos/project/1-large.webp",
-      "alt": "Project photography cover",
-      "quote": "我看着宿舍阳台下的十字路口，\n不同的天气，晴天、阴天、下雨，\n不同的四季，春夏秋冬。",
-      "body": "这是我第一个个人项目，\n真期待它会演变成什么样呢？",
-      "imageClassName": "object-[50%_center]"
+      "title": "庙前潭桥",
+      "href": "/photography/miaoqiantan",
+      "image": "/assets/generated/photos/miaoqiantan/p2-01-large.avif",
+      "alt": "晾晒的衣裤被风吹向一片菜地。",
+      "quote": "在村里，椅子有时坐着人，有时坐着一双雨靴。",
+      "body": "年节回家，再在三月沿着同一条路走一遍。"
+    },
+    {
+      "title": "Bangkok",
+      "href": "/photography/bangkok",
+      "image": "/assets/generated/photos/bangkok/p3-01-large.avif",
+      "alt": "戴头巾的女子站在两座石饰之间，侧脸看向一旁。",
+      "quote": "从摊位和车窗的缝隙里看曼谷。",
+      "body": "两座石饰之间，一个人正望向画外。"
     }
   ],
   "travel": [

@@ -49,8 +49,7 @@ async function buildVariant(sourcePath, outputPath, profile) {
     })
     .toFormat(imageFormat, {
       quality: profile.quality,
-      smartSubsample: true,
-      effort: 6,
+      effort: 4,
     })
     .toBuffer()
 

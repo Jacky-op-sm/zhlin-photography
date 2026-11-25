@@ -90,7 +90,7 @@ export function ExhibitionImage({ photo, collectionId, neighbours, locationHash,
         const visible = previous.previous && !previous.revealed ? previous.previous : previous.target
         return {
           target,
-          previous: current.locationHash !== '#travels' && previous.target.collectionId !== target.collectionId ? visible : null,
+          previous: current.locationHash !== '#travels' && current.locationHash !== '#projects' && previous.target.collectionId !== target.collectionId ? visible : null,
           revealed: false,
           transition: version,
         }
@@ -178,7 +178,7 @@ export function ExhibitionImage({ photo, collectionId, neighbours, locationHash,
 
   // A directory deep link initializes a stage, rather than navigating from
   // the SSR default work. Its cover and caption must describe the same frame.
-  const directoryEntry = locationHash === '#travels'
+  const directoryEntry = locationHash === '#travels' || locationHash === '#projects'
   const displayedKey = directoryEntry ? requestKey : targetKey(view.target)
   const outgoing = directoryEntry ? null : view.previous
   const visibleKey = outgoing && !view.revealed ? targetKey(outgoing) : displayedKey

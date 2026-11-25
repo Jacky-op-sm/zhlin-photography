@@ -60,20 +60,20 @@ async function finishLayerAudit(page: Page) {
 for (const reducedMotion of ['no-preference', 'reduce'] as const) {
   test(`switching works never paints overlapping photographs with system motion ${reducedMotion}`, async ({ page }) => {
     await page.emulateMedia({ reducedMotion })
-    await page.goto('/photography#street/z52-8539')
+    await page.goto('/photography#intersection/p1-01')
     const frame = page.getByTestId('exhibition-image-frame')
     const image = page.getByTestId('exhibition-image')
-    await expect(image).toHaveAttribute('data-photo-id', 'z52-8539')
+    await expect(image).toHaveAttribute('data-photo-id', 'p1-01')
     await expect(frame).toHaveAttribute('data-state', 'ready')
     await expect.poll(() => image.evaluate((element: HTMLImageElement) => element.naturalWidth)).toBeGreaterThan(0)
 
     // Exercise portrait -> landscape and the reverse. A transparent incoming
     // layer used to leave the taller/wider outgoing photograph showing behind it.
     for (const selection of [
-      { work: 'Bangkok', photoId: 'bangkok-08' },
-      { work: 'Street', photoId: 'z52-8539' },
-      { work: 'Animals', photoId: 'pets-1' },
-      { work: 'Street', photoId: 'z52-8539' },
+      { work: 'Bangkok', photoId: 'p3-01' },
+      { work: '同一路口', photoId: 'p1-01' },
+      { work: '庙前潭桥', photoId: 'p2-01' },
+      { work: '同一路口', photoId: 'p1-01' },
     ]) {
       await page.getByRole('button', { name: 'Index', exact: true }).click()
       const index = page.getByRole('dialog', { name: 'Index', exact: true })
@@ -93,24 +93,24 @@ for (const reducedMotion of ['no-preference', 'reduce'] as const) {
 }
 
 test('a second work transition restarts cleanly when browser Back interrupts the first', async ({ page }) => {
-  await page.goto('/photography#bangkok/bangkok-04')
+  await page.goto('/photography#bangkok/p3-02')
   const frame = page.getByTestId('exhibition-image-frame')
   const image = page.getByTestId('exhibition-image')
-  await expect(image).toHaveAttribute('data-photo-id', 'bangkok-04')
+  await expect(image).toHaveAttribute('data-photo-id', 'p3-02')
   await expect(frame).toHaveAttribute('data-state', 'ready')
-  await page.evaluate(() => { window.location.hash = '#street/z52-8539' })
-  await expect(image).toHaveAttribute('data-photo-id', 'z52-8539')
+  await page.evaluate(() => { window.location.hash = '#intersection/p1-01' })
+  await expect(image).toHaveAttribute('data-photo-id', 'p1-01')
   await expect(frame).toHaveAttribute('data-state', 'ready')
   await startLayerAudit(page)
 
-  await page.evaluate(() => { window.location.hash = '#pets/pets-1' })
-  await expect(image).toHaveAttribute('data-photo-id', 'pets-1')
+  await page.evaluate(() => { window.location.hash = '#miaoqiantan/p2-01' })
+  await expect(image).toHaveAttribute('data-photo-id', 'p2-01')
   await expect(frame).toHaveAttribute('data-state', 'transitioning')
   // Interrupt before the one-second curtain finishes. The outgoing image must
   // restart alongside the new incoming image, rather than inherit an old clock.
   await page.waitForTimeout(350)
   await page.goBack()
-  await expect(image).toHaveAttribute('data-photo-id', 'z52-8539')
+  await expect(image).toHaveAttribute('data-photo-id', 'p1-01')
   await expect(frame).toHaveAttribute('data-state', 'transitioning')
   await expect(frame).toHaveAttribute('data-state', 'ready')
   const audit = await finishLayerAudit(page)
@@ -119,14 +119,14 @@ test('a second work transition restarts cleanly when browser Back interrupts the
   await expectSinglePaintedPhoto(page)
 
   await page.goBack()
-  await expect(page).toHaveURL(/#bangkok\/bangkok-04$/)
-  await expect(image).toHaveAttribute('data-photo-id', 'bangkok-04')
+  await expect(page).toHaveURL(/#bangkok\/p3-02$/)
+  await expect(image).toHaveAttribute('data-photo-id', 'p3-02')
   await expect(frame).toHaveAttribute('data-state', 'ready')
   await expectSinglePaintedPhoto(page)
 })
 
 test('rapid work changes keep a single photograph through interrupted curtains', async ({ page }) => {
-  await page.goto('/photography#bangkok/bangkok-08')
+  await page.goto('/photography#bangkok/p3-01')
   const frame = page.getByTestId('exhibition-image-frame')
   const image = page.getByTestId('exhibition-image')
   await expect(frame).toHaveAttribute('data-state', 'ready')
@@ -135,12 +135,12 @@ test('rapid work changes keep a single photograph through interrupted curtains',
   // Interrupt on both sides of the covered midpoint, including returning to
   // a photograph that is already visible underneath an unfinished curtain.
   for (const [hash, photoId, delay] of [
-    ['#street/z52-8539', 'z52-8539', 100],
-    ['#bangkok/bangkok-08', 'bangkok-08', 650],
-    ['#pets/pets-1', 'pets-1', 100],
-    ['#street/z52-8539', 'z52-8539', 650],
-    ['#bangkok/bangkok-08', 'bangkok-08', 100],
-    ['#street/z52-8539', 'z52-8539', 0],
+    ['#intersection/p1-01', 'p1-01', 100],
+    ['#bangkok/p3-01', 'p3-01', 650],
+    ['#miaoqiantan/p2-01', 'p2-01', 100],
+    ['#intersection/p1-01', 'p1-01', 650],
+    ['#bangkok/p3-01', 'p3-01', 100],
+    ['#intersection/p1-01', 'p1-01', 0],
   ] as const) {
     await page.evaluate((hash) => { window.location.hash = hash }, hash)
     await expect(image).toHaveAttribute('data-photo-id', photoId)
@@ -159,28 +159,28 @@ test('browser Back wins over a delayed photograph from another work', async ({ p
   let releaseImage!: () => void
   let requested = false
   const imageGate = new Promise<void>((resolve) => { releaseImage = resolve })
-  await page.route(/Z52_2306-large\.webp/, async (route) => {
+  await page.route(/p2-01-large\.avif/, async (route) => {
     requested = true
     await imageGate
     await route.continue()
   })
   try {
-    await page.goto('/photography#street/z52-8539')
+    await page.goto('/photography#intersection/p1-01')
     const image = page.getByTestId('exhibition-image')
     const frame = page.getByTestId('exhibition-image-frame')
-    await expect(image).toHaveAttribute('data-photo-id', 'z52-8539')
+    await expect(image).toHaveAttribute('data-photo-id', 'p1-01')
     await expect(frame).toHaveAttribute('data-state', 'ready')
     await page.getByRole('button', { name: 'Index', exact: true }).click()
-    await page.getByRole('dialog', { name: 'Index', exact: true }).getByRole('button', { name: /Animals/ }).click()
-    await expect(page).toHaveURL(/#pets\/pets-1$/)
+    await page.getByRole('dialog', { name: 'Index', exact: true }).getByRole('button', { name: /庙前潭桥/ }).click()
+    await expect(page).toHaveURL(/#miaoqiantan\/p2-01$/)
     await expect.poll(() => requested).toBe(true)
     await expect(frame).toHaveAttribute('data-state', 'loading')
-    await expect(image).toHaveAttribute('data-photo-id', 'z52-8539')
+    await expect(image).toHaveAttribute('data-photo-id', 'p1-01')
 
     await page.goBack()
-    await expect(page).toHaveURL(/#street\/z52-8539$/)
+    await expect(page).toHaveURL(/#intersection\/p1-01$/)
     await expect(frame).toHaveAttribute('data-state', 'ready')
-    const lateResponse = page.waitForResponse((response) => response.url().includes('Z52_2306-large.webp'))
+    const lateResponse = page.waitForResponse((response) => response.url().includes('p2-01-large.avif'))
     releaseImage()
     const response = await lateResponse
     await response.finished()
@@ -190,9 +190,9 @@ test('browser Back wins over a delayed photograph from another work', async ({ p
       await lateImage.decode()
       await new Promise<void>((resolve) => requestAnimationFrame(() => requestAnimationFrame(() => resolve())))
     }, response.url())
-    await expect(page).toHaveURL(/#street\/z52-8539$/)
-    await expect(image).toHaveAttribute('data-photo-id', 'z52-8539')
-    await expect(page.getByTestId('exhibition-position')).toContainText(/Street\s*-\s*1\s*\/\s*7/)
+    await expect(page).toHaveURL(/#intersection\/p1-01$/)
+    await expect(image).toHaveAttribute('data-photo-id', 'p1-01')
+    await expect(page.getByTestId('exhibition-position')).toContainText(/同一路口\s*-\s*1\s*\/\s*13/)
     await expectSinglePaintedPhoto(page)
   } finally {
     releaseImage()
@@ -205,25 +205,25 @@ test('the requested photograph loads before speculative next photographs', async
   const imageGate = new Promise<void>((resolve) => { releaseImage = resolve })
   const speculativeRequests: string[] = []
   page.on('request', (request) => {
-    if (/Z52_8331-large\.webp/.test(request.url())) speculativeRequests.push(request.url())
+    if (/p1-02-large\.avif/.test(request.url())) speculativeRequests.push(request.url())
   })
-  await page.route(/Z52_8539-large\.webp/, async (route) => {
+  await page.route(/p1-01-large\.avif/, async (route) => {
     requested = true
     await imageGate
     await route.continue()
   })
   try {
-    await page.goto('/photography#street/z52-8539', { waitUntil: 'domcontentloaded' })
+    await page.goto('/photography#intersection/p1-01', { waitUntil: 'domcontentloaded' })
     const frame = page.getByTestId('exhibition-image-frame')
     await expect.poll(() => requested).toBe(true)
-    await expect(frame).toHaveAttribute('data-requested', 'street/z52-8539')
+    await expect(frame).toHaveAttribute('data-requested', 'intersection/p1-01')
     // Opening Index confirms hydration/effects have run while the selected
     // photograph remains blocked; prefetch must not compete with that request.
     await page.getByRole('button', { name: 'Index', exact: true }).click()
     await expect(page.getByTestId('exhibition-panel')).toHaveAttribute('data-state', 'open')
     expect(speculativeRequests).toEqual([])
     releaseImage()
-    await expect(page.getByTestId('exhibition-image')).toHaveAttribute('data-photo-id', 'z52-8539')
+    await expect(page.getByTestId('exhibition-image')).toHaveAttribute('data-photo-id', 'p1-01')
     await expect(frame).toHaveAttribute('data-state', 'ready')
     await expect.poll(() => speculativeRequests.length).toBeGreaterThan(0)
   } finally {
@@ -234,9 +234,9 @@ test('the requested photograph loads before speculative next photographs', async
 test('a portrait downloads the smallest candidate covering its displayed pixels', async ({ page }) => {
   // Playwright gives this test a fresh context, so a previously cached larger
   // candidate cannot influence the browser's responsive-image selection.
-  await page.goto('/photography#bangkok/bangkok-04')
+  await page.goto('/photography#bangkok/p3-02')
   const image = page.getByTestId('exhibition-image')
-  await expect(image).toHaveAttribute('data-photo-id', 'bangkok-04')
+  await expect(image).toHaveAttribute('data-photo-id', 'p3-02')
   await expect(page.getByTestId('exhibition-image-frame')).toHaveAttribute('data-state', 'ready')
   const selection = await image.evaluate(async (element: HTMLImageElement) => {
     await element.decode()
@@ -257,4 +257,37 @@ test('a portrait downloads the smallest candidate covering its displayed pixels'
   expect(selection.actual, 'The browser must choose a declared responsive candidate').toBeDefined()
   expect(selection.expected).toBeDefined()
   expect(selection.actual!.width, `Visible portrait requires ${selection.requiredWidth.toFixed(2)} physical pixels`).toBe(selection.expected!.width)
+})
+
+test('the published projects follow both approved readings without duplicating photographs', async ({ page }) => {
+  await page.goto('/photography#projects')
+  const index = page.getByRole('dialog', { name: 'Index', exact: true })
+  await expect(index.getByRole('tab', { name: 'Projects', exact: true })).toHaveAttribute('aria-selected', 'true')
+  await index.getByRole('button', { name: /同一路口 13/ }).click()
+  await page.getByRole('button', { name: 'Thumbs', exact: true }).click()
+  const thumbs = page.getByRole('dialog', { name: /Thumbs/ })
+  await thumbs.getByRole('button', { name: '由亮到暗' }).click()
+  await expect(page).toHaveURL(/#intersection\/light\/p1-09$/)
+  await expect(thumbs.getByRole('button', { name: /^View photograph/ })).toHaveCount(13)
+  await thumbs.getByRole('button', { name: '拍摄时间' }).click()
+  await expect(page).toHaveURL(/#intersection\/p1-01$/)
+  await page.goto('/photography/miaoqiantan#miaoqiantan/p2-04')
+  await page.getByRole('button', { name: 'Thumbs', exact: true }).click()
+  await thumbs.getByRole('button', { name: '彩色', exact: true }).click()
+  await expect(page).toHaveURL(/#miaoqiantan\/color\/p2-04$/)
+  await thumbs.getByRole('button', { name: 'Close thumbnails' }).click()
+  const image = page.getByTestId('exhibition-image')
+  await expect(image).toHaveAttribute('src', /miaoqiantan-color/)
+  await page.reload()
+  await expect(image).toHaveAttribute('src', /miaoqiantan-color/)
+  await page.goBack()
+  await expect(image).toHaveAttribute('src', /miaoqiantan%2Fp2-04/)
+})
+
+test('a retained legacy photograph opens its new frame and a withdrawn collection opens its successor', async ({ page }) => {
+  await page.goto('/photography/street#street/z52-8331')
+  await expect(page).toHaveURL(/\/photography#works\/w07$/)
+  await expect(page.getByTestId('exhibition-image')).toHaveAttribute('data-photo-id', 'w07')
+  await page.goto('/photography/pets#pets/pets-1')
+  await expect(page).toHaveURL(/\/photography\/miaoqiantan#miaoqiantan\/p2-01$/)
 })

@@ -19,7 +19,7 @@ export const publicPaths = [...new Set(
 export const primaryAuditPaths = ([
   '/',
   '/photography',
-  '/photography/street',
+  '/photography/intersection',
   '/travel',
   '/hobby',
   '/contact',

@@ -160,7 +160,7 @@ function PhotographerShowcase({ cards }: { cards: PhotographerShowcaseCard[] }) 
         </p>
       </div>
 
-      <div className="site-shell home-photographer-grid">
+      <div className="site-shell home-photographer-grid home-works-grid">
         {cards.map((card) => (
           <article key={card.title} className="home-photographer-card">
             <h2>
@@ -172,7 +172,7 @@ function PhotographerShowcase({ cards }: { cards: PhotographerShowcaseCard[] }) 
                   src={card.image}
                   alt={card.alt}
                   fill
-                  sizes="(min-width: 1800px) 27vw, (min-width: 900px) 30vw, 90vw"
+                  sizes="(min-width: 1100px) 22vw, (min-width: 768px) 45vw, 90vw"
                   className={`object-cover ${card.imageClassName || ''}`}
                 />
               </div>

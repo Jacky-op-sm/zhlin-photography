@@ -47,8 +47,8 @@ test.describe('mobile navigation behavior', () => {
     const brand = page.getByRole('link', { name: '打开摄影展览', exact: true })
     await expect(brand).toHaveAttribute('href', '/photography')
     await brand.click()
-    await expect(page).toHaveURL(/\/photography(?:#bangkok\/[^/]+)?$/)
-    await expect(page.getByTestId('exhibition-position')).toContainText('Bangkok')
+    await expect(page).toHaveURL(/\/photography(?:#works\/[^/]+)?$/)
+    await expect(page.getByTestId('exhibition-position')).toContainText('Works')
     await expect(page.getByTestId('exhibition-image')).toBeVisible()
   })
 
@@ -74,8 +74,8 @@ test.describe('mobile navigation behavior', () => {
     await expect(mobilePanel(page).getByRole('button', { name: '展开 Travel 子菜单' })).toBeVisible()
 
     await mobilePanel(page).getByRole('link', { name: 'Photography', exact: true }).click()
-    await expect(page).toHaveURL(/\/photography(?:#bangkok\/[^/]+)?$/)
-    await expect(page.getByTestId('exhibition-position')).toContainText('Bangkok')
+    await expect(page).toHaveURL(/\/photography(?:#works\/[^/]+)?$/)
+    await expect(page.getByTestId('exhibition-position')).toContainText('Works')
     await expect(page.getByTestId('exhibition-image')).toBeVisible()
     await expect(mobilePanel(page)).toHaveCount(0)
     await expect(page.locator('.site-header')).toHaveCount(0)

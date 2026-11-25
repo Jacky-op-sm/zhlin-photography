@@ -6,7 +6,7 @@ const captureVisuals = process.env.CAPTURE_VISUALS === '1'
 const routes = [
   ['home', '/'],
   ['photography', '/photography'],
-  ['street', '/photography/street'],
+  ['intersection', '/photography/intersection'],
   ['travel', '/travel'],
   ['travel-nanjing', '/travel/nanjing'],
   ['contact', '/contact'],

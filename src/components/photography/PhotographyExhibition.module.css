@@ -88,6 +88,8 @@ body:has(.viewerPage) {
 .indexPanel, .thumbsPanel { touch-action: pan-y; }
 .overlayOpen .thumbsPanel { transform: translateY(0); }
 .thumbsHeader { display: flex; align-items: center; justify-content: space-between; min-height: 25px; margin-bottom: 30px; opacity: 0; transition: opacity .6s ease; }
+.viewOptions { display: flex; gap: 14px; margin-left: auto; margin-right: 24px; }
+.viewOptions button[aria-pressed="true"] { text-decoration: underline; text-underline-offset: 3px; }
 .thumbsHeader h2 { font: inherit; margin: 0; }
 .thumbsHeader button { padding: 0; line-height: 25px; }
 .overlayOpen .thumbsHeader { opacity: 1; transition-delay: .3s; }
@@ -119,7 +121,7 @@ body:has(.viewerPage) {
 @media (max-width: 480px) {
   .indexPanel { padding: max(12px, env(safe-area-inset-top)) max(20px, env(safe-area-inset-right)) max(24px, env(safe-area-inset-bottom)) max(20px, env(safe-area-inset-left)); }
   .panelHeader { gap: 18px; margin-bottom: 8px; }
-  .indexTabs { gap: 18px; }
+  .indexTabs { gap: clamp(8px, 3vw, 18px); }
   .thumbsPanel { padding: max(12px, env(safe-area-inset-top)) 6% max(40px, env(safe-area-inset-bottom)); }
   .thumbsHeader { margin-bottom: 26px; }
   .thumbnailGrid { gap: 17px 0; }

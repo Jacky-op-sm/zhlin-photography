@@ -13,7 +13,7 @@ const nextConfig = {
   allowedDevOrigins: ['127.0.0.1', 'localhost'],
   async redirects() {
     const { default: travels } = await import('./content/travel/exhibition.json', { with: { type: 'json' } })
-    const { default: bangkok } = await import('./content/photography/exhibitions/bangkok.json', { with: { type: 'json' } })
+    const { default: bangkok } = await import('./content/photography/photos/bangkok.json', { with: { type: 'json' } })
     return [
       ...['/travel', '/travel/hangzhou', '/travel/huzhou'].map(source => ({
         source, destination: '/photography#travels', permanent: true,
@@ -21,7 +21,7 @@ const nextConfig = {
       ...travels.map(({ slug }) => ({
         source: `/travel/${slug}`, destination: `/photography#travels/${slug}/1`, permanent: true,
       })),
-      { source: '/travel/bangkok', destination: `/photography#bangkok/${bangkok.photos[0].id}`, permanent: true },
+      { source: '/travel/bangkok', destination: `/photography#bangkok/${bangkok[0].id}`, permanent: true },
     ]
   },
   outputFileTracingIncludes: {
@@ -34,8 +34,8 @@ const nextConfig = {
     // Every image is first-party. Filenames are stable, but the optimizer URL
     // carries the deployment ID, so a release still picks up replaced files.
     minimumCacheTTL: 2678400,
-    // 1600 matches the published width of many photographs on the site.
-    deviceSizes: [640, 750, 828, 1080, 1200, 1600, 1920, 2048, 3840],
+    // A 4:5 frame on an 800px-high desktop needs exactly 480px at 1×.
+    deviceSizes: [480, 640, 750, 828, 1080, 1200, 1600, 1920, 2048, 3840],
   },
   async headers() {
     return [

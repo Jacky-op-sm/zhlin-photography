@@ -1,0 +1,70 @@
+[
+  {
+    "id": "p3-01",
+    "title": "戴头巾的女子站在两座石饰之间，侧脸看向一旁。",
+    "width": 2000,
+    "height": 1600,
+    "legacyHash": "bangkok/bangkok-01",
+    "source": "assets-source/photography/bangkok/p3-01.jpg",
+    "filename": "/assets/generated/photos/bangkok/p3-01-large.avif",
+    "thumbnail": "/assets/generated/photos/bangkok/p3-01-thumb.avif"
+  },
+  {
+    "id": "p3-02",
+    "title": "宽帽檐下的摊主坐在票板后，板下露出交叉的双脚。",
+    "width": 1600,
+    "height": 2000,
+    "source": "assets-source/photography/bangkok/p3-02.jpg",
+    "filename": "/assets/generated/photos/bangkok/p3-02-large.avif",
+    "thumbnail": "/assets/generated/photos/bangkok/p3-02-thumb.avif"
+  },
+  {
+    "id": "p3-03",
+    "title": "铁丝网后，一名男子在桌边低头看手机。",
+    "width": 2000,
+    "height": 1600,
+    "source": "assets-source/photography/bangkok/p3-03.jpg",
+    "filename": "/assets/generated/photos/bangkok/p3-03-large.avif",
+    "thumbnail": "/assets/generated/photos/bangkok/p3-03-thumb.avif"
+  },
+  {
+    "id": "p3-04",
+    "title": "夜市里，从衣料与手臂的缝隙可以看到摊上的玩具。",
+    "width": 2000,
+    "height": 1600,
+    "legacyHash": "bangkok/bangkok-11",
+    "source": "assets-source/photography/bangkok/p3-04.jpg",
+    "filename": "/assets/generated/photos/bangkok/p3-04-large.avif",
+    "thumbnail": "/assets/generated/photos/bangkok/p3-04-thumb.avif"
+  },
+  {
+    "id": "p3-05",
+    "title": "猫在嘟嘟车座旁探出前爪。",
+    "width": 1600,
+    "height": 2000,
+    "legacyHash": "bangkok/bangkok-14",
+    "source": "assets-source/photography/bangkok/p3-05.jpg",
+    "filename": "/assets/generated/photos/bangkok/p3-05-large.avif",
+    "thumbnail": "/assets/generated/photos/bangkok/p3-05-thumb.avif"
+  },
+  {
+    "id": "p3-06",
+    "title": "台阶上坐着一位女子，鸽群散在她脚边和人行道上。",
+    "width": 2000,
+    "height": 1600,
+    "legacyHash": "bangkok/bangkok-16",
+    "source": "assets-source/photography/bangkok/p3-06.jpg",
+    "filename": "/assets/generated/photos/bangkok/p3-06-large.avif",
+    "thumbnail": "/assets/generated/photos/bangkok/p3-06-thumb.avif"
+  },
+  {
+    "id": "p3-07",
+    "title": "两个孩子在游乐场旁的积水里面对面坐着。",
+    "width": 2000,
+    "height": 1600,
+    "legacyHash": "bangkok/bangkok-08",
+    "source": "assets-source/photography/bangkok/p3-07.jpg",
+    "filename": "/assets/generated/photos/bangkok/p3-07-large.avif",
+    "thumbnail": "/assets/generated/photos/bangkok/p3-07-thumb.avif"
+  }
+]

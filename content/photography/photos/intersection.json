@@ -1,0 +1,123 @@
+[
+  {
+    "id": "p1-01",
+    "title": "春日路口，交警与几辆朝不同方向行驶的车。",
+    "width": 1600,
+    "height": 2000,
+    "legacyHash": "project/project-intersection-5",
+    "source": "assets-source/photography/intersection/p1-01.jpg",
+    "filename": "/assets/generated/photos/intersection/p1-01-large.avif",
+    "thumbnail": "/assets/generated/photos/intersection/p1-01-thumb.avif"
+  },
+  {
+    "id": "p1-02",
+    "title": "红树旁，穿荧光衣的交警撑伞独站。",
+    "width": 1600,
+    "height": 2000,
+    "legacyHash": "project/project-intersection-4",
+    "source": "assets-source/photography/intersection/p1-02.jpg",
+    "filename": "/assets/generated/photos/intersection/p1-02-large.avif",
+    "thumbnail": "/assets/generated/photos/intersection/p1-02-thumb.avif"
+  },
+  {
+    "id": "p1-03",
+    "title": "夜里，一个撑伞的人停在路灯照亮的斑马线边。",
+    "width": 1600,
+    "height": 2000,
+    "legacyHash": "project/project-intersection-1",
+    "source": "assets-source/photography/intersection/p1-03.jpg",
+    "filename": "/assets/generated/photos/intersection/p1-03-large.avif",
+    "thumbnail": "/assets/generated/photos/intersection/p1-03-thumb.avif"
+  },
+  {
+    "id": "p1-04",
+    "title": "雨中斜穿马路的人和脚下的倒影。",
+    "width": 1600,
+    "height": 2000,
+    "legacyHash": "project/project-intersection-3",
+    "source": "assets-source/photography/intersection/p1-04.jpg",
+    "filename": "/assets/generated/photos/intersection/p1-04-large.avif",
+    "thumbnail": "/assets/generated/photos/intersection/p1-04-thumb.avif"
+  },
+  {
+    "id": "p1-05",
+    "title": "车灯照亮雨水，一把黑伞位于亮斑下方。",
+    "width": 1600,
+    "height": 2000,
+    "source": "assets-source/photography/intersection/p1-05.jpg",
+    "filename": "/assets/generated/photos/intersection/p1-05-large.avif",
+    "thumbnail": "/assets/generated/photos/intersection/p1-05-thumb.avif"
+  },
+  {
+    "id": "p1-06",
+    "title": "白色小巴和骑车的人经过同一个路口。",
+    "width": 1600,
+    "height": 2000,
+    "source": "assets-source/photography/intersection/p1-06.jpg",
+    "filename": "/assets/generated/photos/intersection/p1-06-large.avif",
+    "thumbnail": "/assets/generated/photos/intersection/p1-06-thumb.avif"
+  },
+  {
+    "id": "p1-07",
+    "title": "空路口，只剩蓝路牌、花坛和白色标线。",
+    "width": 1600,
+    "height": 2000,
+    "source": "assets-source/photography/intersection/p1-07.jpg",
+    "filename": "/assets/generated/photos/intersection/p1-07-large.avif",
+    "thumbnail": "/assets/generated/photos/intersection/p1-07-thumb.avif"
+  },
+  {
+    "id": "p1-08",
+    "title": "几把深浅不同的伞分头经过湿漉漉的路面。",
+    "width": 1600,
+    "height": 2000,
+    "source": "assets-source/photography/intersection/p1-08.jpg",
+    "filename": "/assets/generated/photos/intersection/p1-08-large.avif",
+    "thumbnail": "/assets/generated/photos/intersection/p1-08-thumb.avif"
+  },
+  {
+    "id": "p1-09",
+    "title": "晴天下，行人、骑车者和他们的影子交错。",
+    "width": 1600,
+    "height": 2000,
+    "source": "assets-source/photography/intersection/p1-09.jpg",
+    "filename": "/assets/generated/photos/intersection/p1-09-large.avif",
+    "thumbnail": "/assets/generated/photos/intersection/p1-09-thumb.avif"
+  },
+  {
+    "id": "p1-10",
+    "title": "雨幕里只有一把蓝伞和隐约可见的路牌。",
+    "width": 1600,
+    "height": 2000,
+    "source": "assets-source/photography/intersection/p1-10.jpg",
+    "filename": "/assets/generated/photos/intersection/p1-10-large.avif",
+    "thumbnail": "/assets/generated/photos/intersection/p1-10-thumb.avif"
+  },
+  {
+    "id": "p1-11",
+    "title": "一辆红色汽车驶过绿树旁的湿路。",
+    "width": 1600,
+    "height": 2000,
+    "source": "assets-source/photography/intersection/p1-11.jpg",
+    "filename": "/assets/generated/photos/intersection/p1-11-large.avif",
+    "thumbnail": "/assets/generated/photos/intersection/p1-11-thumb.avif"
+  },
+  {
+    "id": "p1-12",
+    "title": "橙叶前，三名行人和骑车者并排过街。",
+    "width": 1600,
+    "height": 2000,
+    "source": "assets-source/photography/intersection/p1-12.jpg",
+    "filename": "/assets/generated/photos/intersection/p1-12-large.avif",
+    "thumbnail": "/assets/generated/photos/intersection/p1-12-thumb.avif"
+  },
+  {
+    "id": "p1-13",
+    "title": "十月底，橙色枝叶下的交叉路面再次空出。",
+    "width": 1600,
+    "height": 2000,
+    "source": "assets-source/photography/intersection/p1-13.jpg",
+    "filename": "/assets/generated/photos/intersection/p1-13-large.avif",
+    "thumbnail": "/assets/generated/photos/intersection/p1-13-thumb.avif"
+  }
+]

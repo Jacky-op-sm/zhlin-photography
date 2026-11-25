@@ -24,7 +24,7 @@ const budgets: Record<
     imageBytes: kib(1735),
     requests: 57,
   },
-  '/photography/street': {
+  '/photography/intersection': {
     // Includes the selected photograph plus a bounded five-photo lookahead,
     // loaded only after the selected image decodes (covered by loading tests).
     totalBytes: kib(500),

@@ -4,7 +4,6 @@ import fs from 'node:fs'
 import path from 'node:path'
 import {
   contactSchema,
-  exhibitionCollectionSchema,
   hobbyCategorySchema,
   hobbyProfileSchema,
   homepageSchema,
@@ -93,43 +92,27 @@ function validateTravel() {
 }
 
 function validatePhotography() {
-  const exhibitionDirectory = path.join(contentRoot, 'photography', 'exhibitions')
-  const collectionIds = new Set(['street', 'pets', 'project'])
-  for (const filename of fs.readdirSync(exhibitionDirectory).filter((file) => file.endsWith('.json'))) {
-    const label = `content/photography/exhibitions/${filename}`
-    const exhibition = validate(exhibitionCollectionSchema, readJson(label), label)
-    if (!exhibition) continue
-    if (exhibition.id !== path.basename(filename, '.json')) {
-      fail(`${label}.id must match its filename`)
-    }
-    if (collectionIds.has(exhibition.id)) fail(`exhibition id "${exhibition.id}" is duplicated`)
-    collectionIds.add(exhibition.id)
-    collectAssets(exhibition)
-  }
-
-  const series = validate(
-    photographySeriesListSchema,
-    readJson('content/photography/series.json'),
-    'content/photography/series.json',
-  )
-  const seriesSlugs = new Set()
-  for (const item of series ?? []) {
-    if (seriesSlugs.has(item.slug)) {
-      fail(`photography series slug "${item.slug}" is duplicated`)
-    }
-    seriesSlugs.add(item.slug)
-  }
-  collectAssets(series)
-
-  for (const slug of ['street', 'pets', 'project']) {
+  const series = validate(photographySeriesListSchema, readJson('content/photography/series.json'), 'content/photography/series.json') ?? []
+  const slugs = series.map(item => item.slug)
+  if (new Set(slugs).size !== slugs.length) fail('Duplicate photography collection')
+  const readPhotos = (slug) => {
     const label = `content/photography/photos/${slug}.json`
-    const photos = validate(photoRecordsSchema, readJson(label), label)
-    const ids = new Set()
-    for (const photo of photos ?? []) {
-      if (ids.has(photo.id)) fail(`photo id "${photo.id}" is duplicated in ${slug}`)
-      ids.add(photo.id)
-    }
+    const photos = validate(photoRecordsSchema, readJson(label), label) ?? []
     collectAssets(photos)
+    return photos
+  }
+  for (const item of series) {
+    const photos = readPhotos(item.slug)
+    const ids = photos.map(photo => photo.id)
+    if (item.brightnessOrder && (new Set(item.brightnessOrder).size !== ids.length ||
+        item.brightnessOrder.length !== ids.length || !ids.every(id => item.brightnessOrder.includes(id)))) {
+      fail(`Invalid brightness order for ${item.slug}`)
+    }
+    if (item.slug === 'miaoqiantan') {
+      const color = readPhotos('miaoqiantan-color')
+      if (color.length !== photos.length || color.some((p, i) => p.id !== ids[i] ||
+        p.width !== photos[i].width || p.height !== photos[i].height)) fail('Miaoqiantan editions must have identical frames')
+    }
   }
 }
 

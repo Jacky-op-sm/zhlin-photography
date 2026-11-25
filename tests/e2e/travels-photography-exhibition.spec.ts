@@ -1,7 +1,7 @@
 import { test, expect, type Page } from '@playwright/test'
 import wuhan from '../../content/travel/wuhan/cards.json'
 import travels from '../../content/travel/exhibition.json'
-import bangkok from '../../content/photography/exhibitions/bangkok.json'
+import bangkok from '../../content/photography/photos/bangkok.json'
 
 async function worksLandscape(page: Page) {
   await page.goto('/photography')
@@ -35,7 +35,7 @@ test('legacy travel routes preserve every destination', async ({ request }) => {
   const redirects = new Map([
     ...travels.map(({ slug }) => [`/travel/${slug}`, `/photography#travels/${slug}/1`] as const),
     ...['/travel', '/travel/hangzhou', '/travel/huzhou'].map(path => [path, '/photography#travels'] as const),
-    ['/travel/bangkok', `/photography#bangkok/${bangkok.photos[0].id}`] as const,
+    ['/travel/bangkok', `/photography#bangkok/${bangkok[0].id}`] as const,
   ])
   for (const [path, target] of redirects) {
     const response = await request.get(path, { maxRedirects: 0 })

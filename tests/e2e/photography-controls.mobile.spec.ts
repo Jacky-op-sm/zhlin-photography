@@ -1,7 +1,7 @@
 import { test, expect } from '@playwright/test'
 
 test('exhibition controls keep their position when the photograph changes', async ({ page }) => {
-  await page.goto('/photography/pets')
+  await page.goto('/photography/miaoqiantan')
   const image = page.getByTestId('exhibition-image')
   const controls = page.getByTestId('exhibition-controls')
   await expect(image).toBeVisible()
@@ -14,7 +14,7 @@ test('exhibition controls keep their position when the photograph changes', asyn
   await expect(page.getByTestId('exhibition-cursor')).not.toBeVisible()
 
   await page.keyboard.press('ArrowRight')
-  await expect(page.getByTestId('exhibition-position')).toContainText(/2\s*\/\s*15/)
+  await expect(page.getByTestId('exhibition-position')).toContainText(/2\s*\/\s*13/)
   const after = await controls.boundingBox()
   expect(after).not.toBeNull()
   expect(Math.abs(after!.y - before!.y)).toBeLessThanOrEqual(2)

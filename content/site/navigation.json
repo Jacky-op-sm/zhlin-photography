@@ -17,47 +17,44 @@
     "order": 20,
     "children": [
       {
-        "id": "photography-all",
-        "label": "All",
-        "title": "探索全部",
-        "footerLabel": "总览",
+        "id": "photography-works",
+        "label": "Works",
+        "title": "Works",
+        "footerLabel": "Works",
         "href": "/photography",
         "showInHeader": true,
         "showInFooter": true,
         "order": 10
       },
       {
-        "id": "photography-pets",
-        "label": "Pets",
-        "title": "宠物摄影",
-        "footerLabel": "动物",
-        "href": "/photography/pets",
+        "id": "photography-intersection",
+        "label": "同一路口",
+        "title": "同一路口",
+        "footerLabel": "同一路口",
+        "href": "/photography/intersection",
         "showInHeader": true,
         "showInFooter": true,
-        "order": 20,
-        "footerOrder": 30
+        "order": 20
       },
       {
-        "id": "photography-street",
-        "label": "Street",
-        "title": "街头摄影",
-        "footerLabel": "街拍",
-        "href": "/photography/street",
+        "id": "photography-miaoqiantan",
+        "label": "庙前潭桥",
+        "title": "庙前潭桥",
+        "footerLabel": "庙前潭桥",
+        "href": "/photography/miaoqiantan",
         "showInHeader": true,
         "showInFooter": true,
-        "order": 30,
-        "footerOrder": 20
+        "order": 30
       },
       {
-        "id": "photography-project",
-        "label": "Project",
-        "title": "项目摄影",
-        "footerLabel": "项目",
-        "href": "/photography/project",
+        "id": "photography-bangkok",
+        "label": "Bangkok",
+        "title": "Bangkok",
+        "footerLabel": "Bangkok",
+        "href": "/photography/bangkok",
         "showInHeader": true,
         "showInFooter": true,
-        "order": 40,
-        "footerOrder": 40
+        "order": 40
       }
     ]
   },

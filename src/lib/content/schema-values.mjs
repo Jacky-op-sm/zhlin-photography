@@ -43,71 +43,34 @@ export const travelCardsSchema = z.object({
   food: z.array(travelCardSchema),
 })
 
-export const photoRecordSchema = z.object({
-  id: text,
-  focus: text.optional(),
-  title: text,
-  description: text,
-  source: text.optional(),
-  filename: text,
-  thumbnail: text,
-  width: z.number().nonnegative(),
-  height: z.number().nonnegative(),
-  takenAt: text,
-  location: text,
-  tags: z.array(text),
-})
-
-export const photoRecordsSchema = z.array(photoRecordSchema)
-
 const exhibitionId = text.regex(/^[a-z0-9]+(?:-[a-z0-9]+)*$/)
 const exhibitionAsset = text.startsWith('/assets/').refine(
   (value) => !value.split('/').some((segment) => segment === '..' || segment === '.'),
   'Exhibition images must use a public asset path without traversal segments',
 )
 
-export const exhibitionPhotoSchema = z.object({
+export const photoRecordSchema = z.object({
   id: exhibitionId,
-  focus: text.optional(),
-  src: exhibitionAsset,
+  title: text,
+  source: text,
+  filename: exhibitionAsset,
   thumbnail: exhibitionAsset,
   width: z.number().int().positive(),
   height: z.number().int().positive(),
-  alt: text,
+  legacyHash: text.optional(),
 })
 
-export const exhibitionCollectionSchema = z.object({
-  id: exhibitionId,
-  title: text,
-  description: text.optional(),
-  photos: z.array(exhibitionPhotoSchema).min(1).refine(
-    (photos) => new Set(photos.map((photo) => photo.id)).size === photos.length,
-    'Photo IDs must be unique within an exhibition',
-  ),
-})
-
-const featuredPublicationSchema = z.object({
-  title: text,
-  description: text,
-  image: text,
-  href: publicHref,
-  ctaLabel: text,
-})
+export const photoRecordsSchema = z.array(photoRecordSchema).min(1).refine(
+  (photos) => new Set(photos.map((photo) => photo.id)).size === photos.length,
+  'Photo IDs must be unique within a collection',
+)
 
 export const photographySeriesSchema = z.object({
-  slug: z.enum(['street', 'pets', 'project']),
-  navLabel: text,
+  slug: z.enum(['works', 'intersection', 'miaoqiantan', 'bangkok']),
+  section: z.enum(['works', 'projects']),
   title: text,
-  overline: text,
-  landingSummary: text,
-  landingDescription: text,
-  heroLead: text,
-  statement: z.array(text),
-  cover: text,
-  cardCovers: z.array(text).min(1),
-  href: publicHref,
-  ctaLabel: text,
-  featuredPublications: z.array(featuredPublicationSchema).optional(),
+  description: text,
+  brightnessOrder: z.array(exhibitionId).optional(),
 })
 
 export const photographySeriesListSchema = z.array(photographySeriesSchema)

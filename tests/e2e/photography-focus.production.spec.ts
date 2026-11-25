@@ -1,8 +1,8 @@
 import { expect, test, type Page } from '@playwright/test'
 
 async function openPhotograph(page: Page) {
-  await page.goto('/photography#street/z52-8331')
-  await expect(page.getByTestId('exhibition-image')).toHaveAttribute('data-photo-id', 'z52-8331')
+  await page.goto('/photography#works/w02')
+  await expect(page.getByTestId('exhibition-image')).toHaveAttribute('data-photo-id', 'w02')
   await expect(page.getByTestId('exhibition-image-frame')).toHaveAttribute('data-state', 'ready')
 }
 
@@ -19,8 +19,8 @@ async function expectNoPhotoZoneOutline(page: Page) {
 }
 
 for (const direction of [
-  { name: 'previous', x: 0.25, photoId: 'z52-8539' },
-  { name: 'next', x: 0.75, photoId: 'z52-7693' },
+  { name: 'previous', x: 0.25, photoId: 'w01' },
+  { name: 'next', x: 0.75, photoId: 'w03' },
 ]) {
   test(`Escape after clicking the ${direction.name} photo half does not draw a dividing line`, async ({ page }) => {
     await openPhotograph(page)
@@ -60,7 +60,7 @@ for (const panel of ['Index', 'Thumbs'] as const) {
     await expect(page.locator('#site-root')).not.toHaveAttribute('aria-hidden', 'true')
     await expect.poll(() => page.locator('#site-root').evaluate((root: HTMLElement) => root.inert)).toBe(false)
     await expectNoPhotoZoneOutline(page)
-    await expect(page.getByTestId('exhibition-image')).toHaveAttribute('data-photo-id', 'z52-8331')
+    await expect(page.getByTestId('exhibition-image')).toHaveAttribute('data-photo-id', 'w02')
   })
 }
 
