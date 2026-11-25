@@ -183,6 +183,9 @@ body:has(.viewerPage) {
 @media (max-height: 620px) {
   .stage[data-travel-layout="portrait"] { padding-block: max(60px, env(safe-area-inset-top), env(safe-area-inset-bottom)); }
 }
+@media (max-height: 620px) and (orientation: portrait) {
+  .stage[data-travel-layout="portrait"] .body { line-height: 1.65; }
+}
 @media (prefers-reduced-motion: reduce) {
   /* Keep the exhibition choreography consistent across devices, overriding
      the global system-motion reset only for these animated gallery elements. */

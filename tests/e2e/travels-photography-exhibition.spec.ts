@@ -62,7 +62,7 @@ test('directory entry opens over the decoded Wuhan cover, including with a cold 
     await expect.poll(() => requested).toBe(true)
     await expect(index).toHaveCount(0)
     await expect(page.locator('main h1')).toContainText('Wuhan')
-    await expect(page.getByTestId('exhibition-position')).toHaveText('Wuhan - 1/7')
+    await expect(page.getByTestId('exhibition-position')).toHaveText('Wuhan - 1/8')
     await expect(page.getByTestId('exhibition-image')).toHaveAttribute('alt', card.imageAlt)
     await expect(page.locator('article[aria-hidden="false"] p').first()).toHaveText(cover.place!)
   } finally {
@@ -74,7 +74,7 @@ test('directory entry opens over the decoded Wuhan cover, including with a cold 
     visible: getComputedStyle(img).visibility === 'visible' && getComputedStyle(img.parentElement!).opacity === '1',
   }))
   expect(painted).toEqual({ loaded: true, visible: true })
-  await expect(page.getByTestId('exhibition-cursor')).toHaveText('Wuhan - 1/7')
+  await expect(page.getByTestId('exhibition-cursor')).toHaveText('Wuhan - 1/8')
   await page.keyboard.press('Escape')
   await expect(index).toHaveCount(0)
   await expect(page).toHaveURL(/#travels\/wuhan\/1$/)
@@ -89,7 +89,7 @@ test('Travels index, all Wuhan frames, Thumbs and frame history', async ({ page,
   const index = page.getByRole('dialog', { name: 'Index', exact: true })
   await expect(index.getByRole('tab', { name: 'Travels' })).toHaveAttribute('aria-selected', 'true')
   const places = index.getByRole('tabpanel', { name: 'Travels' }).getByRole('button')
-  await expect(places).toHaveText(['Wuhan7', 'Nanjing5', 'Japan6', 'Shanghai4', 'Northeast China7', 'Beijing7'])
+  await expect(places).toHaveText(['Wuhan8', 'Nanjing15', 'Japan25', 'Shanghai6', 'Northeast China9', 'Beijing7'])
   await places.first().click()
   await expect(index).toHaveCount(0)
   const stage = page.getByTestId('exhibition-stage')
@@ -101,7 +101,7 @@ test('Travels index, all Wuhan frames, Thumbs and frame history', async ({ page,
   const visible = travels[0].photos.filter(photo => !photo.hidden)
   for (const [i, frame] of visible.entries()) {
     const card = cards.find(card => card.imageSrc === frame.src)!
-    await expect(page.getByTestId('exhibition-position')).toHaveText(`Wuhan - ${i + 1}/7`)
+    await expect(page.getByTestId('exhibition-position')).toHaveText(`Wuhan - ${i + 1}/8`)
     await expect(image).toHaveAccessibleName(card.imageAlt)
     await expect(caption.locator('h2')).toHaveCount(0)
     await expect(caption.locator('p').first()).toHaveText(frame.place!)
@@ -112,7 +112,8 @@ test('Travels index, all Wuhan frames, Thumbs and frame history', async ({ page,
     const text = (await caption.boundingBox())!
     const bar = (await controls.boundingBox())!
     expect(text.y - (box.y + box.height)).toBeCloseTo(16, 0)
-    await expectLandscapePlacement(page, works, isMobile)
+    if (frame.width >= frame.height) await expectLandscapePlacement(page, works, isMobile)
+    else expect(text.width).toBeCloseTo(box.width, 0)
     if (isMobile) expect(bar.y + bar.height).toBeLessThan(box.y)
     else expect(text.y + text.height).toBeLessThanOrEqual(bar.y)
     expect(text.width).toBeLessThanOrEqual(600)
@@ -130,7 +131,7 @@ test('Travels index, all Wuhan frames, Thumbs and frame history', async ({ page,
   await touch?.detach()
   await page.getByRole('button', { name: 'Thumbs', exact: true }).click()
   const thumbs = page.getByRole('dialog', { name: 'Wuhan — Thumbs' })
-  await expect(thumbs.locator('img')).toHaveCount(7)
+  await expect(thumbs.locator('img')).toHaveCount(8)
   await expect(thumbs.locator('article')).toHaveCount(0)
   await thumbs.getByRole('button', { name: /^View photograph 3:/ }).click()
   await expect(thumbs).toHaveCount(0)
@@ -138,7 +139,7 @@ test('Travels index, all Wuhan frames, Thumbs and frame history', async ({ page,
   await page.reload()
   await expect(caption.locator('p').last()).toHaveText(cards.find(card => card.imageSrc === visible[2].src)!.body)
   await page.goBack()
-  await expect(page.getByTestId('exhibition-position')).toHaveText('Wuhan - 7/7')
+  await expect(page.getByTestId('exhibition-position')).toHaveText('Wuhan - 8/8')
   await page.getByRole('button', { name: 'Index', exact: true }).click()
   await places.first().click()
   await expect(page).toHaveURL(/#travels\/wuhan\/1$/)
@@ -147,13 +148,13 @@ test('Travels index, all Wuhan frames, Thumbs and frame history', async ({ page,
 test('Nanjing fits each landscape caption and keeps portrait frames aligned', async ({ page, isMobile }) => {
   await page.setViewportSize(isMobile ? { width: 375, height: 667 } : { width: 1440, height: 900 })
   const works = await worksLandscape(page)
-  await page.goto('/photography#travels/nanjing/10')
+  await page.goto('/photography#travels/nanjing/16')
   await expect(page).toHaveURL(/#travels\/nanjing\/1$/)
   const stage = page.getByTestId('exhibition-stage')
   const photo = page.getByTestId('exhibition-image')
   let portraitCaptionTop: number | undefined
-  for (let i = 1; i <= 5; i++) {
-    await expect(page.getByTestId('exhibition-position')).toHaveText(`Nanjing - ${i}/5`)
+  for (let i = 1; i <= 15; i++) {
+    await expect(page.getByTestId('exhibition-position')).toHaveText(`Nanjing - ${i}/15`)
     const box = (await photo.boundingBox())!
     const text = (await stage.locator('article[aria-hidden="false"]').boundingBox())!
     const region = (await stage.boundingBox())!
@@ -169,14 +170,14 @@ test('Nanjing fits each landscape caption and keeps portrait frames aligned', as
       portraitCaptionTop ??= text.y
       expect(text.y).toBeCloseTo(portraitCaptionTop, 0)
     }
-    if (i < 5) await page.mouse.click(region.x + region.width * 0.8, box.y + 32)
+    if (i < 15) await page.mouse.click(region.x + region.width * 0.8, box.y + 32)
   }
   expect(portraitCaptionTop).toBeDefined()
 })
 
 test('short phone screens keep the photograph and the whole travel caption visible', async ({ page }) => {
-  await page.goto('/photography#travels/nanjing/4')
-  await expect(page.getByTestId('exhibition-position')).toHaveText('Nanjing - 4/5')
+  await page.goto('/photography#travels/nanjing/3')
+  await expect(page.getByTestId('exhibition-position')).toHaveText('Nanjing - 3/15')
   for (const viewport of [{ width: 320, height: 568 }, { width: 667, height: 375 }]) {
     await page.setViewportSize(viewport)
     const image = page.getByTestId('exhibition-image')

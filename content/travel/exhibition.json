@@ -10,6 +10,13 @@
         "place": "黄鹤楼"
       },
       {
+        "src": "/assets/travel/wuhan/journal/w5.webp",
+        "width": 1600,
+        "height": 2400,
+        "place": "昙华街",
+        "focus": "50% 36%"
+      },
+      {
         "src": "/assets/travel/wuhan/长江渡轮.webp",
         "width": 1800,
         "height": 1200,
@@ -22,11 +29,10 @@
         "place": "长江轮渡"
       },
       {
-        "src": "/assets/travel/wuhan/东湖1.webp",
-        "width": 1800,
-        "height": 1200,
-        "hidden": true,
-        "hiddenReason": "图文不对应"
+        "src": "/assets/travel/wuhan/journal/w1.webp",
+        "width": 2400,
+        "height": 1600,
+        "place": "东湖"
       },
       {
         "src": "/assets/travel/wuhan/武汉大学.jpg",
@@ -48,24 +54,10 @@
         "place": "武大凌波门"
       },
       {
-        "src": "/assets/travel/wuhan/光谷商业街.webp",
-        "width": 1800,
-        "height": 1200,
-        "place": "光谷商业街",
-        "focus": "15% 50%"
-      },
-      {
         "src": "/assets/travel/wuhan/书店.webp",
         "width": 1800,
         "height": 1200,
         "place": "江汉路 / 书店"
-      },
-      {
-        "src": "/assets/travel/wuhan/酒馆.webp",
-        "width": 1600,
-        "height": 1065,
-        "hidden": true,
-        "hiddenReason": "图文不对应"
       }
     ]
   },
@@ -74,45 +66,34 @@
     "title": "Nanjing",
     "photos": [
       {
-        "src": "/assets/travel/nanjing-hero-wutong-street.webp",
-        "width": 2400,
-        "height": 1599,
-        "hidden": true,
-        "hiddenReason": "图文不对应"
-      },
-      {
         "src": "/assets/travel/nanjing/nj-laomendong-crowd.webp",
         "width": 2400,
         "height": 1599,
         "place": "老门东"
       },
       {
-        "src": "/assets/travel/nanjing/nj-nanjing-museum-caravaggio.webp",
+        "src": "/assets/travel/nanjing/journal/n1.webp",
         "width": 2400,
-        "height": 1800,
-        "hidden": true,
-        "hiddenReason": "图文不对应"
+        "height": 1600,
+        "place": "秦淮河"
       },
       {
-        "src": "/assets/travel/nanjing/nj-portrait-riverside-auntie.webp",
-        "width": 1599,
+        "src": "/assets/travel/nanjing/journal/n4.webp",
+        "width": 1600,
         "height": 2400,
-        "place": "玄武湖",
-        "focus": "50% 25%"
+        "place": "夫子庙"
       },
       {
-        "src": "/assets/travel/nanjing/nj-portrait-korean-style-guy.webp",
-        "width": 1599,
-        "height": 2400,
-        "hidden": true,
-        "hiddenReason": "图文不对应"
+        "src": "/assets/travel/nanjing/journal/n8.webp",
+        "width": 2400,
+        "height": 1600,
+        "place": "夫子庙"
       },
       {
         "src": "/assets/travel/nanjing/nj-fuzimiao-night-crowd.webp",
         "width": 2400,
         "height": 1599,
-        "hidden": true,
-        "hiddenReason": "图文不对应"
+        "place": "夫子庙"
       },
       {
         "src": "/assets/travel/nanjing/nj-hongshan-zoo-entrance.webp",
@@ -120,6 +101,24 @@
         "height": 2400,
         "hidden": true,
         "hiddenReason": "图文不对应"
+      },
+      {
+        "src": "/assets/travel/nanjing/journal/n2.webp",
+        "width": 1600,
+        "height": 2400,
+        "place": "红山动物园"
+      },
+      {
+        "src": "/assets/travel/nanjing/journal/n5.webp",
+        "width": 1600,
+        "height": 2400,
+        "place": "红山动物园"
+      },
+      {
+        "src": "/assets/travel/nanjing/nj-nanjing-museum-caravaggio.webp",
+        "width": 2400,
+        "height": 1800,
+        "place": "南京博物院"
       },
       {
         "src": "/assets/travel/nanjing/nj-portrait-biker-man.webp",
@@ -132,6 +131,32 @@
         "width": 1599,
         "height": 2400,
         "place": "鸡鸣寺"
+      },
+      {
+        "src": "/assets/travel/nanjing/journal/n11.webp",
+        "width": 1600,
+        "height": 2400,
+        "place": "玄武湖"
+      },
+      {
+        "src": "/assets/travel/nanjing/nj-portrait-riverside-auntie.webp",
+        "width": 1599,
+        "height": 2400,
+        "place": "玄武湖",
+        "focus": "50% 25%"
+      },
+      {
+        "src": "/assets/travel/nanjing/nj-portrait-korean-style-guy.webp",
+        "width": 1599,
+        "height": 2400,
+        "place": "先锋书店"
+      },
+      {
+        "src": "/assets/travel/nanjing/journal/n3.webp",
+        "width": 1600,
+        "height": 2400,
+        "place": "中山陵",
+        "focus": "50% 60%"
       },
       {
         "src": "/assets/travel/nanjing/nj-zhongshanling-rain-steps.webp",
@@ -155,22 +180,92 @@
         "src": "/assets/travel/japan/07-naoshima-ferry-blue-sea.webp",
         "width": 2400,
         "height": 1599,
-        "place": "直岛",
-        "focus": "10% 50%"
+        "place": "前往直岛的渡轮"
       },
       {
-        "src": "/assets/travel/japan/08-naoshima-museum-sign.webp",
+        "src": "/assets/travel/japan/journal/j15.webp",
         "width": 2400,
-        "height": 1599,
-        "hidden": true,
-        "hiddenReason": "图文不对应"
+        "height": 1600,
+        "place": "直岛"
+      },
+      {
+        "src": "/assets/travel/japan/journal/j6.webp",
+        "width": 2400,
+        "height": 1600,
+        "place": "直岛"
+      },
+      {
+        "src": "/assets/travel/japan/journal/j1.webp",
+        "width": 2400,
+        "height": 1600,
+        "place": "直岛美术馆"
+      },
+      {
+        "src": "/assets/travel/japan/journal/j2.webp",
+        "width": 2400,
+        "height": 1800,
+        "place": "直岛"
+      },
+      {
+        "src": "/assets/travel/japan/journal/j11.webp",
+        "width": 2400,
+        "height": 1600,
+        "place": "屋岛寺"
       },
       {
         "src": "/assets/travel/japan/15-yashima-observatory.webp",
         "width": 2400,
         "height": 1599,
-        "hidden": true,
-        "hiddenReason": "图文不对应"
+        "place": "屋岛"
+      },
+      {
+        "src": "/assets/travel/japan/journal/j5.webp",
+        "width": 2400,
+        "height": 1600,
+        "place": "四国村",
+        "focus": "50% 47%"
+      },
+      {
+        "src": "/assets/travel/japan/journal/j12.webp",
+        "width": 2400,
+        "height": 1600,
+        "place": "小豆岛"
+      },
+      {
+        "src": "/assets/travel/japan/journal/j3.webp",
+        "width": 2400,
+        "height": 1600,
+        "place": "小豆岛"
+      },
+      {
+        "src": "/assets/travel/japan/journal/j4.webp",
+        "width": 2400,
+        "height": 1600,
+        "place": "小豆岛"
+      },
+      {
+        "src": "/assets/travel/japan/25-fushimi-inari-torii.webp",
+        "width": 2400,
+        "height": 1599,
+        "place": "京都"
+      },
+      {
+        "src": "/assets/travel/japan/journal/j17.webp",
+        "width": 2400,
+        "height": 1600,
+        "place": "伏见稻荷"
+      },
+      {
+        "src": "/assets/travel/japan/journal/j9.webp",
+        "width": 2400,
+        "height": 1600,
+        "place": "伏见稻荷"
+      },
+      {
+        "src": "/assets/travel/japan/journal/j10.webp",
+        "width": 2400,
+        "height": 1600,
+        "place": "鸭川"
       },
       {
         "src": "/assets/travel/japan/30-kyoto-kamogawa-night.webp",
@@ -185,30 +280,45 @@
         "place": "京都"
       },
       {
-        "src": "/assets/travel/japan/31-nara-deer-greeting.webp",
-        "width": 2300,
-        "height": 1533,
-        "hidden": true,
-        "hiddenReason": "图文不对应"
+        "src": "/assets/travel/japan/journal/j26.webp",
+        "width": 2400,
+        "height": 1600,
+        "place": "奈良"
+      },
+      {
+        "src": "/assets/travel/japan/journal/j23.webp",
+        "width": 2400,
+        "height": 1600,
+        "place": "奈良"
       },
       {
         "src": "/assets/travel/japan/food-03-nara-lunch.webp",
         "width": 2400,
         "height": 1599,
-        "place": "奈良",
-        "focus": "80% 50%"
+        "place": "奈良"
       },
       {
         "src": "/assets/travel/japan/34-nara-portrait.webp",
         "width": 2300,
         "height": 1533,
-        "hidden": true,
-        "hiddenReason": "图文不对应"
+        "place": "奈良公园"
       },
       {
-        "src": "/assets/travel/japan/35-nara-mt-wakakusa-sunset.webp",
+        "src": "/assets/travel/japan/journal/j29.webp",
         "width": 2400,
-        "height": 1599,
+        "height": 1600,
+        "place": "若草山"
+      },
+      {
+        "src": "/assets/travel/japan/journal/j7.webp",
+        "width": 2400,
+        "height": 1600,
+        "place": "若草山"
+      },
+      {
+        "src": "/assets/travel/japan/journal/j8.webp",
+        "width": 2400,
+        "height": 1600,
         "place": "若草山"
       }
     ]
@@ -218,32 +328,17 @@
     "title": "Shanghai",
     "photos": [
       {
-        "src": "/assets/travel/shanghai/story/metro-second-display.webp",
-        "width": 960,
-        "height": 1280,
-        "hidden": true,
-        "hiddenReason": "图文不对应"
+        "src": "/assets/travel/shanghai/journal/s7.webp",
+        "width": 1800,
+        "height": 2400,
+        "place": "上海地铁"
       },
       {
-        "src": "/assets/travel/shanghai/story/metro-chess-kids.webp",
-        "width": 960,
-        "height": 1280,
-        "place": "上海地铁",
-        "focus": "50% 0%"
-      },
-      {
-        "src": "/assets/travel/shanghai/story/huangpu-riverside-track.webp",
-        "width": 960,
-        "height": 1280,
-        "hidden": true,
-        "hiddenReason": "图文不对应"
-      },
-      {
-        "src": "/assets/travel/shanghai/story/jingan-city-lawn.webp",
-        "width": 960,
-        "height": 1280,
-        "hidden": true,
-        "hiddenReason": "图文不对应"
+        "src": "/assets/travel/shanghai/journal/s2.webp",
+        "width": 1800,
+        "height": 2400,
+        "place": "愚园路",
+        "focus": "50% 58%"
       },
       {
         "src": "/assets/travel/shanghai/story/church-entrance.webp",
@@ -253,22 +348,22 @@
         "focus": "50% 0%"
       },
       {
-        "src": "/assets/travel/shanghai/story/bund-clocktower-night.webp",
-        "width": 960,
-        "height": 1280,
-        "place": "外滩"
+        "src": "/assets/travel/shanghai/journal/s3.webp",
+        "width": 1800,
+        "height": 2400,
+        "place": "上海教堂",
+        "focus": "48% 47%"
       },
       {
-        "src": "/assets/travel/shanghai/story/taxi-riverside-midnight.webp",
-        "width": 960,
-        "height": 1280,
-        "hidden": true,
-        "hiddenReason": "图文不对应"
+        "src": "/assets/travel/shanghai/journal/s8.webp",
+        "width": 1800,
+        "height": 2400,
+        "place": "黄浦江"
       },
       {
-        "src": "/assets/travel/shanghai/story/disney-fireworks-castle.webp",
-        "width": 1700,
-        "height": 1280,
+        "src": "/assets/travel/shanghai/journal/s9.webp",
+        "width": 1800,
+        "height": 2400,
         "place": "上海迪士尼"
       }
     ]
@@ -285,51 +380,52 @@
         "focus": "50% 0%"
       },
       {
-        "src": "/assets/travel/dongbei/0208/p8.webp",
-        "width": 960,
-        "height": 1280,
-        "hidden": true,
-        "hiddenReason": "图文不对应"
-      },
-      {
-        "src": "/assets/travel/dongbei/changbai-portrait-white-fur-hat.webp",
+        "src": "/assets/travel/dongbei/journal/d4.webp",
         "width": 1800,
         "height": 2400,
-        "place": "长白山",
-        "focus": "50% 100%"
+        "place": "沈阳"
       },
       {
-        "src": "/assets/travel/dongbei/changbai-portrait-earmuffs.webp",
+        "src": "/assets/travel/dongbei/journal/d2.webp",
         "width": 1800,
         "height": 2400,
-        "place": "长白山",
-        "focus": "50% 100%"
+        "place": "长白山"
       },
       {
-        "src": "/assets/travel/dongbei/beidahu-snow-portrait.webp",
+        "src": "/assets/travel/dongbei/journal/d1.webp",
         "width": 1800,
         "height": 2400,
-        "place": "北大湖",
-        "focus": "50% 85%"
+        "place": "长白山"
       },
       {
-        "src": "/assets/travel/dongbei/0213/t2.webp",
-        "width": 960,
-        "height": 1280,
+        "src": "/assets/travel/dongbei/journal/d9.webp",
+        "width": 1800,
+        "height": 2400,
+        "place": "北大湖"
+      },
+      {
+        "src": "/assets/travel/dongbei/journal/d3.webp",
+        "width": 1800,
+        "height": 2400,
+        "place": "北大湖"
+      },
+      {
+        "src": "/assets/travel/dongbei/journal/d14.webp",
+        "width": 1800,
+        "height": 2400,
         "place": "松花江"
       },
       {
-        "src": "/assets/travel/dongbei/0215/t3.webp",
-        "width": 960,
-        "height": 1280,
+        "src": "/assets/travel/dongbei/journal/d5.webp",
+        "width": 1800,
+        "height": 2400,
         "place": "哈尔滨"
       },
       {
-        "src": "/assets/travel/dongbei/harbin-window-snow-night.webp",
+        "src": "/assets/travel/dongbei/journal/d12.webp",
         "width": 1800,
         "height": 2400,
-        "place": "哈尔滨",
-        "focus": "50% 100%"
+        "place": "哈尔滨"
       }
     ]
   },
@@ -338,29 +434,10 @@
     "title": "Beijing",
     "photos": [
       {
-        "src": "/assets/travel/beijing/pku-library-outside.webp",
-        "width": 640,
-        "height": 480,
-        "place": "北大图书馆"
-      },
-      {
         "src": "/assets/travel/beijing/tsinghua-gate.webp",
         "width": 640,
         "height": 480,
         "place": "清华园"
-      },
-      {
-        "src": "/assets/travel/beijing/motuo-stage.webp",
-        "width": 640,
-        "height": 480,
-        "place": "魔脱喜剧"
-      },
-      {
-        "src": "/assets/travel/beijing/taxi-driver-profile.webp",
-        "width": 1280,
-        "height": 960,
-        "hidden": true,
-        "hiddenReason": "图文不对应"
       },
       {
         "src": "/assets/travel/beijing/summer-palace-kunming-lake-overlook.jpeg",
@@ -369,17 +446,16 @@
         "place": "颐和园"
       },
       {
-        "src": "/assets/travel/beijing/798-art-district-poster.jpeg",
-        "width": 1350,
+        "src": "/assets/travel/beijing/journal/b2.webp",
+        "width": 2400,
         "height": 1800,
-        "hidden": true,
-        "hiddenReason": "图文不对应"
+        "place": "长城"
       },
       {
-        "src": "/assets/travel/beijing/botanical-garden-gate.webp",
-        "width": 1280,
-        "height": 960,
-        "place": "国家植物园"
+        "src": "/assets/travel/beijing/journal/b4.webp",
+        "width": 2400,
+        "height": 1800,
+        "place": "长城"
       },
       {
         "src": "/assets/travel/beijing/ice-skating-first-try.webp",
@@ -388,10 +464,24 @@
         "place": "溜冰场"
       },
       {
-        "src": "/assets/travel/beijing/shichahai-livehouse-night.webp",
-        "width": 1400,
-        "height": 1050,
+        "src": "/assets/travel/beijing/journal/b3.webp",
+        "width": 1800,
+        "height": 2400,
+        "place": "王府井",
+        "focus": "50% 48%"
+      },
+      {
+        "src": "/assets/travel/beijing/journal/b8.webp",
+        "width": 2400,
+        "height": 1800,
         "place": "什刹海"
+      },
+      {
+        "src": "/assets/travel/beijing/798-art-district-poster.jpeg",
+        "width": 1350,
+        "height": 1800,
+        "hidden": true,
+        "hiddenReason": "图文不对应"
       }
     ]
   }
