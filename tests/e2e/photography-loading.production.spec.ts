@@ -71,9 +71,9 @@ for (const reducedMotion of ['no-preference', 'reduce'] as const) {
     // layer used to leave the taller/wider outgoing photograph showing behind it.
     for (const selection of [
       { work: 'Bangkok', photoId: 'p3-01' },
-      { work: '同一路口', photoId: 'p1-01' },
-      { work: '庙前潭桥', photoId: 'p2-01' },
-      { work: '同一路口', photoId: 'p1-01' },
+      { work: 'Same Intersection', photoId: 'p1-01' },
+      { work: 'Miaoqiantan', photoId: 'p2-01' },
+      { work: 'Same Intersection', photoId: 'p1-01' },
     ]) {
       await page.getByRole('button', { name: 'Index', exact: true }).click()
       const index = page.getByRole('dialog', { name: 'Index', exact: true })
@@ -171,7 +171,7 @@ test('browser Back wins over a delayed photograph from another work', async ({ p
     await expect(image).toHaveAttribute('data-photo-id', 'p1-01')
     await expect(frame).toHaveAttribute('data-state', 'ready')
     await page.getByRole('button', { name: 'Index', exact: true }).click()
-    await page.getByRole('dialog', { name: 'Index', exact: true }).getByRole('button', { name: /庙前潭桥/ }).click()
+    await page.getByRole('dialog', { name: 'Index', exact: true }).getByRole('button', { name: /Miaoqiantan/ }).click()
     await expect(page).toHaveURL(/#miaoqiantan\/p2-01$/)
     await expect.poll(() => requested).toBe(true)
     await expect(frame).toHaveAttribute('data-state', 'loading')
@@ -192,7 +192,7 @@ test('browser Back wins over a delayed photograph from another work', async ({ p
     }, response.url())
     await expect(page).toHaveURL(/#intersection\/p1-01$/)
     await expect(image).toHaveAttribute('data-photo-id', 'p1-01')
-    await expect(page.getByTestId('exhibition-position')).toContainText(/同一路口\s*-\s*1\s*\/\s*13/)
+    await expect(page.getByTestId('exhibition-position')).toContainText(/Same Intersection\s*-\s*1\s*\/\s*13/)
     await expectSinglePaintedPhoto(page)
   } finally {
     releaseImage()
@@ -264,7 +264,7 @@ test('the published projects follow both approved readings without duplicating p
   await page.goto('/photography#projects')
   const index = page.getByRole('dialog', { name: 'Index', exact: true })
   await expect(index.getByRole('tab', { name: 'Works', exact: true })).toHaveAttribute('aria-selected', 'true')
-  await index.getByRole('button', { name: /同一路口 13/ }).click()
+  await index.getByRole('button', { name: /Same Intersection 13/ }).click()
   await page.getByRole('button', { name: 'Thumbs', exact: true }).click()
   const thumbs = page.getByRole('dialog', { name: /Thumbs/ })
   await thumbs.getByRole('button', { name: '由亮到暗' }).click()

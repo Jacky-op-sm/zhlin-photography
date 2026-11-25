@@ -169,7 +169,7 @@ for (const intent of ['hover', 'focus', 'touchstart'] as const) {
         return !!image && image.complete && image.naturalWidth > 0 && audit.decoded.has(image)
       })
     }), { message: 'Opening Index should prepare another work before it is selected' }).toBe(true)
-    const projects = page.getByRole('dialog', { name: 'Index', exact: true }).getByRole('button', { name: /同一路口/ })
+    const projects = page.getByRole('dialog', { name: 'Index', exact: true }).getByRole('button', { name: /Same Intersection/ })
     if (intent === 'hover') await projects.hover()
     else if (intent === 'focus') await projects.focus()
     else await projects.dispatchEvent('touchstart')
@@ -187,7 +187,7 @@ for (const intent of ['hover', 'focus', 'touchstart'] as const) {
     await page.evaluate(() => {
       (window as typeof window & { __photoDecodeAudit: DecodeAudit }).__photoDecodeAudit.slowNewDecodes = true
     })
-    const result = await measurePreparedNavigation(page, 'p1-01', 0, 'index', '同一路口')
+    const result = await measurePreparedNavigation(page, 'p1-01', 0, 'index', 'Same Intersection')
     expect(result.painted, 'The prepared cover must become a painted photograph').toBe(true)
     expect(result.sameNode, 'Selecting a prepared work must promote its decoded node without mounting another image').toBe(true)
     expect(result.elapsedMs, 'A prepared work may retain the existing curtain but must not wait for a fresh load or decode').toBeLessThan(800)
@@ -224,7 +224,7 @@ test('Save-Data loads only selected photographs despite Index navigation intent'
   await expect(page.getByTestId('exhibition-panel')).toHaveAttribute('data-state', 'open')
   const index = page.getByRole('dialog', { name: 'Index', exact: true })
   await index.getByRole('button', { name: /Bangkok/ }).hover()
-  const projects = index.getByRole('button', { name: /同一路口/ })
+  const projects = index.getByRole('button', { name: /Same Intersection/ })
   await projects.focus()
   await projects.dispatchEvent('touchstart')
   await page.waitForLoadState('networkidle')
@@ -269,7 +269,7 @@ test('a late neighboring decode never replaces the latest selection or blanks th
     await page.evaluate(() => new Promise<void>((resolve) => requestAnimationFrame(() => requestAnimationFrame(() => resolve()))))
     await expect(image).toHaveAttribute('data-photo-id', 'p2-05')
     await expect(image).toBeVisible()
-    await expect(page.getByTestId('exhibition-position')).toContainText(/庙前潭桥\s*-\s*5\s*\/\s*13/)
+    await expect(page.getByTestId('exhibition-position')).toContainText(/Miaoqiantan\s*-\s*5\s*\/\s*13/)
     expect(await frame.locator('img').count()).toBeLessThanOrEqual(6)
   } finally {
     if (!page.isClosed()) await page.evaluate(() => {

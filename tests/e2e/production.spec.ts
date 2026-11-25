@@ -160,7 +160,7 @@ test.describe('production interactions', () => {
     await page.goto('/photography/miaoqiantan')
     const thumbs = page.getByRole('button', { name: 'Thumbs', exact: true })
     await thumbs.click()
-    const viewer = page.getByRole('dialog', { name: '庙前潭桥 — Thumbs', exact: true })
+    const viewer = page.getByRole('dialog', { name: 'Miaoqiantan — Thumbs', exact: true })
     await expect(viewer).toBeVisible()
     await expect(
       page.getByRole('button', { name: 'Close thumbnails', exact: true }),
@@ -184,7 +184,7 @@ test.describe('production interactions', () => {
     await page.goto('/photography/intersection')
     await page.waitForLoadState('networkidle')
     await page.getByRole('button', { name: 'Thumbs', exact: true }).click()
-    const images = page.getByRole('dialog', { name: '同一路口 — Thumbs', exact: true }).locator('img')
+    const images = page.getByRole('dialog', { name: 'Same Intersection — Thumbs', exact: true }).locator('img')
     await expect(images).toHaveCount(13)
     await expect.poll(() => images.evaluateAll((items) => items.every((image) => (image as HTMLImageElement).naturalWidth > 0))).toBe(true)
     const sources = await images.evaluateAll(
