@@ -1,13 +1,15 @@
 'use client'
 
 import { useCallback, useEffect, useLayoutEffect, useMemo, useRef, useState, useSyncExternalStore, type CSSProperties, type MouseEvent as ReactMouseEvent } from 'react'
+import { flushSync } from 'react-dom'
 import Image from 'next/image'
 import Link from 'next/link'
 import Modal from '@/components/ui/Modal'
 import profile from '../../../content/site/profile.json'
 import { ExhibitionImage, useExhibitionCursor, TRANSITION_MS } from './ExhibitionPresentation'
+import { targetKey, type Target } from './ExhibitionImage'
 import { cropRatio } from './exhibition-images'
-import { observeLandscapeCaption } from './landscape-caption'
+import { createCaptionMeasure, measureTravelBounds, placeLandscape, placePortrait, type CaptionMeasure, type TravelBounds, type TravelPlacement } from './travel-layout'
 import styles from './PhotographyExhibition.module.css'
 
 type Caption = { place: string; eyebrow: string; title: string; body: string }
@@ -30,6 +32,16 @@ function subscribeToLocation(onChange: () => void) {
 function locationSnapshot() { return window.location.hash }
 function serverLocationSnapshot() { return '' }
 function photoHash(collectionId: string, photoId: string) { return `#${collectionId.split('/').map(encodeURIComponent).join('/')}/${encodeURIComponent(photoId)}` }
+function placementKey({ collection, photoIndex }: Selection) {
+  const photo = collection.photos[photoIndex]
+  // Every portrait frame of a series shares one reserved caption block.
+  return cropRatio(photo) > 1 ? `${collection.id}/${photo.id}` : `${collection.id}/portrait`
+}
+function placeFrame(bounds: TravelBounds, { collection, photoIndex }: Selection, measure: CaptionMeasure) {
+  const photo = collection.photos[photoIndex]
+  if (cropRatio(photo) > 1) return placeLandscape(bounds, photo.caption ?? { place: '', body: '' }, measure)
+  return placePortrait(bounds, collection.photos.flatMap(entry => entry.caption ? [entry.caption] : []), measure)
+}
 function directorySection(hash: string) {
   return hash === '#projects' ? 'projects' : hash === '#travels' ? 'travels' : null
 }
@@ -64,6 +76,9 @@ export default function PhotographyExhibition({ collections, initialCollectionId
   const hash = useSyncExternalStore(subscribeToLocation, locationSnapshot, serverLocationSnapshot)
   const selection = useMemo(() => resolveSelection(hash, availableCollections, initialCollectionId), [hash, availableCollections, initialCollectionId])
   const [presented, setPresented] = useState(() => selection && { ...selection, decoded: false })
+  const [covering, setCovering] = useState<Target | null>(null)
+  const [layoutVersion, setLayoutVersion] = useState(0)
+  const [layout, setLayout] = useState<{ version: number; placements: Record<string, TravelPlacement> }>({ version: -1, placements: {} })
   const [panel, setPanel] = useState<Panel | null>(null)
   const [preview, setPreview] = useState<Selection | null>(null)
   const [tab, setTab] = useState<{ active: IndexTab; displayed: IndexTab; fading: boolean }>({ active: 'works', displayed: 'works', fading: false })
@@ -71,7 +86,10 @@ export default function PhotographyExhibition({ collections, initialCollectionId
   const tabRefs = useRef<Partial<Record<IndexTab, HTMLButtonElement | null>>>({})
   const indexTrigger = useRef<HTMLButtonElement>(null)
   const stageRef = useRef<HTMLDivElement>(null)
-  const captionsRef = useRef<HTMLDivElement>(null)
+  const landscapeProbeRef = useRef<HTMLDivElement>(null)
+  const portraitProbeRef = useRef<HTMLDivElement>(null)
+  const bandProbeRef = useRef<HTMLDivElement>(null)
+  const measurerRef = useRef<HTMLDivElement>(null)
   const controlsRef = useRef<HTMLElement>(null)
   const positionRef = useRef<HTMLParagraphElement>(null)
   const cursorRef = useRef<HTMLDivElement>(null)
@@ -88,8 +106,14 @@ export default function PhotographyExhibition({ collections, initialCollectionId
   const shownIndex = shown?.photoIndex ?? 0
   const isTravel = shownCollection?.section === 'travels'
   const shownPhoto = shownCollection?.photos[shownIndex]
-  const ratio = shownPhoto ? cropRatio(shownPhoto) : 1
-  const travelLayout = isTravel ? (ratio > 1 ? 'landscape' : 'portrait') : undefined
+  const travelLayout = isTravel && shownPhoto ? (cropRatio(shownPhoto) > 1 ? 'landscape' : 'portrait') : undefined
+  // While the curtain still shows the outgoing photograph, its caption stays with it.
+  const coveringFrame = useMemo(() => {
+    const outgoing = covering && availableCollections.find(item => item.id === covering.collectionId)
+    const index = outgoing ? outgoing.photos.indexOf(covering.photo) : -1
+    return outgoing && index >= 0 ? { collection: outgoing, photoIndex: index } : null
+  }, [covering, availableCollections])
+  const captionFrame = coveringFrame ?? (shownCollection ? { collection: shownCollection, photoIndex: shownIndex } : null)
   const section = collection?.section ?? 'works'
   // Each project has one index entry even when a visitor chooses its alternate reading.
   const primaryCollections = useMemo(() => availableCollections.filter(item => !item.baseId)
@@ -199,56 +223,49 @@ export default function PhotographyExhibition({ collections, initialCollectionId
     return () => window.removeEventListener('popstate', restoreHistoryPanel)
   }, [])
 
+  // Each travel frame is placed before it is shown: the requested frame while
+  // it decodes, the presented frame, and an outgoing frame under the curtain.
+  const placementFrames = useMemo(() => [
+    shownCollection && { collection: shownCollection, photoIndex: shownIndex },
+    collection && { collection, photoIndex },
+    coveringFrame,
+  ].filter((frame): frame is Selection => !!frame && frame.collection.section === 'travels'), [shownCollection, shownIndex, collection, photoIndex, coveringFrame])
   useLayoutEffect(() => {
+    const current = layout.version === layoutVersion
+    const missing = placementFrames.filter(frame => !current || !layout.placements[placementKey(frame)])
+    const [stage, controls, counter, index, landscapeProbe, portraitProbe, bandProbe, measurer] = [stageRef.current, controlsRef.current, positionRef.current, indexTrigger.current,
+      landscapeProbeRef.current, portraitProbeRef.current, bandProbeRef.current, measurerRef.current]
+    if (!missing.length || !stage || !controls || !counter || !index || !landscapeProbe || !portraitProbe || !bandProbe || !measurer) return
+    const bounds = measureTravelBounds({ stage, controls, counter, index, landscapeProbe, portraitProbe, bandProbe, measurer })
+    const measure = createCaptionMeasure(measurer)
+    const placements = current ? { ...layout.placements } : {}
+    for (const frame of missing) placements[placementKey(frame)] ??= placeFrame(bounds, frame, measure)
+    setLayout({ version: layoutVersion, placements })
+  }, [placementFrames, layout, layoutVersion])
+  // Viewport, orientation and font changes invalidate every placement at once.
+  useEffect(() => {
     const stage = stageRef.current
-    const captions = captionsRef.current
-    if (travelLayout !== 'portrait' || !stage || !captions) return
-
-    // All captions share one grid cell. A narrower photo can add a line of text,
-    // so measure again at each new width until both fit at the largest size.
-    const fit = () => {
-      stage.style.removeProperty('--fitted-width')
-      stage.style.removeProperty('--caption-width')
-      const layout = getComputedStyle(stage)
-      const available = stage.clientHeight - parseFloat(layout.paddingTop) - parseFloat(layout.paddingBottom)
-      const gap = parseFloat(layout.rowGap)
-      const maxWidth = captions.getBoundingClientRect().width
-      let width = maxWidth
-      while (width > 1) {
-        const room = available - gap - captions.getBoundingClientRect().height
-        if (width / ratio <= room + 0.5) break
-        const next = Math.floor(room * ratio)
-        if (next < 1) {
-          // On very short landscape screens no equal-width column may fit:
-          // narrowing it again produces more lines than the entire viewport.
-          stage.style.setProperty('--caption-width', 'var(--photo-width)')
-          const remaining = available - gap - captions.getBoundingClientRect().height
-          const photoWidth = Math.max(1, Math.min(maxWidth, Math.floor(remaining * ratio)))
-          stage.style.setProperty('--fitted-width', `${photoWidth}px`)
-          break
-        }
-        stage.style.setProperty('--fitted-width', `${next}px`)
-        width = next
-      }
-      stage.style.setProperty('--caption-height', `${captions.getBoundingClientRect().height}px`)
-    }
-    fit()
-    const observer = new ResizeObserver(fit)
+    if (!stage) return
+    let cancelled = false
+    const invalidate = () => { if (!cancelled) flushSync(() => setLayoutVersion(version => version + 1)) }
+    const observer = new ResizeObserver(invalidate)
     observer.observe(stage)
-    document.fonts.addEventListener('loadingdone', fit)
+    document.fonts.addEventListener('loadingdone', invalidate)
+    void document.fonts.ready.then(invalidate)
     return () => {
+      cancelled = true
       observer.disconnect()
-      document.fonts.removeEventListener('loadingdone', fit)
-      stage.style.removeProperty('--fitted-width')
-      stage.style.removeProperty('--caption-height')
-      stage.style.removeProperty('--caption-width')
+      document.fonts.removeEventListener('loadingdone', invalidate)
     }
-  }, [travelLayout, shownCollection, ratio])
-
+  }, [])
+  // The black canvas belongs to this page only. The server HTML selects it by
+  // the page marker; once mounted, the root class decides, and this cleanup
+  // removes it in the same commit that removes the exhibition.
   useLayoutEffect(() => {
-    if (travelLayout !== 'landscape' || !stageRef.current || !captionsRef.current || !controlsRef.current || !positionRef.current) return
-    return observeLandscapeCaption(stageRef.current, captionsRef.current, controlsRef.current, positionRef.current, ratio)
-  }, [travelLayout, shownPhoto, ratio])
+    const root = document.documentElement
+    root.classList.add(styles.viewerScripted, styles.viewerCanvas)
+    return () => root.classList.remove(styles.viewerCanvas)
+  }, [])
 
   useEffect(() => {
     if (panel?.phase !== 'entering') return
@@ -280,14 +297,27 @@ export default function PhotographyExhibition({ collections, initialCollectionId
   }, [panel, step])
 
   if (!collection || !photo || !shownCollection) return <main lang="en" className={styles.exhibition}><Link href="/">Back to Zhlin</Link><p>No photographs are available.</p></main>
-  const portraitStyle = travelLayout === 'portrait' ? { '--stage-ratio': ratio } as CSSProperties : undefined
-  const captionPhotos = travelLayout === 'landscape' && shownPhoto ? [shownPhoto] : shownCollection.photos
+  const placementOf = (frame: Selection | null) => frame && layout.version === layoutVersion ? layout.placements[placementKey(frame)] : undefined
+  const photoPlacements: Record<string, CSSProperties> = {}
+  for (const frame of placementFrames) {
+    const placed = placementOf(frame)
+    if (placed) photoPlacements[targetKey({ collectionId: frame.collection.id, photo: frame.collection.photos[frame.photoIndex] })] = {
+      left: placed.photo.x, top: placed.photo.y, width: placed.photo.width, transform: 'none',
+    }
+  }
+  const captionPhoto = captionFrame?.collection.section === 'travels' ? captionFrame.collection.photos[captionFrame.photoIndex] : undefined
+  const captionPlacement = placementOf(captionFrame)
+  const captionStyle = captionPlacement ? {
+    left: captionPlacement.caption.x, top: captionPlacement.caption.y, width: captionPlacement.caption.width,
+    '--caption-scale': captionPlacement.caption.scale,
+  } as CSSProperties : { visibility: 'hidden' } as CSSProperties
   const label = `${shownCollection.title} - ${shownIndex + 1}/${shownCollection.photos.length}`
 
   return (
-    <main lang="en" className={styles.exhibition} aria-label="Photography exhibition" data-exhibition-collection={shownCollection.id} data-travel={isTravel} data-index-open={panel?.kind === 'index' && panel.phase !== 'closing'}>
+    <main lang="en" className={styles.exhibition} aria-label="Photography exhibition" data-exhibition-collection={shownCollection.id} data-travel={isTravel}
+      data-index-open={panel?.kind === 'index' && panel.phase !== 'closing'} data-thumbs-open={panel?.kind === 'thumbs' && panel.phase !== 'closing'}>
       <h1 className={styles.srOnly}>{shownCollection.title} — Photography by Zhlin</h1>
-      <div ref={stageRef} className={styles.stage} style={portraitStyle} data-travel-layout={travelLayout} data-testid="exhibition-stage" data-exhibition-surface
+      <div ref={stageRef} className={styles.stage} data-travel-layout={travelLayout} data-testid="exhibition-stage" data-exhibition-surface
         onTouchStart={(event) => { const touch = event.touches[0]; touchStart.current = event.touches.length === 1 ? { x: touch.clientX, y: touch.clientY } : null }}
         onTouchEnd={(event) => {
           const start = touchStart.current
@@ -301,18 +331,27 @@ export default function PhotographyExhibition({ collections, initialCollectionId
         onTouchCancel={() => { touchStart.current = null }}
       >
         <div className={styles.photoSurface}>
-          <ExhibitionImage photo={photo} collectionId={collection.id} neighbours={neighbours} locationHash={hash} onPresent={onPresent} />
+          <ExhibitionImage photo={photo} collectionId={collection.id} neighbours={neighbours} locationHash={hash} onPresent={onPresent} placements={photoPlacements} onCover={setCovering} />
           <button type="button" className={`${styles.clickZone} ${styles.previousZone}`} tabIndex={-1} aria-hidden="true" disabled={!hasPrevious} onClick={() => { if (Date.now() > suppressClickUntil.current) step(-1) }} />
           <button type="button" className={`${styles.clickZone} ${styles.nextZone}`} tabIndex={-1} aria-hidden="true" disabled={!hasNext} onClick={() => { if (Date.now() > suppressClickUntil.current) step(1) }} />
         </div>
-        {isTravel && <div ref={captionsRef} className={travelLayout === 'landscape' ? styles.landscapeFrame : styles.captions} lang="zh-CN">
-          {captionPhotos.map(({ id, caption }) => caption && (
-            <article key={id} className={styles.caption} aria-hidden={id !== shownPhoto?.id}>
-              <p className={styles.eyebrow}>{caption.place}</p>
-              <p className={styles.body}>{caption.body}</p>
-            </article>
-          ))}
+        {captionPhoto?.caption && <div className={styles.travelCaption} style={captionStyle} lang="zh-CN" data-testid="travel-caption"
+          data-orientation={cropRatio(captionPhoto) > 1 ? 'landscape' : 'portrait'}>
+          <article key={`${captionFrame?.collection.id}/${captionPhoto.id}`} className={styles.caption}>
+            <p className={styles.eyebrow}>{captionPhoto.caption.place}</p>
+            <p className={styles.body}>{captionPhoto.caption.body}</p>
+          </article>
         </div>}
+        {/* Hidden references for travel placement: the Works frames, the Works
+            photo band, and a caption typeset off-screen at any width. */}
+        <div className={styles.layoutProbes} aria-hidden="true">
+          <div ref={landscapeProbeRef} className={styles.imageLayer} data-orientation="landscape" />
+          <div ref={portraitProbeRef} className={styles.imageLayer} data-orientation="portrait" />
+          <div ref={bandProbeRef} className={styles.bandProbe} />
+          <div ref={measurerRef} className={`${styles.travelCaption} ${styles.captionMeasurer}`} lang="zh-CN">
+            <article className={styles.caption}><p className={styles.eyebrow} /><p className={styles.body} /></article>
+          </div>
+        </div>
       </div>
       <div ref={cursorRef} className={styles.cursorLabel} data-testid="exhibition-cursor" data-visible="false" data-size="large" aria-hidden="true">{label}</div>
       <p ref={positionRef} className={styles.position} aria-live="polite" aria-atomic="true" data-testid="exhibition-position">{label}</p>

@@ -1,12 +1,16 @@
-/* The page marker is in the server HTML and disappears with this exact route. */
-html:has(.viewerPage), body:has(.viewerPage) {
+/* Before any script runs, the page marker in the server HTML selects the black
+   canvas. Once the exhibition mounts, the root carries .viewerScripted for the
+   rest of the visit and only .viewerCanvas decides. The exhibition's layout
+   effect cleanup removes .viewerCanvas in the commit that removes the page. */
+html:not(.viewerScripted):has(.viewerPage), html.viewerCanvas,
+html:not(.viewerScripted):has(.viewerPage) > body, html.viewerCanvas > body {
   height: 100%;
   min-height: 0;
   overflow: hidden;
   overscroll-behavior: none;
 }
-html:has(.viewerPage) { background-color: #000; }
-body:has(.viewerPage) {
+html:not(.viewerScripted):has(.viewerPage), html.viewerCanvas { background-color: #000; }
+html:not(.viewerScripted):has(.viewerPage) > body, html.viewerCanvas > body {
   position: fixed;
   inset: 0;
   width: 100%;
@@ -23,7 +27,7 @@ body:has(.viewerPage) {
 .photoSurface { position: absolute; inset: 0; }
 .exhibition[data-index-open="true"] .stage { transform: translateX(-25%); transition-delay: .2s; }
 .imageFrame { position: absolute; inset: 0; overflow: hidden; }
-.imageLayer, .landscapeFrame {
+.imageLayer {
   --crop-ratio: 1.25;
   --works-width: min(var(--photo-width), calc(var(--photo-height) * var(--crop-ratio)));
   position: absolute;
@@ -38,7 +42,7 @@ body:has(.viewerPage) {
 .preparedImage { visibility: hidden; opacity: 0; pointer-events: none; }
 .imageError { position: absolute; z-index: 5; bottom: 88px; left: 50%; transform: translateX(-50%); display: flex; align-items: center; gap: 16px; padding: 8px 16px; background: #fff; white-space: nowrap; }
 .imageError button { min-height: 44px; background: none; border: 0; padding: 8px; font: inherit; text-decoration: underline; cursor: pointer; }
-.collectionCurtain { position: absolute; inset: 0; background: #fff; pointer-events: none; animation: collectionCurtain 1s cubic-bezier(.165,.84,.44,1) both; }
+.collectionCurtain { position: absolute; z-index: 1; inset: 0; background: #fff; pointer-events: none; animation: collectionCurtain 1s cubic-bezier(.165,.84,.44,1) both; }
 .clickZone { position: absolute; top: 0; bottom: 0; width: 50%; border: 0; background: transparent; padding: 0; cursor: w-resize; }
 /* Pointer-only hit areas have separate, visible keyboard navigation controls. */
 .exhibition .clickZone:focus-visible { outline: none !important; }
@@ -54,7 +58,6 @@ body:has(.viewerPage) {
 .viewNavigation button { min-height: 44px; padding: 12px 0; font-weight: 400; }
 .viewNavigation button:first-child { font-weight: 500; }
 .divider { position: relative; top: 1px; width: 19px; height: 1px; margin: 0 5px; background: currentColor; }
-.viewNavigation button:hover, .panelHeader button:hover, .homeLink:hover, .infoContent a:hover, .thumbsHeader button:hover { text-decoration: underline; text-underline-offset: 3px; }
 .exhibition a:focus-visible, .exhibition button:focus-visible, .overlay a:focus-visible, .overlay button:focus-visible { outline: 2px solid #111; outline-offset: 4px; }
 .position, .srOnly { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0, 0, 0, 0); white-space: nowrap; border: 0; }
 .keyboardNavigation { position: absolute; z-index: 35; left: 50%; bottom: 74px; display: flex; transform: translateX(-50%); gap: 20px; }
@@ -76,7 +79,6 @@ body:has(.viewerPage) {
 .collectionList { display: flex; flex-direction: column; gap: 0; }
 .collectionButton { display: flex; align-items: baseline; justify-content: space-between; gap: 20px; width: 100%; min-height: 22px; padding: 0; text-align: left; font-size: 12px; line-height: 22px; }
 .collectionButton > span:first-child { transform-origin: left center; transition: transform .2s ease; }
-.collectionButton:hover > span:first-child { transform: skewX(-10deg); }
 .collectionButton[aria-current] > span:first-child { font-weight: 500; }
 .collectionCount { font-variant-numeric: tabular-nums; }
 .infoContent { max-width: 660px; line-height: 20px; }
@@ -98,7 +100,12 @@ body:has(.viewerPage) {
 .thumbnailButton { display: block; min-width: 0; width: 100%; padding: 15px; }
 .thumbnailImage { display: block; width: 100%; }
 .thumbnailImage img { display: block; width: 100%; height: auto; transition: opacity .3s ease; }
-.thumbnailButton:hover .thumbnailImage img { opacity: .75; }
+/* Touch screens keep :hover on whatever was last tapped; only a mouse hovers. */
+@media (hover: hover) and (pointer: fine) {
+  .viewNavigation button:hover, .panelHeader button:hover, .homeLink:hover, .infoContent a:hover, .thumbsHeader button:hover { text-decoration: underline; text-underline-offset: 3px; }
+  .collectionButton:hover > span:first-child { transform: skewX(-10deg); }
+  .thumbnailButton:hover .thumbnailImage img { opacity: .75; }
+}
 .thumbnailButton[aria-current] .thumbnailImage { outline: 1px solid #777; outline-offset: 5px; }
 
 @media (max-width: 991px) { .thumbnailGrid { grid-template-columns: repeat(5, minmax(0, 1fr)); } }
@@ -135,59 +142,30 @@ body:has(.viewerPage) {
 @media (max-height: 500px) and (max-width: 960px), (max-height: 500px) and (pointer: coarse) { .viewNavigation { bottom: auto; } }
 @keyframes collectionCurtain { 0% { transform: translateY(100%); } 45%, 50% { transform: translateY(0); } 100% { transform: translateY(-100%); } }
 
-.stage[data-travel-layout="portrait"] {
-  --travel-width: var(--fitted-width, min(var(--photo-width), calc(var(--photo-height) * var(--stage-ratio))));
-  padding-block: calc((100dvh - var(--photo-height)) / 2);
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  gap: 16px;
-}
-.stage[data-travel-layout="portrait"]::before {
-  content: "";
-  flex: none;
-  height: calc(var(--travel-width) / var(--stage-ratio));
-}
-.stage[data-travel-layout="portrait"] .imageLayer {
-  width: min(var(--travel-width), calc(var(--travel-width) / var(--stage-ratio) * var(--crop-ratio)));
-  transform: translate(-50%, calc(-50% - (var(--caption-height, 0px) + 16px) / 2));
-}
-.captions {
-  position: relative;
-  display: grid;
-  width: var(--caption-width, var(--travel-width));
-  align-self: center;
-  flex: none;
-}
-.stage[data-travel-layout="landscape"] :is(.imageLayer[data-orientation="landscape"], .landscapeFrame) {
-  top: var(--landscape-top, 50%);
-  width: var(--landscape-width, var(--works-width));
-  transform: translate(-50%, var(--landscape-translate-y, -50%));
-}
-.landscapeFrame { pointer-events: none; }
-.landscapeFrame > .caption { position: absolute; inset-inline: 0; top: calc(100% + 16px); }
-.stage[data-wide-caption] :is(.imageLayer[data-orientation="landscape"], .landscapeFrame) {
-  left: calc((100% - var(--works-width)) / 2);
-  transform: none;
-}
-.stage[data-wide-caption] .landscapeFrame > .caption { width: var(--works-width); }
-.captions, .landscapeFrame {
+/* Travel frames: positions come from travel-layout.ts as inline styles. */
+.travelCaption {
+  position: absolute;
+  pointer-events: none;
   text-align: left;
   font-family: 'PingFang SC', 'Hiragino Sans GB', 'Noto Sans SC', 'Microsoft YaHei', sans-serif;
 }
-.caption { grid-area: 1 / 1; min-width: 0; white-space: pre-line; overflow-wrap: anywhere; }
-.caption[aria-hidden="true"] { visibility: hidden; }
-.eyebrow { margin: 0 0 6px; color: #6b6b6b; font-size: 13px; line-height: 1.5; letter-spacing: .04em; }
-.body { margin: 0; color: #3d3d3d; font-size: 14px; line-height: 1.8; }
-.landscapeFrame .eyebrow { font-size: calc(13px * var(--caption-scale, 1)); }
-.landscapeFrame .body { font-size: calc(14px * var(--caption-scale, 1)); }
-
-@media (max-height: 620px) {
-  .stage[data-travel-layout="portrait"] { padding-block: max(60px, env(safe-area-inset-top), env(safe-area-inset-bottom)); }
-}
+.caption { min-width: 0; white-space: pre-line; overflow-wrap: anywhere; }
+.eyebrow { margin: 0 0 6px; color: #6b6b6b; font-size: calc(13px * var(--caption-scale, 1)); line-height: 1.5; letter-spacing: .04em; }
+.body { margin: 0; color: #3d3d3d; font-size: calc(14px * var(--caption-scale, 1)); line-height: 1.8; }
 @media (max-height: 620px) and (orientation: portrait) {
-  .stage[data-travel-layout="portrait"] .body { line-height: 1.65; }
+  .travelCaption[data-orientation="portrait"] .body { line-height: 1.65; }
 }
+.layoutProbes { position: absolute; inset: 0; visibility: hidden; pointer-events: none; }
+.bandProbe { position: absolute; left: 0; width: var(--photo-width); top: calc((100% - var(--photo-height)) / 2); height: var(--photo-height); }
+@media (max-height: 620px) {
+  .bandProbe { top: max(60px, env(safe-area-inset-top), env(safe-area-inset-bottom)); bottom: max(60px, env(safe-area-inset-top), env(safe-area-inset-bottom)); height: auto; }
+}
+.captionMeasurer { left: 0; top: 0; }
+
+/* Thumbs keeps its translucent sheet; the words behind it step out of the way. */
+.travelCaption, .position, .viewNavigation { transition: opacity .3s ease, visibility 0s; }
+.exhibition[data-thumbs-open="true"] :is(.travelCaption, .position, .viewNavigation) { opacity: 0; visibility: hidden; transition: opacity .3s ease, visibility 0s .3s; }
+
 @media (prefers-reduced-motion: reduce) {
   /* Keep the exhibition choreography consistent across devices, overriding
      the global system-motion reset only for these animated gallery elements. */

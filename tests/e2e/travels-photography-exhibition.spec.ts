@@ -3,31 +3,36 @@ import wuhan from '../../content/travel/wuhan/cards.json'
 import travels from '../../content/travel/exhibition.json'
 import bangkok from '../../content/photography/photos/bangkok.json'
 
+const CAPTION = '[data-testid="travel-caption"] article'
+
 async function worksLandscape(page: Page) {
   await page.goto('/photography')
   return (await page.getByTestId('exhibition-image').boundingBox())!
 }
 
+// Landscape rule: rise from the Works frame by exactly the caption's overflow
+// past the bottom line B; if that crosses the top line T, sit at T and shrink.
 async function expectLandscapePlacement(page: Page, works: Awaited<ReturnType<typeof worksLandscape>>, mobile: boolean) {
   const photo = (await page.getByTestId('exhibition-image').boundingBox())!
-  const footer = mobile ? page.getByTestId('exhibition-position') : page.getByRole('button', { name: 'Index', exact: true })
-  const textBox = (element: Element) => {
-    const range = document.createRange()
-    range.selectNodeContents(element)
-    return range.getBoundingClientRect().toJSON()
-  }
-  const lastLine = await page.locator('article[aria-hidden="false"] p').last().evaluate(textBox)
-  const clearance = (await footer.evaluate(textBox)).top - lastLine.bottom
-  const minimum = mobile ? 20 : 24
-  expect(clearance).toBeGreaterThanOrEqual(minimum - 0.5)
-  expect(photo.width).toBeLessThanOrEqual(works.width + 1)
-  if (Math.abs(photo.width - works.width) < 1) {
+  const caption = (await page.locator(CAPTION).boundingBox())!
+  const controls = (await page.getByTestId('exhibition-controls').boundingBox())!
+  const bottom = mobile
+    ? (await page.getByTestId('exhibition-position').boundingBox())!.y - 20
+    : await page.getByRole('button', { name: 'Index', exact: true }).evaluate((element: Element) => {
+      const range = document.createRange()
+      range.selectNodeContents(element)
+      return range.getBoundingClientRect().top - 24
+    })
+  const top = mobile ? controls.y + controls.height + 16 : 40
+  expect(caption.y + caption.height).toBeLessThanOrEqual(bottom + 1)
+  const rise = Math.max(0, works.y + works.height + 16 + caption.height - bottom)
+  if (works.y - rise >= top) {
+    expect(photo.width).toBeCloseTo(works.width, 0)
     expect(photo.x).toBeCloseTo(works.x, 0)
-    // At full size the photo moves only by the amount its own text overflows.
-    expect(photo.y).toBeCloseTo(Math.min(works.y, photo.y + clearance - minimum), 0)
+    expect(photo.y).toBeCloseTo(works.y - rise, 0)
   } else {
-    const controls = (await page.getByTestId('exhibition-controls').boundingBox())!
-    expect(photo.y).toBeCloseTo(mobile ? controls.y + controls.height + 16 : 40, 0)
+    expect(photo.y).toBeCloseTo(top, 0)
+    expect(photo.width).toBeLessThan(works.width)
   }
 }
 
@@ -64,7 +69,7 @@ test('directory entry opens over the decoded Wuhan cover, including with a cold 
     await expect(page.locator('main h1')).toContainText('Wuhan')
     await expect(page.getByTestId('exhibition-position')).toHaveText('Wuhan - 1/8')
     await expect(page.getByTestId('exhibition-image')).toHaveAttribute('alt', card.imageAlt)
-    await expect(page.locator('article[aria-hidden="false"] p').first()).toHaveText(cover.place!)
+    await expect(page.locator(CAPTION).locator('p').first()).toHaveText(cover.place!)
   } finally {
     releaseCover()
   }
@@ -93,7 +98,7 @@ test('Travels index, all Wuhan frames, Thumbs and frame history', async ({ page,
   await places.first().click()
   await expect(index).toHaveCount(0)
   const stage = page.getByTestId('exhibition-stage')
-  const caption = stage.locator('article[aria-hidden="false"]')
+  const caption = stage.locator(CAPTION)
   const image = page.getByTestId('exhibition-image')
   const controls = page.getByTestId('exhibition-controls')
   const touch = isMobile ? await page.context().newCDPSession(page) : null
@@ -156,7 +161,7 @@ test('Nanjing fits each landscape caption and keeps portrait frames aligned', as
   for (let i = 1; i <= 15; i++) {
     await expect(page.getByTestId('exhibition-position')).toHaveText(`Nanjing - ${i}/15`)
     const box = (await photo.boundingBox())!
-    const text = (await stage.locator('article[aria-hidden="false"]').boundingBox())!
+    const text = (await stage.locator(CAPTION).boundingBox())!
     const region = (await stage.boundingBox())!
     expect(box.y).toBeGreaterThanOrEqual(region.y - 1)
     expect(text.y + text.height).toBeLessThanOrEqual(region.y + region.height + 1)
@@ -181,12 +186,18 @@ test('short phone screens keep the photograph and the whole travel caption visib
   for (const viewport of [{ width: 320, height: 568 }, { width: 667, height: 375 }]) {
     await page.setViewportSize(viewport)
     const image = page.getByTestId('exhibition-image')
-    const caption = page.locator('article[aria-hidden="false"]')
+    const caption = page.locator(CAPTION)
     await expect(image).toBeInViewport({ ratio: 1 })
     await expect(caption).toBeInViewport({ ratio: 1 })
     const photoBox = (await image.boundingBox())!
     const textBox = (await caption.boundingBox())!
     expect(textBox.y - photoBox.y - photoBox.height).toBeCloseTo(16, 0)
-    if (viewport.height > viewport.width) expect(textBox.width).toBeCloseTo(photoBox.width, 0)
+    if (viewport.height > viewport.width) {
+      // Text and photo share a width whenever both fit between T and B. On the
+      // smallest phones no shared width fits Nanjing's longest caption, so the
+      // text keeps the whole photo band and the photograph takes what remains.
+      expect(textBox.width).toBeGreaterThanOrEqual(photoBox.width - 1)
+      expect(textBox.x + textBox.width / 2).toBeCloseTo(photoBox.x + photoBox.width / 2, 0)
+    }
   }
 })

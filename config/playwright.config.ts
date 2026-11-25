@@ -76,6 +76,11 @@ export default defineConfig({
       },
     },
     {
+      // Sets its own phone and desktop viewports for each test.
+      name: 'travels-placement',
+      testMatch: /travels-placement\.spec\.ts/,
+    },
+    {
       name: 'desktop-1280',
       testMatch: /(?:desktop-regression|photography-exhibition|navigation\.desktop)\.spec\.ts/,
       use: {

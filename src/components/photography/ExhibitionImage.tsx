@@ -1,22 +1,23 @@
 'use client'
 
 import { getImageProps } from 'next/image'
-import { useCallback, useLayoutEffect, useMemo, useRef, useState } from 'react'
+import { useCallback, useLayoutEffect, useMemo, useRef, useState, type CSSProperties } from 'react'
 import type { ExhibitionPhoto } from './PhotographyExhibition'
 import { getExhibitionImageSizes, TRANSITION_MS } from './exhibition-images'
 import styles from './PhotographyExhibition.module.css'
 
-type Target = { photo: ExhibitionPhoto; collectionId: string }
+export type Target = { photo: ExhibitionPhoto; collectionId: string }
 type View = { target: Target; previous: Target | null; revealed: boolean; transition: number }
 type DecodedImage = { image: HTMLImageElement; src: string }
-const targetKey = (target: Target) => `${target.collectionId}/${target.photo.id}`
+export const targetKey = (target: Target) => `${target.collectionId}/${target.photo.id}`
 const MAX_IMAGES = 6
 
-function ImageLayer({ target, active, visible, requested, register, decode, fail }: {
+function ImageLayer({ target, active, visible, requested, placement, register, decode, fail }: {
   target: Target
   active: boolean
   visible: boolean
   requested: boolean
+  placement?: CSSProperties
   register: (key: string, image: HTMLImageElement | null) => void
   decode: (target: Target, image: HTMLImageElement) => void
   fail: (key: string) => void
@@ -39,7 +40,7 @@ function ImageLayer({ target, active, visible, requested, register, decode, fail
     fetchPriority: requested ? 'high' : 'low',
   })
   const className = [styles.imageLayer, !visible ? styles.preparedImage : ''].join(' ')
-  return <div className={className} data-orientation={target.photo.width >= target.photo.height ? 'landscape' : 'portrait'} aria-hidden={active ? undefined : true}>
+  return <div className={className} style={placement} data-orientation={target.photo.width >= target.photo.height ? 'landscape' : 'portrait'} aria-hidden={active ? undefined : true}>
     {/* Next generates the same responsive URLs; retaining the native node lets us
         decode once, promote it directly, and observe responsive source changes. */}
     {/* eslint-disable-next-line @next/next/no-img-element */}
@@ -50,12 +51,16 @@ function ImageLayer({ target, active, visible, requested, register, decode, fail
   </div>
 }
 
-export function ExhibitionImage({ photo, collectionId, neighbours, locationHash, onPresent }: {
+export function ExhibitionImage({ photo, collectionId, neighbours, locationHash, onPresent, placements, onCover }: {
   photo: ExhibitionPhoto
   collectionId: string
   neighbours: Target[]
   locationHash: string
   onPresent: (collectionId: string, photoId: string) => void
+  /** Explicit frames for photographs that are not placed like Works, by target key. */
+  placements?: Record<string, CSSProperties>
+  /** Reports the outgoing photograph while the curtain still shows it. */
+  onCover?: (target: Target | null) => void
 }) {
   const requested = useMemo(() => ({ photo, collectionId }), [photo, collectionId])
   const requestKey = targetKey(requested)
@@ -181,7 +186,9 @@ export function ExhibitionImage({ photo, collectionId, neighbours, locationHash,
   const directoryEntry = locationHash === '#travels' || locationHash === '#projects'
   const displayedKey = directoryEntry ? requestKey : targetKey(view.target)
   const outgoing = directoryEntry ? null : view.previous
-  const visibleKey = outgoing && !view.revealed ? targetKey(outgoing) : displayedKey
+  const covering = outgoing && !view.revealed ? outgoing : null
+  const visibleKey = covering ? targetKey(covering) : displayedKey
+  useLayoutEffect(() => { onCover?.(covering) }, [covering, onCover])
   const pending = requestKey !== targetKey(view.target)
   const failed = failedRequest === requestKey
   // Keep the requested, displayed and outgoing nodes before filling the small
@@ -194,7 +201,7 @@ export function ExhibitionImage({ photo, collectionId, neighbours, locationHash,
       const key = targetKey(target)
       return <ImageLayer key={`${key}/${retries[key] ?? 0}`} target={target}
         active={key === displayedKey} visible={key === visibleKey}
-        requested={key === requestKey} register={register} decode={decode} fail={fail} />
+        requested={key === requestKey} placement={placements?.[key]} register={register} decode={decode} fail={fail} />
     })}
     {outgoing ? <div key={`curtain-${view.transition}`} className={styles.collectionCurtain} aria-hidden="true" /> : null}
     {failed ? <div className={styles.imageError} role="alert" data-exhibition-ui><span>This photograph could not load.</span><button type="button" onClick={() => {
