@@ -242,9 +242,8 @@ test('a portrait downloads the smallest candidate covering its displayed pixels'
     await element.decode()
     const bounds = element.getBoundingClientRect()
     const aspectRatio = Number(element.getAttribute('width')) / Number(element.getAttribute('height'))
-    // object-fit: contain can make the visible photograph narrower than its
-    // image element. Measure the existing layout independently of `sizes`.
-    const requiredWidth = Math.min(bounds.width, bounds.height * aspectRatio) * window.devicePixelRatio
+    // A cover crop can paint a wider source than its visible frame.
+    const requiredWidth = Math.max(bounds.width, bounds.height * aspectRatio) * window.devicePixelRatio
     const candidates = element.srcset.split(',').map((candidate) => {
       const match = candidate.trim().match(/^(\S+)\s+(\d+)w$/)
       if (!match) throw new Error(`Unexpected responsive image candidate: ${candidate}`)

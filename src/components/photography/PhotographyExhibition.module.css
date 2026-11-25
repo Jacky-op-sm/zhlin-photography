@@ -1,11 +1,19 @@
-.exhibition { position: relative; width: 100%; height: 100vh; height: 100dvh; min-height: 280px; overflow: hidden; background: #fff; color: #111; font-family: Arial, Helvetica, sans-serif; font-size: 12px; line-height: 1.4; -webkit-tap-highlight-color: transparent; }
+.exhibition { --photo-width: 41.666667vw; --photo-height: calc(100dvh - 200px); position: relative; width: 100%; height: 100vh; height: 100dvh; min-height: 280px; overflow: hidden; background: #fff; color: #111; font-family: Arial, Helvetica, sans-serif; font-size: 12px; line-height: 1.4; -webkit-tap-highlight-color: transparent; }
 .stage { position: absolute; inset: 0; touch-action: pan-y pinch-zoom; transition: transform 1s cubic-bezier(.165,.84,.44,1) .1s; }
 .photoSurface { position: absolute; inset: 0; }
 .exhibition[data-index-open="true"] .stage { transform: translateX(-25%); transition-delay: .2s; }
 .imageFrame { position: absolute; inset: 0; overflow: hidden; }
-.imageLayer { position: absolute; left: 50%; top: 50%; width: 58.333333vw; height: calc(100vh - 200px); height: calc(100dvh - 200px); min-height: 120px; transform: translate(-50%, -50%); }
-.imageLayer[data-orientation="portrait"] { width: 41.666667vw; }
-.image { display: block; width: 100%; height: 100%; object-fit: contain; user-select: none; }
+.imageLayer {
+  --crop-ratio: 1.25;
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: min(var(--photo-width), calc(var(--photo-height) * var(--crop-ratio)));
+  aspect-ratio: var(--crop-ratio);
+  transform: translate(-50%, -50%);
+}
+.imageLayer[data-orientation="portrait"] { --crop-ratio: .8; }
+.image { display: block; width: 100%; height: 100%; object-fit: cover; user-select: none; }
 .preparedImage { visibility: hidden; opacity: 0; pointer-events: none; }
 .imageError { position: absolute; z-index: 5; bottom: 88px; left: 50%; transform: translateX(-50%); display: flex; align-items: center; gap: 16px; padding: 8px 16px; background: #fff; white-space: nowrap; }
 .imageError button { min-height: 44px; background: none; border: 0; padding: 8px; font: inherit; text-decoration: underline; cursor: pointer; }
@@ -22,7 +30,9 @@
 .cursorLabel[data-size="small"] { font-size: 14px; }
 .viewNavigation { position: absolute; z-index: 30; bottom: max(23px, env(safe-area-inset-bottom)); left: 50%; transform: translateX(-50%); display: flex; align-items: center; white-space: nowrap; gap: 0; }
 .viewNavigation button, .keyboardNavigation button, .panelHeader button, .collectionButton, .thumbnailButton, .thumbsHeader button { border: 0; border-radius: 0; background: transparent; color: inherit; font: inherit; cursor: pointer; }
-.viewNavigation button { min-height: 44px; padding: 12px 9px; }
+.viewNavigation button { min-height: 44px; padding: 12px 0; font-weight: 400; }
+.viewNavigation button:first-child { font-weight: 500; }
+.divider { position: relative; top: 1px; width: 19px; height: 1px; margin: 0 5px; background: currentColor; }
 .viewNavigation button:hover, .panelHeader button:hover, .homeLink:hover, .infoContent a:hover, .thumbsHeader button:hover { text-decoration: underline; text-underline-offset: 3px; }
 .exhibition a:focus-visible, .exhibition button:focus-visible, .overlay a:focus-visible, .overlay button:focus-visible { outline: 2px solid #111; outline-offset: 4px; }
 .position, .srOnly { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0, 0, 0, 0); white-space: nowrap; border: 0; }
@@ -69,7 +79,7 @@
 
 @media (max-width: 991px) { .thumbnailGrid { grid-template-columns: repeat(5, minmax(0, 1fr)); } }
 @media (max-width: 960px) {
-  .imageLayer, .imageLayer[data-orientation="portrait"] { width: calc(100vw - 40px); height: calc(100vh - 160px); height: calc(100dvh - 160px); }
+  .exhibition { --photo-width: calc(100vw - 40px); --photo-height: calc(100dvh - 160px); }
   .viewNavigation { top: max(12px, env(safe-area-inset-top)); bottom: auto; }
   .exhibition[data-index-open="true"] .stage { transform: none; }
   .indexPanel { width: 100%; }
@@ -95,73 +105,57 @@
   .thumbnailButton[aria-current] .thumbnailImage { outline-offset: 2px; }
 }
 @media (max-height: 500px) {
-  .imageLayer, .imageLayer[data-orientation="portrait"] { height: calc(100vh - 100px); height: calc(100dvh - 100px); }
   .viewNavigation { bottom: 8px; }
   .position { bottom: max(16px, env(safe-area-inset-bottom)); }
 }
 @media (max-height: 500px) and (max-width: 960px), (max-height: 500px) and (pointer: coarse) { .viewNavigation { bottom: auto; } }
 @keyframes collectionCurtain { 0% { transform: translateY(100%); } 45%, 50% { transform: translateY(0); } 100% { transform: translateY(-100%); } }
 
-/* Stacking the captions in one grid cell reserves exactly the height of the
-   tallest one, including line wrapping at the current width and font size. */
 .exhibition[data-travel="true"] .stage {
-  inset: max(30px, env(safe-area-inset-top)) 0 max(80px, calc(env(safe-area-inset-bottom) + 60px));
+  --travel-width: var(--fitted-width, min(var(--photo-width), calc(var(--photo-height) * var(--stage-ratio))));
+  padding-block: calc((100dvh - var(--photo-height)) / 2);
   display: flex;
   flex-direction: column;
-  gap: 28px;
-  overflow-y: auto;
-  overscroll-behavior: contain;
+  justify-content: center;
+  gap: 16px;
 }
-.exhibition[data-travel="true"] .photoSurface {
-  position: relative;
-  inset: auto;
-  flex: 0 1 var(--desktop-photo-height);
-  min-height: 150px;
-  margin-top: auto;
+.exhibition[data-travel="true"] .stage::before {
+  content: "";
+  flex: none;
+  height: calc(var(--travel-width) / var(--stage-ratio));
 }
 .exhibition[data-travel="true"] .imageLayer {
-  top: 0;
-  height: 100%;
-  min-height: 0;
-  transform: translateX(-50%);
+  width: min(var(--travel-width), calc(var(--travel-width) / var(--stage-ratio) * var(--crop-ratio)));
+  transform: translate(-50%, calc(-50% - (var(--caption-height, 0px) + 16px) / 2));
 }
-.exhibition[data-travel="true"] .image { object-position: center bottom; }
 .captions {
+  position: relative;
   display: grid;
-  width: min(600px, calc(100% - 40px));
+  width: var(--travel-width);
   align-self: center;
   flex: none;
-  margin-bottom: auto;
   text-align: left;
   font-family: 'PingFang SC', 'Hiragino Sans GB', 'Noto Sans SC', 'Microsoft YaHei', sans-serif;
 }
 .caption { grid-area: 1 / 1; min-width: 0; white-space: pre-line; overflow-wrap: anywhere; }
 .caption[aria-hidden="true"] { visibility: hidden; }
-.eyebrow { margin: 0 0 3px; color: #6b6b6b; font-size: 13px; line-height: 1.5; letter-spacing: .04em; }
-.caption h2 { margin: 0 0 4px; color: #222; font-size: 17px; font-weight: 600; line-height: 1.8; }
-.body { margin: 0; color: #3d3d3d; font-size: 17px; line-height: 2; }
-.exhibition[data-travel="true"] .viewNavigation { top: auto; bottom: max(10px, env(safe-area-inset-bottom)); }
-@media (min-width: 961px) and (pointer: fine) {
-  .exhibition[data-travel="true"] .viewNavigation { bottom: max(23px, env(safe-area-inset-bottom)); }
-}
-@media (hover: none), (pointer: coarse) {
-  .exhibition[data-travel="true"] .position { top: max(16px, env(safe-area-inset-top)); bottom: auto; }
-  .exhibition[data-travel="true"] .stage { top: max(52px, calc(env(safe-area-inset-top) + 36px)); }
-}
-@media (max-width: 960px) {
-  .exhibition[data-travel="true"] .photoSurface { flex-basis: var(--tablet-photo-height); }
-}
-@media (max-width: 767px) {
-  .exhibition[data-travel="true"] .photoSurface {
-    /* Reserve the caption heading and its first two lines on short screens. */
-    flex: 0 0 min(var(--mobile-photo-height), 55svh, max(80px, calc(100% - 190px)));
-    min-height: 0;
+.eyebrow { margin: 0 0 6px; color: #6b6b6b; font-size: 13px; line-height: 1.5; letter-spacing: .04em; }
+.body { margin: 0; color: #3d3d3d; font-size: 14px; line-height: 1.8; }
+
+.safariTopEdge, .safariBottomEdge { display: none; }
+@supports (-webkit-touch-callout: none) {
+  /* Edge backgrounds for Safari's browser chrome. The opaque exhibition
+     paints above them so no black line interrupts the white page. */
+  .safariTopEdge, .safariBottomEdge {
+    display: block;
+    position: fixed;
+    inset-inline: 0;
+    height: 1px;
+    background: #000;
+    pointer-events: none;
   }
-  .exhibition[data-travel="true"] .stage {
-    bottom: max(64px, calc(env(safe-area-inset-bottom) + 52px));
-    padding-bottom: 44px;
-  }
-  .exhibition[data-travel="true"] .imageLayer { width: 100%; }
+  .safariTopEdge { top: 0; }
+  .safariBottomEdge { bottom: 0; }
 }
 @media (prefers-reduced-motion: reduce) {
   /* Keep the exhibition choreography consistent across devices, overriding

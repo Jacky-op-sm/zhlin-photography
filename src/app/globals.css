@@ -105,11 +105,11 @@ html {
   background: #ffffff;
   color: var(--site-text);
   padding: 0.65rem 0.9rem;
-  box-shadow: var(--site-shadow);
   transition: transform 160ms ease;
 }
 
 .skip-link:focus {
+  box-shadow: var(--site-shadow);
   transform: translateY(0);
 }
 

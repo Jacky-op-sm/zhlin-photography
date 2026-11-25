@@ -45,6 +45,7 @@ export const travelCardsSchema = z.object({
 
 export const photoRecordSchema = z.object({
   id: text,
+  focus: text.optional(),
   title: text,
   description: text,
   source: text.optional(),
@@ -67,6 +68,7 @@ const exhibitionAsset = text.startsWith('/assets/').refine(
 
 export const exhibitionPhotoSchema = z.object({
   id: exhibitionId,
+  focus: text.optional(),
   src: exhibitionAsset,
   thumbnail: exhibitionAsset,
   width: z.number().int().positive(),

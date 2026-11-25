@@ -29,7 +29,8 @@
       "street",
       "black-white"
     ],
-    "source": "assets-source/photography/street/Z52_8331.jpg"
+    "source": "assets-source/photography/street/Z52_8331.jpg",
+    "focus": "50% 75%"
   },
   {
     "id": "z52-7693",
@@ -61,7 +62,8 @@
       "street",
       "black-white"
     ],
-    "source": "assets-source/photography/street/Z52_8337.jpg"
+    "source": "assets-source/photography/street/Z52_8337.jpg",
+    "focus": "50% 0%"
   },
   {
     "id": "z52-8055",

@@ -201,7 +201,8 @@
       "portrait",
       "pet"
     ],
-    "source": "assets-source/photography/pets/Z52_6039.jpg"
+    "source": "assets-source/photography/pets/Z52_6039.jpg",
+    "focus": "50% 100%"
   },
   {
     "id": "pets-14",
@@ -218,7 +219,8 @@
       "portrait",
       "pet"
     ],
-    "source": "assets-source/photography/pets/Z52_6041.jpg"
+    "source": "assets-source/photography/pets/Z52_6041.jpg",
+    "focus": "78% 50%"
   },
   {
     "id": "pets-15",
@@ -235,7 +237,8 @@
       "portrait",
       "pet"
     ],
-    "source": "assets-source/photography/pets/Z52_6168.jpg"
+    "source": "assets-source/photography/pets/Z52_6168.jpg",
+    "focus": "100% 50%"
   },
   {
     "id": "pets-16",

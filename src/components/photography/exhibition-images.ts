@@ -1,19 +1,21 @@
 export const TRANSITION_MS = 1000
 
-// Match the imageLayer dimensions and object-fit: contain in
-// PhotographyExhibition.module.css without changing the rendered photograph.
+export function cropRatio(photo: { width: number; height: number }) {
+  return photo.width >= photo.height ? 5 / 4 : 4 / 5
+}
+
+// With cover, wide originals extend beyond the sides of the visible frame.
+// Request enough source pixels for that full painted width at the device DPR.
 export function getExhibitionImageSizes(photo: { width: number; height: number }) {
-  const aspectRatio = photo.width / photo.height
-  const scaled = (value: number) => Number((value * aspectRatio).toFixed(6))
-  const containedWidth = (width: string, verticalSpace: number) =>
-    `min(${width}, max(${scaled(120)}px, calc(${scaled(100)}dvh - ${scaled(verticalSpace)}px)))`
-  const desktopWidth = photo.width > photo.height ? '58.333333vw' : '41.666667vw'
-  const mobileWidth = 'calc(100vw - 40px)'
+  const ratio = cropRatio(photo)
+  const paintedRatio = Math.max(ratio, photo.width / photo.height)
+  const overscan = paintedRatio / ratio
+  const rounded = (value: number) => Number(value.toFixed(6))
+  const heightLimit = (inset: number) =>
+    `calc(${rounded(100 * paintedRatio)}dvh - ${rounded(inset * paintedRatio)}px)`
 
   return [
-    `(max-width: 960px) and (max-height: 500px) ${containedWidth(mobileWidth, 100)}`,
-    `(max-height: 500px) ${containedWidth(desktopWidth, 100)}`,
-    `(max-width: 960px) ${containedWidth(mobileWidth, 160)}`,
-    containedWidth(desktopWidth, 200),
+    `(max-width: 960px) min(calc(${rounded(100 * overscan)}vw - ${rounded(40 * overscan)}px), ${heightLimit(160)})`,
+    `min(${rounded(100 * 10 / 24 * overscan)}vw, ${heightLimit(200)})`,
   ].join(', ')
 }

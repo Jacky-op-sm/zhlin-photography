@@ -1,6 +1,6 @@
 import { test, expect } from '@playwright/test'
 
-test('street exhibition preserves the photograph and fits the mobile viewport', async ({ page }) => {
+test('street exhibition crops the photograph and fits the mobile viewport', async ({ page }) => {
   await page.goto('/photography/street')
   const image = page.getByTestId('exhibition-image')
   await expect(image).toBeVisible()
@@ -16,7 +16,7 @@ test('street exhibition preserves the photograph and fits the mobile viewport', 
       bottom: box.bottom,
       viewportWidth: window.innerWidth,
       viewportHeight: window.innerHeight,
-      ratioDifference: Math.abs(box.width / box.height - element.naturalWidth / element.naturalHeight),
+      ratioDifference: Math.abs(box.width / box.height - (element.naturalWidth >= element.naturalHeight ? 1.25 : 0.8)),
       fit: style.objectFit,
       overflow: Math.max(document.documentElement.scrollWidth, document.body.scrollWidth) - window.innerWidth,
     }
@@ -25,7 +25,8 @@ test('street exhibition preserves the photograph and fits the mobile viewport', 
   expect(layout.right).toBeLessThanOrEqual(layout.viewportWidth)
   expect(layout.top).toBeGreaterThanOrEqual(0)
   expect(layout.bottom).toBeLessThanOrEqual(layout.viewportHeight)
-  expect(layout.fit === 'contain' || layout.ratioDifference < 0.01).toBe(true)
+  expect(layout.fit).toBe('cover')
+  expect(layout.ratioDifference).toBeLessThan(0.01)
   expect(layout.overflow).toBeLessThanOrEqual(0)
   await expect(page.getByTestId('exhibition-position')).toContainText(/1\s*\/\s*7/)
   await expect(page.getByRole('button', { name: 'Index', exact: true })).toBeInViewport()

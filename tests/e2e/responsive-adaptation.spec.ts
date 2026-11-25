@@ -39,7 +39,7 @@ test.describe('responsive adaptation regressions', () => {
     }
   })
 
-  test('photography exhibition keeps the complete image inside the viewport', async ({ page }, testInfo) => {
+  test('photography exhibition keeps the cropped frame inside the viewport', async ({ page }, testInfo) => {
     test.skip(!(isMobileProject(testInfo.project.name) || isIPadProject(testInfo.project.name)), 'mobile/ipad test')
 
     await page.goto('/photography/street')
@@ -57,14 +57,15 @@ test.describe('responsive adaptation regressions', () => {
         viewportWidth: window.innerWidth,
         viewportHeight: window.innerHeight,
         fit: getComputedStyle(element).objectFit,
-        ratioDifference: Math.abs(box.width / box.height - element.naturalWidth / element.naturalHeight),
+        ratioDifference: Math.abs(box.width / box.height - (element.naturalWidth >= element.naturalHeight ? 1.25 : 0.8)),
       }
     })
     expect(placement.left).toBeGreaterThanOrEqual(0)
     expect(placement.right).toBeLessThanOrEqual(placement.viewportWidth)
     expect(placement.top).toBeGreaterThanOrEqual(0)
     expect(placement.bottom).toBeLessThanOrEqual(placement.viewportHeight)
-    expect(placement.fit === 'contain' || placement.ratioDifference < 0.01).toBe(true)
+    expect(placement.fit).toBe('cover')
+    expect(placement.ratioDifference).toBeLessThan(0.01)
     await expect(page.getByRole('button', { name: 'Index', exact: true })).toBeInViewport()
     await expect(page.getByRole('button', { name: 'Thumbs', exact: true })).toBeInViewport()
   })

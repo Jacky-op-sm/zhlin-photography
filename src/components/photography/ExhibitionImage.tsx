@@ -39,11 +39,12 @@ function ImageLayer({ target, active, visible, requested, register, decode, fail
     fetchPriority: requested ? 'high' : 'low',
   })
   const className = [styles.imageLayer, !visible ? styles.preparedImage : ''].join(' ')
-  return <div className={className} data-orientation={target.photo.width > target.photo.height ? 'landscape' : 'portrait'} aria-hidden={active ? undefined : true}>
+  return <div className={className} data-orientation={target.photo.width >= target.photo.height ? 'landscape' : 'portrait'} aria-hidden={active ? undefined : true}>
     {/* Next generates the same responsive URLs; retaining the native node lets us
         decode once, promote it directly, and observe responsive source changes. */}
     {/* eslint-disable-next-line @next/next/no-img-element */}
     <img {...props} alt={props.alt} ref={setImage} className={styles.image} draggable={false}
+      style={{ objectPosition: target.photo.focus }}
       data-testid={active ? 'exhibition-image' : undefined} data-photo-id={target.photo.id}
       onLoad={(event) => decode(target, event.currentTarget)} onError={() => fail(key)} />
   </div>

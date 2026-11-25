@@ -17,7 +17,8 @@
       "thumbnail": "/assets/photography/bangkok/bangkok-04-thumb.webp",
       "width": 1600,
       "height": 2400,
-      "alt": "A pigeon flying beside a golden fountain with water falling from its upper basin."
+      "alt": "A pigeon flying beside a golden fountain with water falling from its upper basin.",
+      "focus": "50% 0%"
     },
     {
       "id": "bangkok-16",
@@ -65,7 +66,8 @@
       "thumbnail": "/assets/photography/bangkok/bangkok-07-thumb.webp",
       "width": 1600,
       "height": 2400,
-      "alt": "A golden shrine illuminated beneath chandeliers inside a temple."
+      "alt": "A golden shrine illuminated beneath chandeliers inside a temple.",
+      "focus": "50% 25%"
     },
     {
       "id": "bangkok-01",
@@ -81,7 +83,8 @@
       "thumbnail": "/assets/photography/bangkok/bangkok-06-thumb.webp",
       "width": 1600,
       "height": 2400,
-      "alt": "A couple walking through a busy outdoor market."
+      "alt": "A couple walking through a busy outdoor market.",
+      "focus": "50% 75%"
     },
     {
       "id": "bangkok-09",
@@ -113,7 +116,8 @@
       "thumbnail": "/assets/photography/bangkok/bangkok-15-thumb.webp",
       "width": 1600,
       "height": 2400,
-      "alt": "A pedestrian crossing a street beneath overhead wires and a distant temple spire."
+      "alt": "A pedestrian crossing a street beneath overhead wires and a distant temple spire.",
+      "focus": "50% 100%"
     },
     {
       "id": "bangkok-12",
@@ -121,7 +125,8 @@
       "thumbnail": "/assets/photography/bangkok/bangkok-12-thumb.webp",
       "width": 2400,
       "height": 1289,
-      "alt": "A passenger boat passing temple buildings on the opposite riverbank."
+      "alt": "A passenger boat passing temple buildings on the opposite riverbank.",
+      "focus": "28% 50%"
     },
     {
       "id": "bangkok-10",

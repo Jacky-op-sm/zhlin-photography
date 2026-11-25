@@ -21,6 +21,7 @@ export const photographyExhibitions: ExhibitionCollection[] = [
         thumbnail: photo.thumbnail,
         width: photo.width,
         height: photo.height,
+        focus: photo.focus,
         alt: photo.title,
       })),
   })),
@@ -32,7 +33,8 @@ export const photographyExhibitions: ExhibitionCollection[] = [
       id: `travels/${slug}`,
       section: 'travels',
       title,
-      photos: photos.map(({ src, width, height }, index) => {
+      photos: photos.filter(photo => !photo.hidden).map(({ src, width, height, place, focus }, index) => {
+        if (!place) throw new Error(`Missing travel place for ${src}`)
         const matches = cards.filter(card => card.imageSrc === src)
         if (matches.length !== 1 || !matches[0].imageAlt) {
           throw new Error(`Expected one captioned travel card for ${src}`)
@@ -40,7 +42,7 @@ export const photographyExhibitions: ExhibitionCollection[] = [
         const { eyebrow, title, body, imageAlt } = matches[0]
         return {
           id: String(index + 1), src, thumbnail: src, width, height,
-          alt: imageAlt, caption: { eyebrow, title, body },
+          focus, alt: imageAlt, caption: { place, eyebrow, title, body },
         }
       }),
     }
